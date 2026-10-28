@@ -1,6 +1,6 @@
 # Security policy
 
-Nashi processes files locally. It does not run a cloud API, collect analytics,
+Lokum processes files locally. It does not run a cloud API, collect analytics,
 import browser cookies, or ask for an account for official public updates.
 Web downloads contact the URL/site you choose. Updates use HTTPS and a pinned
 Ed25519 public key; signing private keys and developer certificates are never

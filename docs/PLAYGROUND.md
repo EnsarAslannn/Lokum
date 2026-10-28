@@ -1,6 +1,6 @@
-# Nashi interactive playground
+# Lokum interactive playground
 
-The English and Turkish landing pages use an independent implementation of Nashi's drag-and-wheel interaction, inspired by Tangerine. No reference-site source, illustrations, audio or video is bundled.
+The English and Turkish landing pages use an independent implementation of Lokum's drag-and-wheel interaction, inspired by Tangerine. No reference-site source, illustrations, audio or video is bundled.
 
 ## Interaction
 
@@ -40,6 +40,6 @@ The browser suite uses a separate temporary Chrome profile. It covers real drag/
 
 ## Assets and privacy
 
-`assets/demo/orchard.jpg` and `hills.jpg` are original programmatic Nashi landscape illustrations. `weekend.mp4` animates that artwork; `soft-morning.wav` is an original synthesized chord. These are not user recordings. The real application recording remains separately available in `assets/showcase/`.
+`assets/demo/orchard.jpg` and `hills.jpg` are original programmatic Lokum landscape illustrations. `weekend.mp4` animates that artwork; `soft-morning.wav` is an original synthesized chord. These are not user recordings. The real application recording remains separately available in `assets/showcase/`.
 
 PDF processing uses pdf-lib 1.17.1, distributed under the MIT license in `assets/vendor/pdf-lib.LICENSE.md`. Scripts, media and fonts are served locally; there are no analytics, remote fonts, third-party script requests or uploaded file contents. The opt-in wheel feedback uses the same `Resources/Sounds/WheelSelection.wav` as the app (a three-voice pool, 50 ms throttling, 0.65 volume); it is unrelated to reduced-motion settings. Audio feedback defaults off, and motion respects reduced-motion preferences.

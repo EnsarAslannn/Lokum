@@ -1,12 +1,20 @@
-name: Public Windows update verification
+name: Lokum public Windows update verification
 on:
   workflow_dispatch:
-  release:
-    types: [published]
+    inputs:
+      initial_release_tag:
+        description: 'Existing Lokum release tag to upgrade from (for example v1.0.0)'
+        required: true
+        type: string
 permissions:
   contents: read
 jobs:
   update:
+    # Opt in only after this repository publishes its own signed Lokum releases.
+    if: vars.LOKUM_UPDATE_TESTS_ENABLED == 'true' && vars.LOKUM_UPDATE_PUBLIC_KEY != ''
+    env:
+      LOKUM_INITIAL_RELEASE_TAG: ${{ inputs.initial_release_tag }}
+      LOKUM_UPDATE_PUBLIC_KEY: ${{ vars.LOKUM_UPDATE_PUBLIC_KEY }}
     runs-on: windows-2025
     timeout-minutes: 25
     steps:
@@ -25,22 +33,27 @@ jobs:
           if ($expectedVersion -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid release version' }
           $proof = Join-Path $env:GITHUB_WORKSPACE 'build/public-update-proof'
           New-Item -ItemType Directory -Force $proof | Out-Null
-          $base = 'https://github.com/orkunisitmak/nashi-app/releases/download/v0.7.1-31/'
+          if ($env:GITHUB_REPOSITORY -notmatch '^[A-Za-z0-9][A-Za-z0-9-]{0,38}/[A-Za-z0-9_.-]{1,100}$') { throw 'Invalid Lokum repository' }
+          if ($env:LOKUM_INITIAL_RELEASE_TAG -notmatch '^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$') { throw 'Invalid initial release tag' }
+          $base = "https://github.com/$env:GITHUB_REPOSITORY/releases/download/$env:LOKUM_INITIAL_RELEASE_TAG/"
+          $channel = Join-Path $proof 'lokum-updates.json'
+          @{ Repository = $env:GITHUB_REPOSITORY; PublicKey = $env:LOKUM_UPDATE_PUBLIC_KEY } | ConvertTo-Json | Set-Content -Encoding utf8 $channel
+          $env:LOKUM_VERIFY_UPDATE_CONFIGURATION = $channel
           $zip = Join-Path $proof 'initial.zip'
           $manifest = Join-Path $proof 'initial.json'
-          Invoke-WebRequest ($base + 'Nashi-Windows-x64.zip') -OutFile $zip
+          Invoke-WebRequest ($base + 'Lokum-Windows-x64.zip') -OutFile $zip
           Invoke-WebRequest ($base + 'windows-update.json') -OutFile $manifest
-          $env:NASHI_VERIFY_UPDATE_MANIFEST = $manifest
-          $env:NASHI_VERIFY_UPDATE_ARCHIVE = $zip
-          dotnet run --project windows/Nashi.Verify -c Release
+          $env:LOKUM_VERIFY_UPDATE_MANIFEST = $manifest
+          $env:LOKUM_VERIFY_UPDATE_ARCHIVE = $zip
+          dotnet run --project windows/Lokum.Verify -c Release
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          $data = Join-Path $env:LOCALAPPDATA 'Nashi'
+          $data = Join-Path $env:LOCALAPPDATA 'Lokum'
           $imports = Join-Path $data 'Imports'
           New-Item -ItemType Directory -Force $imports | Out-Null
           $text = Join-Path $imports 'Update persistence.txt'
           $image = Join-Path $imports 'Update persistence.png'
           'Persistent clipboard · Türkçe 🍐' | Set-Content -Encoding utf8 $text
-          Copy-Item Resources/Brand/NashiIcon.png $image
+          Copy-Item Resources/Brand/LokumIcon.png $image
           $state = Join-Path $data 'library.json'
           @{ Appearance = 'dark'; Entries = @(@{ Id = [guid]::NewGuid().ToString(); Created = [DateTimeOffset]::Now.ToString('o'); Action = 'Update persistence fixture'; Paths = @($text,$image) }) } | ConvertTo-Json -Depth 5 | Set-Content -Encoding utf8 $state
           # This disposable profile closes on X so the test can read saved state.
@@ -51,17 +64,18 @@ jobs:
           $stateHash = (Get-FileHash $state).Hash
           $textHash = (Get-FileHash $text).Hash
           $imageHash = (Get-FileHash $image).Hash
-          $target = Join-Path $env:RUNNER_TEMP 'Nashi-Portable-Update'
+          $target = Join-Path $env:RUNNER_TEMP 'Lokum-Portable-Update'
           Expand-Archive $zip $target
-          $old = [Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $target 'Nashi.dll')).FileVersion
-          powershell.exe -NoProfile -STA -File scripts/verify-windows-update-ui.ps1 -AppPath (Join-Path $target 'Nashi.exe') -ExpectedVersion $expectedVersion -ProofPath (Join-Path $proof 'native-update-ui.json')
+          Copy-Item -LiteralPath $channel -Destination (Join-Path $target 'lokum-updates.json')
+          $old = [Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $target 'Lokum.dll')).FileVersion
+          powershell.exe -NoProfile -STA -File scripts/verify-windows-update-ui.ps1 -AppPath (Join-Path $target 'Lokum.exe') -ExpectedVersion $expectedVersion -ProofPath (Join-Path $proof 'native-update-ui.json')
           if ($LASTEXITCODE -ne 0) { throw 'The native update UI test failed' }
           $new = $old
           $restarted = $null
           for ($i = 0; $i -lt 30; $i++) {
             Start-Sleep -Seconds 2
-            if (Test-Path (Join-Path $target 'Nashi.dll')) { $new = [Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $target 'Nashi.dll')).FileVersion }
-            $restarted = Get-Process -Name Nashi -ErrorAction SilentlyContinue | Where-Object { $_.Path -eq (Join-Path $target 'Nashi.exe') -and $_.MainWindowHandle -ne 0 } | Select-Object -First 1
+            if (Test-Path (Join-Path $target 'Lokum.dll')) { $new = [Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path $target 'Lokum.dll')).FileVersion }
+            $restarted = Get-Process -Name Lokum -ErrorAction SilentlyContinue | Where-Object { $_.Path -eq (Join-Path $target 'Lokum.exe') -and $_.MainWindowHandle -ne 0 } | Select-Object -First 1
             if ([version]$new -gt [version]$old -and $null -ne $restarted) { break }
           }
           if ([version]$new -le [version]$old) { throw 'Installed version did not advance' }
@@ -74,8 +88,8 @@ jobs:
           if ((Get-FileHash $preferences).Hash -ne $preferencesHash) { throw 'Update changed saved preferences' }
           if ((Get-FileHash $state).Hash -ne $stateHash -or (Get-FileHash $text).Hash -ne $textHash -or (Get-FileHash $image).Hash -ne $imageHash) { throw 'Update changed saved Library or clipboard imports' }
           function Invoke-UpdatedFixture([string] $argument, [string] $directory, [int] $timeout) {
-            $env:NASHI_SMOKE_DIRECTORY = Join-Path $proof $directory
-            $start = [Diagnostics.ProcessStartInfo]::new((Join-Path $target 'Nashi.exe'))
+            $env:LOKUM_SMOKE_DIRECTORY = Join-Path $proof $directory
+            $start = [Diagnostics.ProcessStartInfo]::new((Join-Path $target 'Lokum.exe'))
             $start.UseShellExecute = $false
             $start.ArgumentList.Add($argument)
             $check = [Diagnostics.Process]::Start($start)

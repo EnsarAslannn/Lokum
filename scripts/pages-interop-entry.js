@@ -7,7 +7,7 @@ import { StylesheetModel } from "../Tools/PagesBuild/cupertino/package/dist/tss/
 import { DrawableModel } from "../Tools/PagesBuild/cupertino/package/dist/tsd/drawables.js";
 import seed from "../Tools/PagesBuild/table-seed.pages";
 
-function check() { if (typeof _nashiCheckCancelled === "function" && _nashiCheckCancelled()) throw new Error("Operation cancelled."); }
+function check() { if (typeof _lokumCheckCancelled === "function" && _lokumCheckCancelled()) throw new Error("Operation cancelled."); }
 function bytes(base64) { const text = atob(base64); return Uint8Array.from(text, c => c.charCodeAt(0)); }
 function base64(data) {
   let text = "";

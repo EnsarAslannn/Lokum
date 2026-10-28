@@ -44,7 +44,7 @@ import Security
         let repository = CredentialBrokerRepository("Owner/Repo")!
         for allowInteraction in [false, true] {
             let query = CredentialBrokerQuery.make(repository: repository, allowInteraction: allowInteraction)
-            check(query[kSecAttrService as String] as? String == "local.tangerine.replica.github-updates", "existing service preserved")
+            check(query[kSecAttrService as String] as? String == "local.lokum.app.github-updates", "existing service preserved")
             check(query[kSecAttrAccount as String] as? String == "owner/repo", "per-repository account preserved")
             check(query[kSecAttrSynchronizable as String] as? Bool == false, "non-synchronizing query")
             check(query[kSecUseDataProtectionKeychain as String] as? Bool == false, "legacy login Keychain")

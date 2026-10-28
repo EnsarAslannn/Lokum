@@ -26,6 +26,6 @@ Removing a reference, clearing Float or closing its window does not delete any o
 
 ## Verification
 
-`Nashi --float-smoke <output-directory>` runs an opt-in native AppKit replay with generated fixtures and captures compact/expanded/list/Turkish states. It checks controls, keyboard selection, top-edge tuck/reveal and byte-for-byte preservation of the originals. `--keep-float-open` leaves a test-only native drag source/destination open for Computer Use; all its files are restricted to that output directory. It does not install a global input driver or request additional system access.
+`Lokum --float-smoke <output-directory>` runs an opt-in native AppKit replay with generated fixtures and captures compact/expanded/list/Turkish states. It checks controls, keyboard selection, top-edge tuck/reveal and byte-for-byte preservation of the originals. `--keep-float-open` leaves a test-only native drag source/destination open for Computer Use; all its files are restricted to that output directory. It does not install a global input driver or request additional system access.
 
 Windows native parity smoke captures the compact/expanded shelf and exercises selection, deduplication, Escape, collapse/reopen and removal with real keyboard input. Cross-compilation alone is not counted as native Windows verification.

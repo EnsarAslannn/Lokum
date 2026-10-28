@@ -5,7 +5,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');
 const path=require('node:path');
 const base=process.argv[2]||'http://127.0.0.1:8771';
-const output=process.env.NASHI_WEB_TEST_OUTPUT||'build/web-demo-proof';
+const output=process.env.LOKUM_WEB_TEST_OUTPUT||'build/web-demo-proof';
 const ids=['compress','removeMetadata','editImage','annotateImage','frameImage','cropImage','normalizeAudio','muteVideo','trimVideo','splitPDF','organizePDF','extractArchive','createPDF','mergePDF','cropVideo','changeVideoSpeed','joinVideos','videoSnapshots','splitVideo','audioToVideo','trimAudio','audioChannels','createCollage','redactImage','redactVideo','redactAudio','readQRCode'];
 (async()=>{
  await fs.mkdir(output,{recursive:true});

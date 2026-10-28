@@ -11,7 +11,7 @@ run=lambda args:subprocess.run([str(x) for x in args],cwd=ROOT,check=True)
 ffmpeg=ROOT/'Tools/ffmpeg'
 run([ffmpeg,'-y','-hide_banner','-loglevel','error','-f','lavfi','-i','testsrc2=size=320x180:rate=24','-f','lavfi','-i','sine=frequency=660:sample_rate=44100','-t','3','-c:v','libx264','-pix_fmt','yuv420p','-c:a','aac',SERVER/'Clip.mp4'])
 run([ffmpeg,'-y','-hide_banner','-loglevel','error','-i',SERVER/'Clip.mp4','-frames:v','1',SERVER/'Picture.png'])
-(SERVER/'index.html').write_text('<!doctype html><title>Nashi test</title><video src="/Clip.mp4" controls></video>')
+(SERVER/'index.html').write_text('<!doctype html><title>Lokum test</title><video src="/Clip.mp4" controls></video>')
 class Handler(http.server.SimpleHTTPRequestHandler):
  def log_message(self,*args):pass
  def do_HEAD(self):
@@ -30,9 +30,9 @@ class Handler(http.server.SimpleHTTPRequestHandler):
 server=http.server.ThreadingHTTPServer(('127.0.0.1',0),partial(Handler,directory=str(SERVER)))
 worker=threading.Thread(target=server.serve_forever,daemon=True);worker.start()
 try:
- run(['swift','build','-c','release','--product','Nashi'])
+ run(['swift','build','-c','release','--product','Lokum'])
  binary_dir=Path(subprocess.check_output(['swift','build','-c','release','--show-bin-path'],cwd=ROOT,text=True).strip())
  binary=OUTPUT/'verify-web-download'
- run(['swiftc','-parse-as-library','-I',binary_dir,binary_dir/'NashiCore.o',ROOT/'scripts/verify-web-download.swift','-o',binary])
+ run(['swiftc','-parse-as-library','-I',binary_dir,binary_dir/'LokumCore.o',ROOT/'scripts/verify-web-download.swift','-o',binary])
  run([binary,OUTPUT,f'http://127.0.0.1:{server.server_port}'])
 finally:server.shutdown();server.server_close();worker.join()

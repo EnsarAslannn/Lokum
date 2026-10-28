@@ -52,7 +52,7 @@ Drag chords are configurable. Text entry keeps normal editing shortcuts; tool sh
 - `swift test` (includes real image/document/media exports; live web-service checks are opt-in)
 - Installed signed Mac app: `--desktop-parity-smoke <output-directory>` runs real keyboard input against a disposable Home/Library fixture, a private pasteboard and isolated defaults. It does not replace the user's Library or clipboard. It records screenshots and a JSON report.
 - Installed Mac app: `--window-management-smoke <manager-pid> <output-directory>` tests real window drags against the bounded cross-process fixture described in [WINDOW-MANAGEMENT.md](WINDOW-MANAGEMENT.md).
-- `dotnet run --project windows/Nashi.Verify -c Release` checks engine safety, file transactions, formats, source FPS and real FFmpeg operations when tools are configured.
+- `dotnet run --project windows/Lokum.Verify -c Release` checks engine safety, file transactions, formats, source FPS and real FFmpeg operations when tools are configured.
 - Windows executable: `--smoke-test` runs native SendInput/OLE/WPF checks, real OS clipboard imports, Library restart/search/reuse, preview navigation, crop/annotation/export, media controls and processed playback, original-file integrity, Explorer gestures and all eight window layouts. GitHub's Windows runner uploads screenshots, errors and JSON results.
 
 Windows native verification runs on an isolated Windows runner. This is not a claim of a physical Windows Computer Use session or listening to audio on every hardware configuration. Regression tests cover additional display geometries; not every display/codec/share-provider configuration has been exercised on physical hardware.

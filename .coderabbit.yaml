@@ -44,13 +44,13 @@ reviews:
         Missing, skipped, stale or fork-only CI is not a successful required check.
         Labels, AI approval and a small diff never authorize a merge. Features and
         mixed changes require Orkun's explicit decision. Flag overlapping PRs.
-    - path: "Sources/NashiCore/**"
+    - path: "Sources/LokumCore/**"
       instructions: >-
         Preserve originals, unique output naming and transactional cleanup on
         failure/cancellation. Check traversal, archive extraction, unsafe URLs,
         shell interpolation, malformed media and metadata preservation. CLI
         capability discovery must not depend on files in the working directory.
-    - path: "Sources/NashiApp/**"
+    - path: "Sources/LokumApp/**"
       instructions: >-
         Preserve macOS 13 compatibility and existing Swift language settings.
         Check main-thread/actor use, lifecycle cancellation, keyboard focus and
@@ -62,7 +62,7 @@ reviews:
         source versus processed preview lifetime, actual native process exit codes
         and original-file safety. Engine-only checks do not prove Windows UI.
         Keep the shared 45-format/27-tool catalog aligned and locked restore intact.
-    - path: "Sources/NashiUpdates/**"
+    - path: "Sources/LokumUpdates/**"
       instructions: >-
         Require human security review for update trust, signatures, broker protocol,
         credentials and restart behavior. Never disclose credentials or bypass trust.

@@ -49,14 +49,14 @@ def acquire(item):
 def main():
     WORK.mkdir(parents=True, exist_ok=True)
     for item in SOURCES: acquire(item)
-    node = os.environ.get("NASHI_NODE") or shutil.which("node")
+    node = os.environ.get("LOKUM_NODE") or shutil.which("node")
     if not node:
         candidate = Path.home() / ".cache/codex-runtimes/codex-primary-runtime/dependencies/node/bin/node"
         if candidate.is_file(): node = str(candidate)
-    if not node: raise RuntimeError("Set NASHI_NODE to a Node 22+ executable for this build step.")
+    if not node: raise RuntimeError("Set LOKUM_NODE to a Node 22+ executable for this build step.")
     subprocess.run([node, str(ROOT / "scripts/pages-make-seed.mjs")], cwd=ROOT, check=True)
     bundle = ROOT / "Resources/PagesInterop.js"
-    subprocess.run([str(WORK / "esbuild/package/bin/esbuild"), "scripts/pages-interop-entry.js", "--bundle", "--format=iife", "--platform=browser", "--target=safari16", "--global-name=NashiPages", "--loader:.pages=binary", "--legal-comments=inline", "--outfile=" + str(bundle)], cwd=ROOT, check=True)
+    subprocess.run([str(WORK / "esbuild/package/bin/esbuild"), "scripts/pages-interop-entry.js", "--bundle", "--format=iife", "--platform=browser", "--target=safari16", "--global-name=LokumPages", "--loader:.pages=binary", "--legal-comments=inline", "--outfile=" + str(bundle)], cwd=ROOT, check=True)
     licenses = ROOT / "Resources/licenses/cupertino-files"
     licenses.mkdir(parents=True, exist_ok=True)
     package = WORK / "cupertino/package"

@@ -1,61 +1,111 @@
-<p align="center"><img src="Resources/Brand/NashiIcon.png" width="128" alt="Nashi"></p>
-<h1 align="center">Nashi</h1>
-<p align="center">Your files, a little sweeter. · Dosyaların için tatlı bir kolaylık.</p>
+<p align="center"><img src="Resources/Brand/LokumIcon.png" width="128" alt="Lokum"></p>
+<h1 align="center">Lokum</h1>
+<p align="center">Dosyaların için tatlı bir kolaylık.</p>
 
-[English guide](https://orkunisitmak.github.io/nashi-app/) · [Türkçe](https://orkunisitmak.github.io/nashi-app/tr/) · [Latest release](https://github.com/orkunisitmak/nashi-app/releases/latest) · [Security](SECURITY.md)
+Lokum; görsel, video, ses ve belge dosyalarını dönüştüren, düzenleyen ve düzenli tutan yerel bir masaüstü uygulamasıdır. [Nashi](https://github.com/orkunisitmak/nashi-app) kaynaklarının MIT lisanslı bir türevidir. Araçlar ve sürükle–çark düzeni korunur; isim, simge ve görünüm Lokum'a aittir. Yeni görünüm gül kurusu, krem ve fıstık yeşili tonlarında açık ve koyu temalar içerir.
 
-Nashi is an independent, open-source file conversion and editing app inspired by [Tangerine](https://tangerineformac.com/)'s drag-and-wheel interaction. It adds public web-media downloads, QR reading, refined crop/annotation workflows, keyboard media editing, live progress and signed automatic updates. Nashi is not affiliated with Tangerine or LEAP STUDIO and includes no proprietary reference-app binaries or artwork.
+[Türkçe kullanım](README.tr.md) · [Etkileşimli tanıtım kaynakları](docs/tr/index.html) · [Özellik ve platform matrisi](windows/FEATURE-PARITY.md) · [Bağımlılıklar](docs/dependencies.md)
 
-Try the [interactive browser playground](https://orkunisitmak.github.io/nashi-app/#playground): drag sample files, use the wheel and shortcuts, and explore all 27 tools. Supported image/PDF/audio exports are real; desktop-only operations are labeled previews.
+**Proje deposu:** [EnsarAslannn/Lokum](https://github.com/EnsarAslannn/Lokum) · [Hata bildir / öneri paylaş](https://github.com/EnsarAslannn/Lokum/issues)
 
-## See Nashi in action
+## Çalıştırma
 
-[![Nashi real screen recording: Finder drag, conversion wheel, crop and video trim](docs/assets/showcase/nashi-demo.gif?v=50e9219b2083)](https://orkunisitmak.github.io/nashi-app/#demo)
+Bu depo kaynak kodunu içerir; derlenmiş uygulama ve indirilen araçlar Git'e eklenmez. Hazır paket yayımlandığında [Releases](https://github.com/EnsarAslannn/Lokum/releases) sayfasından edinilebilir. Elinde `Lokum-Windows-x64.zip` varsa tamamını yazılabilir bir klasöre çıkarıp içindeki `Lokum.exe` dosyasını aç. Paketin tüm dosyalarını birlikte tut. Bağımsız Windows paketinde ayrı bir .NET kurulumu gerekmez. Kaynaktan çalıştırmak için aşağıdaki derleme adımlarını kullan.
 
-**[Watch the 95-second screen recording](https://orkunisitmak.github.io/nashi-app/#demo)** · **[Türkçe demo](https://orkunisitmak.github.io/nashi-app/tr/#demo)** · [MP4](https://orkunisitmak.github.io/nashi-app/assets/showcase/nashi-demo.mp4?v=50e9219b2083)
+İlk açılışta **Kurulumu tamamla → Eksik araçları indir** akışını kullan. FFmpeg/ffprobe, yt-dlp, Deno, LibreOffice ve metadata araçları ilgili işlevler için kullanılır; uygulama bunları kendi kurulum akışından, sabitlenmiş sürüm ve SHA-256 kontrolleriyle edinir. Yerel görsel ve temel PDF işlemleri hemen kullanılabilir. İndirme iptal edilirse veya başarısız olursa aynı ekrandan yeniden denenebilir.
 
-A real macOS 0.7.3 screen recording: drag files in Finder, use the wheel to convert to JPG, crop an image and trim a video with In/Out handles. Pauses and longer previews are shortened; retained actions play at normal speed. English and Turkish captions are available in the video player.
+Kütüphane ve ayarlar `%LOCALAPPDATA%/Lokum` altında saklanır. Orijinal Nashi uygulamasının ayar ve dosya geçmişi ayrı kalır.
 
-| macOS · Home | macOS · Crop image |
+## Korunan özellikler
+
+- **45 girdi formatı, 27 araç, 275 dönüşüm yolu:** ortak katalog ve seçim kuralları korunur.
+- **Görseller:** dönüştürme, sıkıştırma, boyutlandırma, döndürme/yansıtma, kırpma, işaretleme, çerçeve, kolaj, metadata, gizleme ve QR okuma.
+- **Video ve ses:** dönüştürme, sıkıştırma, kırpma, birleştirme, hız değiştirme, kare çıkarma, normalizasyon, kanal ayarları, sessize alma ve gizleme araçları.
+- **Belgeler ve arşivler:** PDF oluşturma/birleştirme/bölme/düzenleme, Office/Pages/EPUB/tablo/sunum/altyazı dönüşümleri ve arşiv işlemleri.
+- **Günlük akış:** araç çarkı, sürükleme kısayolları, pano içe aktarma, Float rafı, kütüphane, klasör otomasyonu ve pencere düzenleri.
+- **Web:** desteklenen herkese açık medya bağlantılarından video, ses ve görsel indirme.
+
+İşlevlerin işletim sistemi, dosya yapısı, kurulu codec ve harici araç gereksinimleri [platform matrisinde](windows/FEATURE-PARITY.md) açıklanır. Karmaşık belge dönüşümleri kaynak belgenin bütün özelliklerini korumayabilir. Web indirme desteği ilgili sitenin davranışına bağlıdır.
+
+## Görünüm
+
+| Açık tema | Koyu tema |
 | :---: | :---: |
-| [![Nashi Mac Home with file selection and quick actions](docs/assets/showcase/mac-home.png)](docs/assets/showcase/mac-home.png) | [![Nashi Mac crop editor with a square selection and aspect ratio controls](docs/assets/showcase/mac-crop.png)](docs/assets/showcase/mac-crop.png) |
-| **macOS · Video trim** | **Windows · 0.7.5** |
-| [![Nashi video trim editor with In and Out handles and a selected range](docs/assets/showcase/mac-trim.png)](docs/assets/showcase/mac-trim.png) | [![Nashi native Windows 0.7.5 Home in the dark theme](docs/assets/showcase/windows-home-preview.png)](docs/assets/showcase/windows-home-preview.png) |
+| ![Lokum Windows açık tema](docs/assets/showcase/lokum-windows-light.png) | ![Lokum Windows koyu tema](docs/assets/showcase/lokum-windows-dark.png) |
 
-Windows screenshot: native UI test capture from the released 0.7.5 code, verified in [PR #1](https://github.com/orkunisitmak/nashi-app/pull/1). Demo files contain Nashi's own artwork; no personal files or account details are shown.
+Ekranlar, Lokum Windows uygulamasının izole görsel denetiminden alınır. macOS kaynakları da yeni tema ve lokum simgesini içerir; macOS çalıştırılabilir paketi bu Windows ortamında derlenmemiştir.
 
-## Download and use
+## Kısayollar
 
-- **[macOS ZIP · Apple Silicon, macOS 13+](https://github.com/orkunisitmak/nashi-app/releases/latest/download/Nashi-macOS-arm64.zip):** extract, move Nashi.app to your Applications folder and open it. The full macOS catalog has 27 tools, 45 input formats and 275 conversion routes.
-- **[Windows x64 ZIP](https://github.com/orkunisitmak/nashi-app/releases/latest/download/Nashi-Windows-x64.zip):** extract the entire archive into its own writable folder, then open Nashi.exe. No separate .NET install is required. Keep the folder together so portable updates can replace the app safely. [Windows features and differences](windows/README.md).
+| Windows | İşlem |
+| --- | --- |
+| Ctrl+O | Dosya seç |
+| Ctrl+V | Dosya, metin, görsel veya bağlantı yapıştır |
+| Ctrl+Space | Seçili dosyaların araç çarkını aç |
+| Ctrl+1 / Ctrl+2 | Ana ekran / kütüphane |
+| Ctrl+F | Kütüphanede ara |
+| Ctrl+Shift+D | Kopyalanmış indirme bağlantısını aç |
+| Space / ← / → / I / O | Desteklenen medya editörlerinde oynatma, gezinme ve aralık işaretleri |
+| Shift+sürükleme / Enter | Kırpma oranını kilitle / kırpılmış kopyayı kaydet |
 
-First launch guides you through **Finish setup → Download missing tools** for hash-verified downloads directly from upstream. Media and Office tools install in sequence; existing tools are kept, and cancelled or failed setup can be retried. **Tools ready** appears only when both groups are available. Core native image/PDF features work immediately. [Exact versions, hashes and licenses](docs/dependencies.md).
+macOS'ta Finder sürüklemesi sırasında Shift dönüştürme, Command araçlar ve Control dosya işlemleri çarkını açar. Sürükleme tuşları ayarlardan değiştirilebilir. Metin alanlarında normal yapıştırma ve gezinme korunur.
 
-These first public builds do not have Apple notarization or Windows Authenticode publisher signing. Your OS may require first-launch approval; consult [Apple's guidance](https://support.apple.com/en-us/102445). Nashi does not disable system security settings. Official release assets include SHA-256 checksums. A CI artifact alone is not an official signed update.
+## Kaynaktan derleme
 
-## Shortcuts
+Önce kaynakları al:
 
-On macOS, hold **Shift** while dragging in Finder for conversion, **Command** for tools or **Control** for file actions. **Control–Shift–D** downloads a copied public link. Drag modifiers are customizable. On Windows, use **Ctrl+O** to choose files, **Ctrl+V** to import copied files/text/images, and **Ctrl+Space** for the tools wheel. **Ctrl+2** opens Library; **Ctrl+F** searches it. Normal paste inside text fields is preserved. Home and Library share the Mac color palette, rounded cards and gold actions, with System/Light/Dark appearance.
+```sh
+git clone https://github.com/EnsarAslannn/Lokum.git
+cd Lokum
+```
 
-Supported media editors use **Space** for play/pause, **Left/Right** to seek one second and **I/O** to mark a range. Crop uses drag, **Shift** for aspect lock and **Enter** to save. The [English](https://orkunisitmak.github.io/nashi-app/#shortcuts) and [Turkish](https://orkunisitmak.github.io/nashi-app/tr/#shortcuts) pages contain the complete macOS shortcut sheet; the [Windows guide](windows/README.md) lists its available controls.
+Windows için .NET 10 SDK gerekir. PowerShell'de:
 
-## Build
+```powershell
+dotnet restore windows/Lokum.Windows --locked-mode
+dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lokum
+.\build\windows\Lokum\Lokum.exe
+```
 
-For macOS: Apple Silicon, macOS 13+ and Xcode/Swift 6.
+Windows çıktısı `build/windows/Lokum` klasörüne yazılır. Tüm klasör birlikte dağıtılmalıdır.
+
+macOS için macOS 13+, Apple Silicon ve Xcode/Swift 6 gerekir:
 
 ```sh
 scripts/setup-exiftool.sh
-swift build --product Nashi
-swift test --filter NashiUpdatesTests
+swift build --product Lokum
+swift test
 scripts/build-app.sh release
 ```
 
-The public app is written to `build/Nashi.app`. Large runtimes are installed through its setup screen. Source builds use an ad-hoc signature unless you provide your own ignored signing profile. Signing private keys are never distributed. [Windows build instructions](windows/README.md).
+macOS çıktısı `build/Lokum.app` konumuna yazılır. macOS kaynaklarının derleme ve çalışma doğrulaması bir Mac üzerinde yapılmalıdır.
 
-## Privacy and updates
+## Geliştirme ve doğrulama
 
-Conversion/editing run locally. Web downloads contact the selected media site. No analytics, cloud account or browser-cookie import is built in. Official releases update through this public repository without a GitHub account or token. macOS verifies the signed feed and archive; Windows verifies the archive signature and version before replacement. Active operations finish or cancel before the app exits for an update. Portable Windows updates retain the previous folder as a recoverable backup.
+```powershell
+dotnet run --project windows/Lokum.Verify -c Release
+python scripts/check-feature-parity.py
+python scripts/generate-localizations.py --check
+```
 
-## License and acknowledgments
+Windows arayüzünü kullanıcı kütüphanesine dokunmadan denetlemek için, derledikten sonra:
 
-Nashi's original source is [MIT](LICENSE). Vendored libraries and external tools retain their own licenses; see [macOS notices](Resources/THIRD-PARTY-NOTICES.txt), [Windows notices](windows/THIRD-PARTY-NOTICES.txt) and [runtime setup](docs/dependencies.md). No purchase flow or reference-app account is required.
+```powershell
+.\build\windows\Lokum\Lokum.exe --ui-audit build/ui-audit
+```
+
+Bu denetim açık/koyu tema ve Türkçe/İngilizce sahnelerini, ana ekran ile kütüphanedeki düğmelerin tıklama hedeflerini kontrol eder. Gerçek fare, klavye ve dışa aktarma testlerinin tamamının yerini tutmaz. Ayrıntılar: [arayüz denetimi](docs/testing/UI-AUDIT.md) ve [katkı rehberi](CONTRIBUTING.md).
+
+Derleme çıktıları (`build`, `bin`, `obj`), indirilen araçlar, yerel ayarlar ve gizli anahtarlar `.gitignore` ile dışarıda tutulur. Kendi erişim anahtarlarını veya kişisel test dosyalarını depoya ekleme.
+
+## Gizlilik ve güncellemeler
+
+Dönüştürme ve düzenleme yerelde çalışır. Web indirmeleri seçilen siteye, eksik araçların kurulumu ilgili resmi dağıtım kaynağına bağlanır. Analytics, bulut hesabı veya tarayıcı çerezi içe aktarma bulunmaz.
+
+Lokum'un imzalı güncelleme mekanizması korunur. Bu türev için ayrı bir yayın deposu ve güvenilir imza anahtarı yapılandırılana kadar otomatik güncelleme kanalı bağlı değildir. Lokum, Nashi'nin güncelleme paketiyle değiştirilmez. [Kanal yapılandırma notları](docs/LOKUM.md) yayınlayan kişi içindir.
+
+## Kaynak ve lisans
+
+Temel: [orkunisitmak/nashi-app](https://github.com/orkunisitmak/nashi-app), commit [`295c74f79f0313e89ad1542fe39e8fd4c64c88b2`](https://github.com/orkunisitmak/nashi-app/commit/295c74f79f0313e89ad1542fe39e8fd4c64c88b2). Nashi'nin orijinal kodu Orkun Işıtmak ve katkıcılarına aittir. [MIT lisansı ve telif bildirimi](LICENSE) korunmuştur. Lokum bağımsız bir türevdir; Nashi veya Tangerine'nin resmi sürümü değildir.
+
+Harici araç ve kütüphanelerin kendi lisansları geçerlidir: [macOS bildirimleri](Resources/THIRD-PARTY-NOTICES.txt), [Windows bildirimleri](windows/THIRD-PARTY-NOTICES.txt).

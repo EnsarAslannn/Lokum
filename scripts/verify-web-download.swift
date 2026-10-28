@@ -1,6 +1,6 @@
 import Foundation
 import AppKit
-import NashiCore
+import LokumCore
 
 private final class DownloadProgressEvents:@unchecked Sendable {
     let lock=NSLock();private var values:[(Double,String)]=[]

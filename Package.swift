@@ -2,25 +2,25 @@
 import PackageDescription
 
 let package = Package(
-    name: "Nashi",
+    name: "Lokum",
     platforms: [.macOS(.v13)],
     products: [
-        .library(name: "NashiCore", targets: ["NashiCore"]),
-        .executable(name: "Nashi", targets: ["NashiApp"]),
-        .executable(name: "nashi-cli", targets: ["NashiCLI"])
+        .library(name: "LokumCore", targets: ["LokumCore"]),
+        .executable(name: "Lokum", targets: ["LokumApp"]),
+        .executable(name: "lokum-cli", targets: ["LokumCLI"])
     ],
     dependencies: [
         .package(url: "https://github.com/sparkle-project/Sparkle", exact: "2.10.0")
     ],
     targets: [
-        .target(name: "NashiCore", resources: [.copy("Resources")]),
+        .target(name: "LokumCore", resources: [.copy("Resources")]),
         // The frozen XPC wire protocol stays at its sealed source path. It is compiled
         // into the renamed module without changing its Objective-C identity.
-        .target(name: "NashiUpdates", dependencies: [.product(name: "Sparkle", package: "Sparkle")], path: "Sources", exclude: ["NashiApp", "NashiCore", "NashiCLI", "UpdateCredentialBroker"], sources: ["NashiUpdates", "TangerineUpdates/UpdateCredentialBrokerProtocol.swift"]),
-        .executableTarget(name: "NashiApp", dependencies: ["NashiCore", "NashiUpdates"], linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]),
-        .executableTarget(name: "NashiCLI", dependencies: ["NashiCore"]),
-        .testTarget(name: "NashiCoreTests", dependencies: ["NashiCore"], resources: [.copy("Fixtures")]),
-        .testTarget(name: "NashiUpdatesTests", dependencies: ["NashiUpdates"])
+        .target(name: "LokumUpdates", dependencies: [.product(name: "Sparkle", package: "Sparkle")], path: "Sources", exclude: ["LokumApp", "LokumCore", "LokumCLI", "UpdateCredentialBroker"], sources: ["LokumUpdates", "TangerineUpdates/UpdateCredentialBrokerProtocol.swift"]),
+        .executableTarget(name: "LokumApp", dependencies: ["LokumCore", "LokumUpdates"], linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]),
+        .executableTarget(name: "LokumCLI", dependencies: ["LokumCore"]),
+        .testTarget(name: "LokumCoreTests", dependencies: ["LokumCore"], resources: [.copy("Fixtures")]),
+        .testTarget(name: "LokumUpdatesTests", dependencies: ["LokumUpdates"])
     ],
     swiftLanguageModes: [.v5]
 )

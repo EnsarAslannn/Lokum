@@ -15,7 +15,15 @@ assert.equal(SIZE,320);assert.equal(angle(3,0),180);
 assert.equal(Object.keys(catalog.presentation.wheelTitles).length,27);
 assert.equal(Object.keys(catalog.presentation.editorTitles).length,27);
 for(const title of Object.values(catalog.presentation.wheelTitles))assert.ok(catalog.presentation.translations[title],`Missing native Turkish title: ${title}`);
-assert.equal(catalog.presentation.palette.Paper.dark,'#111A14');
+// Test usable contrast in the generated demo, not a particular design's hex spelling.
+const luminance=hex=>{
+ const rgb=hex.slice(1).match(/../g).map(value=>parseInt(value,16)/255).map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4);
+ return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];
+};
+for(const appearance of ['light','dark'])for(const [text,surface]of [['Ink','Paper'],['Ink','Surface'],['Muted','Paper'],['Muted','Surface']]){
+ const a=luminance(catalog.presentation.palette[text][appearance]),b=luminance(catalog.presentation.palette[surface][appearance]);
+ assert.ok((Math.max(a,b)+.05)/(Math.min(a,b)+.05)>=4.5,`${appearance} ${text}/${surface} text must remain readable`);
+}
 assert.deepEqual(readFileSync(join(root,'Resources/Sounds/WheelSelection.wav')),readFileSync(join(root,'docs/assets/demo/wheel-selection.wav')));
 for(let count=1;count<=9;count++)for(let index=0;index<count;index++){
  assert.ok(!/NaN|Infinity/.test(petal(count,index)));
@@ -25,7 +33,7 @@ for(let count=1;count<=9;count++)for(let index=0;index<count;index++){
 assert.equal(containsRect({x:1,y:1,width:2,height:2},(x,y)=>x>=0&&y>=0&&x<=4&&y<=4,0),true);
 assert.equal(containsRect({x:1,y:1,width:2,height:2},(x,y)=>x>=0&&y>=0&&x<=4&&y<=4),false,'Padding must protect labels from edges');
 if(process.platform==='darwin'){
- const dir=mkdtempSync(join(tmpdir(),'nashi-web-geometry-'));
+ const dir=mkdtempSync(join(tmpdir(),'lokum-web-geometry-'));
  try{
   const harness=join(dir,'main.swift'),binary=join(dir,'geometry');
   writeFileSync(harness,`import AppKit
@@ -40,7 +48,7 @@ for count in 1...9 { for index in 0..<count {
 let data=try JSONSerialization.data(withJSONObject:rows)
 print(String(data:data,encoding:.utf8)!)
 `);
-  const build=spawnSync('swiftc',[join(root,'Sources/NashiApp/WheelGeometry.swift'),harness,'-o',binary],{encoding:'utf8'});assert.equal(build.status,0,build.stderr);
+  const build=spawnSync('swiftc',[join(root,'Sources/LokumApp/WheelGeometry.swift'),harness,'-o',binary],{encoding:'utf8'});assert.equal(build.status,0,build.stderr);
   const run=spawnSync(binary,[],{encoding:'utf8'});assert.equal(run.status,0,run.stderr);
   const oracle=JSON.parse(run.stdout);
   for(const row of oracle){

@@ -17,18 +17,18 @@ jobs:
       - name: Audit and publish native app
         shell: pwsh
         run: |
-          dotnet restore windows/Nashi.Windows --locked-mode
+          dotnet restore windows/Lokum.Windows --locked-mode
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          dotnet publish windows/Nashi.Windows -c Release --no-restore -o build/windows/Nashi
+          dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lokum
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          dotnet run --project windows/Nashi.Verify -c Release
+          dotnet run --project windows/Lokum.Verify -c Release
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Native keyboard clipboard Library crop trim and appearance
         shell: pwsh
         env:
-          NASHI_SMOKE_DIRECTORY: '${{ github.workspace }}\build\windows-smoke'
+          LOKUM_SMOKE_DIRECTORY: '${{ github.workspace }}\build\windows-smoke'
         run: |
-          $start = [Diagnostics.ProcessStartInfo]::new((Resolve-Path build/windows/Nashi/Nashi.exe))
+          $start = [Diagnostics.ProcessStartInfo]::new((Resolve-Path build/windows/Lokum/Lokum.exe))
           $start.UseShellExecute = $false
           $start.ArgumentList.Add('--smoke-test')
           $process = [Diagnostics.Process]::Start($start)
@@ -39,12 +39,12 @@ jobs:
             throw 'Native desktop test failed'
           }
           Get-Content build/windows-smoke/smoke.json
-          Compress-Archive -Path build/windows/Nashi/* -DestinationPath build/Nashi-Windows-x64.zip
+          Compress-Archive -Path build/windows/Lokum/* -DestinationPath build/Lokum-Windows-x64.zip
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         if: always()
         with:
           name: windows-desktop-proof
           path: |
-            build/Nashi-Windows-x64.zip
+            build/Lokum-Windows-x64.zip
             build/windows-smoke
           retention-days: 7

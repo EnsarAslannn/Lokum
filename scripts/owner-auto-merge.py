@@ -38,7 +38,7 @@ class GitHub:
             raise ValueError("This automation is restricted to its own repository")
         headers = {"Authorization": "Bearer " + self.token,
                    "Accept": "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28",
-                   "User-Agent": "Nashi-owner-auto-merge"}
+                   "User-Agent": "Lokum-owner-auto-merge"}
         if data is not None:
             headers["Content-Type"] = "application/json"
         request = urllib.request.Request("https://api.github.com" + path, headers=headers,

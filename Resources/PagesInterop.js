@@ -1,4 +1,4 @@
-var NashiPages = (() => {
+var LokumPages = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -40,12 +40,12 @@ var NashiPages = (() => {
   });
 
   // scripts/pages-runtime.js
-  if (typeof globalThis.atob !== "function") globalThis.atob = (value) => _nashiBase64Decode(String(value));
-  if (typeof globalThis.btoa !== "function") globalThis.btoa = (value) => _nashiBase64Encode(String(value));
+  if (typeof globalThis.atob !== "function") globalThis.atob = (value) => _lokumBase64Decode(String(value));
+  if (typeof globalThis.btoa !== "function") globalThis.btoa = (value) => _lokumBase64Encode(String(value));
   if (typeof globalThis.TextEncoder !== "function") {
     globalThis.TextEncoder = class {
       encode(value = "") {
-        const bytes2 = atob(_nashiUTF8Encode(String(value)));
+        const bytes2 = atob(_lokumUTF8Encode(String(value)));
         return Uint8Array.from(bytes2, (character2) => character2.charCodeAt(0));
       }
     };
@@ -58,14 +58,14 @@ var NashiPages = (() => {
       decode(bytes2 = new Uint8Array()) {
         let binary = "";
         for (let i = 0; i < bytes2.length; i += 8192) binary += String.fromCharCode(...bytes2.subarray(i, i + 8192));
-        return _nashiUTF8Decode(btoa(binary));
+        return _lokumUTF8Decode(btoa(binary));
       }
     };
   }
   if (typeof globalThis.crypto === "undefined") globalThis.crypto = {};
   if (typeof globalThis.crypto.getRandomValues !== "function") {
     globalThis.crypto.getRandomValues = (array) => {
-      const binary = atob(_nashiRandom(array.byteLength));
+      const binary = atob(_lokumRandom(array.byteLength));
       const bytes2 = new Uint8Array(array.buffer, array.byteOffset, array.byteLength);
       for (let i = 0; i < bytes2.length; i++) bytes2[i] = binary.charCodeAt(i);
       return array;
@@ -20284,7 +20284,7 @@ ${text}`;
 
   // scripts/pages-interop-entry.js
   function check() {
-    if (typeof _nashiCheckCancelled === "function" && _nashiCheckCancelled()) throw new Error("Operation cancelled.");
+    if (typeof _lokumCheckCancelled === "function" && _lokumCheckCancelled()) throw new Error("Operation cancelled.");
   }
   function bytes(base642) {
     const text = atob(base642);

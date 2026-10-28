@@ -9,11 +9,17 @@ import sys
 from urllib.parse import urlsplit
 
 
+def disconnect_channel(info):
+    for field in ["SUFeedURL", "SUPublicEDKey", "LokumSuggestedGitHubRepository", "LokumPublicUpdateRepository", "LokumLocalUpdateFeed"]:
+        info.pop(field, None)
+    info["SUEnableAutomaticChecks"] = False
+
+
 def apply_configuration(info_path, configuration_path, environ=None):
     environ = os.environ if environ is None else environ
     with open(info_path, "rb") as stream:
         info = plistlib.load(stream)
-    for name, key in [("NASHI_APP_VERSION", "CFBundleShortVersionString"), ("NASHI_BUILD_NUMBER", "CFBundleVersion")]:
+    for name, key in [("LOKUM_APP_VERSION", "CFBundleShortVersionString"), ("LOKUM_BUILD_NUMBER", "CFBundleVersion")]:
         if value := environ.get(name):
             if not re.fullmatch(r"[0-9]+(?:\.[0-9]+){0,2}", value):
                 raise ValueError(f"{name} must contain one to three numeric components")
@@ -22,6 +28,12 @@ def apply_configuration(info_path, configuration_path, environ=None):
     if path.is_file():
         with path.open("rb") as stream:
             configuration = plistlib.load(stream)
+        if configuration.get("Enabled", True) is False:
+            disconnect_channel(info)
+            with open(info_path, "wb") as stream:
+                plistlib.dump(info, stream)
+            print("Lokum update controls are available; no release channel is connected.")
+            return
         feed = configuration.get("FeedURL", "")
         key = configuration.get("PublicEDKey", "")
         address = urlsplit(feed)
@@ -35,47 +47,43 @@ def apply_configuration(info_path, configuration_path, environ=None):
             raise ValueError("PublicEDKey must be a base64-encoded 32-byte Ed25519 public key")
         info["SUFeedURL"] = feed
         info["SUPublicEDKey"] = key
+        info["SURequireSignedFeed"] = True
+        info["SUVerifyUpdateBeforeExtraction"] = True
+        info["SUEnableAutomaticChecks"] = True
         if configuration.get("GitHubOnly", False) is True:
             match = re.fullmatch(r"/([A-Za-z0-9][A-Za-z0-9-]{0,38})/([A-Za-z0-9_.-]{1,100})/releases/latest/download/appcast\.xml", address.path)
             if address.hostname != "github.com" or address.scheme != "https" or address.query or not match:
                 raise ValueError("GitHubOnly requires the repository's HTTPS latest appcast asset URL")
             # No unauthenticated checks before the user saves a connection.
             info.pop("SUFeedURL", None)
-            info["NashiSuggestedGitHubRepository"] = "/".join(match.groups())
+            info["LokumSuggestedGitHubRepository"] = "/".join(match.groups())
         else:
-            info.pop("NashiSuggestedGitHubRepository", None)
+            info.pop("LokumSuggestedGitHubRepository", None)
         public_repository=configuration.get("PublicRepository")
         if public_repository:
             if configuration.get("GitHubOnly",False) or feed != "https://github.com/"+public_repository+"/releases/latest/download/appcast.xml":
                 raise ValueError("PublicRepository must match the anonymous HTTPS feed")
             if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9-]{0,38}/[A-Za-z0-9_.-]{1,100}",public_repository):
                 raise ValueError("Invalid PublicRepository")
-            info["NashiPublicUpdateRepository"]=public_repository
+            info["LokumPublicUpdateRepository"]=public_repository
         else:
-            info.pop("NashiPublicUpdateRepository",None)
+            info.pop("LokumPublicUpdateRepository",None)
         if local:
             if not loopback:
                 raise ValueError("LocalDevelopment feeds must use a loopback address")
-            info["NashiLocalUpdateFeed"] = True
+            info["LokumLocalUpdateFeed"] = True
             info["NSAppTransportSecurity"] = {"NSAllowsLocalNetworking": True}
         else:
-            info.pop("NashiLocalUpdateFeed", None)
+            info.pop("LokumLocalUpdateFeed", None)
             # The private GitHub adapter binds only 127.0.0.1. Remote requests
             # still require HTTPS; arbitrary insecure loads remain disallowed.
             info["NSAppTransportSecurity"] = {"NSAllowsLocalNetworking": True}
         print(f"Update feed: {feed}")
     else:
-        if environ.get("NASHI_UPDATE_CONFIG"):
+        if environ.get("LOKUM_UPDATE_CONFIG"):
             raise FileNotFoundError(f"Update configuration does not exist: {path}")
-        info.pop("SUFeedURL", None)
-        info.pop("NashiSuggestedGitHubRepository", None)
-        key = info.get("SUPublicEDKey", "")
-        if key:
-            if len(base64.b64decode(key, validate=True)) != 32:
-                raise ValueError("The bundled update signing key must be a 32-byte Ed25519 public key")
-            print("Update signing key included; connect a GitHub repository in the app.")
-        else:
-            print("Update controls included; release feed and signing key are not configured yet.")
+        disconnect_channel(info)
+        print("Update controls included; release feed and signing key are not configured yet.")
     with open(info_path, "wb") as stream:
         plistlib.dump(info, stream)
 

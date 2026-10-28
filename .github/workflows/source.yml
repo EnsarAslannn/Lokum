@@ -21,6 +21,10 @@ jobs:
           persist-credentials: false
       - name: Check generated language tables
         run: python3 scripts/generate-localizations.py --check
+      - name: Lokum site and update channel regressions
+        run: |
+          python3 scripts/test-site-generation.py
+          python3 scripts/test-update-configuration.py
       - name: Owner merge authorization regressions
         run: python3 scripts/test-owner-auto-merge.py
       - name: Public source boundary
@@ -38,7 +42,7 @@ jobs:
       - name: Public source boundary
         run: python3 scripts/audit-public-tree.py
       - name: Build native macOS app
-        run: swift build --product Nashi
+        run: swift build --product Lokum
       - name: Isolated native UI, accessibility and artwork checks
         run: python3 scripts/test-native-ui.py
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
@@ -51,7 +55,7 @@ jobs:
       - name: Archive link boundary and extraction regressions
         run: swift test --filter 'ArchiveLinkBoundaryTests|ArchiveResourceLimitsTests|DocumentEngineTests/testArchive|DocumentEngineTests/testZIPTARGZIPRoundTripsNestedFilesAndUnicodeWithoutOverwritingOriginals|DocumentEngineTests/testStoredRARAndOrdinaryGZIPAreReadable|DocumentEngineTests/testCancellationProducesNoPublishedDocumentOrExtractedFolder'
       - name: Update trust, web photo and window placement and setup regressions
-        run: swift test --filter 'NashiUpdatesTests|WebMediaDragPayloadTests|InstagramPhotosTests|YouTubeThumbnailTests|WindowPlacementTests|AppLocalizationTests|ToolSetupTests'
+        run: swift test --filter 'LokumUpdatesTests|WebMediaDragPayloadTests|InstagramPhotosTests|YouTubeThumbnailTests|WindowPlacementTests|AppLocalizationTests|ToolSetupTests'
       - name: Install FFmpeg for redaction regressions
         run: brew install ffmpeg
       - name: Redaction coverage and image opacity regressions

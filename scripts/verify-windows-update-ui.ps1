@@ -5,7 +5,7 @@ param(
 )
 $ErrorActionPreference = 'Stop'
 if ($env:GITHUB_ACTIONS -ne 'true') { throw 'Run this desktop test only on an isolated GitHub Actions Windows runner.' }
-if ([IO.Path]::GetFileName($AppPath) -ne 'Nashi.exe' -or !(Test-Path $AppPath)) { throw 'Choose the extracted Nashi test app.' }
+if ([IO.Path]::GetFileName($AppPath) -ne 'Lokum.exe' -or !(Test-Path $AppPath)) { throw 'Choose the extracted Lokum test app.' }
 if ($ExpectedVersion -notmatch '^\d+\.\d+\.\d+(\.\d+)?$') { throw 'Choose a numeric update version.' }
 Add-Type -AssemblyName UIAutomationClient
 Add-Type -AssemblyName UIAutomationTypes
@@ -13,7 +13,7 @@ Add-Type -TypeDefinition @'
 using System;
 using System.Runtime.InteropServices;
 using System.Text;
-public static class NashiIsolatedUpdateUi {
+public static class LokumIsolatedUpdateUi {
     private delegate bool WindowVisitor(IntPtr window, IntPtr parameter);
     [DllImport("user32.dll")] private static extern bool EnumWindows(WindowVisitor visitor, IntPtr parameter);
     [DllImport("user32.dll")] private static extern uint GetWindowThreadProcessId(IntPtr window, out uint processId);
@@ -28,7 +28,7 @@ public static class NashiIsolatedUpdateUi {
             uint owner; GetWindowThreadProcessId(window, out owner);
             if (owner != (uint)processId || !IsWindowVisible(window)) return true;
             var title = new StringBuilder(256); GetWindowText(window, title, title.Capacity);
-            if (title.ToString() != "Nashi update") return true;
+            if (title.ToString() != "Lokum update") return true;
             var button = GetDlgItem(window, 1); // Native IDOK, only in this app's exact update dialog.
             if (button == IntPtr.Zero || !IsWindowVisible(button) || !IsWindowEnabled(button)) return true;
             var name = new StringBuilder(64); GetWindowText(button, name, name.Capacity);
@@ -74,9 +74,9 @@ try {
     while ([DateTime]::UtcNow -lt $deadline) {
         $dialog = Find-Element ([System.Windows.Automation.AutomationElement]::RootElement) ([System.Windows.Automation.TreeScope]::Children) @(
             $processCondition,
-            (Property-Equals ([System.Windows.Automation.AutomationElement]::NameProperty) 'Nashi update')
+            (Property-Equals ([System.Windows.Automation.AutomationElement]::NameProperty) 'Lokum update')
         )
-        if ($null -eq $dialog) { $dialog = Find-Element $root ([System.Windows.Automation.TreeScope]::Descendants) @($processCondition,(Property-Equals ([System.Windows.Automation.AutomationElement]::NameProperty) 'Nashi update')) }
+        if ($null -eq $dialog) { $dialog = Find-Element $root ([System.Windows.Automation.TreeScope]::Descendants) @($processCondition,(Property-Equals ([System.Windows.Automation.AutomationElement]::NameProperty) 'Lokum update')) }
         if ($null -ne $dialog) { break }
         Start-Sleep -Milliseconds 200
     }
@@ -98,7 +98,7 @@ try {
     $confirmationMethod = 'UI Automation InvokePattern'
     if ($null -ne $confirm) {
         $confirm.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
-    } elseif ([NashiIsolatedUpdateUi]::Confirm($app.Id)) {
+    } elseif ([LokumIsolatedUpdateUi]::Confirm($app.Id)) {
         # Some hosted desktop providers expose the dialog title but omit its native buttons.
         $confirmationMethod = 'Native visible IDOK button'
     } else { throw ('The update confirmation had no visible OK action. Buttons: '+($observed | ConvertTo-Json -Compress)) }
@@ -112,16 +112,16 @@ try {
     $readySince = $null
     $deadline = [DateTime]::UtcNow.AddSeconds(90)
     while ([DateTime]::UtcNow -lt $deadline) {
-        $reopened = Get-Process -Name Nashi -ErrorAction SilentlyContinue | Where-Object { $_.Id -ne $app.Id -and $_.Path -eq $AppPath -and $_.MainWindowHandle -ne 0 } | Select-Object -First 1
+        $reopened = Get-Process -Name Lokum -ErrorAction SilentlyContinue | Where-Object { $_.Id -ne $app.Id -and $_.Path -eq $AppPath -and $_.MainWindowHandle -ne 0 } | Select-Object -First 1
         if ($null -ne $reopened) {
-            $installed = [Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path ([IO.Path]::GetDirectoryName($AppPath)) 'Nashi.dll')).FileVersion
+            $installed = [Diagnostics.FileVersionInfo]::GetVersionInfo((Join-Path ([IO.Path]::GetDirectoryName($AppPath)) 'Lokum.dll')).FileVersion
             if (([version]$installed).ToString(3) -eq ([version]$ExpectedVersion).ToString(3)) {
                 $root = [System.Windows.Automation.AutomationElement]::FromHandle($reopened.MainWindowHandle)
                 $owner = Property-Equals ([System.Windows.Automation.AutomationElement]::ProcessIdProperty) $reopened.Id
                 $setup = Find-Element ([System.Windows.Automation.AutomationElement]::RootElement) ([System.Windows.Automation.TreeScope]::Children) @(
-                    $owner, (Property-Equals ([System.Windows.Automation.AutomationElement]::NameProperty) 'Set up Nashi tools')
+                    $owner, (Property-Equals ([System.Windows.Automation.AutomationElement]::NameProperty) 'Set up Lokum tools')
                 )
-                if ($null -eq $setup) { $setup = Find-Element $root ([System.Windows.Automation.TreeScope]::Descendants) @($owner,(Property-Equals ([System.Windows.Automation.AutomationElement]::NameProperty) 'Set up Nashi tools')) }
+                if ($null -eq $setup) { $setup = Find-Element $root ([System.Windows.Automation.TreeScope]::Descendants) @($owner,(Property-Equals ([System.Windows.Automation.AutomationElement]::NameProperty) 'Set up Lokum tools')) }
                 if ($null -ne $setup) {
                     $setupObserved = $true
                     $setup.GetCurrentPattern([System.Windows.Automation.WindowPattern]::Pattern).Close()

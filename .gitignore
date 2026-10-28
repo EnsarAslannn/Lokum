@@ -16,3 +16,28 @@ Configuration/CredentialBroker.json
 *.mobileprovision
 **/bin/
 **/obj/
+__pycache__/
+*.pyc
+
+# Local development and package outputs
+node_modules/
+/dist/
+/artifacts/
+/outputs/
+/work/
+.vs/
+.idea/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+TestResults/
+coverage/
+*.log
+Thumbs.db
+Desktop.ini
+
+# Local credentials and update signing material
+*.pem
+.envrc
+lokum-updates.local.json

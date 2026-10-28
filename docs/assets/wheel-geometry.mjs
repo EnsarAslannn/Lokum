@@ -1,4 +1,4 @@
-// Browser port of Sources/NashiApp/WheelGeometry.swift. Coordinates are flipped
+// Browser port of Sources/LokumApp/WheelGeometry.swift. Coordinates are flipped
 // into SVG's downward Y axis; keep the native proportions and rounded petals.
 export const SIZE = 320, RADIUS = SIZE * .44, INNER = RADIUS * .407;
 const rad = degrees => degrees * Math.PI / 180;

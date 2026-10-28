@@ -1,42 +1,36 @@
-# Nashi
+# Lokum · Kullanım
 
-[English](README.md) · [Türkçe özellikler ve kısayollar](https://orkunisitmak.github.io/nashi-app/tr/) · [Son sürüm](https://github.com/orkunisitmak/nashi-app/releases/latest)
+Lokum, Nashi'nin MIT lisanslı kaynaklarından türetilen dosya araç kutusudur. Aynı 45 format / 27 araç kataloğunu yeni lokum simgesi ve gül kurusu–krem temasıyla sunar. Tam kurulum, derleme ve kaynak bilgileri [ana rehberdedir](README.md).
 
-Nashi, [Tangerine](https://tangerineformac.com/) uygulamasının sürükle ve çark etkileşiminden ilham alan bağımsız, açık kaynaklı bir dosya dönüştürme/düzenleme uygulamasıdır. Web’den medya indirme, QR okuma, geliştirilmiş crop/annotate araçları, klavyeyle medya düzenleme, canlı ilerleme ve imzalı otomatik güncelleme ekler. Tangerine veya LEAP STUDIO ile bağlantılı değildir; referans uygulamanın binary dosyaları veya görselleri dağıtılmaz.
+## Başlangıç
 
-[Etkileşimli web demosunu dene](https://orkunisitmak.github.io/nashi-app/tr/#playground): örnek dosyaları sürükle, wheel ve kısayolları kullan, 27 aracı keşfet. Desteklenen görsel/PDF/ses çıktıları gerçektir; masaüstüne özel işlemler önizleme olarak işaretlenir.
+1. Hazır paket yayımlandığında [Releases](https://github.com/EnsarAslannn/Lokum/releases) sayfasından edin. Elindeki `Lokum-Windows-x64.zip` paketinin tamamını yazılabilir bir klasöre çıkar. Kaynak kodunu indirdiysen önce [derleme adımlarını](README.md#kaynaktan-derleme) uygula.
+2. Çıkardığın veya derlediğin klasördeki `Lokum.exe` dosyasını aç. Paketin tüm dosyalarını birlikte tut.
+3. **Kurulumu tamamla** ekranından eksik medya, Office ve metadata araçlarını indir. Uygulama indirilen dosyaların SHA-256 değerlerini doğrular.
+4. **Dosya seç** veya Ctrl+O ile dosyalarını ekle; Ctrl+V ile panodaki dosya, metin ve görselleri de içe aktarabilirsin.
+5. Ctrl+Space ile çarkı aç, dönüştürme biçimini veya aracı seç ve yeni kopyayı kaydet.
 
-## Nashi’yi iş başında gör
+Dışa aktarımlar kaynak dosyanın üzerine yazmaz; mevcut çıktı adları da korunur. **Taşı** dosya işlemi ise seçilen orijinali taşır.
 
-[![Nashi gerçek ekran kaydı: Finder sürükleme, wheel, dönüştürme, crop ve video trim](docs/assets/showcase/nashi-demo.gif?v=50e9219b2083)](https://orkunisitmak.github.io/nashi-app/tr/#demo)
+## Sık kullanılan akışlar
 
-**[95 saniyelik ekran kaydını izle](https://orkunisitmak.github.io/nashi-app/tr/#demo)** · [MP4 aç / indir](https://orkunisitmak.github.io/nashi-app/assets/showcase/nashi-demo.mp4?v=50e9219b2083)
+- **Görsel kırpma:** görseli seç, çarktan kırpmayı aç, alanı sürükleyerek belirle. Shift oranı kilitler; Enter yeni kırpılmış kopyayı kaydeder.
+- **İşaretleme:** kalem, marker, şekil, ok veya metin aracını seç. Seç/Taşı ile düzenle; Ctrl+Z son çizimi geri alır.
+- **Video/ses kırpma:** Space ile önizlemeyi oynat, sağ/sol oklarla gezin, I/O ile başlangıç ve bitişi işaretle ve aralığı yeni dosya olarak kaydet.
+- **PDF:** dosyaları seçip birleştir veya tek PDF'nin sayfalarını böl, sırala ve döndür.
+- **Web indirme:** herkese açık, desteklenen medya bağlantısını **Bağlantı indir** ekranına yapıştır. Ctrl+Shift+D kopyalanmış bağlantıyı açar.
+- **Kütüphane:** Ctrl+2 ile önceki çıktıları aç; Ctrl+F ile ara ve dosyayı yeniden kullan. Veriler `%LOCALAPPDATA%/Lokum` konumundadır.
 
-macOS 0.7.3 ile çekilmiş gerçek kullanım ekran kaydı: Finder’dan sürükleme, wheel’den JPG’ye dönüştürme, görsel kırpma ve In/Out tutamaçlarıyla video trim. Beklemeler ve uzun önizlemeler kısaltıldı; kalan hareketler normal hızda oynar. Video oynatıcıda Türkçe ve İngilizce altyazı bulunur.
+## Görünüm ve platformlar
 
-| macOS · Ana ekran | macOS · Görsel kırp |
-| :---: | :---: |
-| [![Nashi Mac ana ekranı](docs/assets/showcase/mac-home.png)](docs/assets/showcase/mac-home.png) | [![Kare seçim ve oran kontrolleriyle Nashi kırpma editörü](docs/assets/showcase/mac-crop.png)](docs/assets/showcase/mac-crop.png) |
-| **macOS · Video kırp** | **Windows · 0.7.5** |
-| [![In/Out tutamaçları ve seçilen aralıkla Nashi video trim editörü](docs/assets/showcase/mac-trim.png)](docs/assets/showcase/mac-trim.png) | [![Koyu temada yerel Windows 0.7.5 ana ekranı](docs/assets/showcase/windows-home-preview.png)](docs/assets/showcase/windows-home-preview.png) |
+Ayarlar → Genel bölümünden Sistem, Açık ve Koyu görünümü seçebilirsin. Sürükleme kısayolları, çark boyutu, geri bildirim ve çıktı klasörleri de ayarlanabilir.
 
-Windows görüntüsü, [PR #1](https://github.com/orkunisitmak/nashi-app/pull/1) ile doğrulanan ve yayınlanan 0.7.5 kodunun yerel UI testinden alınmıştır. Demo dosyaları yalnızca Nashi görsellerini içerir; kişisel dosya veya hesap bilgisi gösterilmez.
+Windows paketi yerel WPF uygulamasıdır ve kendi .NET çalışma ortamını içerir. macOS SwiftUI kaynakları depoda korunur; macOS paketi oluşturmak için bir Mac üzerinde [derleme adımlarını](README.md#kaynaktan-derleme) uygula. [Platform matrisi](windows/FEATURE-PARITY.md) destek ve farklılıkları listeler.
 
-## İndir ve kullan
+## Güncellemeler
 
-- **[macOS ZIP · Apple Silicon, macOS 13+](https://github.com/orkunisitmak/nashi-app/releases/latest/download/Nashi-macOS-arm64.zip):** ZIP’i aç, Nashi.app’i Uygulamalar klasörüne taşı ve aç. macOS kataloğu 27 araç, 45 girdi formatı ve 275 dönüşüm yolu içerir.
-- **[Windows x64 ZIP · yerel önizleme](https://github.com/orkunisitmak/nashi-app/releases/latest/download/Nashi-Windows-x64.zip):** ZIP’in tamamını kendine ait, yazılabilir bir klasöre çıkar ve Nashi.exe’yi aç. Ayrıca .NET kurmak gerekmez. Güncelleme için klasörün bütünlüğünü koru. [Windows özellikleri ve farkları](windows/README.md).
+Lokum için ayrı bir yayın deposu ve imza anahtarı tanımlanana kadar güncelleme kanalı bağlı değildir. İmzalı güncelleme altyapısı kaynakta korunur; [kanal yapılandırma notları](docs/LOKUM.md) yayınlayan kişi içindir.
 
-İlk açılışta **Kurulumu tamamla → Eksik araçları indir** akışı Medya ve Office araçlarını sırayla kurar. Bilgisayarında bulunan araçlar yeniden indirilmez; iptal veya hata sonrasında yalnızca eksik gruplarla devam edilir. **Araçlar hazır** durumu iki grup da kullanılabilir olduğunda gösterilir. İndirmeler doğrudan upstream’den gelir; hash’leri kurulumdan önce doğrulanır. Temel yerel görsel/PDF işlemleri hemen çalışır. [Sürümler, hash’ler ve lisanslar](docs/dependencies.md).
+## Lisans
 
-İlk public build’lerde Apple notarization / Windows Authenticode yayıncı imzası bulunmuyor. İşletim sistemi ilk açılışta onay isteyebilir. Nashi sistem güvenlik ayarlarını kapatmaz. Resmi yayınlarda SHA-256 dosyası vardır; her CI çıktısı resmi imzalı güncelleme sayılmaz.
-
-## Kısayollar
-
-macOS’ta Finder’da sürüklerken **Shift** dönüşüm, **Command** araçlar, **Control** dosya işlemleri çarkını açar. **Control–Shift–D** kopyalanmış public linki indirir. Sürükleme tuşları özelleştirilebilir. Windows’ta **Ctrl+O** dosya seçer; **Ctrl+Space** seçili dosyaların araç çarkını açar.
-
-Desteklenen medya editörlerinde **Space** oynat/duraklat, **sağ/sol ok** bir saniye ilerle/geri git, **I/O** aralık başlangıcı/sonu. Crop’ta sürükleyerek seç, **Shift** ile oranı kilitle, **Enter** ile kaydet. [Tam kısayol rehberi](https://orkunisitmak.github.io/nashi-app/tr/#shortcuts).
-
-Dönüştürme ve düzenleme yerelde çalışır. Web indirmeleri seçtiğin siteye bağlanır. Analytics, bulut hesabı veya tarayıcı çerezi aktarma yok. Public güncellemeler GitHub hesabı/token istemez. macOS feed ve arşiv imzasını, Windows arşiv imzasını ve sürümünü doğrular. İşler tamamlanmadan veya iptal edilmeden güncelleme için uygulama kapanmaz. Windows eski uygulama klasörünü geri alınabilir yedek olarak tutar.
-
-Kaynak kod [MIT](LICENSE) lisanslıdır; üçüncü taraf bileşenlerin kendi lisansları geçerlidir. [macOS build adımları](README.md#build) · [Windows build adımları](windows/README.md).
+Orijinal proje: [Nashi — Orkun Işıtmak ve katkıcıları](https://github.com/orkunisitmak/nashi-app). [MIT lisansı](LICENSE) ile üçüncü taraf lisansları korunmuştur.

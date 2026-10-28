@@ -13,8 +13,8 @@ def bundle_for_audit(binary, output):
     if any(parent.suffix == ".app" for parent in binary.parents):
         return binary
     repository = Path(__file__).resolve().parent.parent
-    candidate = output / "application/Nashi UI Audit.app"
-    marker = candidate.parent / ".nashi-ui-audit-app"
+    candidate = output / "application/Lokum UI Audit.app"
+    marker = candidate.parent / ".lokum-ui-audit-app"
     if candidate.exists():
         if not marker.is_file():
             raise AssertionError("Refusing to replace an unrelated audit application")
@@ -23,18 +23,18 @@ def bundle_for_audit(binary, output):
     resources = contents / "Resources"
     (contents / "MacOS").mkdir(parents=True)
     resources.mkdir()
-    shutil.copy2(binary, contents / "MacOS/Nashi")
+    shutil.copy2(binary, contents / "MacOS/Lokum")
     with (repository / "Resources/Info.plist").open("rb") as stream:
         info = plistlib.load(stream)
-    info.update(CFBundleIdentifier="local.nashi.ui-audit", CFBundleDisplayName="Nashi UI Audit",
-                NashiExternalTools=True)
+    info.update(CFBundleIdentifier="local.lokum.ui-audit", CFBundleDisplayName="Lokum UI Audit",
+                LokumExternalTools=True)
     # This candidate is only used by the three explicit own-window QA entrypoints.
     info.pop("CFBundleDocumentTypes", None)
     with (contents / "Info.plist").open("wb") as stream:
         plistlib.dump(info, stream)
     for localization in (repository / "Resources/Localizations").glob("*.lproj"):
         shutil.copytree(localization, resources / localization.name)
-    core_resources = binary.parent / "Nashi_NashiCore.bundle"
+    core_resources = binary.parent / "Lokum_LokumCore.bundle"
     if core_resources.is_dir():
         shutil.copytree(core_resources, resources / core_resources.name)
     framework = repository / ".build/artifacts/sparkle/Sparkle/Sparkle.xcframework/macos-arm64_x86_64/Sparkle.framework"
@@ -44,13 +44,13 @@ def bundle_for_audit(binary, output):
                    check=True, capture_output=True)
     subprocess.run(["codesign", "--force", "--sign", "-", "--options", "0", "--timestamp=none", str(candidate)],
                    check=True, capture_output=True)
-    marker.write_text("Generated Nashi own-window QA bundle; no optional tool installers.\n")
-    return contents / "MacOS/Nashi"
+    marker.write_text("Generated Lokum own-window QA bundle; no optional tool installers.\n")
+    return contents / "MacOS/Lokum"
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--app", default=".build/debug/Nashi")
+    parser.add_argument("--app", default=".build/debug/Lokum")
     parser.add_argument("--output", default="build/native-ui")
     args = parser.parse_args()
     app, output = Path(args.app).resolve(), Path(args.output).resolve()

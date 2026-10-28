@@ -2,7 +2,7 @@
 """Fail if the Windows embedded catalog differs from the native Swift contract."""
 import json, pathlib, re
 root = pathlib.Path(__file__).resolve().parents[1]
-source = (root / 'Sources/NashiCore/FeatureCatalog.swift').read_text()
+source = (root / 'Sources/LokumCore/FeatureCatalog.swift').read_text()
 expected = {}
 for name in ['conversionMatrix', 'singleTools', 'multipleTools']:
     block = source.split('let '+name+':',1)[1].split('= [',1)[1].split('\n    ]',1)[0]
@@ -16,8 +16,8 @@ for name, value in expected.items():
 print(f'PASS matching catalogs: {len(actual["conversionMatrix"])} input formats, {len(actual["toolNames"])} tools')
 # Runtime preview/metadata routing must agree too; matching menu catalogs alone
 # would miss aliases such as M4V and AAC.
-models = (root/'Sources/NashiCore/Models.swift').read_text()
-windows = (root/'windows/Nashi.Core/FeatureCatalog.cs').read_text()
+models = (root/'Sources/LokumCore/Models.swift').read_text()
+windows = (root/'windows/Lokum.Core/FeatureCatalog.cs').read_text()
 alias_line = source.split('public static func normalizedExtension',1)[1].split('public static func formats',1)[0]
 aliases = dict(re.findall(r'"([a-z0-9]+)":"([a-z0-9]+)"', alias_line))
 for category in ['image', 'video', 'audio', 'archive']:

@@ -33,9 +33,8 @@ struct CredentialBrokerRepository: Equatable {
 }
 
 enum CredentialBrokerQuery {
-    // Preserve the existing service and per-repository account, so adopting the
-    // helper does not move, replace, or delete a previously saved credential.
-    static let service = "local.tangerine.replica.github-updates"
+    // Keep Lokum credentials separate from the original app's Keychain items.
+    static let service = "local.lokum.app.github-updates"
 
     static func make(repository: CredentialBrokerRepository, allowInteraction: Bool = false) -> [String: Any] {
         let context = LAContext()
@@ -61,11 +60,11 @@ final class CredentialBroker: NSObject, UpdateCredentialBrokerProtocol {
     // The legacy interaction switch is process-global. Every instance shares
     // this queue, so an explicit authorization cannot enable UI for another
     // read, write, or deletion. No operation changes an ACL or partition list.
-    private static let queue = DispatchQueue(label: "local.tangerine.replica.credentials.keychain")
+    private static let queue = DispatchQueue(label: "local.lokum.app.credentials.keychain")
 
     private func error(_ status: OSStatus) -> NSError {
         NSError(domain: NSOSStatusErrorDomain, code: Int(status), userInfo: [
-            NSLocalizedDescriptionKey: "GitHub credential access is unavailable. Authorize access from Tangerine settings."
+            NSLocalizedDescriptionKey: "GitHub credential access is unavailable. Authorize access from Lokum settings."
         ])
     }
 
@@ -105,7 +104,7 @@ final class CredentialBroker: NSObject, UpdateCredentialBrokerProtocol {
         perform(onFailure: reply) { [self] in
             let query = CredentialBrokerQuery.make(repository: repository)
             let attributes: [String: Any] = [kSecValueData as String: Data(token.utf8),
-                                           kSecAttrLabel as String: "Tangerine updates · \(repository.account)"]
+                                           kSecAttrLabel as String: "Lokum updates · \(repository.account)"]
             var status = SecItemUpdate(query as CFDictionary, attributes as CFDictionary)
             if status == errSecItemNotFound {
                 var item = query

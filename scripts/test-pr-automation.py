@@ -77,7 +77,7 @@ class AutomationPolicyTests(unittest.TestCase):
             ('failed or pending check', {'checks': set()}, False),
             ('other base', {'base': 'release'}, False),
             ('docs script', {'files': ['docs/assets/playground.js']}, False),
-            ('source mixed in', {'files': ['README.md', 'Sources/NashiCore/Models.swift']}, False),
+            ('source mixed in', {'files': ['README.md', 'Sources/LokumCore/Models.swift']}, False),
             ('workflow', {'files': ['.github/workflows/source.yml']}, False),
             ('dependency', {'files': ['Package.resolved']}, False),
             ('automation config', {'files': ['.mergify.yml']}, False),
@@ -91,12 +91,12 @@ class AutomationPolicyTests(unittest.TestCase):
         rule = MG['pull_request_rules'][2]
         for path in ['.github/workflows/source.yml', '.mergify.yml', '.coderabbit.yaml',
                      'Configuration/Updates.plist', 'scripts/build-app.sh',
-                     'Sources/NashiUpdates/AppUpdater.swift',
+                     'Sources/LokumUpdates/AppUpdater.swift',
                      'Sources/TangerineUpdates/UpdateCredentialBrokerProtocol.swift',
                      'Sources/UpdateCredentialBroker/main.swift',
-                     'Sources/NashiCore/ProcessRunner.swift', 'Package.swift',
-                     'windows/Nashi.Core/packages.lock.json',
-                     'windows/Nashi.Core/Nashi.Core.csproj', 'windows/Directory.Build.props']:
+                     'Sources/LokumCore/ProcessRunner.swift', 'Package.swift',
+                     'windows/Lokum.Core/packages.lock.json',
+                     'windows/Lokum.Core/Lokum.Core.csproj', 'windows/Directory.Build.props']:
             with self.subTest(path=path):
                 self.assertTrue(matches(rule, snapshot(files=[path])))
 

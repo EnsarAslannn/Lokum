@@ -17,7 +17,7 @@ pull_request_rules:
     conditions:
       - base=main
       - "-draft"
-      - 'files~=(^\.github/|^\.(coderabbit|mergify)|^Configuration/|^scripts/|^Sources/(NashiUpdates|TangerineUpdates|UpdateCredentialBroker)/|^Sources/NashiCore/(ProcessRunner|ExportTransaction|ArchiveCodec|WebDownload)|(^|/)(Package\.(swift|resolved)|[^/]*\.csproj|[^/]*\.props|packages\.lock\.json|package(-lock)?\.json|SECURITY\.md|AGENTS\.md|CLAUDE\.md)$)'
+      - 'files~=(^\.github/|^\.(coderabbit|mergify)|^Configuration/|^scripts/|^Sources/(LokumUpdates|TangerineUpdates|UpdateCredentialBroker)/|^Sources/LokumCore/(ProcessRunner|ExportTransaction|ArchiveCodec|WebDownload)|(^|/)(Package\.(swift|resolved)|[^/]*\.csproj|[^/]*\.props|packages\.lock\.json|package(-lock)?\.json|SECURITY\.md|AGENTS\.md|CLAUDE\.md)$)'
     actions: {}
   - name: "Observe same-repository Markdown-only CI; still manual"
     conditions:

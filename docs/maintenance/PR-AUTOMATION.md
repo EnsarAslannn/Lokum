@@ -1,4 +1,4 @@
-# Nashi PR and issue assistance: staged setup
+# Lokum PR and issue assistance: staged setup
 
 Status: proposed, observation only. Do not mark the setup PR ready or merge it
 until Orkun approves the policy and the GitHub App installations separately.
