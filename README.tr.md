@@ -19,6 +19,7 @@ Dışa aktarımlar kaynak dosyanın üzerine yazmaz; mevcut çıktı adları da 
 - **İşaretleme:** kalem, marker, şekil, ok veya metin aracını seç. Seç/Taşı ile düzenle; Ctrl+Z son çizimi geri alır.
 - **Video/ses kırpma:** Space ile önizlemeyi oynat, sağ/sol oklarla gezin, I/O ile başlangıç ve bitişi işaretle ve aralığı yeni dosya olarak kaydet.
 - **PDF:** dosyaları seçip birleştir veya tek PDF'nin sayfalarını böl, sırala ve döndür.
+- **Meta veriler:** dosyanın tarihi, yazarı, kamera bilgisi ve varsa konum gibi ek bilgileri görüntüler/düzenler. **Tüm meta verileri kaldır** seçeneği yeni bir kopya oluşturur. Ekran görüntülerinde kamera/GPS bilgisi bulunmayabilir. Türkçe dosya ve klasör adları desteklenir; dosyayı yeniden adlandırmak gerekmez.
 - **Web indirme:** herkese açık, desteklenen medya bağlantısını **Bağlantı indir** ekranına yapıştır. Ctrl+Shift+D kopyalanmış bağlantıyı açar.
 - **Kütüphane:** Ctrl+2 ile önceki çıktıları aç; Ctrl+F ile ara ve dosyayı yeniden kullan. Veriler `%LOCALAPPDATA%/Lokum` konumundadır.
 

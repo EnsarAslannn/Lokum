@@ -33,6 +33,14 @@ jobs:
         run: |
           dotnet run --project windows/Lokum.Verify -c Release -- --background-removal-only --output build/background-removal-tests
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Unicode screenshot metadata read edit and removal
+        shell: pwsh
+        env:
+          LOKUM_VERIFY_METADATA_TOOLS: '${{ runner.temp }}\Lokum-Metadata-Tools'
+          LOKUM_VERIFY_DOWNLOAD_METADATA: '1'
+        run: |
+          dotnet run --project windows/Lokum.Verify -c Release -- --metadata-unicode-only
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Install verified media tools and exercise real exports
         shell: pwsh
         env:

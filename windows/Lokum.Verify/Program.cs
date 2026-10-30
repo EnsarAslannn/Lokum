@@ -1,6 +1,17 @@
 using Lokum.Core;
 using System.Text.Json;
 
+if(args.Contains("--metadata-unicode-only"))
+{
+    var metadataChecks=0;
+    var toolsDirectory=Environment.GetEnvironmentVariable("LOKUM_VERIFY_METADATA_TOOLS")??throw new Exception("Set LOKUM_VERIFY_METADATA_TOOLS to the folder containing metadata-13.59.");
+    if(Environment.GetEnvironmentVariable("LOKUM_VERIFY_DOWNLOAD_METADATA")=="1")await new MetadataService(toolsDirectory).InstallAsync(null,CancellationToken.None);
+    var metadataOutput=Path.GetFullPath(args.SkipWhile(a=>a!="--output").Skip(1).FirstOrDefault()??"build/metadata-unicode-tests");
+    await MetadataUnicodeChecks.Run((ok,message)=>{if(!ok)throw new Exception(message);metadataChecks++;},toolsDirectory,metadataOutput);
+    File.WriteAllText(Path.Combine(metadataOutput,"verification.json"),JsonSerializer.Serialize(new{passed=true,checks=metadataChecks,turkishScreenshotRead=true,unicodeMetadataWrite=true,metadataRemoval=true,metadataCopy=true,originalPreserved=true,pixelsPreserved=true,multilineValuesPreserved=true,largeUtf8Value=true,stagingCleaned=true},new JsonSerializerOptions{WriteIndented=true}));
+    Console.WriteLine("PASS metadata Unicode: "+metadataChecks);return;
+}
+
 if(args.Contains("--background-removal-only"))
 {
     var backgroundChecks=0;
