@@ -1,6 +1,11 @@
 using Lokum.Core;
 using System.Text.Json;
 
+if(args.Contains("--runner-only")){Environment.ExitCode=await VerificationRunnerChecks.Run();return;}
+
+Environment.ExitCode=await VerificationRunner.RunAsync(async()=>
+{
+
 if(args.Contains("--metadata-unicode-only"))
 {
     var metadataChecks=0;
@@ -187,6 +192,8 @@ if(Environment.GetEnvironmentVariable("LOKUM_VERIFY_UPDATE_MANIFEST") is {} mani
     var extracted=Path.Combine(Path.GetTempPath(),"Lokum-Update-Verify-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(extracted);
     try{PublicUpdates.ExtractVerified(archivePath,extracted);Console.WriteLine("PASS signed public Windows archive and safe extraction");}finally{Directory.Delete(extracted,true);}
 }
+
+},Console.Error);
 
 sealed class InlineProgress(Action<OperationProgress> report):IProgress<OperationProgress>
 {

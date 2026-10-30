@@ -28,6 +28,11 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lokum
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Verification failures exit cleanly
+        shell: pwsh
+        run: |
+          python scripts/test-verification-runner.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Offline background removal and transparent PNG exports
         shell: pwsh
         run: |
