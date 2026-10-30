@@ -325,6 +325,7 @@
 "CHOOSE MEDIA AND A SUPPORTED TOOL." = "MEDYA DOSYASINI VE DESTEKLENEN BİR ARACI SEÇ.";
 "CHOOSE ONE INSTAGRAM POST WITH UP TO 50 ITEMS." = "EN FAZLA 50 ÖĞE İÇEREN TEK BİR INSTAGRAM GÖNDERİSİ SEÇ.";
 "CHOOSE ONE OF THE EDITABLE METADATA FIELDS." = "DÜZENLENEBİLİR META VERİ ALANLARINDAN BİRİNİ SEÇ.";
+"CHOOSE ONE OR MORE IMAGES TO REMOVE THEIR BACKGROUNDS." = "ARKA PLANLARINI KALDIRMAK İÇİN BİR VEYA DAHA FAZLA GÖRSEL SEÇ.";
 "CHOOSE OUTPUT FOLDER…" = "ÇIKTI KLASÖRÜNÜ SEÇ…";
 "CHOOSE PAGE RANGES SUCH AS 1-3, 5 WITHIN THE PDF PAGE COUNT." = "PDF'NİN SAYFA SAYISI İÇİNDE 1-3, 5 GİBİ SAYFA ARALIKLARI SEÇ.";
 "CHOOSE SET UP MEDIA TOOLS FIRST." = "ÖNCE MEDYA ARAÇLARINI KUR'U SEÇ.";
@@ -390,6 +391,7 @@
 "COULDN’T CHECK FOR UPDATES" = "GÜNCELLEMELER DENETLENEMEDİ";
 "COULDN’T FINISH" = "İŞLEM TAMAMLANAMADI";
 "COULDN’T OPEN THIS TOOL" = "BU ARAÇ AÇILAMADI";
+"COULDN’T REMOVE THE BACKGROUND." = "ARKA PLAN KALDIRILAMADI.";
 "COVER STYLE" = "KAPLAMA STİLİ";
 "CREATE A NEW FLOAT" = "YENİ YÜZEN PENCERE OLUŞTUR";
 "CREATE COLLAGE" = "KOLAJ OLUŞTUR";
@@ -485,6 +487,7 @@
 "Choose media and a supported tool." = "Medya dosyasını ve desteklenen bir aracı seç.";
 "Choose one Instagram post with up to 50 items." = "En fazla 50 öğe içeren tek bir Instagram gönderisi seç.";
 "Choose one of the editable metadata fields." = "Düzenlenebilir meta veri alanlarından birini seç.";
+"Choose one or more images to remove their backgrounds." = "Arka planlarını kaldırmak için bir veya daha fazla görsel seç.";
 "Choose output folder…" = "Çıktı klasörünü seç…";
 "Choose page ranges such as 1-3, 5 within the PDF page count." = "PDF'nin sayfa sayısı içinde 1-3, 5 gibi sayfa aralıkları seç.";
 "Choose supported GIF and audio sample settings." = "Desteklenen GIF ve ses örnekleme ayarlarını seç.";
@@ -549,6 +552,7 @@
 "Couldn’t check for updates" = "Güncellemeler denetlenemedi";
 "Couldn’t finish" = "İşlem tamamlanamadı";
 "Couldn’t open this tool" = "Bu araç açılamadı";
+"Couldn’t remove the background." = "Arka plan kaldırılamadı.";
 "Cover style" = "Kaplama stili";
 "Create Collage" = "Kolaj Oluştur";
 "Create PDF" = "PDF Oluştur";
@@ -929,6 +933,7 @@
 "INPUT AND OUTPUT FORMAT." = "GİRDİ VE ÇIKTI BİÇİMİ.";
 "INPUT FORMAT" = "GİRDİ BİÇİMİ";
 "INPUT-ONLY FORMAT." = "YALNIZCA GİRDİ BİÇİMİ.";
+"INSPECT FINE EDGES BEFORE SAVING. COMPLEX BACKGROUNDS MAY NEED FURTHER EDITING." = "KAYDETMEDEN ÖNCE İNCE KENARLARI KONTROL ET. KARMAŞIK ARKA PLANLAR EK DÜZENLEME GEREKTİREBİLİR.";
 "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. FOR VIDEOS, USE THE SHARE LINK; FOR OTHER PHOTOS, DRAG THE IMAGE OR USE COPY IMAGE ADDRESS. PUBLIC MEDIA ONLY; LOGIN-REQUIRED AND PROTECTED ITEMS MAY BE UNAVAILABLE." = "INSTAGRAM FOTOĞRAF GÖNDERİLERİNDE FOTOĞRAF SEÇİMİ AÇILIR. VİDEOLAR İÇİN PAYLAŞIM BAĞLANTISINI KULLAN; DİĞER FOTOĞRAFLARI SÜRÜKLE VEYA GÖRSEL ADRESİNİ KOPYALA. YALNIZCA HERKESE AÇIK MEDYA DESTEKLENİR; GİRİŞ GEREKTİREN VEYA KORUMALI İÇERİKLER KULLANILAMAYABİLİR.";
 "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. REEL LINKS OFFER VIDEO AND AUDIO. PUBLIC DOWNLOADABLE MEDIA ONLY." = "INSTAGRAM FOTOĞRAF GÖNDERİLERİNDE FOTOĞRAF SEÇİMİ AÇILIR. REELS BAĞLANTILARINDA VİDEO VE SES SEÇENEKLERİ SUNULUR. YALNIZCA HERKESE AÇIK, İNDİRİLEBİLİR MEDYA DESTEKLENİR.";
 "INSTALL AN OCR LANGUAGE IN WINDOWS LANGUAGE SETTINGS TO DETECT TEXT." = "METİN ALGILAMAK İÇİN WINDOWS DİL AYARLARINDAN BİR OCR DİLİ YÜKLE.";
@@ -957,6 +962,7 @@
 "Input and output format." = "Girdi ve çıktı biçimi.";
 "Input format" = "Girdi biçimi";
 "Input-only format." = "Yalnızca girdi biçimi.";
+"Inspect fine edges before saving. Complex backgrounds may need further editing." = "Kaydetmeden önce ince kenarları kontrol et. Karmaşık arka planlar ek düzenleme gerektirebilir.";
 "Instagram photo posts open a photo selection. For videos, use the share link; for other photos, drag the image or use Copy Image Address. Public media only; login-required and protected items may be unavailable." = "Instagram fotoğraf gönderilerinde fotoğraf seçimi açılır. Videolar için paylaşım bağlantısını kullan; diğer fotoğrafları sürükle veya görsel adresini kopyala. Yalnızca herkese açık medya desteklenir; giriş gerektiren veya korumalı içerikler kullanılamayabilir.";
 "Instagram photo posts open a photo selection. Reel links offer video and audio. Public downloadable media only." = "Instagram fotoğraf gönderilerinde fotoğraf seçimi açılır. Reels bağlantılarında video ve ses seçenekleri sunulur. Yalnızca herkese açık, indirilebilir medya desteklenir.";
 "Install an OCR language in Windows Language settings to detect text." = "Metin algılamak için Windows dil ayarlarından bir OCR dili yükle.";
@@ -1321,6 +1327,7 @@
 "PREPARING A LOCAL PREVIEW…" = "YEREL ÖNİZLEME HAZIRLANIYOR…";
 "PREPARING PREVIEW…" = "ÖNİZLEME HAZIRLANIYOR…";
 "PREPARING PROCESSED PREVIEW…" = "İŞLENMİŞ ÖNİZLEME HAZIRLANIYOR…";
+"PREPARING TRANSPARENT PNG…" = "ŞEFFAF PNG HAZIRLANIYOR…";
 "PREPARING…" = "HAZIRLANIYOR…";
 "PRESERVE METADATA" = "META VERİLERİ KORU";
 "PRESERVE ORIGINAL PAGES" = "ORİJİNAL SAYFALARI KORU";
@@ -1329,6 +1336,7 @@
 "PREVIEW LEFT" = "SOLU ÖNİZLE";
 "PREVIEW READY · EXPORT USES YOUR ORIGINAL FILE." = "ÖNİZLEME HAZIR · DIŞA AKTARIRKEN ORİJİNAL DOSYAN KULLANILIR.";
 "PREVIEW RIGHT" = "SAĞI ÖNİZLE";
+"PREVIEW SHOWS THE FIRST IMAGE. SAVING PROCESSES ALL SELECTED IMAGES." = "ÖNİZLEME İLK GÖRSELİ GÖSTERİR. KAYDEDİLDİĞİNDE SEÇİLEN TÜM GÖRSELLER İŞLENİR.";
 "PREVIEW USES THE FIRST 12 SECONDS. EXPORT INCLUDES THE FULL RECORDING." = "ÖNİZLEME İLK 12 SANİYEYİ KULLANIR. DIŞA AKTARMA KAYDIN TAMAMINI İÇERİR.";
 "PREVIOUS FRAME" = "ÖNCEKİ KARE";
 "PREVIOUS PAGE" = "ÖNCEKİ SAYFA";
@@ -1371,6 +1379,7 @@
 "Preparing a local preview…" = "Yerel önizleme hazırlanıyor…";
 "Preparing preview…" = "Önizleme hazırlanıyor…";
 "Preparing processed preview…" = "İşlenmiş önizleme hazırlanıyor…";
+"Preparing transparent PNG…" = "Şeffaf PNG hazırlanıyor…";
 "Preparing…" = "Hazırlanıyor…";
 "Preserve metadata" = "Meta verileri koru";
 "Preserve original pages" = "Orijinal sayfaları koru";
@@ -1379,6 +1388,7 @@
 "Preview Left" = "Solu Önizle";
 "Preview Right" = "Sağı Önizle";
 "Preview ready · export uses your original file." = "Önizleme hazır · dışa aktarırken orijinal dosyan kullanılır.";
+"Preview shows the first image. Saving processes all selected images." = "Önizleme ilk görseli gösterir. Kaydedildiğinde seçilen tüm görseller işlenir.";
 "Preview unavailable: %@" = "Önizleme kullanılamıyor: %@";
 "Preview unavailable: %lld" = "Önizleme kullanılamıyor: %lld";
 "Preview uses the first 12 seconds. Export includes the full recording." = "Önizleme ilk 12 saniyeyi kullanır. Dışa aktarma kaydın tamamını içerir.";
@@ -1407,6 +1417,7 @@
 "READY TO MAKE A FRESH COPY. NO EXTRA SETTINGS NEEDED." = "YENİ KOPYA OLUŞTURMAYA HAZIR. EK AYAR GEREKMEZ.";
 "READY WHEN YOU LOG IN" = "OTURUM AÇTIĞINDA HAZIR";
 "READY." = "HAZIR.";
+"READY. SAVE A NEW TRANSPARENT PNG; YOUR ORIGINAL STAYS SAFE." = "HAZIR. YENİ BİR ŞEFFAF PNG KAYDET; ÖZGÜN DOSYAN KORUNUR.";
 "READY. YOU CAN GO BACK TO YOUR FILES." = "HAZIR. DOSYALARINA DÖNEBİLİRSİN.";
 "RECENT CONVERSIONS" = "SON DÖNÜŞTÜRMELER";
 "RECTANGLE" = "DİKDÖRTGEN";
@@ -1434,6 +1445,7 @@
 "REMOVE SELECTED RANGE" = "SEÇİLİ ARALIĞI KALDIR";
 "REMOVE SILENCE AT THE BEGINNING AND END" = "BAŞLANGIÇ VE SONDAKİ SESSİZLİĞİ KALDIR";
 "REMOVE SILENCE FROM BEGINNING AND END" = "BAŞLANGIÇ VE SONDAKİ SESSİZLİĞİ KALDIR";
+"REMOVING BACKGROUND…" = "ARKA PLAN KALDIRILIYOR…";
 "RENDERED PAGES EXCEED 512 MB. CHOOSE A LOWER DPI OR SPLIT THE PDF FIRST." = "OLUŞTURULAN SAYFALAR 512 MB'I AŞIYOR. DAHA DÜŞÜK BİR DPI SEÇ VEYA ÖNCE PDF'Yİ BÖL.";
 "REPLACE SELECTED AUDIO WITH" = "SEÇİLİ SESİ ŞUNUNLA DEĞİŞTİR";
 "REPORT SAVED." = "RAPOR KAYDEDİLDİ.";
@@ -1456,6 +1468,7 @@
 "ROTATION" = "DÖNDÜRME";
 "ROUNDED" = "YUVARLAK";
 "ROW" = "SATIR";
+"RUNS ON YOUR PC. NO IMAGE UPLOADS." = "BİLGİSAYARINDA ÇALIŞIR. GÖRSELLERİN YÜKLENMEZ.";
 "Read QR Codes" = "QR Kodlarını Oku";
 "Read QR Codes · Lokum" = "QR Kodlarını Oku · Lokum";
 "Read QR codes" = "QR kodlarını oku";
@@ -1466,6 +1479,7 @@
 "Ready to make a fresh copy. No extra settings needed." = "Yeni kopya oluşturmaya hazır. Ek ayar gerekmez.";
 "Ready when you log in" = "Oturum açtığında hazır";
 "Ready." = "Hazır.";
+"Ready. Save a new transparent PNG; your original stays safe." = "Hazır. Yeni bir şeffaf PNG kaydet; özgün dosyan korunur.";
 "Ready. You can go back to your files." = "Hazır. Dosyalarına dönebilirsin.";
 "Recent Conversions" = "Son Dönüştürmeler";
 "Rectangle" = "Dikdörtgen";
@@ -1493,6 +1507,7 @@
 "Remove selected range" = "Seçili aralığı kaldır";
 "Remove silence at the beginning and end" = "Başlangıç ve sondaki sessizliği kaldır";
 "Remove silence from beginning and end" = "Başlangıç ve sondaki sessizliği kaldır";
+"Removing background…" = "Arka plan kaldırılıyor…";
 "Rendered pages exceed 512 MB. Choose a lower DPI or split the PDF first." = "Oluşturulan sayfalar 512 MB'ı aşıyor. Daha düşük bir DPI seç veya önce PDF'yi böl.";
 "Replace selected audio with" = "Seçili sesi şununla değiştir";
 "Report saved." = "Rapor kaydedildi.";
@@ -1516,6 +1531,7 @@
 "Rotation" = "Döndürme";
 "Rounded" = "Yuvarlak";
 "Row" = "Satır";
+"Runs on your PC. No image uploads." = "Bilgisayarında çalışır. Görsellerin yüklenmez.";
 "SAMPLE DEPTH" = "ÖRNEK DERİNLİĞİ";
 "SATURATION" = "DOYGUNLUK";
 "SAVE" = "KAYDET";
@@ -1544,6 +1560,7 @@
 "SAVE SPEED COPY" = "HIZI DEĞİŞTİRİLMİŞ KOPYAYI KAYDET";
 "SAVE THE ARCHIVE OUTSIDE THE FOLDER BEING ZIPPED." = "ARŞİVİ SIKIŞTIRILAN KLASÖRÜN DIŞINA KAYDET.";
 "SAVE TO" = "KAYIT YERİ";
+"SAVE TRANSPARENT PNG  ↗" = "ŞEFFAF PNG KAYDET  ↗";
 "SAVE TRIMMED COPY" = "KIRPILMIŞ KOPYAYI KAYDET";
 "SAVE WITH BACKGROUND" = "ARKA PLANLA KAYDET";
 "SAVED 1 NEW FILE. ORIGINALS KEPT." = "1 YENİ DOSYA KAYDEDİLDİ. ORİJİNAL KORUNDU.";
@@ -1670,6 +1687,7 @@
 "Save speed copy" = "Hızı değiştirilmiş kopyayı kaydet";
 "Save the archive outside the folder being zipped." = "Arşivi sıkıştırılan klasörün dışına kaydet.";
 "Save to" = "Kayıt yeri";
+"Save transparent PNG  ↗" = "Şeffaf PNG kaydet  ↗";
 "Save trimmed copy" = "Kırpılmış kopyayı kaydet";
 "Save with background" = "Arka planla kaydet";
 "Saved %@ new files. Originals kept." = "%@ yeni dosya kaydedildi. Orijinaller korundu.";
@@ -1838,6 +1856,7 @@
 "TOP" = "ÜST";
 "TRANSPARENT" = "ŞEFFAF";
 "TRANSPARENT BACKGROUNDS SAVE AS PNG TO KEEP THEIR TRANSPARENCY." = "ŞEFFAF ARKA PLANLAR, ŞEFFAFLIĞI KORUMAK İÇİN PNG OLARAK KAYDEDİLİR.";
+"TRANSPARENT PNG" = "ŞEFFAF PNG";
 "TRIM" = "KIRP";
 "TRIM AUDIO" = "SESİ KIRP";
 "TRIM AUDIO · LOKUM" = "SESİ KIRP · LOKUM";
@@ -1846,6 +1865,7 @@
 "TRUE PEAK DB" = "GERÇEK TEPE DÜZEYİ DB";
 "TRUE PEAK LIMIT" = "TEPE DÜZEYİ SINIRI";
 "TRY A CLEARER IMAGE OR ANOTHER PDF." = "DAHA NET BİR GÖRSEL VEYA BAŞKA BİR PDF DENE.";
+"TRY AGAIN" = "TEKRAR DENE";
 "TRY FEEDBACK" = "GERİ BİLDİRİMİ DENE";
 "TURN OFF UNIFORM WIDTH TO PRESERVE THIS PDF’S FORM FIELDS, ATTACHMENTS, LINKS OR NAVIGATION." = "BU PDF'NİN FORM ALANLARINI, EKLERİNİ, BAĞLANTILARINI VEYA GEZİNMESİNİ KORUMAK İÇİN EŞİT GENİŞLİĞİ KAPAT.";
 "Tap the chosen modifier combination while dragging files." = "Dosyaları sürüklerken seçtiğin tuş birleşimine bas.";
@@ -1923,6 +1943,7 @@
 "Tools · while dragging" = "Araçlar · sürüklerken";
 "Top" = "Üst";
 "Transparent" = "Şeffaf";
+"Transparent PNG" = "Şeffaf PNG";
 "Transparent backgrounds save as PNG to keep their transparency." = "Şeffaf arka planlar, şeffaflığı korumak için PNG olarak kaydedilir.";
 "Trim" = "Kırp";
 "Trim Audio" = "Sesi Kırp";
@@ -1932,6 +1953,7 @@
 "True peak dB" = "Gerçek tepe düzeyi dB";
 "True peak limit" = "Tepe düzeyi sınırı";
 "Try a clearer image or another PDF." = "Daha net bir görsel veya başka bir PDF dene.";
+"Try again" = "Tekrar dene";
 "Try feedback" = "Geri bildirimi dene";
 "Turn off uniform width to preserve this PDF’s form fields, attachments, links or navigation." = "Bu PDF'nin form alanlarını, eklerini, bağlantılarını veya gezinmesini korumak için eşit genişliği kapat.";
 "UNDO" = "GERİ AL";

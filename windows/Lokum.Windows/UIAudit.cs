@@ -20,7 +20,7 @@ internal static class UIAudit
     internal static readonly string[] SceneIds =
     [
         "home.empty", "home.selected", "library", "settings.general", "settings.formats",
-        "settings.updates", "wheel.pdf-multiple", "editor.crop-image", "editor.annotate-image", "editor.frame-image"
+        "settings.updates", "wheel.pdf-multiple", "editor.crop-image", "editor.annotate-image", "editor.frame-image", "editor.remove-background"
     ];
     private static readonly string[] Appearances = ["light", "dark"];
     private static readonly string[] Languages = ["en", "tr"];
@@ -187,10 +187,11 @@ internal static class UIAudit
                 "editor.crop-image" => new ToolEditor(owner, "crop", "Crop Image", fixtures.Image, preview: fixtures.Bitmap),
                 "editor.annotate-image" => new ToolEditor(owner, "annotate", "Annotate", fixtures.Image, preview: fixtures.Bitmap),
                 "editor.frame-image" => new ToolEditor(owner, "frameImage", "Frame Image", fixtures.Image, preview: fixtures.Bitmap),
+                "editor.remove-background" => new BackgroundRemovalWindow(owner,fixtures.Image),
                 _ => throw new ArgumentException("Unknown scene: " + capture.Scene)
             };
             if (!ReferenceEquals(subject, owner)) ShowAtMinimum(subject);
-            var ready = WaitUntil(() => Ready(subject), TimeSpan.FromSeconds(8));
+            var ready = WaitUntil(() => Ready(subject), TimeSpan.FromSeconds(capture.Scene=="editor.remove-background"?30:8));
             capture.Checks["loadedAndArranged"] = ready;
             capture.Checks["privateLibrary"] = Path.GetFullPath(library.DirectoryPath).StartsWith(Path.GetFullPath(stateRoot) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase);
             capture.Checks["language"] = L10n.Language == capture.Language;
@@ -289,6 +290,7 @@ internal static class UIAudit
         if (!window.IsLoaded || !window.IsVisible || window.Content is not FrameworkElement content ||
             !content.IsMeasureValid || !content.IsArrangeValid || content.ActualWidth < 1 || content.ActualHeight < 1) return false;
         return (window is not ToolEditor editor || editor.UIAuditPreviewReady)
+            && (window is not BackgroundRemovalWindow removal || removal.PreviewReady)
             && Descendants<Image>(window).All(image => image.Source is not BitmapImage bitmap || !bitmap.IsDownloading)
             && ArtworkReady(window);
     }
@@ -336,6 +338,8 @@ internal static class UIAudit
             "editor.annotate-image" => subject is ToolEditor && Descendants<ComboBox>(subject).Any(combo => Equals(combo.SelectedItem, "Marker")),
             "editor.frame-image" => subject is ToolEditor frame && frame.UIAuditPreviewReady &&
                 Descendants<Image>(subject).Any(image => image.Source is BitmapSource source && source.PixelWidth == fixtures.Bitmap.PixelWidth + 160 && source.PixelHeight == fixtures.Bitmap.PixelHeight + 160),
+            "editor.remove-background" => subject is BackgroundRemovalWindow removal && removal.PreviewReady &&
+                Descendants<Image>(subject).Count(image=>image.Source is BitmapSource source&&source.PixelWidth==fixtures.Bitmap.PixelWidth&&source.PixelHeight==fixtures.Bitmap.PixelHeight)==2,
             _ => false
         };
         if (!capture.Checks["actualScene"]) capture.Issues.Add("The requested scene's semantic state was not present.");

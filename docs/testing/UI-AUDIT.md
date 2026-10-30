@@ -36,7 +36,7 @@ Both audit commands accept these optional filters:
 --language en|tr|both
 ```
 
-Unknown scenes/options, empty selections, repeated scenes and invalid themes/languages fail. No filter means the complete matrix: **10 scenes × 2 appearances × 2 languages = 40 captures per platform**.
+Unknown scenes/options, empty selections, repeated scenes and invalid themes/languages fail. No filter means the complete matrix: **10 scenes × 2 appearances × 2 languages = 40 captures on macOS**, and **11 × 2 × 2 = 44 captures on Windows**, which additionally covers offline background removal.
 
 | Scene ID | Production surface |
 | --- | --- |
@@ -50,6 +50,7 @@ Unknown scenes/options, empty selections, repeated scenes and invalid themes/lan
 | editor.crop-image | Image crop at minimum supported editor size |
 | editor.annotate-image | Annotation editor at minimum size |
 | editor.frame-image | Frame editor after its asynchronous preview is ready |
+| editor.remove-background | Windows only: original and transparent cutout after real offline inference completes |
 
 Fixtures include long Turkish/Unicode filenames. The app's actual localization and theme are used. Editor probes only run in audit mode; normal SwiftUI rendering does not add geometry-reader traffic.
 
@@ -59,6 +60,6 @@ Fixtures include long Turkish/Unicode filenames. The app's actual localization a
 
 The artwork report is `file-artwork.json`. Range reports are `mac-range-accessibility.json` / `windows-range-accessibility.json`; both include the actual production semantic controls and bounded-action tests. Mac range checks also replay pointer handlers directly; existing desktop smoke tests continue to exercise OS input separately.
 
-These snapshots are **own-view renders**, not screen recordings. They do not prove live glass, native titlebars, real drag/modifier timing, system focus routing, or a full VoiceOver/Narrator session. Inspect a held candidate through Computer Use for those visible details and retain the existing native gesture/keyboard/export tests. Do not claim all 27 editors are visually covered by these initial ten scenes.
+These snapshots are **own-view renders**, not screen recordings. They do not prove live glass, native titlebars, real drag/modifier timing, system focus routing, or a full VoiceOver/Narrator session. Inspect a held candidate through Computer Use for those visible details and retain the existing native gesture/keyboard/export tests. These scenes do not cover every editor. Windows Home/Library scenes also verify that active buttons receive hit tests after switching pages; the background-removal scene waits for the actual model output and enabled Save button.
 
 Do not run the audit as a replacement for engine tests. It verifies view readiness and layout; exported files still need the appropriate format, dimension, duration, metadata and original-preservation checks.

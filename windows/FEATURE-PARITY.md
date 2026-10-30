@@ -4,6 +4,17 @@ These features are included in the published [0.7.5 release](https://github.com/
 
 `Resources/FeatureCatalog.json` is the shared availability contract: 45 input formats, 27 tools, single/multiple-selection rules and conversion intersections. `scripts/check-feature-parity.py` compares it with the Swift catalog on every source check. The catalog check establishes matching choices; engine and native desktop checks establish behavior.
 
+Windows additionally offers **Remove Background** for raster images and SVG,
+including mixed image batches. This is an explicit Windows-only addition in
+`FeatureCatalog.cs`; it does not change the shared Swift catalog. U2NETP weights
+are embedded and run offline with ONNX Runtime CPU. The editor previews the
+first image against a checkerboard and exports separate RGBA PNGs at original
+oriented dimensions. Existing alpha is multiplied by the predicted foreground
+mask; originals are preserved and failed/cancelled batches publish nothing.
+`dotnet run --project windows/Lokum.Verify -c Release -- --background-removal-only`
+exercises a real public-domain NASA photograph, alpha preservation, batch naming
+and cancellation. `--ui-audit` includes the new preview in both themes/locales.
+
 | Area | Windows implementation | Verification |
 | --- | --- | --- |
 | Drag wheels | Ctrl tools, Shift convert, Alt file actions; configurable distinct chords, global copied-link shortcut, size/finish/animation/sound preferences | Real OLE drag with SendInput, file payload and browser URL/HTML fixtures |

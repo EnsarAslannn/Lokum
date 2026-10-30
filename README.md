@@ -20,12 +20,31 @@ Kütüphane ve ayarlar `%LOCALAPPDATA%/Lokum` altında saklanır. Orijinal Nashi
 
 - **45 girdi formatı, 27 araç, 275 dönüşüm yolu:** ortak katalog ve seçim kuralları korunur.
 - **Görseller:** dönüştürme, sıkıştırma, boyutlandırma, döndürme/yansıtma, kırpma, işaretleme, çerçeve, kolaj, metadata, gizleme ve QR okuma.
+- **Windows arka plan kaldırma:** U²-Net modeliyle yerelde otomatik kesim, özgün/sonuç önizlemesi ve şeffaf PNG dışa aktarma. Tek görsel ve toplu seçim desteklenir.
 - **Video ve ses:** dönüştürme, sıkıştırma, kırpma, birleştirme, hız değiştirme, kare çıkarma, normalizasyon, kanal ayarları, sessize alma ve gizleme araçları.
 - **Belgeler ve arşivler:** PDF oluşturma/birleştirme/bölme/düzenleme, Office/Pages/EPUB/tablo/sunum/altyazı dönüşümleri ve arşiv işlemleri.
 - **Günlük akış:** araç çarkı, sürükleme kısayolları, pano içe aktarma, Float rafı, kütüphane, klasör otomasyonu ve pencere düzenleri.
 - **Web:** desteklenen herkese açık medya bağlantılarından video, ses ve görsel indirme.
 
 İşlevlerin işletim sistemi, dosya yapısı, kurulu codec ve harici araç gereksinimleri [platform matrisinde](windows/FEATURE-PARITY.md) açıklanır. Karmaşık belge dönüşümleri kaynak belgenin bütün özelliklerini korumayabilir. Web indirme desteği ilgili sitenin davranışına bağlıdır.
+
+## Arka plan kaldırma (Windows)
+
+Görseli seçip **İnce ayar / Fine-tune → Arka Planı Kaldır / Remove Background**
+aracını aç. Aynı araç çarkta da bulunur. Önizlemenin tamamlanmasını bekle ve
+**Şeffaf PNG kaydet** düğmesine bas. Birden fazla görsel seçiliyse önizleme
+ilkini gösterir, kaydetme işlemi tüm seçili görsellerin ayrı PNG kopyalarını üretir.
+Çıktılar `Dosya Adı Cutout.png` olarak, ayarlardaki çıktı konumuna kaydedilir.
+Özgün dosyaların üzerine yazılmaz; iptal veya hata halinde yarım sonuç yayımlanmaz.
+
+Model ve çalışma motoru Windows paketine dahildir; Python, API anahtarı veya
+görsel yüklemesi gerekmez. Windows'un ONNX Runtime bileşeni için
+[Microsoft Visual C++ x64 çalışma ortamı](https://onnxruntime.ai/docs/install/#requirements)
+gereklidir; eksik olan bilgisayarlarda önce Microsoft'un resmi yeniden dağıtılabilir
+paketi kurulmalıdır. Bu bilgisayarda gerçek önizleme ve kayıt testi geçti. Hafif model saç, saydam nesneler
+ve karmaşık zeminlerde kusursuz kesim sağlamayabilir; kaydetmeden önce kenarları
+incele. Bu araç henüz macOS sürümüne eklenmemiştir.
+[Model kaynağı ve sağlama toplamı](Resources/Models/README.md).
 
 ## Görünüm
 
@@ -84,6 +103,7 @@ macOS çıktısı `build/Lokum.app` konumuna yazılır. macOS kaynaklarının de
 
 ```powershell
 dotnet run --project windows/Lokum.Verify -c Release
+dotnet run --project windows/Lokum.Verify -c Release -- --background-removal-only
 python scripts/check-feature-parity.py
 python scripts/generate-localizations.py --check
 ```

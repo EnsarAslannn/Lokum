@@ -325,6 +325,7 @@
 "CHOOSE MEDIA AND A SUPPORTED TOOL." = "CHOOSE MEDIA AND A SUPPORTED TOOL.";
 "CHOOSE ONE INSTAGRAM POST WITH UP TO 50 ITEMS." = "CHOOSE ONE INSTAGRAM POST WITH UP TO 50 ITEMS.";
 "CHOOSE ONE OF THE EDITABLE METADATA FIELDS." = "CHOOSE ONE OF THE EDITABLE METADATA FIELDS.";
+"CHOOSE ONE OR MORE IMAGES TO REMOVE THEIR BACKGROUNDS." = "CHOOSE ONE OR MORE IMAGES TO REMOVE THEIR BACKGROUNDS.";
 "CHOOSE OUTPUT FOLDER…" = "CHOOSE OUTPUT FOLDER…";
 "CHOOSE PAGE RANGES SUCH AS 1-3, 5 WITHIN THE PDF PAGE COUNT." = "CHOOSE PAGE RANGES SUCH AS 1-3, 5 WITHIN THE PDF PAGE COUNT.";
 "CHOOSE SET UP MEDIA TOOLS FIRST." = "CHOOSE SET UP MEDIA TOOLS FIRST.";
@@ -390,6 +391,7 @@
 "COULDN’T CHECK FOR UPDATES" = "COULDN’T CHECK FOR UPDATES";
 "COULDN’T FINISH" = "COULDN’T FINISH";
 "COULDN’T OPEN THIS TOOL" = "COULDN’T OPEN THIS TOOL";
+"COULDN’T REMOVE THE BACKGROUND." = "COULDN’T REMOVE THE BACKGROUND.";
 "COVER STYLE" = "COVER STYLE";
 "CREATE A NEW FLOAT" = "CREATE A NEW FLOAT";
 "CREATE COLLAGE" = "CREATE COLLAGE";
@@ -485,6 +487,7 @@
 "Choose media and a supported tool." = "Choose media and a supported tool.";
 "Choose one Instagram post with up to 50 items." = "Choose one Instagram post with up to 50 items.";
 "Choose one of the editable metadata fields." = "Choose one of the editable metadata fields.";
+"Choose one or more images to remove their backgrounds." = "Choose one or more images to remove their backgrounds.";
 "Choose output folder…" = "Choose output folder…";
 "Choose page ranges such as 1-3, 5 within the PDF page count." = "Choose page ranges such as 1-3, 5 within the PDF page count.";
 "Choose supported GIF and audio sample settings." = "Choose supported GIF and audio sample settings.";
@@ -549,6 +552,7 @@
 "Couldn’t check for updates" = "Couldn’t check for updates";
 "Couldn’t finish" = "Couldn’t finish";
 "Couldn’t open this tool" = "Couldn’t open this tool";
+"Couldn’t remove the background." = "Couldn’t remove the background.";
 "Cover style" = "Cover style";
 "Create Collage" = "Create Collage";
 "Create PDF" = "Create PDF";
@@ -929,6 +933,7 @@
 "INPUT AND OUTPUT FORMAT." = "INPUT AND OUTPUT FORMAT.";
 "INPUT FORMAT" = "INPUT FORMAT";
 "INPUT-ONLY FORMAT." = "INPUT-ONLY FORMAT.";
+"INSPECT FINE EDGES BEFORE SAVING. COMPLEX BACKGROUNDS MAY NEED FURTHER EDITING." = "INSPECT FINE EDGES BEFORE SAVING. COMPLEX BACKGROUNDS MAY NEED FURTHER EDITING.";
 "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. FOR VIDEOS, USE THE SHARE LINK; FOR OTHER PHOTOS, DRAG THE IMAGE OR USE COPY IMAGE ADDRESS. PUBLIC MEDIA ONLY; LOGIN-REQUIRED AND PROTECTED ITEMS MAY BE UNAVAILABLE." = "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. FOR VIDEOS, USE THE SHARE LINK; FOR OTHER PHOTOS, DRAG THE IMAGE OR USE COPY IMAGE ADDRESS. PUBLIC MEDIA ONLY; LOGIN-REQUIRED AND PROTECTED ITEMS MAY BE UNAVAILABLE.";
 "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. REEL LINKS OFFER VIDEO AND AUDIO. PUBLIC DOWNLOADABLE MEDIA ONLY." = "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. REEL LINKS OFFER VIDEO AND AUDIO. PUBLIC DOWNLOADABLE MEDIA ONLY.";
 "INSTALL AN OCR LANGUAGE IN WINDOWS LANGUAGE SETTINGS TO DETECT TEXT." = "INSTALL AN OCR LANGUAGE IN WINDOWS LANGUAGE SETTINGS TO DETECT TEXT.";
@@ -957,6 +962,7 @@
 "Input and output format." = "Input and output format.";
 "Input format" = "Input format";
 "Input-only format." = "Input-only format.";
+"Inspect fine edges before saving. Complex backgrounds may need further editing." = "Inspect fine edges before saving. Complex backgrounds may need further editing.";
 "Instagram photo posts open a photo selection. For videos, use the share link; for other photos, drag the image or use Copy Image Address. Public media only; login-required and protected items may be unavailable." = "Instagram photo posts open a photo selection. For videos, use the share link; for other photos, drag the image or use Copy Image Address. Public media only; login-required and protected items may be unavailable.";
 "Instagram photo posts open a photo selection. Reel links offer video and audio. Public downloadable media only." = "Instagram photo posts open a photo selection. Reel links offer video and audio. Public downloadable media only.";
 "Install an OCR language in Windows Language settings to detect text." = "Install an OCR language in Windows Language settings to detect text.";
@@ -1321,6 +1327,7 @@
 "PREPARING A LOCAL PREVIEW…" = "PREPARING A LOCAL PREVIEW…";
 "PREPARING PREVIEW…" = "PREPARING PREVIEW…";
 "PREPARING PROCESSED PREVIEW…" = "PREPARING PROCESSED PREVIEW…";
+"PREPARING TRANSPARENT PNG…" = "PREPARING TRANSPARENT PNG…";
 "PREPARING…" = "PREPARING…";
 "PRESERVE METADATA" = "PRESERVE METADATA";
 "PRESERVE ORIGINAL PAGES" = "PRESERVE ORIGINAL PAGES";
@@ -1329,6 +1336,7 @@
 "PREVIEW LEFT" = "PREVIEW LEFT";
 "PREVIEW READY · EXPORT USES YOUR ORIGINAL FILE." = "PREVIEW READY · EXPORT USES YOUR ORIGINAL FILE.";
 "PREVIEW RIGHT" = "PREVIEW RIGHT";
+"PREVIEW SHOWS THE FIRST IMAGE. SAVING PROCESSES ALL SELECTED IMAGES." = "PREVIEW SHOWS THE FIRST IMAGE. SAVING PROCESSES ALL SELECTED IMAGES.";
 "PREVIEW USES THE FIRST 12 SECONDS. EXPORT INCLUDES THE FULL RECORDING." = "PREVIEW USES THE FIRST 12 SECONDS. EXPORT INCLUDES THE FULL RECORDING.";
 "PREVIOUS FRAME" = "PREVIOUS FRAME";
 "PREVIOUS PAGE" = "PREVIOUS PAGE";
@@ -1371,6 +1379,7 @@
 "Preparing a local preview…" = "Preparing a local preview…";
 "Preparing preview…" = "Preparing preview…";
 "Preparing processed preview…" = "Preparing processed preview…";
+"Preparing transparent PNG…" = "Preparing transparent PNG…";
 "Preparing…" = "Preparing…";
 "Preserve metadata" = "Preserve metadata";
 "Preserve original pages" = "Preserve original pages";
@@ -1379,6 +1388,7 @@
 "Preview Left" = "Preview Left";
 "Preview Right" = "Preview Right";
 "Preview ready · export uses your original file." = "Preview ready · export uses your original file.";
+"Preview shows the first image. Saving processes all selected images." = "Preview shows the first image. Saving processes all selected images.";
 "Preview unavailable: %@" = "Preview unavailable: %@";
 "Preview unavailable: %lld" = "Preview unavailable: %lld";
 "Preview uses the first 12 seconds. Export includes the full recording." = "Preview uses the first 12 seconds. Export includes the full recording.";
@@ -1407,6 +1417,7 @@
 "READY TO MAKE A FRESH COPY. NO EXTRA SETTINGS NEEDED." = "READY TO MAKE A FRESH COPY. NO EXTRA SETTINGS NEEDED.";
 "READY WHEN YOU LOG IN" = "READY WHEN YOU LOG IN";
 "READY." = "READY.";
+"READY. SAVE A NEW TRANSPARENT PNG; YOUR ORIGINAL STAYS SAFE." = "READY. SAVE A NEW TRANSPARENT PNG; YOUR ORIGINAL STAYS SAFE.";
 "READY. YOU CAN GO BACK TO YOUR FILES." = "READY. YOU CAN GO BACK TO YOUR FILES.";
 "RECENT CONVERSIONS" = "RECENT CONVERSIONS";
 "RECTANGLE" = "RECTANGLE";
@@ -1434,6 +1445,7 @@
 "REMOVE SELECTED RANGE" = "REMOVE SELECTED RANGE";
 "REMOVE SILENCE AT THE BEGINNING AND END" = "REMOVE SILENCE AT THE BEGINNING AND END";
 "REMOVE SILENCE FROM BEGINNING AND END" = "REMOVE SILENCE FROM BEGINNING AND END";
+"REMOVING BACKGROUND…" = "REMOVING BACKGROUND…";
 "RENDERED PAGES EXCEED 512 MB. CHOOSE A LOWER DPI OR SPLIT THE PDF FIRST." = "RENDERED PAGES EXCEED 512 MB. CHOOSE A LOWER DPI OR SPLIT THE PDF FIRST.";
 "REPLACE SELECTED AUDIO WITH" = "REPLACE SELECTED AUDIO WITH";
 "REPORT SAVED." = "REPORT SAVED.";
@@ -1456,6 +1468,7 @@
 "ROTATION" = "ROTATION";
 "ROUNDED" = "ROUNDED";
 "ROW" = "ROW";
+"RUNS ON YOUR PC. NO IMAGE UPLOADS." = "RUNS ON YOUR PC. NO IMAGE UPLOADS.";
 "Read QR Codes" = "Read QR Codes";
 "Read QR Codes · Lokum" = "Read QR Codes · Lokum";
 "Read QR codes" = "Read QR codes";
@@ -1466,6 +1479,7 @@
 "Ready to make a fresh copy. No extra settings needed." = "Ready to make a fresh copy. No extra settings needed.";
 "Ready when you log in" = "Ready when you log in";
 "Ready." = "Ready.";
+"Ready. Save a new transparent PNG; your original stays safe." = "Ready. Save a new transparent PNG; your original stays safe.";
 "Ready. You can go back to your files." = "Ready. You can go back to your files.";
 "Recent Conversions" = "Recent Conversions";
 "Rectangle" = "Rectangle";
@@ -1493,6 +1507,7 @@
 "Remove selected range" = "Remove selected range";
 "Remove silence at the beginning and end" = "Remove silence at the beginning and end";
 "Remove silence from beginning and end" = "Remove silence from beginning and end";
+"Removing background…" = "Removing background…";
 "Rendered pages exceed 512 MB. Choose a lower DPI or split the PDF first." = "Rendered pages exceed 512 MB. Choose a lower DPI or split the PDF first.";
 "Replace selected audio with" = "Replace selected audio with";
 "Report saved." = "Report saved.";
@@ -1516,6 +1531,7 @@
 "Rotation" = "Rotation";
 "Rounded" = "Rounded";
 "Row" = "Row";
+"Runs on your PC. No image uploads." = "Runs on your PC. No image uploads.";
 "SAMPLE DEPTH" = "SAMPLE DEPTH";
 "SATURATION" = "SATURATION";
 "SAVE" = "SAVE";
@@ -1544,6 +1560,7 @@
 "SAVE SPEED COPY" = "SAVE SPEED COPY";
 "SAVE THE ARCHIVE OUTSIDE THE FOLDER BEING ZIPPED." = "SAVE THE ARCHIVE OUTSIDE THE FOLDER BEING ZIPPED.";
 "SAVE TO" = "SAVE TO";
+"SAVE TRANSPARENT PNG  ↗" = "SAVE TRANSPARENT PNG  ↗";
 "SAVE TRIMMED COPY" = "SAVE TRIMMED COPY";
 "SAVE WITH BACKGROUND" = "SAVE WITH BACKGROUND";
 "SAVED 1 NEW FILE. ORIGINALS KEPT." = "SAVED 1 NEW FILE. ORIGINALS KEPT.";
@@ -1670,6 +1687,7 @@
 "Save speed copy" = "Save speed copy";
 "Save the archive outside the folder being zipped." = "Save the archive outside the folder being zipped.";
 "Save to" = "Save to";
+"Save transparent PNG  ↗" = "Save transparent PNG  ↗";
 "Save trimmed copy" = "Save trimmed copy";
 "Save with background" = "Save with background";
 "Saved %@ new files. Originals kept." = "Saved %@ new files. Originals kept.";
@@ -1838,6 +1856,7 @@
 "TOP" = "TOP";
 "TRANSPARENT" = "TRANSPARENT";
 "TRANSPARENT BACKGROUNDS SAVE AS PNG TO KEEP THEIR TRANSPARENCY." = "TRANSPARENT BACKGROUNDS SAVE AS PNG TO KEEP THEIR TRANSPARENCY.";
+"TRANSPARENT PNG" = "TRANSPARENT PNG";
 "TRIM" = "TRIM";
 "TRIM AUDIO" = "TRIM AUDIO";
 "TRIM AUDIO · LOKUM" = "TRIM AUDIO · LOKUM";
@@ -1846,6 +1865,7 @@
 "TRUE PEAK DB" = "TRUE PEAK DB";
 "TRUE PEAK LIMIT" = "TRUE PEAK LIMIT";
 "TRY A CLEARER IMAGE OR ANOTHER PDF." = "TRY A CLEARER IMAGE OR ANOTHER PDF.";
+"TRY AGAIN" = "TRY AGAIN";
 "TRY FEEDBACK" = "TRY FEEDBACK";
 "TURN OFF UNIFORM WIDTH TO PRESERVE THIS PDF’S FORM FIELDS, ATTACHMENTS, LINKS OR NAVIGATION." = "TURN OFF UNIFORM WIDTH TO PRESERVE THIS PDF’S FORM FIELDS, ATTACHMENTS, LINKS OR NAVIGATION.";
 "Tap the chosen modifier combination while dragging files." = "Tap the chosen modifier combination while dragging files.";
@@ -1923,6 +1943,7 @@
 "Tools · while dragging" = "Tools · while dragging";
 "Top" = "Top";
 "Transparent" = "Transparent";
+"Transparent PNG" = "Transparent PNG";
 "Transparent backgrounds save as PNG to keep their transparency." = "Transparent backgrounds save as PNG to keep their transparency.";
 "Trim" = "Trim";
 "Trim Audio" = "Trim Audio";
@@ -1932,6 +1953,7 @@
 "True peak dB" = "True peak dB";
 "True peak limit" = "True peak limit";
 "Try a clearer image or another PDF." = "Try a clearer image or another PDF.";
+"Try again" = "Try again";
 "Try feedback" = "Try feedback";
 "Turn off uniform width to preserve this PDF’s form fields, attachments, links or navigation." = "Turn off uniform width to preserve this PDF’s form fields, attachments, links or navigation.";
 "UNDO" = "UNDO";

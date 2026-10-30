@@ -5,6 +5,18 @@ Independent app inspired by Tangerine; not affiliated with LEAP STUDIO.
 https://github.com/dotnet/runtime/blob/main/LICENSE.TXT
 https://github.com/dotnet/wpf/blob/main/LICENSE.TXT
 
+Offline background removal:
+- U²-Net / U2NETP, Xuebin Qin and contributors, Apache-2.0.
+  https://github.com/xuebinqin/U-2-Net
+  ONNX weights distributed by https://github.com/danielgatis/rembg/releases/tag/v0.0.0
+  Embedded model provenance and SHA-256: Resources/Models/README.md in the source tree.
+  Complete license: licenses/U-2-Net-LICENSE.txt.
+- ONNX Runtime 1.23.2, Microsoft and contributors, MIT.
+  https://github.com/microsoft/onnxruntime/tree/v1.23.2
+  Complete license and dependency notices: licenses/ONNX-Runtime-LICENSE.txt and
+  licenses/ONNX-Runtime-THIRD-PARTY-NOTICES.txt.
+  CPU inference only; no image is uploaded to a server.
+
 PDFsharp 6.2.4, empira and contributors, MIT.
 https://github.com/empira/PDFsharp/blob/master/LICENSE
 BouncyCastle.Cryptography 2.7.0, The Legion of the Bouncy Castle Inc., MIT.

@@ -1058,5 +1058,16 @@
   "Zip regular files and folders without links (10,000 item limit).": "Bağlantı içermeyen normal dosya ve klasörleri sıkıştır (sınır 10.000 öğe).",
   "A little delight. A lot of possibility.": "Küçük bir lokum. Bir sürü olasılık.",
   "Signed updates use your configured Lokum release channel. This build has no channel connected yet.": "İmzalı güncellemeler Lokum yayın kanalını kullanır. Bu derlemeye henüz bir kanal bağlanmadı.",
-  "Lokum updates are not connected yet. A Lokum release channel and signing key are required.": "Lokum güncellemeleri henüz bağlı değil. Bir Lokum yayın kanalı ve imza anahtarı gerekiyor."
+  "Lokum updates are not connected yet. A Lokum release channel and signing key are required.": "Lokum güncellemeleri henüz bağlı değil. Bir Lokum yayın kanalı ve imza anahtarı gerekiyor.",
+  "Runs on your PC. No image uploads.": "Bilgisayarında çalışır. Görsellerin yüklenmez.",
+  "Transparent PNG": "Şeffaf PNG",
+  "Inspect fine edges before saving. Complex backgrounds may need further editing.": "Kaydetmeden önce ince kenarları kontrol et. Karmaşık arka planlar ek düzenleme gerektirebilir.",
+  "Save transparent PNG  ↗": "Şeffaf PNG kaydet  ↗",
+  "Try again": "Tekrar dene",
+  "Removing background…": "Arka plan kaldırılıyor…",
+  "Ready. Save a new transparent PNG; your original stays safe.": "Hazır. Yeni bir şeffaf PNG kaydet; özgün dosyan korunur.",
+  "Couldn’t remove the background.": "Arka plan kaldırılamadı.",
+  "Preparing transparent PNG…": "Şeffaf PNG hazırlanıyor…",
+  "Choose one or more images to remove their backgrounds.": "Arka planlarını kaldırmak için bir veya daha fazla görsel seç.",
+  "Preview shows the first image. Saving processes all selected images.": "Önizleme ilk görseli gösterir. Kaydedildiğinde seçilen tüm görseller işlenir."
 }

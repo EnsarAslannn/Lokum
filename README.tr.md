@@ -15,6 +15,7 @@ Dışa aktarımlar kaynak dosyanın üzerine yazmaz; mevcut çıktı adları da 
 ## Sık kullanılan akışlar
 
 - **Görsel kırpma:** görseli seç, çarktan kırpmayı aç, alanı sürükleyerek belirle. Shift oranı kilitler; Enter yeni kırpılmış kopyayı kaydeder.
+- **Arka plan kaldırma (Windows):** görseli seç, **İnce ayar → Arka Planı Kaldır** aracını aç. Yerel önizleme hazır olduğunda **Şeffaf PNG kaydet** düğmesine bas. Model pakete dahildir; internet bağlantısı, Python veya API anahtarı gerekmez. Çoklu seçimde her görsel ayrı PNG olarak kaydedilir. İnce kenarları önizlemede kontrol et. Windows çalışma ortamı gereksinimi [ana rehberde](README.md#arka-plan-kaldırma-windows) açıklanır.
 - **İşaretleme:** kalem, marker, şekil, ok veya metin aracını seç. Seç/Taşı ile düzenle; Ctrl+Z son çizimi geri alır.
 - **Video/ses kırpma:** Space ile önizlemeyi oynat, sağ/sol oklarla gezin, I/O ile başlangıç ve bitişi işaretle ve aralığı yeni dosya olarak kaydet.
 - **PDF:** dosyaları seçip birleştir veya tek PDF'nin sayfalarını böl, sırala ve döndür.

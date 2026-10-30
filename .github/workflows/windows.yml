@@ -28,6 +28,11 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lokum
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Offline background removal and transparent PNG exports
+        shell: pwsh
+        run: |
+          dotnet run --project windows/Lokum.Verify -c Release -- --background-removal-only --output build/background-removal-tests
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Install verified media tools and exercise real exports
         shell: pwsh
         env:

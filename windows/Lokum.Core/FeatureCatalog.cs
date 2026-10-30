@@ -8,7 +8,9 @@ public static class FeatureCatalog
     private static readonly Contract Data=Load();
     private static Contract Load(){using var stream=typeof(FeatureCatalog).Assembly.GetManifestResourceStream("Lokum.FeatureCatalog.json")!;return JsonSerializer.Deserialize<Contract>(stream,new JsonSerializerOptions{PropertyNameCaseInsensitive=true})!;}
     public static IReadOnlyDictionary<string,string[]> Conversions=>Data.ConversionMatrix;
-    public static IReadOnlyDictionary<string,string> ToolNames=>Data.ToolNames;
+    // Windows-only additions stay separate from the shared Swift catalog.
+    private static readonly Dictionary<string,string> WindowsToolNames=new(Data.ToolNames){["removeBackground"]="Remove Background"};
+    public static IReadOnlyDictionary<string,string> ToolNames=>WindowsToolNames;
     public static string Extension(string path)=>Path.GetExtension(path).TrimStart('.').ToLowerInvariant() switch{"jpeg"=>"jpg","tif"=>"tiff","heif"=>"heic","aif"=>"aiff","markdown"=>"md","gzip" or "tgz"=>"gz",var ext=>ext};
     public static bool IsImage(string path)=>new[]{"jpg","png","webp","heic","tiff","svg","avif","bmp"}.Contains(Extension(path));
     public static bool IsVideo(string path)=>new[]{"mp4","mov","mkv","webm","avi","wmv","m4v","gif"}.Contains(Extension(path));
@@ -18,7 +20,9 @@ public static class FeatureCatalog
     public static string[] Tools(IReadOnlyList<string> inputs)
     {
         var result=Intersect(inputs,inputs.Count>1?Data.MultipleTools:Data.SingleTools).ToList();
-        if(inputs.Count>0&&inputs.All(p=>IsImage(p)||Extension(p)=="pdf"))result.Add("readQRCode");return result.ToArray();
+        if(inputs.Count>0&&inputs.All(p=>IsImage(p)||Extension(p)=="pdf"))result.Add("readQRCode");
+        if(inputs.Count>0&&inputs.All(p=>IsImage(p)&&!Directory.Exists(p)))result.Add("removeBackground");
+        return result.ToArray();
     }
     private static string[] Intersect(IReadOnlyList<string> inputs,Dictionary<string,string[]> table)
     {

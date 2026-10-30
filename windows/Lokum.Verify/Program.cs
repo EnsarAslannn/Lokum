@@ -1,6 +1,16 @@
 using Lokum.Core;
 using System.Text.Json;
 
+if(args.Contains("--background-removal-only"))
+{
+    var backgroundChecks=0;
+    BackgroundRemovalChecks.Catalog((ok,message)=>{if(!ok)throw new Exception(message);backgroundChecks++;});
+    var backgroundOutput=Path.GetFullPath(args.SkipWhile(a=>a!="--output").Skip(1).FirstOrDefault()??Path.Combine(Path.GetTempPath(),"Lokum-Background-Checks-"+Guid.NewGuid().ToString("N")));
+    var backgroundFixture=Path.GetFullPath("Tests/LokumCoreTests/Fixtures/astronaut.png");
+    BackgroundRemovalChecks.Engine((ok,message)=>{if(!ok)throw new Exception(message);backgroundChecks++;},backgroundOutput,backgroundFixture);
+    Console.WriteLine("PASS background removal: "+backgroundChecks);return;
+}
+
 if(args.Contains("--update-isolation-only"))
 {
     var updateChecks=0;var directory=Path.Combine(Path.GetTempPath(),"Lokum-Update-Checks-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(directory);
