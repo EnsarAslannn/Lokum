@@ -16,6 +16,7 @@ Configuration/CredentialBroker.json
 *.mobileprovision
 **/bin/
 **/obj/
+*_wpftmp.csproj
 __pycache__/
 *.pyc
 

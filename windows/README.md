@@ -6,6 +6,13 @@ be used as the app launcher. Failed verification checks print diagnostics to
 standard error and exit with code 1. `python scripts/test-verification-runner.py`
 checks this behavior, including a real subprocess failure.
 
+Open the repository root in VS Code. The checked-in `.vscode/settings.json`
+selects `Lokum.sln`, which contains the Core, Verify and Windows projects.
+Generated `bin`, `obj` and WPF temporary project files are excluded from the
+Explorer and file watching. If the editor previously loaded temporary projects,
+run **Developer: Reload Window** once. Build all three projects with
+`dotnet build Lokum.sln -c Debug`.
+
 Mac and Windows 0.7.5 are published with the shared 45-format / 27-tool catalog and aligned Home, Library, paste, preview and window-management workflows. See [the feature parity and verification matrix](FEATURE-PARITY.md) for implementation, evidence and platform differences.
 
 Lokum uses WPF / .NET 10, the same pear artwork, file garden, rounded cards, gold actions and light/dark palette as macOS, with Windows keyboard conventions and native window controls. Build with `dotnet publish windows/Lokum.Windows -c Release -o build/windows/Lokum`. The output is self-contained; users do not install .NET separately. Keep the portable folder together in a writable location so updates can replace it safely.

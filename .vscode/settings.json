@@ -1,0 +1,13 @@
+{
+  "dotnet.defaultSolution": "Lokum.sln",
+  "files.exclude": {
+    "**/bin": true,
+    "**/obj": true,
+    "**/*_wpftmp.csproj": true
+  },
+  "files.watcherExclude": {
+    "**/bin/**": true,
+    "**/obj/**": true,
+    "**/*_wpftmp.csproj": true
+  }
+}
