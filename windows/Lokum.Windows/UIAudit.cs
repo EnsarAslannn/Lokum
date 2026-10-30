@@ -20,7 +20,8 @@ internal static class UIAudit
     internal static readonly string[] SceneIds =
     [
         "home.empty", "home.selected", "library", "settings.general", "settings.formats",
-        "settings.updates", "wheel.pdf-multiple", "editor.crop-image", "editor.annotate-image", "editor.frame-image", "editor.remove-background"
+        "settings.updates", "wheel.pdf-multiple", "editor.crop-image", "editor.annotate-image", "editor.frame-image", "editor.remove-background",
+        "editor.metadata-empty", "editor.metadata-filled"
     ];
     private static readonly string[] Appearances = ["light", "dark"];
     private static readonly string[] Languages = ["en", "tr"];
@@ -188,6 +189,8 @@ internal static class UIAudit
                 "editor.annotate-image" => new ToolEditor(owner, "annotate", "Annotate", fixtures.Image, preview: fixtures.Bitmap),
                 "editor.frame-image" => new ToolEditor(owner, "frameImage", "Frame Image", fixtures.Image, preview: fixtures.Bitmap),
                 "editor.remove-background" => new BackgroundRemovalWindow(owner,fixtures.Image),
+                "editor.metadata-empty" => new MetadataEditor(owner, MetadataEditorChecks.Fixture(fixtures.Image, false)),
+                "editor.metadata-filled" => new MetadataEditor(owner, MetadataEditorChecks.Fixture(fixtures.Image, true)),
                 _ => throw new ArgumentException("Unknown scene: " + capture.Scene)
             };
             if (!ReferenceEquals(subject, owner)) ShowAtMinimum(subject);
@@ -340,9 +343,15 @@ internal static class UIAudit
                 Descendants<Image>(subject).Any(image => image.Source is BitmapSource source && source.PixelWidth == fixtures.Bitmap.PixelWidth + 160 && source.PixelHeight == fixtures.Bitmap.PixelHeight + 160),
             "editor.remove-background" => subject is BackgroundRemovalWindow removal && removal.PreviewReady &&
                 Descendants<Image>(subject).Count(image=>image.Source is BitmapSource source&&source.PixelWidth==fixtures.Bitmap.PixelWidth&&source.PixelHeight==fixtures.Bitmap.PixelHeight)==2,
+            "editor.metadata-empty" or "editor.metadata-filled" => subject is MetadataEditor,
             _ => false
         };
         if (!capture.Checks["actualScene"]) capture.Issues.Add("The requested scene's semantic state was not present.");
+        if (subject is MetadataEditor metadata)
+        {
+            try { MetadataEditorChecks.Verify(metadata, capture.Scene == "editor.metadata-filled"); capture.Checks["metadataReadableAndEditable"] = true; }
+            catch (Exception error) { capture.Checks["metadataReadableAndEditable"] = false; capture.Issues.Add(error.Message); }
+        }
     }
 
     private static void ValidateLayout(Window window, Capture capture)
