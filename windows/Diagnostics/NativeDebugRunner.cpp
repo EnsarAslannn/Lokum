@@ -1,11 +1,11 @@
-// Diagnostic runner for Nashi's isolated Windows CI fixture. Prints call stacks,
+// Diagnostic runner for Lokum's isolated Windows CI fixture. Prints call stacks,
 // never process memory or local variables; preserves the debuggee's exit code.
 #include <windows.h>
 #include <cstdio>
 #include <cstring>
 #include <cstdlib>
 #include <cwchar>
-#if !defined(NASHI_TRACE_LIBRARY)
+#if !defined(LOKUM_TRACE_LIBRARY)
 #include <dbghelp.h>
 #include <string>
 #include <vector>
@@ -32,7 +32,7 @@ static void writeStack(FILE* output,HANDLE process,HANDLE thread,CONTEXT context
         std::fflush(output);
 }
 #endif
-#if defined(NASHI_TRACE_LIBRARY)
+#if defined(LOKUM_TRACE_LIBRARY)
 static wchar_t tracePath[32768]{};
 static volatile LONG tracing=0;
 static void rawStack(FILE* output,CONTEXT context) {
@@ -60,7 +60,7 @@ static LONG CALLBACK traceException(EXCEPTION_POINTERS* exception) {
     return EXCEPTION_CONTINUE_SEARCH; // Observe only: preserve the original exception and process status.
 }
 extern "C" __declspec(dllexport) void __cdecl InstallTrace() {
-    auto length=GetEnvironmentVariableW(L"NASHI_SMOKE_DIRECTORY",tracePath,32768);
+    auto length=GetEnvironmentVariableW(L"LOKUM_SMOKE_DIRECTORY",tracePath,32768);
     if(length==0||length>32700)return;
     wcscat_s(tracePath,L"\\native-exception-stack.txt");
     AddVectoredExceptionHandler(1,traceException);

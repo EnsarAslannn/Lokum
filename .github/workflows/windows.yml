@@ -24,7 +24,7 @@ jobs:
       - name: Audit and publish Windows x64
         shell: pwsh
         run: |
-          dotnet restore windows/Lokum.Windows --locked-mode
+          dotnet restore Lokum.sln --locked-mode
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lokum
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
@@ -64,6 +64,8 @@ jobs:
           $vcvars = Join-Path $vs 'VC\Auxiliary\Build\vcvars64.bat'
           cmd /d /c "call `"$vcvars`" && cl /nologo /std:c++20 /EHsc /W4 /DLOKUM_TRACE_LIBRARY /LD windows\Diagnostics\NativeDebugRunner.cpp /Fe:build\NativeShutdownTrace.dll && cl /nologo /std:c++20 /EHsc /W4 windows\Diagnostics\NativeDebugRunner.cpp /Fe:build\NativeDebugRunner.exe /link dbghelp.lib"
           if ($LASTEXITCODE -ne 0) { throw 'Native diagnostics did not compile' }
+          python scripts/test-native-trace.py build/NativeShutdownTrace.dll
+          if ($LASTEXITCODE -ne 0) { throw 'Native diagnostics export or output path is invalid' }
           function Invoke-NativeFixture([string] $directory) {
             $env:LOKUM_SMOKE_DIRECTORY = $directory
             New-Item -ItemType Directory -Force $directory | Out-Null

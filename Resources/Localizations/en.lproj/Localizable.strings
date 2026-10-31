@@ -94,11 +94,13 @@
 "ADD FILES…" = "ADD FILES…";
 "ADD FRAME" = "ADD FRAME";
 "ADD METADATA FIELD" = "ADD METADATA FIELD";
+"ADD METADATA FIELDS" = "ADD METADATA FIELDS";
 "ADD REDACTION" = "ADD REDACTION";
 "ADD SELECTED RANGE" = "ADD SELECTED RANGE";
 "ADD SPLIT" = "ADD SPLIT";
 "ADD TO AN EXISTING FLOAT" = "ADD TO AN EXISTING FLOAT";
 "ADDITIONAL OPTIONS" = "ADDITIONAL OPTIONS";
+"ALBUM" = "ALBUM";
 "ALL" = "ALL";
 "ALL METADATA" = "ALL METADATA";
 "ALL SET. YOU’RE READY TO GO." = "ALL SET. YOU’RE READY TO GO.";
@@ -144,6 +146,7 @@
 "AUDIO TO VIDEO" = "AUDIO TO VIDEO";
 "AUDIO VISUALIZER" = "AUDIO VISUALIZER";
 "AUDIO · MP3" = "AUDIO · MP3";
+"AUTHOR" = "AUTHOR";
 "AUTHORIZE SAVED TOKEN…" = "AUTHORIZE SAVED TOKEN…";
 "AVAILABLE FILES SELECTED. SOME FILES HAVE MOVED OR WERE DELETED." = "AVAILABLE FILES SELECTED. SOME FILES HAVE MOVED OR WERE DELETED.";
 "About" = "About";
@@ -160,9 +163,11 @@
 "Add Split" = "Add Split";
 "Add a bleep or silence range." = "Add a bleep or silence range.";
 "Add files" = "Add files";
+"Add metadata fields" = "Add metadata fields";
 "Add selected range" = "Add selected range";
 "Add to an existing Float" = "Add to an existing Float";
 "Additional options" = "Additional options";
+"Album" = "Album";
 "All" = "All";
 "All metadata" = "All metadata";
 "All set. You’re ready to go." = "All set. You’re ready to go.";
@@ -214,6 +219,7 @@
 "Audio sample depth" = "Audio sample depth";
 "Audio to Video" = "Audio to Video";
 "Audio · MP3" = "Audio · MP3";
+"Author" = "Author";
 "Authorize Saved Token…" = "Authorize Saved Token…";
 "Available files selected. Some files have moved or were deleted." = "Available files selected. Some files have moved or were deleted.";
 "BACK" = "BACK";
@@ -255,6 +261,8 @@
 "Brightness" = "Brightness";
 "Built for your files. Made for your Mac." = "Built for your files. Made for your Mac.";
 "CALLOUT" = "CALLOUT";
+"CAMERA MANUFACTURER" = "CAMERA MANUFACTURER";
+"CAMERA MODEL" = "CAMERA MODEL";
 "CANCEL" = "CANCEL";
 "CANCEL DOWNLOAD" = "CANCEL DOWNLOAD";
 "CANCEL SETUP" = "CANCEL SETUP";
@@ -360,6 +368,7 @@
 "COLOR" = "COLOR";
 "COLUMN" = "COLUMN";
 "COLUMNS" = "COLUMNS";
+"COMMENT" = "COMMENT";
 "COMPATIBILITY" = "COMPATIBILITY";
 "COMPRESS" = "COMPRESS";
 "COMPRESS & SAVE" = "COMPRESS & SAVE";
@@ -386,6 +395,7 @@
 "COPY A LINK, THEN CHOOSE DOWNLOAD LINK FROM THE LOKUM MENU." = "COPY A LINK, THEN CHOOSE DOWNLOAD LINK FROM THE LOKUM MENU.";
 "COPY A PUBLIC MEDIA LINK FIRST." = "COPY A PUBLIC MEDIA LINK FIRST.";
 "COPY PATH" = "COPY PATH";
+"COPYRIGHT" = "COPYRIGHT";
 "CORNER RADIUS" = "CORNER RADIUS";
 "CORNERS" = "CORNERS";
 "COULDN’T CHECK FOR UPDATES" = "COULDN’T CHECK FOR UPDATES";
@@ -397,6 +407,8 @@
 "CREATE COLLAGE" = "CREATE COLLAGE";
 "CREATE PDF" = "CREATE PDF";
 "CREATE VISUALIZATION" = "CREATE VISUALIZATION";
+"CREATED" = "CREATED";
+"CREATOR" = "CREATOR";
 "CROP" = "CROP";
 "CROP AREA" = "CROP AREA";
 "CROP IMAGE" = "CROP IMAGE";
@@ -407,6 +419,8 @@
 "CUSTOM DIMENSIONS" = "CUSTOM DIMENSIONS";
 "CUT" = "CUT";
 "Callout" = "Callout";
+"Camera manufacturer" = "Camera manufacturer";
+"Camera model" = "Camera model";
 "Cancel" = "Cancel";
 "Cancel download" = "Cancel download";
 "Cancel setup" = "Cancel setup";
@@ -516,6 +530,7 @@
 "Color" = "Color";
 "Column" = "Column";
 "Columns" = "Columns";
+"Comment" = "Comment";
 "Compatibility" = "Compatibility";
 "Compress" = "Compress";
 "Compress & save" = "Compress & save";
@@ -547,6 +562,7 @@
 "Copy a link, then choose Download Link from the Lokum menu." = "Copy a link, then choose Download Link from the Lokum menu.";
 "Copy a public media link first." = "Copy a public media link first.";
 "Copy path" = "Copy path";
+"Copyright" = "Copyright";
 "Corner radius" = "Corner radius";
 "Corners" = "Corners";
 "Couldn’t check for updates" = "Couldn’t check for updates";
@@ -559,6 +575,8 @@
 "Create a New Float" = "Create a New Float";
 "Create a new Float" = "Create a new Float";
 "Create visualization" = "Create visualization";
+"Created" = "Created";
+"Creator" = "Creator";
 "Crop" = "Crop";
 "Crop Image" = "Crop Image";
 "Crop Image · Lokum" = "Crop Image · Lokum";
@@ -569,11 +587,13 @@
 "Custom dimensions" = "Custom dimensions";
 "Cut" = "Cut";
 "DARK" = "DARK";
+"DATE TAKEN" = "DATE TAKEN";
 "DEFAULTS COULD NOT BE RESTORED" = "DEFAULTS COULD NOT BE RESTORED";
 "DEGREES" = "DEGREES";
 "DEHAZE" = "DEHAZE";
 "DELETE" = "DELETE";
 "DELETE CLIP" = "DELETE CLIP";
+"DESCRIPTION" = "DESCRIPTION";
 "DETACH" = "DETACH";
 "DETAIL" = "DETAIL";
 "DETECT FACES" = "DETECT FACES";
@@ -616,6 +636,7 @@
 "DRAG AN EXISTING ANNOTATION TO MOVE IT; DRAG ITS HANDLES TO RESIZE. TURN OFF SELECT / MOVE TO DRAW." = "DRAG AN EXISTING ANNOTATION TO MOVE IT; DRAG ITS HANDLES TO RESIZE. TURN OFF SELECT / MOVE TO DRAW.";
 "DRAG INSIDE TO MOVE. DRAG NEAR A CORNER TO RESIZE. DRAG OUTSIDE TO START A NEW SELECTION." = "DRAG INSIDE TO MOVE. DRAG NEAR A CORNER TO RESIZE. DRAG OUTSIDE TO START A NEW SELECTION.";
 "DRAG ON THE PREVIEW TO ADD AN AREA. EACH AREA IS SAVED INTO THE NEW COPY." = "DRAG ON THE PREVIEW TO ADD AN AREA. EACH AREA IS SAVED INTO THE NEW COPY.";
+"DRAG OVER THE AREA YOU WANT TO BLUR. THE PREVIEW SHOWS THE SELECTED COVER STYLE. SAVE TO CREATE A NEW PNG." = "DRAG OVER THE AREA YOU WANT TO BLUR. THE PREVIEW SHOWS THE SELECTED COVER STYLE. SAVE TO CREATE A NEW PNG.";
 "DRAG SHORTCUTS" = "DRAG SHORTCUTS";
 "DRAG THE STACK TO CARRY ALL FILES. DRAG THE PAPERCLIP TO MOVE FLOAT." = "DRAG THE STACK TO CARRY ALL FILES. DRAG THE PAPERCLIP TO MOVE FLOAT.";
 "DRAG TO DRAW WITH THE SELECTED TOOL. USE SELECT / MOVE TO EDIT AN EXISTING ANNOTATION." = "DRAG TO DRAW WITH THE SELECTED TOOL. USE SELECT / MOVE TO EDIT AN EXISTING ANNOTATION.";
@@ -630,11 +651,13 @@
 "DROP SOMETHING GOOD." = "DROP SOMETHING GOOD.";
 "DUPLICATE" = "DUPLICATE";
 "Dark" = "Dark";
+"Date taken" = "Date taken";
 "Defaults could not be restored" = "Defaults could not be restored";
 "Degrees" = "Degrees";
 "Dehaze" = "Dehaze";
 "Delete" = "Delete";
 "Delete Clip" = "Delete Clip";
+"Description" = "Description";
 "Detach" = "Detach";
 "Detail" = "Detail";
 "Detect Faces" = "Detect Faces";
@@ -681,6 +704,7 @@
 "Drag an existing annotation to move it; drag its handles to resize. Turn off Select / Move to draw." = "Drag an existing annotation to move it; drag its handles to resize. Turn off Select / Move to draw.";
 "Drag inside to move. Drag near a corner to resize. Drag outside to start a new selection." = "Drag inside to move. Drag near a corner to resize. Drag outside to start a new selection.";
 "Drag on the preview to add an area. Each area is saved into the new copy." = "Drag on the preview to add an area. Each area is saved into the new copy.";
+"Drag over the area you want to blur. The preview shows the selected cover style. Save to create a new PNG." = "Drag over the area you want to blur. The preview shows the selected cover style. Save to create a new PNG.";
 "Drag shortcuts" = "Drag shortcuts";
 "Drag the stack to carry all files. Drag the paperclip to move Float." = "Drag the stack to carry all files. Drag the paperclip to move Float.";
 "Drag to draw with the selected tool. Use Select / Move to edit an existing annotation." = "Drag to draw with the selected tool. Use Select / Move to edit an existing annotation.";
@@ -756,6 +780,7 @@
 "FILE ACTIONS" = "FILE ACTIONS";
 "FILE ACTIONS WHEEL" = "FILE ACTIONS WHEEL";
 "FILE ACTIONS · WHILE DRAGGING" = "FILE ACTIONS · WHILE DRAGGING";
+"FILE INFORMATION" = "FILE INFORMATION";
 "FILE ORDER" = "FILE ORDER";
 "FILE SIZE" = "FILE SIZE";
 "FILE TOOLS WHEEL" = "FILE TOOLS WHEEL";
@@ -817,6 +842,7 @@
 "File actions" = "File actions";
 "File actions wheel" = "File actions wheel";
 "File actions · while dragging" = "File actions · while dragging";
+"File information" = "File information";
 "File order" = "File order";
 "File size" = "File size";
 "File tools wheel" = "File tools wheel";
@@ -877,6 +903,7 @@
 "GAMMA" = "GAMMA";
 "GAMMA MUST BE POSITIVE; CONTRAST AND SATURATION CANNOT BE NEGATIVE." = "GAMMA MUST BE POSITIVE; CONTRAST AND SATURATION CANNOT BE NEGATIVE.";
 "GENERAL" = "GENERAL";
+"GENRE" = "GENRE";
 "GET STARTED" = "GET STARTED";
 "GIF FRAME RATE" = "GIF FRAME RATE";
 "GIF FRAMES PER SECOND" = "GIF FRAMES PER SECOND";
@@ -898,6 +925,7 @@
 "Gamma" = "Gamma";
 "Gamma must be positive; contrast and saturation cannot be negative." = "Gamma must be positive; contrast and saturation cannot be negative.";
 "General" = "General";
+"Genre" = "Genre";
 "Get started" = "Get started";
 "GitHub repository" = "GitHub repository";
 "Give it a little breathing room." = "Give it a little breathing room.";
@@ -934,6 +962,7 @@
 "INPUT FORMAT" = "INPUT FORMAT";
 "INPUT-ONLY FORMAT." = "INPUT-ONLY FORMAT.";
 "INSPECT FINE EDGES BEFORE SAVING. COMPLEX BACKGROUNDS MAY NEED FURTHER EDITING." = "INSPECT FINE EDGES BEFORE SAVING. COMPLEX BACKGROUNDS MAY NEED FURTHER EDITING.";
+"INSPECT SAVED INFORMATION, EDIT FIELDS OR REMOVE PERSONAL TAGS. YOUR ORIGINAL FILE STAYS UNCHANGED." = "INSPECT SAVED INFORMATION, EDIT FIELDS OR REMOVE PERSONAL TAGS. YOUR ORIGINAL FILE STAYS UNCHANGED.";
 "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. FOR VIDEOS, USE THE SHARE LINK; FOR OTHER PHOTOS, DRAG THE IMAGE OR USE COPY IMAGE ADDRESS. PUBLIC MEDIA ONLY; LOGIN-REQUIRED AND PROTECTED ITEMS MAY BE UNAVAILABLE." = "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. FOR VIDEOS, USE THE SHARE LINK; FOR OTHER PHOTOS, DRAG THE IMAGE OR USE COPY IMAGE ADDRESS. PUBLIC MEDIA ONLY; LOGIN-REQUIRED AND PROTECTED ITEMS MAY BE UNAVAILABLE.";
 "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. REEL LINKS OFFER VIDEO AND AUDIO. PUBLIC DOWNLOADABLE MEDIA ONLY." = "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. REEL LINKS OFFER VIDEO AND AUDIO. PUBLIC DOWNLOADABLE MEDIA ONLY.";
 "INSTALL AN OCR LANGUAGE IN WINDOWS LANGUAGE SETTINGS TO DETECT TEXT." = "INSTALL AN OCR LANGUAGE IN WINDOWS LANGUAGE SETTINGS TO DETECT TEXT.";
@@ -963,6 +992,7 @@
 "Input format" = "Input format";
 "Input-only format." = "Input-only format.";
 "Inspect fine edges before saving. Complex backgrounds may need further editing." = "Inspect fine edges before saving. Complex backgrounds may need further editing.";
+"Inspect saved information, edit fields or remove personal tags. Your original file stays unchanged." = "Inspect saved information, edit fields or remove personal tags. Your original file stays unchanged.";
 "Instagram photo posts open a photo selection. For videos, use the share link; for other photos, drag the image or use Copy Image Address. Public media only; login-required and protected items may be unavailable." = "Instagram photo posts open a photo selection. For videos, use the share link; for other photos, drag the image or use Copy Image Address. Public media only; login-required and protected items may be unavailable.";
 "Instagram photo posts open a photo selection. Reel links offer video and audio. Public downloadable media only." = "Instagram photo posts open a photo selection. Reel links offer video and audio. Public downloadable media only.";
 "Install an OCR language in Windows Language settings to detect text." = "Install an OCR language in Windows Language settings to detect text.";
@@ -991,6 +1021,7 @@
 "KEEP THE GOOD PART." = "KEEP THE GOOD PART.";
 "KEEP THE ORIGINAL PAGES" = "KEEP THE ORIGINAL PAGES";
 "KEEP THINGS\nMOVING." = "KEEP THINGS\nMOVING.";
+"KEYWORDS" = "KEYWORDS";
 "Keep at least one clip." = "Keep at least one clip.";
 "Keep at least one page." = "Keep at least one page.";
 "Keep dragging\nDrop a file or link" = "Keep dragging\nDrop a file or link";
@@ -1001,6 +1032,7 @@
 "Keep the good part." = "Keep the good part.";
 "Keep the original pages" = "Keep the original pages";
 "Keep things\nmoving." = "Keep things\nmoving.";
+"Keywords" = "Keywords";
 "LANDSCAPE" = "LANDSCAPE";
 "LANDSCAPE · 16:9" = "LANDSCAPE · 16:9";
 "LANGUAGE" = "LANGUAGE";
@@ -1104,6 +1136,7 @@
 "METADATA TOOLS CHECKSUM MISMATCH." = "METADATA TOOLS CHECKSUM MISMATCH.";
 "METADATA · LOKUM" = "METADATA · LOKUM";
 "MIDDLE THIRD" = "MIDDLE THIRD";
+"MODIFIED" = "MODIFIED";
 "MONO" = "MONO";
 "MONOSPACED" = "MONOSPACED";
 "MOVE" = "MOVE";
@@ -1144,6 +1177,7 @@
 "Metadata tools checksum mismatch." = "Metadata tools checksum mismatch.";
 "Metadata · Lokum" = "Metadata · Lokum";
 "Middle third" = "Middle third";
+"Modified" = "Modified";
 "Mono" = "Mono";
 "Monospaced" = "Monospaced";
 "Move" = "Move";
@@ -1166,6 +1200,7 @@
 "NICE FILES.\nNO FUSS." = "NICE FILES.\nNO FUSS.";
 "NICELY DONE." = "NICELY DONE.";
 "NICELY DONE. 1 FILE IS READY." = "NICELY DONE. 1 FILE IS READY.";
+"NO EDITABLE TAGS ARE SAVED IN THIS FILE. YOU CAN ADD A TITLE, AUTHOR OR DESCRIPTION BELOW." = "NO EDITABLE TAGS ARE SAVED IN THIS FILE. YOU CAN ADD A TITLE, AUTHOR OR DESCRIPTION BELOW.";
 "NO FOLDERS ALLOWED YET." = "NO FOLDERS ALLOWED YET.";
 "NO MATCHES. TRY A FILE NAME OR TOOL." = "NO MATCHES. TRY A FILE NAME OR TOOL.";
 "NO MATCHING REGIONS WERE DETECTED. YOU CAN STILL DRAW AREAS BY HAND." = "NO MATCHING REGIONS WERE DETECTED. YOU CAN STILL DRAW AREAS BY HAND.";
@@ -1196,6 +1231,7 @@
 "Nicely done. %lld files are ready." = "Nicely done. %lld files are ready.";
 "Nicely done. 1 file is ready." = "Nicely done. 1 file is ready.";
 "No QR codes this time." = "No QR codes this time.";
+"No editable tags are saved in this file. You can add a title, author or description below." = "No editable tags are saved in this file. You can add a title, author or description below.";
 "No folders allowed yet." = "No folders allowed yet.";
 "No matches. Try a file name or tool." = "No matches. Try a file name or tool.";
 "No matching regions were detected. You can still draw areas by hand." = "No matching regions were detected. You can still draw areas by hand.";
@@ -1462,6 +1498,7 @@
 "RIGHT TWO-THIRDS" = "RIGHT TWO-THIRDS";
 "RIGHT VOLUME" = "RIGHT VOLUME";
 "RIGHT WHERE\nYOU WANT IT." = "RIGHT WHERE\nYOU WANT IT.";
+"RIGHTS" = "RIGHTS";
 "ROTATE" = "ROTATE";
 "ROTATE LEFT" = "ROTATE LEFT";
 "ROTATE RIGHT" = "ROTATE RIGHT";
@@ -1525,6 +1562,7 @@
 "Right two-thirds" = "Right two-thirds";
 "Right volume" = "Right volume";
 "Right where\nyou want it." = "Right where\nyou want it.";
+"Rights" = "Rights";
 "Rotate" = "Rotate";
 "Rotate Left" = "Rotate Left";
 "Rotate Right" = "Rotate Right";
@@ -1565,6 +1603,7 @@
 "SAVE WITH BACKGROUND" = "SAVE WITH BACKGROUND";
 "SAVED 1 NEW FILE. ORIGINALS KEPT." = "SAVED 1 NEW FILE. ORIGINALS KEPT.";
 "SAVED IN POST ORDER IN A NEW INSTAGRAM FOLDER." = "SAVED IN POST ORDER IN A NEW INSTAGRAM FOLDER.";
+"SAVED METADATA FIELDS" = "SAVED METADATA FIELDS";
 "SCAN AGAIN" = "SCAN AGAIN";
 "SEARCH FORMATS" = "SEARCH FORMATS";
 "SEARCH METADATA" = "SEARCH METADATA";
@@ -1621,6 +1660,7 @@
 "SMALL · 1280 PX LONGEST EDGE" = "SMALL · 1280 PX LONGEST EDGE";
 "SMALLER FILE" = "SMALLER FILE";
 "SMALLEST" = "SMALLEST";
+"SOFTWARE" = "SOFTWARE";
 "SOLID" = "SOLID";
 "SOUND AND HAPTIC FEEDBACK" = "SOUND AND HAPTIC FEEDBACK";
 "SOUND FEEDBACK" = "SOUND FEEDBACK";
@@ -1650,6 +1690,7 @@
 "STROKE WIDTH" = "STROKE WIDTH";
 "STRONG" = "STRONG";
 "STYLE" = "STYLE";
+"SUBJECT" = "SUBJECT";
 "SUBTITLES" = "SUBTITLES";
 "SUBTLE ANIMATIONS" = "SUBTLE ANIMATIONS";
 "SVG EXTERNAL RESOURCES ARE NOT LOADED. EMBED THE RASTER IMAGE FIRST." = "SVG EXTERNAL RESOURCES ARE NOT LOADED. EMBED THE RASTER IMAGE FIRST.";
@@ -1694,6 +1735,7 @@
 "Saved %lld new files. Originals kept." = "Saved %lld new files. Originals kept.";
 "Saved 1 new file. Originals kept." = "Saved 1 new file. Originals kept.";
 "Saved in post order in a new Instagram folder." = "Saved in post order in a new Instagram folder.";
+"Saved metadata fields" = "Saved metadata fields";
 "Scan again" = "Scan again";
 "Search formats" = "Search formats";
 "Search metadata" = "Search metadata";
@@ -1753,6 +1795,7 @@
 "Small · 1280 px longest edge" = "Small · 1280 px longest edge";
 "Smaller File" = "Smaller File";
 "Smallest" = "Smallest";
+"Software" = "Software";
 "Solid" = "Solid";
 "Sound and haptic feedback" = "Sound and haptic feedback";
 "Sound feedback" = "Sound feedback";
@@ -1781,6 +1824,7 @@
 "Stroke width" = "Stroke width";
 "Strong" = "Strong";
 "Style" = "Style";
+"Subject" = "Subject";
 "Subtitles" = "Subtitles";
 "Subtle animations" = "Subtle animations";
 "System" = "System";
@@ -1845,6 +1889,7 @@
 "THUMBNAIL" = "THUMBNAIL";
 "TIMES (SECONDS)" = "TIMES (SECONDS)";
 "TINT" = "TINT";
+"TITLE" = "TITLE";
 "TOO MANY FILES ALREADY USE THIS NAME." = "TOO MANY FILES ALREADY USE THIS NAME.";
 "TOO MANY IMAGE REDIRECTS." = "TOO MANY IMAGE REDIRECTS.";
 "TOO MANY UPDATE FILES." = "TOO MANY UPDATE FILES.";
@@ -1933,6 +1978,7 @@
 "Thumbnail" = "Thumbnail";
 "Times (seconds)" = "Times (seconds)";
 "Tint" = "Tint";
+"Title" = "Title";
 "Too many files already use this name." = "Too many files already use this name.";
 "Too many image redirects." = "Too many image redirects.";
 "Too many update files." = "Too many update files.";
@@ -2068,6 +2114,7 @@
 "Windows could not add Lokum to the system tray." = "Windows could not add Lokum to the system tray.";
 "Windows could not create a tray icon." = "Windows could not create a tray icon.";
 "Working…" = "Working…";
+"YEAR" = "YEAR";
 "YOU CAN ALSO CHOOSE FILES FROM THE MAIN WINDOW." = "YOU CAN ALSO CHOOSE FILES FROM THE MAIN WINDOW.";
 "YOU CHOOSE WHEN TO DOWNLOAD AND INSTALL." = "YOU CHOOSE WHEN TO DOWNLOAD AND INSTALL.";
 "YOU HAVE THE LATEST PUBLISHED WINDOWS VERSION." = "YOU HAVE THE LATEST PUBLISHED WINDOWS VERSION.";
@@ -2085,6 +2132,7 @@
 "YOUR TOOLS ARE READY." = "YOUR TOOLS ARE READY.";
 "YOUR TOOLS ARE READY. LET’S PUT THAT NEXT FILE TO GOOD USE." = "YOUR TOOLS ARE READY. LET’S PUT THAT NEXT FILE TO GOOD USE.";
 "YOU’RE ALL SET.\nMAKE SOMETHING GOOD." = "YOU’RE ALL SET.\nMAKE SOMETHING GOOD.";
+"Year" = "Year";
 "You can also choose files from the main window." = "You can also choose files from the main window.";
 "You choose when to download and install." = "You choose when to download and install.";
 "You have the latest published Windows version." = "You have the latest published Windows version.";

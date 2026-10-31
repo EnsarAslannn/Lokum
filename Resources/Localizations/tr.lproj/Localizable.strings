@@ -94,11 +94,13 @@
 "ADD FILES…" = "DOSYA EKLE…";
 "ADD FRAME" = "KARE EKLE";
 "ADD METADATA FIELD" = "META VERİ ALANI EKLE";
+"ADD METADATA FIELDS" = "META VERİ ALANI EKLE";
 "ADD REDACTION" = "SANSÜR ALANI EKLE";
 "ADD SELECTED RANGE" = "SEÇİLİ ARALIĞI EKLE";
 "ADD SPLIT" = "BÖLME NOKTASI EKLE";
 "ADD TO AN EXISTING FLOAT" = "MEVCUT YÜZEN PENCEREYE EKLE";
 "ADDITIONAL OPTIONS" = "DİĞER SEÇENEKLER";
+"ALBUM" = "ALBÜM";
 "ALL" = "TÜMÜ";
 "ALL METADATA" = "TÜM META VERİLER";
 "ALL SET. YOU’RE READY TO GO." = "HER ŞEY HAZIR.";
@@ -144,6 +146,7 @@
 "AUDIO TO VIDEO" = "SESTEN VİDEO OLUŞTUR";
 "AUDIO VISUALIZER" = "SESİ GÖRSELLEŞTİR";
 "AUDIO · MP3" = "SES · MP3";
+"AUTHOR" = "YAZAR";
 "AUTHORIZE SAVED TOKEN…" = "KAYITLI TOKENA İZİN VER…";
 "AVAILABLE FILES SELECTED. SOME FILES HAVE MOVED OR WERE DELETED." = "MEVCUT DOSYALAR SEÇİLDİ. BAZI DOSYALAR TAŞINMIŞ VEYA SİLİNMİŞ.";
 "About" = "Hakkında";
@@ -160,9 +163,11 @@
 "Add Split" = "Bölme Noktası Ekle";
 "Add a bleep or silence range." = "Bir bip veya sessizlik aralığı ekle.";
 "Add files" = "Dosya ekle";
+"Add metadata fields" = "Meta veri alanı ekle";
 "Add selected range" = "Seçili aralığı ekle";
 "Add to an existing Float" = "Mevcut yüzen pencereye ekle";
 "Additional options" = "Diğer seçenekler";
+"Album" = "Albüm";
 "All" = "Tümü";
 "All metadata" = "Tüm meta veriler";
 "All set. You’re ready to go." = "Her şey hazır.";
@@ -214,6 +219,7 @@
 "Audio sample depth" = "Ses örnek derinliği";
 "Audio to Video" = "Sesten Video Oluştur";
 "Audio · MP3" = "Ses · MP3";
+"Author" = "Yazar";
 "Authorize Saved Token…" = "Kayıtlı Tokena İzin Ver…";
 "Available files selected. Some files have moved or were deleted." = "Mevcut dosyalar seçildi. Bazı dosyalar taşınmış veya silinmiş.";
 "BACK" = "GERİ";
@@ -255,6 +261,8 @@
 "Brightness" = "Parlaklık";
 "Built for your files. Made for your Mac." = "Dosyaların için geliştirildi. Mac'in için tasarlandı.";
 "CALLOUT" = "AÇIKLAMA";
+"CAMERA MANUFACTURER" = "KAMERA ÜRETİCİSİ";
+"CAMERA MODEL" = "KAMERA MODELİ";
 "CANCEL" = "İPTAL";
 "CANCEL DOWNLOAD" = "İNDİRMEYİ İPTAL ET";
 "CANCEL SETUP" = "KURULUMU İPTAL ET";
@@ -360,6 +368,7 @@
 "COLOR" = "RENK";
 "COLUMN" = "SÜTUN";
 "COLUMNS" = "SÜTUN SAYISI";
+"COMMENT" = "YORUM";
 "COMPATIBILITY" = "UYUMLULUK";
 "COMPRESS" = "SIKIŞTIR";
 "COMPRESS & SAVE" = "SIKIŞTIR VE KAYDET";
@@ -386,6 +395,7 @@
 "COPY A LINK, THEN CHOOSE DOWNLOAD LINK FROM THE LOKUM MENU." = "BİR BAĞLANTI KOPYALA, SONRA LOKUM MENÜSÜNDEN BAĞLANTIDAN İNDİR'İ SEÇ.";
 "COPY A PUBLIC MEDIA LINK FIRST." = "ÖNCE HERKESE AÇIK BİR MEDYA BAĞLANTISI KOPYALA.";
 "COPY PATH" = "YOLU KOPYALA";
+"COPYRIGHT" = "TELİF HAKKI";
 "CORNER RADIUS" = "KÖŞE YUVARLAKLIĞI";
 "CORNERS" = "KÖŞELER";
 "COULDN’T CHECK FOR UPDATES" = "GÜNCELLEMELER DENETLENEMEDİ";
@@ -397,6 +407,8 @@
 "CREATE COLLAGE" = "KOLAJ OLUŞTUR";
 "CREATE PDF" = "PDF OLUŞTUR";
 "CREATE VISUALIZATION" = "GÖRSELLEŞTİRME OLUŞTUR";
+"CREATED" = "OLUŞTURULMA TARİHİ";
+"CREATOR" = "OLUŞTURAN";
 "CROP" = "KIRP";
 "CROP AREA" = "KIRPMA ALANI";
 "CROP IMAGE" = "GÖRSELİ KIRP";
@@ -407,6 +419,8 @@
 "CUSTOM DIMENSIONS" = "ÖZEL BOYUTLAR";
 "CUT" = "KES";
 "Callout" = "Açıklama";
+"Camera manufacturer" = "Kamera üreticisi";
+"Camera model" = "Kamera modeli";
 "Cancel" = "İptal";
 "Cancel download" = "İndirmeyi iptal et";
 "Cancel setup" = "Kurulumu iptal et";
@@ -516,6 +530,7 @@
 "Color" = "Renk";
 "Column" = "Sütun";
 "Columns" = "Sütun sayısı";
+"Comment" = "Yorum";
 "Compatibility" = "Uyumluluk";
 "Compress" = "Sıkıştır";
 "Compress & save" = "Sıkıştır ve kaydet";
@@ -547,6 +562,7 @@
 "Copy a link, then choose Download Link from the Lokum menu." = "Bir bağlantı kopyala, sonra Lokum menüsünden Bağlantıdan İndir'i seç.";
 "Copy a public media link first." = "Önce herkese açık bir medya bağlantısı kopyala.";
 "Copy path" = "Yolu kopyala";
+"Copyright" = "Telif hakkı";
 "Corner radius" = "Köşe yuvarlaklığı";
 "Corners" = "Köşeler";
 "Couldn’t check for updates" = "Güncellemeler denetlenemedi";
@@ -559,6 +575,8 @@
 "Create a New Float" = "Yeni Yüzen Pencere Oluştur";
 "Create a new Float" = "Yeni yüzen pencere oluştur";
 "Create visualization" = "Görselleştirme oluştur";
+"Created" = "Oluşturulma tarihi";
+"Creator" = "Oluşturan";
 "Crop" = "Kırp";
 "Crop Image" = "Görseli Kırp";
 "Crop Image · Lokum" = "Görseli Kırp · Lokum";
@@ -569,11 +587,13 @@
 "Custom dimensions" = "Özel boyutlar";
 "Cut" = "Kes";
 "DARK" = "KOYU";
+"DATE TAKEN" = "ÇEKİM TARİHİ";
 "DEFAULTS COULD NOT BE RESTORED" = "VARSAYILANLARA DÖNÜLEMEDİ";
 "DEGREES" = "DERECE";
 "DEHAZE" = "PUS GİDERME";
 "DELETE" = "SİL";
 "DELETE CLIP" = "KLİBİ SİL";
+"DESCRIPTION" = "AÇIKLAMA";
 "DETACH" = "AYIR";
 "DETAIL" = "AYRINTI";
 "DETECT FACES" = "YÜZLERİ ALGILA";
@@ -616,6 +636,7 @@
 "DRAG AN EXISTING ANNOTATION TO MOVE IT; DRAG ITS HANDLES TO RESIZE. TURN OFF SELECT / MOVE TO DRAW." = "BİR İŞARETİ TAŞIMAK İÇİN İÇİNİ, BOYUTLANDIRMAK İÇİN TUTAMAĞINI SÜRÜKLE. ÇİZMEK İÇİN SEÇ / TAŞI'YI KAPAT.";
 "DRAG INSIDE TO MOVE. DRAG NEAR A CORNER TO RESIZE. DRAG OUTSIDE TO START A NEW SELECTION." = "TAŞIMAK İÇİN ALANIN İÇİNİ, BOYUTLANDIRMAK İÇİN KÖŞEYİ SÜRÜKLE. YENİ SEÇİM İÇİN ALANIN DIŞINDA SÜRÜKLE.";
 "DRAG ON THE PREVIEW TO ADD AN AREA. EACH AREA IS SAVED INTO THE NEW COPY." = "ALAN EKLEMEK İÇİN ÖNİZLEMEDE SÜRÜKLE. HER ALAN YENİ KOPYAYA İŞLENİR.";
+"DRAG OVER THE AREA YOU WANT TO BLUR. THE PREVIEW SHOWS THE SELECTED COVER STYLE. SAVE TO CREATE A NEW PNG." = "BULANIKLAŞTIRMAK İSTEDİĞİN ALANI SÜRÜKLEYEREK SEÇ. ÖNİZLEME, SEÇTİĞİN KAPLAMA STİLİNİ GÖSTERİR. KAYDETTİĞİNDE YENİ BİR PNG OLUŞTURULUR.";
 "DRAG SHORTCUTS" = "SÜRÜKLEME KISAYOLLARI";
 "DRAG THE STACK TO CARRY ALL FILES. DRAG THE PAPERCLIP TO MOVE FLOAT." = "TÜM DOSYALARI TAŞIMAK İÇİN YIĞINI, FLOAT’IN YERİNİ DEĞİŞTİRMEK İÇİN ATACI SÜRÜKLEYİN.";
 "DRAG TO DRAW WITH THE SELECTED TOOL. USE SELECT / MOVE TO EDIT AN EXISTING ANNOTATION." = "SEÇİLİ ARAÇLA ÇİZMEK İÇİN SÜRÜKLE. BİR İŞARETİ DÜZENLEMEK İÇİN SEÇ / TAŞI'YI KULLAN.";
@@ -630,11 +651,13 @@
 "DROP SOMETHING GOOD." = "BİR DOSYA BIRAK.";
 "DUPLICATE" = "ÇOĞALT";
 "Dark" = "Koyu";
+"Date taken" = "Çekim tarihi";
 "Defaults could not be restored" = "Varsayılanlara dönülemedi";
 "Degrees" = "Derece";
 "Dehaze" = "Pus giderme";
 "Delete" = "Sil";
 "Delete Clip" = "Klibi Sil";
+"Description" = "Açıklama";
 "Detach" = "Ayır";
 "Detail" = "Ayrıntı";
 "Detect Faces" = "Yüzleri Algıla";
@@ -681,6 +704,7 @@
 "Drag an existing annotation to move it; drag its handles to resize. Turn off Select / Move to draw." = "Bir işareti taşımak için içini, boyutlandırmak için tutamağını sürükle. Çizmek için Seç / Taşı'yı kapat.";
 "Drag inside to move. Drag near a corner to resize. Drag outside to start a new selection." = "Taşımak için alanın içini, boyutlandırmak için köşeyi sürükle. Yeni seçim için alanın dışında sürükle.";
 "Drag on the preview to add an area. Each area is saved into the new copy." = "Alan eklemek için önizlemede sürükle. Her alan yeni kopyaya işlenir.";
+"Drag over the area you want to blur. The preview shows the selected cover style. Save to create a new PNG." = "Bulanıklaştırmak istediğin alanı sürükleyerek seç. Önizleme, seçtiğin kaplama stilini gösterir. Kaydettiğinde yeni bir PNG oluşturulur.";
 "Drag shortcuts" = "Sürükleme kısayolları";
 "Drag the stack to carry all files. Drag the paperclip to move Float." = "Tüm dosyaları taşımak için yığını, Float’ın yerini değiştirmek için atacı sürükleyin.";
 "Drag to draw with the selected tool. Use Select / Move to edit an existing annotation." = "Seçili araçla çizmek için sürükle. Bir işareti düzenlemek için Seç / Taşı'yı kullan.";
@@ -756,6 +780,7 @@
 "FILE ACTIONS" = "DOSYA İŞLEMLERİ";
 "FILE ACTIONS WHEEL" = "DOSYA İŞLEMLERİ ÇARKI";
 "FILE ACTIONS · WHILE DRAGGING" = "DOSYA İŞLEMLERİ · SÜRÜKLERKEN";
+"FILE INFORMATION" = "DOSYA BİLGİLERİ";
 "FILE ORDER" = "DOSYA SIRASI";
 "FILE SIZE" = "DOSYA BOYUTU";
 "FILE TOOLS WHEEL" = "DOSYA ARAÇLARI ÇARKI";
@@ -817,6 +842,7 @@
 "File actions" = "Dosya işlemleri";
 "File actions wheel" = "Dosya işlemleri çarkı";
 "File actions · while dragging" = "Dosya işlemleri · sürüklerken";
+"File information" = "Dosya bilgileri";
 "File order" = "Dosya sırası";
 "File size" = "Dosya boyutu";
 "File tools wheel" = "Dosya araçları çarkı";
@@ -877,6 +903,7 @@
 "GAMMA" = "GAMA";
 "GAMMA MUST BE POSITIVE; CONTRAST AND SATURATION CANNOT BE NEGATIVE." = "GAMA POZİTİF OLMALI; KONTRAST VE DOYGUNLUK NEGATİF OLAMAZ.";
 "GENERAL" = "GENEL";
+"GENRE" = "TÜR";
 "GET STARTED" = "BAŞLA";
 "GIF FRAME RATE" = "GIF KARE HIZI";
 "GIF FRAMES PER SECOND" = "GIF SANİYEDEKİ KARE SAYISI";
@@ -898,6 +925,7 @@
 "Gamma" = "Gama";
 "Gamma must be positive; contrast and saturation cannot be negative." = "Gama pozitif olmalı; kontrast ve doygunluk negatif olamaz.";
 "General" = "Genel";
+"Genre" = "Tür";
 "Get started" = "Başla";
 "GitHub repository" = "GitHub deposu";
 "Give it a little breathing room." = "Biraz nefes alacak alan aç.";
@@ -934,6 +962,7 @@
 "INPUT FORMAT" = "GİRDİ BİÇİMİ";
 "INPUT-ONLY FORMAT." = "YALNIZCA GİRDİ BİÇİMİ.";
 "INSPECT FINE EDGES BEFORE SAVING. COMPLEX BACKGROUNDS MAY NEED FURTHER EDITING." = "KAYDETMEDEN ÖNCE İNCE KENARLARI KONTROL ET. KARMAŞIK ARKA PLANLAR EK DÜZENLEME GEREKTİREBİLİR.";
+"INSPECT SAVED INFORMATION, EDIT FIELDS OR REMOVE PERSONAL TAGS. YOUR ORIGINAL FILE STAYS UNCHANGED." = "KAYITLI BİLGİLERİ İNCELE, ALANLARI DÜZENLE VEYA KİŞİSEL BİLGİLERİ KALDIR. ÖZGÜN DOSYAN KORUNUR.";
 "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. FOR VIDEOS, USE THE SHARE LINK; FOR OTHER PHOTOS, DRAG THE IMAGE OR USE COPY IMAGE ADDRESS. PUBLIC MEDIA ONLY; LOGIN-REQUIRED AND PROTECTED ITEMS MAY BE UNAVAILABLE." = "INSTAGRAM FOTOĞRAF GÖNDERİLERİNDE FOTOĞRAF SEÇİMİ AÇILIR. VİDEOLAR İÇİN PAYLAŞIM BAĞLANTISINI KULLAN; DİĞER FOTOĞRAFLARI SÜRÜKLE VEYA GÖRSEL ADRESİNİ KOPYALA. YALNIZCA HERKESE AÇIK MEDYA DESTEKLENİR; GİRİŞ GEREKTİREN VEYA KORUMALI İÇERİKLER KULLANILAMAYABİLİR.";
 "INSTAGRAM PHOTO POSTS OPEN A PHOTO SELECTION. REEL LINKS OFFER VIDEO AND AUDIO. PUBLIC DOWNLOADABLE MEDIA ONLY." = "INSTAGRAM FOTOĞRAF GÖNDERİLERİNDE FOTOĞRAF SEÇİMİ AÇILIR. REELS BAĞLANTILARINDA VİDEO VE SES SEÇENEKLERİ SUNULUR. YALNIZCA HERKESE AÇIK, İNDİRİLEBİLİR MEDYA DESTEKLENİR.";
 "INSTALL AN OCR LANGUAGE IN WINDOWS LANGUAGE SETTINGS TO DETECT TEXT." = "METİN ALGILAMAK İÇİN WINDOWS DİL AYARLARINDAN BİR OCR DİLİ YÜKLE.";
@@ -963,6 +992,7 @@
 "Input format" = "Girdi biçimi";
 "Input-only format." = "Yalnızca girdi biçimi.";
 "Inspect fine edges before saving. Complex backgrounds may need further editing." = "Kaydetmeden önce ince kenarları kontrol et. Karmaşık arka planlar ek düzenleme gerektirebilir.";
+"Inspect saved information, edit fields or remove personal tags. Your original file stays unchanged." = "Kayıtlı bilgileri incele, alanları düzenle veya kişisel bilgileri kaldır. Özgün dosyan korunur.";
 "Instagram photo posts open a photo selection. For videos, use the share link; for other photos, drag the image or use Copy Image Address. Public media only; login-required and protected items may be unavailable." = "Instagram fotoğraf gönderilerinde fotoğraf seçimi açılır. Videolar için paylaşım bağlantısını kullan; diğer fotoğrafları sürükle veya görsel adresini kopyala. Yalnızca herkese açık medya desteklenir; giriş gerektiren veya korumalı içerikler kullanılamayabilir.";
 "Instagram photo posts open a photo selection. Reel links offer video and audio. Public downloadable media only." = "Instagram fotoğraf gönderilerinde fotoğraf seçimi açılır. Reels bağlantılarında video ve ses seçenekleri sunulur. Yalnızca herkese açık, indirilebilir medya desteklenir.";
 "Install an OCR language in Windows Language settings to detect text." = "Metin algılamak için Windows dil ayarlarından bir OCR dili yükle.";
@@ -991,6 +1021,7 @@
 "KEEP THE GOOD PART." = "İSTEDİĞİN BÖLÜM KALSIN.";
 "KEEP THE ORIGINAL PAGES" = "ORİJİNAL SAYFALARI KORU";
 "KEEP THINGS\nMOVING." = "AKIŞINI\nKORU.";
+"KEYWORDS" = "ANAHTAR KELİMELER";
 "Keep at least one clip." = "En az bir klip bırak.";
 "Keep at least one page." = "En az bir sayfa bırak.";
 "Keep dragging\nDrop a file or link" = "Sürüklemeye devam et\nDosya veya bağlantı bırak";
@@ -1001,6 +1032,7 @@
 "Keep the good part." = "İstediğin bölüm kalsın.";
 "Keep the original pages" = "Orijinal sayfaları koru";
 "Keep things\nmoving." = "Akışını\nkoru.";
+"Keywords" = "Anahtar kelimeler";
 "LANDSCAPE" = "YATAY";
 "LANDSCAPE · 16:9" = "YATAY · 16:9";
 "LANGUAGE" = "DİL";
@@ -1104,6 +1136,7 @@
 "METADATA TOOLS CHECKSUM MISMATCH." = "META VERİ ARAÇLARININ SAĞLAMA TOPLAMI EŞLEŞMİYOR.";
 "METADATA · LOKUM" = "META VERİLER · LOKUM";
 "MIDDLE THIRD" = "ORTA ÜÇTE BİR";
+"MODIFIED" = "DEĞİŞTİRİLME TARİHİ";
 "MONO" = "MONO";
 "MONOSPACED" = "EŞ ARALIKLI";
 "MOVE" = "TAŞI";
@@ -1144,6 +1177,7 @@
 "Metadata tools checksum mismatch." = "Meta veri araçlarının sağlama toplamı eşleşmiyor.";
 "Metadata · Lokum" = "Meta Veriler · Lokum";
 "Middle third" = "Orta üçte bir";
+"Modified" = "Değiştirilme tarihi";
 "Mono" = "Mono";
 "Monospaced" = "Eş aralıklı";
 "Move" = "Taşı";
@@ -1166,6 +1200,7 @@
 "NICE FILES.\nNO FUSS." = "DOSYALAR HAZIR.\nZAHMET YOK.";
 "NICELY DONE." = "HAZIR, ELİNE SAĞLIK!";
 "NICELY DONE. 1 FILE IS READY." = "HAZIR! 1 DOSYAN HAZIR.";
+"NO EDITABLE TAGS ARE SAVED IN THIS FILE. YOU CAN ADD A TITLE, AUTHOR OR DESCRIPTION BELOW." = "BU DOSYADA DÜZENLENEBİLİR BİR META VERİ ALANI KAYITLI DEĞİL. AŞAĞIDAN BAŞLIK, YAZAR VEYA AÇIKLAMA EKLEYEBİLİRSİN.";
 "NO FOLDERS ALLOWED YET." = "HENÜZ İZİN VERİLEN KLASÖR YOK.";
 "NO MATCHES. TRY A FILE NAME OR TOOL." = "EŞLEŞME BULUNAMADI. DOSYA ADI VEYA ARAÇ ADIYLA ARA.";
 "NO MATCHING REGIONS WERE DETECTED. YOU CAN STILL DRAW AREAS BY HAND." = "EŞLEŞEN BÖLGE BULUNAMADI. ALANLARI YİNE DE ELLE ÇİZEBİLİRSİN.";
@@ -1196,6 +1231,7 @@
 "Nicely done. %lld files are ready." = "Hazır! %lld dosyan hazır.";
 "Nicely done. 1 file is ready." = "Hazır! 1 dosyan hazır.";
 "No QR codes this time." = "QR kodu bulunamadı.";
+"No editable tags are saved in this file. You can add a title, author or description below." = "Bu dosyada düzenlenebilir bir meta veri alanı kayıtlı değil. Aşağıdan başlık, yazar veya açıklama ekleyebilirsin.";
 "No folders allowed yet." = "Henüz izin verilen klasör yok.";
 "No matches. Try a file name or tool." = "Eşleşme bulunamadı. Dosya adı veya araç adıyla ara.";
 "No matching regions were detected. You can still draw areas by hand." = "Eşleşen bölge bulunamadı. Alanları yine de elle çizebilirsin.";
@@ -1462,6 +1498,7 @@
 "RIGHT TWO-THIRDS" = "SAĞ ÜÇTE İKİ";
 "RIGHT VOLUME" = "SAĞ KANAL SESİ";
 "RIGHT WHERE\nYOU WANT IT." = "TAM DA\nİSTEDİĞİN YERDE.";
+"RIGHTS" = "HAKLAR";
 "ROTATE" = "DÖNDÜR";
 "ROTATE LEFT" = "SOLA DÖNDÜR";
 "ROTATE RIGHT" = "SAĞA DÖNDÜR";
@@ -1525,6 +1562,7 @@
 "Right two-thirds" = "Sağ üçte iki";
 "Right volume" = "Sağ kanal sesi";
 "Right where\nyou want it." = "Tam da\nistediğin yerde.";
+"Rights" = "Haklar";
 "Rotate" = "Döndür";
 "Rotate Left" = "Sola Döndür";
 "Rotate Right" = "Sağa Döndür";
@@ -1565,6 +1603,7 @@
 "SAVE WITH BACKGROUND" = "ARKA PLANLA KAYDET";
 "SAVED 1 NEW FILE. ORIGINALS KEPT." = "1 YENİ DOSYA KAYDEDİLDİ. ORİJİNAL KORUNDU.";
 "SAVED IN POST ORDER IN A NEW INSTAGRAM FOLDER." = "GÖNDERİ SIRASIYLA YENİ BİR INSTAGRAM KLASÖRÜNE KAYDEDİLİR.";
+"SAVED METADATA FIELDS" = "KAYITLI META VERİ ALANLARI";
 "SCAN AGAIN" = "YENİDEN TARA";
 "SEARCH FORMATS" = "BİÇİMLERDE ARA";
 "SEARCH METADATA" = "META VERİLERDE ARA";
@@ -1621,6 +1660,7 @@
 "SMALL · 1280 PX LONGEST EDGE" = "KÜÇÜK · UZUN KENAR 1280 PX";
 "SMALLER FILE" = "DAHA KÜÇÜK DOSYA";
 "SMALLEST" = "EN KÜÇÜK";
+"SOFTWARE" = "YAZILIM";
 "SOLID" = "DÜZ";
 "SOUND AND HAPTIC FEEDBACK" = "SES VE DOKUNSAL GERİ BİLDİRİM";
 "SOUND FEEDBACK" = "SESLİ GERİ BİLDİRİM";
@@ -1650,6 +1690,7 @@
 "STROKE WIDTH" = "ÇİZGİ KALINLIĞI";
 "STRONG" = "GÜÇLÜ";
 "STYLE" = "STİL";
+"SUBJECT" = "KONU";
 "SUBTITLES" = "ALTYAZILAR";
 "SUBTLE ANIMATIONS" = "HAFİF ANİMASYONLAR";
 "SVG EXTERNAL RESOURCES ARE NOT LOADED. EMBED THE RASTER IMAGE FIRST." = "SVG DIŞ KAYNAKLARI YÜKLENMEZ. ÖNCE GÖRSELİ SVG DOSYASINA GÖM.";
@@ -1694,6 +1735,7 @@
 "Saved %lld new files. Originals kept." = "%lld yeni dosya kaydedildi. Orijinaller korundu.";
 "Saved 1 new file. Originals kept." = "1 yeni dosya kaydedildi. Orijinal korundu.";
 "Saved in post order in a new Instagram folder." = "Gönderi sırasıyla yeni bir Instagram klasörüne kaydedilir.";
+"Saved metadata fields" = "Kayıtlı meta veri alanları";
 "Scan again" = "Yeniden tara";
 "Search formats" = "Biçimlerde ara";
 "Search metadata" = "Meta verilerde ara";
@@ -1753,6 +1795,7 @@
 "Small · 1280 px longest edge" = "Küçük · uzun kenar 1280 px";
 "Smaller File" = "Daha Küçük Dosya";
 "Smallest" = "En küçük";
+"Software" = "Yazılım";
 "Solid" = "Düz";
 "Sound and haptic feedback" = "Ses ve dokunsal geri bildirim";
 "Sound feedback" = "Sesli geri bildirim";
@@ -1781,6 +1824,7 @@
 "Stroke width" = "Çizgi kalınlığı";
 "Strong" = "Güçlü";
 "Style" = "Stil";
+"Subject" = "Konu";
 "Subtitles" = "Altyazılar";
 "Subtle animations" = "Hafif animasyonlar";
 "System" = "Sistem";
@@ -1845,6 +1889,7 @@
 "THUMBNAIL" = "KÜÇÜK RESİM";
 "TIMES (SECONDS)" = "ZAMANLAR (SANİYE)";
 "TINT" = "TON";
+"TITLE" = "BAŞLIK";
 "TOO MANY FILES ALREADY USE THIS NAME." = "BU ADI KULLANAN ÇOK FAZLA DOSYA VAR.";
 "TOO MANY IMAGE REDIRECTS." = "GÖRSEL ÇOK FAZLA KEZ YÖNLENDİRİLDİ.";
 "TOO MANY UPDATE FILES." = "GÜNCELLEMEDE ÇOK FAZLA DOSYA VAR.";
@@ -1933,6 +1978,7 @@
 "Thumbnail" = "Küçük resim";
 "Times (seconds)" = "Zamanlar (saniye)";
 "Tint" = "Ton";
+"Title" = "Başlık";
 "Too many files already use this name." = "Bu adı kullanan çok fazla dosya var.";
 "Too many image redirects." = "Görsel çok fazla kez yönlendirildi.";
 "Too many update files." = "Güncellemede çok fazla dosya var.";
@@ -2068,6 +2114,7 @@
 "Windows could not add Lokum to the system tray." = "Windows, Lokum'yi sistem tepsisine ekleyemedi.";
 "Windows could not create a tray icon." = "Windows tepsi simgesini oluşturamadı.";
 "Working…" = "İşleniyor…";
+"YEAR" = "YIL";
 "YOU CAN ALSO CHOOSE FILES FROM THE MAIN WINDOW." = "ANA PENCEREDEN DE DOSYA SEÇEBİLİRSİN.";
 "YOU CHOOSE WHEN TO DOWNLOAD AND INSTALL." = "NE ZAMAN İNDİRİP KURACAĞINA SEN KARAR VER.";
 "YOU HAVE THE LATEST PUBLISHED WINDOWS VERSION." = "YAYINLANAN EN GÜNCEL WINDOWS SÜRÜMÜNÜ KULLANIYORSUN.";
@@ -2085,6 +2132,7 @@
 "YOUR TOOLS ARE READY." = "ARAÇLARIN HAZIR.";
 "YOUR TOOLS ARE READY. LET’S PUT THAT NEXT FILE TO GOOD USE." = "ARAÇLARIN HAZIR. SIRADAKİ DOSYAYI BİRLİKTE HAZIRLAYALIM.";
 "YOU’RE ALL SET.\nMAKE SOMETHING GOOD." = "HER ŞEY HAZIR.\nGÜZEL BİR ŞEY YAP.";
+"Year" = "Yıl";
 "You can also choose files from the main window." = "Ana pencereden de dosya seçebilirsin.";
 "You choose when to download and install." = "Ne zaman indirip kuracağına sen karar ver.";
 "You have the latest published Windows version." = "Yayınlanan en güncel Windows sürümünü kullanıyorsun.";
