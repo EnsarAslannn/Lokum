@@ -240,6 +240,16 @@ internal static class UIAudit
     private static void ValidatePageHitTargets(MainWindow owner, Capture capture)
     {
         var libraryVisible = owner.LibraryVisible;
+        owner.ShowLibrary(false);
+        owner.UpdateLayout();
+        owner.Activate();
+        Descendants<Button>(owner).First(button => button.IsVisible && button.IsEnabled).Focus();
+        var searchHandled = owner.HandleShortcut(System.Windows.Input.Key.F, System.Windows.Input.ModifierKeys.Control, System.Windows.Input.Keyboard.FocusedElement as DependencyObject);
+        DrainDispatcher();
+        capture.Checks["librarySearchShortcutFocused"] = searchHandled && owner.LibraryVisible && owner.SearchField.IsKeyboardFocused;
+        if (!capture.Checks["librarySearchShortcutFocused"]) capture.Issues.Add("Ctrl+F did not focus Library search after revealing its collapsed page.");
+        owner.ShowLibrary(libraryVisible);
+        owner.UpdateLayout();
         var blocked = new List<string>();
         void CheckActivePage()
         {

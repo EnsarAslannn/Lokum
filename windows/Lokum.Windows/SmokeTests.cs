@@ -67,7 +67,7 @@ internal static class SmokeTests
         Check(window.SelectedFiles.Count==1&&Path.GetExtension(window.SelectedFiles[0])==".txt","Native Ctrl+V did not import text");
         Check(File.ReadAllText(window.SelectedFiles[0])==clipboardText,"Unicode or line breaks changed while pasting text");
         var importedText=window.SelectedFiles[0];Check(library.Entries.Count==1,"Pasted text missing from Library");
-        DesktopInput.Key(window,Key.F,control:true);Check(window.LibraryVisible&&window.SearchField.IsKeyboardFocused,"Ctrl+F did not focus Library search");
+        DesktopInput.Key(window,Key.F,control:true);Check(window.LibraryVisible&&window.SearchField.IsKeyboardFocused,"Ctrl+F did not focus Library search; library="+window.LibraryVisible+"; searchVisible="+window.SearchField.IsVisible+"; active="+window.IsActive+"; focused="+Keyboard.FocusedElement?.GetType().Name);
         Clipboard.SetText("Pasted text");DesktopInput.Key(window,Key.V,control:true);
         Check(window.SearchField.Text=="Pasted text"&&library.Entries.Count==1,"Ctrl+V in a text field imported a new file or failed normal paste");
         DesktopInput.Key(window,Key.D1,control:true);Check(!window.LibraryVisible,"Ctrl+1 did not switch Home");

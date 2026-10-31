@@ -154,7 +154,13 @@ public sealed partial class MainWindow:Window
         if(modifiers==ModifierKeys.Control&&key==Key.OemComma){ShowSettings();return true;}
         if(modifiers==ModifierKeys.Control&&key==Key.D1){ShowLibrary(false);return true;}
         if(modifiers==ModifierKeys.Control&&key==Key.D2){ShowLibrary(true);return true;}
-        if(modifiers==ModifierKeys.Control&&key==Key.F){ShowLibrary(true);search.Focus();search.SelectAll();return true;}
+        if(modifiers==ModifierKeys.Control&&key==Key.F)
+        {
+            ShowLibrary(true);
+            // A collapsed page must be arranged before its search box can take keyboard focus.
+            Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input,new Action(()=>{if(!LibraryVisible||!IsVisible)return;search.Focus();search.SelectAll();}));
+            return true;
+        }
         if(busy)return false;
         if(modifiers==ModifierKeys.Control&&key==Key.O){Choose();return true;}
         if(modifiers==ModifierKeys.Control&&key==Key.U){_ = CheckUpdatesAsync(true);return true;}
