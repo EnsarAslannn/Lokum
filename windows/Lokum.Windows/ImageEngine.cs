@@ -9,7 +9,7 @@ namespace Lokum.Windows;
 public sealed record ImageOptions(int? Width=null,int? Height=null,int Rotation=0,Int32Rect? Crop=null,int Quality=85,bool Horizontal=true,BitmapSource? Annotated=null)
 {
     public PhotoAdjustments Adjustments{get;init;}=new();public FrameOptions Frame{get;init;}=new();public CollageOptions Collage{get;init;}=new();
-    public string RedactionStyle{get;init;}="solid";public Rect[] Redactions{get;init;}=[];
+    public string RedactionStyle{get;init;}="blur";public Rect[] Redactions{get;init;}=[];
     public long? TargetBytes{get;init;}public double? ReductionPercent{get;init;}
     public bool FlipHorizontal{get;init;}public bool FlipVertical{get;init;}
     public string? EncoderPath{get;init;}

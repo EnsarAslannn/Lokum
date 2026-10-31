@@ -79,7 +79,7 @@ public sealed partial class ToolEditor:Window
         if(tool=="rotate")Field("Degrees",90);
         if(tool is "crop" or "cropVideo" or "redactVideo" or "redactImage")
         {
-            options.Children.Add(new TextBlock{Text=tool=="redactVideo"?"Drag a region to cover with a solid block.":"Drag to select a crop. Hold Shift for a square; existing selections keep their ratio. Press Enter to save.",TextWrapping=TextWrapping.Wrap,Margin=new(4,4,4,16)});
+            options.Children.Add(L10n.Label(new TextBlock{Text=tool=="redactVideo"?"Drag a region to cover with a solid block.":tool=="redactImage"?"Drag over the area you want to blur. The preview shows the selected cover style. Save to create a new PNG.":"Drag to select a crop. Hold Shift for a square; existing selections keep their ratio. Press Enter to save.",TextWrapping=TextWrapping.Wrap,Margin=new(4,4,4,16)}));
             var w=bitmap?.PixelWidth??media?.Video?.Width??1280;var h=bitmap?.PixelHeight??media?.Video?.Height??720;
             Field("X",0);Field("Y",0);Field("Width",w);Field("Height",h);
             if(tool=="redactVideo"){Field("Start",0);Field("End",duration);}
@@ -132,7 +132,7 @@ public sealed partial class ToolEditor:Window
         else
         {
             if(tool is not ("annotate" or "redactImage" or "redactVideo")&&selection is not null)drawing.Children.Remove(selection);
-            activeRectangle=new Rectangle{Stroke=tool=="annotate"?Brushes.OrangeRed:Theme.Brush("Gold"),StrokeThickness=Math.Max(2,drawing.Width/350),Fill=tool is "redactVideo" or "redactImage"?Brushes.Black:new SolidColorBrush(Color.FromArgb(35,182,63,104)),IsHitTestVisible=false};drawing.Children.Add(activeRectangle);Canvas.SetLeft(activeRectangle,origin.X);Canvas.SetTop(activeRectangle,origin.Y);if(tool!="annotate")selection=activeRectangle;
+            activeRectangle=new Rectangle{Stroke=tool=="annotate"?Brushes.OrangeRed:Theme.Brush("Gold"),StrokeThickness=Math.Max(2,drawing.Width/350),Fill=tool=="redactVideo"?Brushes.Black:tool=="redactImage"?Brushes.Transparent:new SolidColorBrush(Color.FromArgb(35,182,63,104)),IsHitTestVisible=false};drawing.Children.Add(activeRectangle);Canvas.SetLeft(activeRectangle,origin.X);Canvas.SetTop(activeRectangle,origin.Y);if(tool!="annotate")selection=activeRectangle;
         }
         e.Handled=true;
     }
@@ -155,7 +155,7 @@ public sealed partial class ToolEditor:Window
     {
         try
         {
-            if(tool=="redactImage"&&activeRectangle is {Width:>=1,Height:>=1} r)photoRegions.Add(new Rect(Canvas.GetLeft(r),Canvas.GetTop(r),r.Width,r.Height));
+            if(tool=="redactImage"&&activeRectangle is {} r){drawing.Children.Remove(r);if(r.Width>=1&&r.Height>=1)AddPhotoRegion(new Rect(Canvas.GetLeft(r),Canvas.GetTop(r),r.Width,r.Height));}
             if(tool=="redactVideo"&&activeRectangle is {Width:>=2,Height:>=2} v){var (start,end)=ReadPlaybackRange();videoRegions.Add(new(Canvas.GetLeft(v),Canvas.GetTop(v),v.Width,v.Height,start,end));ReloadRanges();}
         }
         catch(ArgumentException error){if(activeRectangle is not null)drawing.Children.Remove(activeRectangle);time.Text=error.Message;}

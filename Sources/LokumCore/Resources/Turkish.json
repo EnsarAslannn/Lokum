@@ -1092,5 +1092,6 @@
   "Keywords": "Anahtar kelimeler",
   "Album": "Albüm",
   "Year": "Yıl",
-  "Genre": "Tür"
+  "Genre": "Tür",
+  "Drag over the area you want to blur. The preview shows the selected cover style. Save to create a new PNG.": "Bulanıklaştırmak istediğin alanı sürükleyerek seç. Önizleme, seçtiğin kaplama stilini gösterir. Kaydettiğinde yeni bir PNG oluşturulur."
 }

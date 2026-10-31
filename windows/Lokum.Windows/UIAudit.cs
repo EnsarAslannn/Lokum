@@ -21,7 +21,7 @@ internal static class UIAudit
     [
         "home.empty", "home.selected", "library", "settings.general", "settings.formats",
         "settings.updates", "wheel.pdf-multiple", "editor.crop-image", "editor.annotate-image", "editor.frame-image", "editor.remove-background",
-        "editor.metadata-empty", "editor.metadata-filled"
+        "editor.metadata-empty", "editor.metadata-filled", "editor.redact-image"
     ];
     private static readonly string[] Appearances = ["light", "dark"];
     private static readonly string[] Languages = ["en", "tr"];
@@ -191,6 +191,7 @@ internal static class UIAudit
                 "editor.remove-background" => new BackgroundRemovalWindow(owner,fixtures.Image),
                 "editor.metadata-empty" => new MetadataEditor(owner, MetadataEditorChecks.Fixture(fixtures.Image, false)),
                 "editor.metadata-filled" => new MetadataEditor(owner, MetadataEditorChecks.Fixture(fixtures.Image, true)),
+                "editor.redact-image" => new ToolEditor(owner, "redactImage", "Redact Photo", fixtures.Image, preview: fixtures.Bitmap),
                 _ => throw new ArgumentException("Unknown scene: " + capture.Scene)
             };
             if (!ReferenceEquals(subject, owner)) ShowAtMinimum(subject);
@@ -344,6 +345,7 @@ internal static class UIAudit
             "editor.remove-background" => subject is BackgroundRemovalWindow removal && removal.PreviewReady &&
                 Descendants<Image>(subject).Count(image=>image.Source is BitmapSource source&&source.PixelWidth==fixtures.Bitmap.PixelWidth&&source.PixelHeight==fixtures.Bitmap.PixelHeight)==2,
             "editor.metadata-empty" or "editor.metadata-filled" => subject is MetadataEditor,
+            "editor.redact-image" => subject is ToolEditor,
             _ => false
         };
         if (!capture.Checks["actualScene"]) capture.Issues.Add("The requested scene's semantic state was not present.");
@@ -351,6 +353,11 @@ internal static class UIAudit
         {
             try { MetadataEditorChecks.Verify(metadata, capture.Scene == "editor.metadata-filled"); capture.Checks["metadataReadableAndEditable"] = true; }
             catch (Exception error) { capture.Checks["metadataReadableAndEditable"] = false; capture.Issues.Add(error.Message); }
+        }
+        if (capture.Scene == "editor.redact-image" && subject is ToolEditor redaction)
+        {
+            try { ImageRedactionChecks.Verify(redaction, fixtures.Bitmap, fixtures.Image, fixtures.Outputs); capture.Checks["redactionPreviewAndExport"] = true; }
+            catch (Exception error) { capture.Checks["redactionPreviewAndExport"] = false; capture.Issues.Add((error.InnerException ?? error).ToString()); }
         }
     }
 
