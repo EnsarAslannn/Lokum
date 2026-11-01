@@ -14,5 +14,7 @@ internal static class ImageWorkspaceChecks
         check(FeatureCatalog.Tools(["movie.mp4"]).Contains("cropVideo"),"Combining image tools removed video cropping.");
         foreach(var item in new[]{("removeBackground","Arka Plan Düzenle"),("editImage","Görsel Düzenle"),("redactImage","Görsel Sansürle"),("readQRCode","QR Kod Oku")})
             check(AppLocalization.Text(FeatureCatalog.ToolNames[item.Item1],"tr")==item.Item2,"The visible image tool name is incorrect: "+item.Item1);
+        foreach(var source in new[]{"Read QR Codes","Read QR codes","READ QR CODES"})
+            check(AppLocalization.Uppercase(AppLocalization.Text(source,"tr"),"tr")=="QR KOD OKU","QR action capitalization selected a stale translation: "+source);
     }
 }

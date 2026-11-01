@@ -1488,7 +1488,7 @@
 "Quit Lokum" = "Lokum'den Çık";
 "READ QR CODE" = "QR KOD OKU";
 "READ QR CODE · LOKUM" = "QR KOD OKU · LOKUM";
-"READ QR CODES" = "QR KODLARINI OKU";
+"READ QR CODES" = "QR KOD OKU";
 "READ QR CODES · LOKUM" = "QR KOD OKU · LOKUM";
 "READY" = "HAZIR";
 "READY FOR ANOTHER ROUND." = "YENİDEN KULLANIMA HAZIR.";
@@ -1560,7 +1560,7 @@
 "Read QR Code · Lokum" = "QR Kod Oku · Lokum";
 "Read QR Codes" = "QR Kod Oku";
 "Read QR Codes · Lokum" = "QR Kod Oku · Lokum";
-"Read QR codes" = "QR kodlarını oku";
+"Read QR codes" = "QR Kod Oku";
 "Ready" = "Hazır";
 "Ready for another round." = "Yeniden kullanıma hazır.";
 "Ready on your Mac" = "Mac'inde hazır";

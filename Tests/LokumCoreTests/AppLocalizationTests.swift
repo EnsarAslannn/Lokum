@@ -18,6 +18,12 @@ final class AppLocalizationTests:XCTestCase {
         XCTAssertEqual(AppLocalization.uppercased("Görseli seç",language:"tr"),"GÖRSELİ SEÇ")
         XCTAssertEqual(AppLocalization.uppercased("Shift",language:"en"),"SHIFT")
     }
+    func testRenamedQrActionIsConsistentAcrossMenuCapitalizations() {
+        for source in ["Read QR Codes","Read QR codes","READ QR CODES"] {
+            XCTAssertEqual(AppLocalization.uppercased(AppLocalization.text(source,language:"tr"),language:"tr"),"QR KOD OKU",source)
+            XCTAssertTrue(AppLocalization.matches(source,query:"QR Kod Oku",language:"tr"),source)
+        }
+    }
     func testFallbackAndFormattingKeepOriginalInput() {
         XCTAssertEqual(AppLocalization.normalizedLanguage(nil),"en")
         XCTAssertEqual(AppLocalization.normalizedLanguage("fr"),"en")
