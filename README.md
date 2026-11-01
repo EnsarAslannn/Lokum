@@ -20,7 +20,7 @@ Kütüphane ve ayarlar `%LOCALAPPDATA%/Lokum` altında saklanır. Orijinal Nashi
 
 - **45 girdi formatı, 27 araç, 275 dönüşüm yolu:** ortak katalog ve seçim kuralları korunur.
 - **Görseller:** dönüştürme, sıkıştırma, boyutlandırma, döndürme/yansıtma, kırpma, işaretleme, çerçeve, kolaj, metadata, gizleme ve QR okuma.
-- **Windows arka plan kaldırma:** U²-Net modeliyle yerelde otomatik kesim, özgün/sonuç önizlemesi ve şeffaf PNG dışa aktarma. Tek görsel ve toplu seçim desteklenir.
+- **Windows arka plan düzenleme:** serbest veya dikdörtgen seçimle korunacak alanı belirleme, isteğe bağlı yerel otomatik kesim, şeffaf PNG, düz renk veya görsel arka plan. Tek görsel ve toplu seçim desteklenir.
 - **Video ve ses:** dönüştürme, sıkıştırma, kırpma, birleştirme, hız değiştirme, kare çıkarma, normalizasyon, kanal ayarları, sessize alma ve gizleme araçları.
 - **Belgeler ve arşivler:** PDF oluşturma/birleştirme/bölme/düzenleme, Office/Pages/EPUB/tablo/sunum/altyazı dönüşümleri ve arşiv işlemleri.
 - **Günlük akış:** araç çarkı, sürükleme kısayolları, pano içe aktarma, Float rafı, kütüphane, klasör otomasyonu ve pencere düzenleri.
@@ -30,14 +30,27 @@ Kütüphane ve ayarlar `%LOCALAPPDATA%/Lokum` altında saklanır. Orijinal Nashi
 
 ## Arka plan kaldırma (Windows)
 
-Görseli seçip **İnce ayar / Fine-tune → Arka Planı Kaldır / Remove Background**
-aracını aç. Aynı araç çarkta da bulunur. Önizlemenin tamamlanmasını bekle ve
-**Şeffaf PNG kaydet** düğmesine bas. Birden fazla görsel seçiliyse önizleme
-ilkini gösterir, kaydetme işlemi tüm seçili görsellerin ayrı PNG kopyalarını üretir.
-Çıktılar `Dosya Adı Cutout.png` olarak, ayarlardaki çıktı konumuna kaydedilir.
+Görseli seçip **İnce ayar / Fine-tune → Arka Plan Düzenle / Edit Background**
+aracını aç. Arka plan kaldırma ve ekleme çarkta tek seçenek altında toplanır.
+
+1. Soldaki görselde korunacak alanın çevresini **Serbest seçim** ile çiz veya
+   **Dikdörtgen seçim** ile bir alan sürükle. Seçimin içi korunur, dışı şeffaflaşır.
+   Dikdörtgenin içindeki zemin de kalır; nesnenin çevresini takip etmek için serbest
+   seçimi veya **Otomatik seç** düğmesini kullan. Birden fazla alan ekleyebilir,
+   **Seçimden çıkar** ile iç boşlukları silebilir ve **Ctrl+Z** ile geri alabilirsin.
+2. Önizleme hazır olunca sağdaki arka plan seçeneğini kullan: **Şeffaf**, **Düz renk**
+   veya **Arka plan görseli**. Düz renkte ton çubuğundan rengi, paletten doygunluk
+   ve parlaklığı seç; istersen `#RRGGBB` kodunu gir. Arka plan görseli,
+   özgün tuvali dolduracak biçimde ortalanır; kenarlarından kırpılabilir.
+3. **Yeni PNG kaydet** ile önizlemenin kopyasını kaydet. Çoklu seçimde üstteki
+   dosya listesinden her görselin korunacak alanını ayrı belirle. Arka plan ayarı
+   tüm dosyalara uygulanır; tüm seçimler hazır olunca toplu kaydetme açılır.
+
+Çıktılar şeffafsa `Dosya Adı Cutout.png`, arka plan ekliyse
+`Dosya Adı Background.png` olarak, ayarlardaki çıktı konumuna kaydedilir.
 Özgün dosyaların üzerine yazılmaz; iptal veya hata halinde yarım sonuç yayımlanmaz.
 
-Model ve çalışma motoru Windows paketine dahildir; Python, API anahtarı veya
+Otomatik seçim modeli ve çalışma motoru Windows paketine dahildir; Python, API anahtarı veya
 görsel yüklemesi gerekmez. Windows'un ONNX Runtime bileşeni için
 [Microsoft Visual C++ x64 çalışma ortamı](https://onnxruntime.ai/docs/install/#requirements)
 gereklidir; eksik olan bilgisayarlarda önce Microsoft'un resmi yeniden dağıtılabilir
@@ -45,6 +58,21 @@ paketi kurulmalıdır. Bu bilgisayarda gerçek önizleme ve kayıt testi geçti.
 ve karmaşık zeminlerde kusursuz kesim sağlamayabilir; kaydetmeden önce kenarları
 incele. Bu araç henüz macOS sürümüne eklenmemiştir.
 [Model kaynağı ve sağlama toplamı](Resources/Models/README.md).
+
+## Görsel düzenleme ve kırpma (Windows)
+
+Çarktaki **Görsel Düzenle / Edit Image**; kırpma, boyutlandırma, döndürme,
+yansıtma, ışık, renk ve detay ayarlarını aynı pencerede sunar. Ayrı bir görsel
+kırpma seçeneği gösterilmez; video kırpma bağımsız kalır.
+
+**Görseli kırp** düğmesine bas, önizlemede alanı sürükleyerek seç ve
+**Kırpmayı önizle** düğmesine bas. Kesilmiş hali aynı önizlemede görünür;
+**Yeni kopya kaydet** ile kaydet veya **Görseli kırp** ile seçimi tekrar değiştir.
+Kırpma seçimi içindeyken kayıt düğmesi kapalıdır; Enter önce kırpmayı önizler.
+**Kırpmayı kaldır**, diğer ışık/renk ayarlarını koruyarak tam görsele döner.
+Orijinal dosya değişmez. Çoklu görselde aynı oransal kırpma uygulanır.
+
+Diğer ilgili çark adları **Görsel Sansürle** ve **QR Kod Oku** olarak gösterilir.
 
 ## Görünüm
 
@@ -104,6 +132,8 @@ macOS çıktısı `build/Lokum.app` konumuna yazılır. macOS kaynaklarının de
 ```powershell
 dotnet run --project windows/Lokum.Verify -c Release
 dotnet run --project windows/Lokum.Verify -c Release -- --background-removal-only
+dotnet run --project windows/Lokum.Verify -c Release -- --background-editing-only
+dotnet run --project windows/Lokum.Verify -c Release -- --image-workspace-only
 python scripts/check-feature-parity.py
 python scripts/generate-localizations.py --check
 ```

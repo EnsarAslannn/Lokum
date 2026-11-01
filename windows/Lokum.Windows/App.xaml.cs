@@ -45,6 +45,23 @@ public partial class App:Application
             new Window{Title=minimum>620?"Lokum Constrained Layout Fixture":"Lokum Window Layout Fixture",Width=Math.Max(620,minimum),MinWidth=minimum,Height=420,Left=80,Top=90,WindowStartupLocation=WindowStartupLocation.Manual,
                 Content=new System.Windows.Controls.TextBlock{Text="Lokum window arrangement test fixture",Margin=new Thickness(30),FontSize=22}}.Show();return;
         }
+        if(e.Args.Length==3&&e.Args[0]=="--background-editor-fixture")
+        {
+            // Explicit interactive QA workspace: bypass singleton/global hooks and keep all
+            // preferences, Library and exports in the caller's disposable directory.
+            IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;
+            try
+            {
+                var directory=Path.GetFullPath(e.Args[2]);Directory.CreateDirectory(directory);
+                var library=new Lokum.Core.LibraryStore(Path.Combine(directory,"state"));library.SetAppearance("light");
+                var preferences=new Lokum.Core.PreferencesStore(library.DirectoryPath);
+                preferences.Save(new(){Language="tr",Enabled=false,AutomaticUpdateChecks=false,KeepInTray=false,RevealFinished=false,Feedback=false,Animations=false,OutputMode="folder",OutputFolder=Path.Combine(directory,"exports")});
+                var fixture=new MainWindow([Path.GetFullPath(e.Args[1])],library,checkForUpdates:false,offerToolSetup:false);
+                fixture.Closed+=(_,_)=>Shutdown(0);fixture.Show();
+            }
+            catch(Exception error){Console.Error.WriteLine(error);Shutdown(1);}
+            return;
+        }
         if(e.Args.Length==2&&e.Args[0]=="--apply-update"){try{Shutdown(UpdateInstaller.Apply(e.Args[1]));}catch(Exception error){UseSavedLanguage();MessageBox.Show(L10n.Text(error.Message),L10n.Text("Lokum update could not finish"));Shutdown(1);}return;}
         if(e.Args.Contains("--verify-update-state")){try{ShutdownMode=ShutdownMode.OnExplicitShutdown;SmokeTests.VerifyUpdateState();Shutdown(0);}catch(Exception error){Console.Error.WriteLine(error);Shutdown(1);}return;}
         if(e.Args.Contains("--smoke-test")){IsSmokeTest=true;try{NativeExceptionTrace.Install();SmokeTests.Run();Shutdown(0);}catch(Exception error){Console.Error.WriteLine(error);var directory=Environment.GetEnvironmentVariable("LOKUM_SMOKE_DIRECTORY");if(directory is not null){Directory.CreateDirectory(directory);File.WriteAllText(Path.Combine(directory,"error.txt"),error.ToString());}Shutdown(1);}return;}

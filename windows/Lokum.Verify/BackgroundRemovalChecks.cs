@@ -11,7 +11,7 @@ internal static class BackgroundRemovalChecks
         check(FeatureCatalog.Tools(["one.jpg","two.png"]).Contains("removeBackground"),"Background removal is missing for a batch of images");
         foreach(var selection in new string[][]{[],["document.pdf"],["clip.mp4"],["photo.jpg","document.pdf"]})
             check(!FeatureCatalog.Tools(selection).Contains("removeBackground"),"Background removal was offered for unsupported files");
-        check(FeatureCatalog.ToolNames.GetValueOrDefault("removeBackground")=="Remove Background","Background removal has no tool label");
+        check(FeatureCatalog.ToolNames.GetValueOrDefault("removeBackground")=="Edit Background","The unified background workspace has no tool label");
     }
 
     internal static void Engine(Action<bool,string> check,string root,string fixture)

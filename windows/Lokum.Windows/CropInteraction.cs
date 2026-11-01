@@ -8,14 +8,14 @@ public sealed partial class ToolEditor
     private string? cropGesture;private Rect cropBefore;private readonly ComboBox aspectRatio=new(){ItemsSource=new[]{"Free","1:1","16:9","9:16","4:3","3:4"},SelectedIndex=0};
     private void BuildCropOptions()
     {
-        if(tool is not ("crop" or "cropVideo"))return;options.Children.Add(L10n.Label(new TextBlock{Text="Aspect ratio",Margin=new(4,12,4,0)}));options.Children.Add(aspectRatio);
+        if(tool is not ("crop" or "cropVideo" or "editImage"))return;options.Children.Add(L10n.Label(new TextBlock{Text="Aspect ratio",Margin=new(4,12,4,0)}));options.Children.Add(aspectRatio);
         aspectRatio.SelectionChanged+=(_,_)=>{var ratio=CropRatio();if(ratio is null)return;var w=Math.Min(drawing.Width,drawing.Height*ratio.Value);var h=w/ratio.Value;SetCrop(new((drawing.Width-w)/2,(drawing.Height-h)/2,w,h));};
         options.Children.Add(L10n.Label(new TextBlock{Text="Drag inside to move. Drag near a corner to resize. Drag outside to start a new selection.",TextWrapping=TextWrapping.Wrap,Margin=new(4,10,4,10)}));
     }
     private double? CropRatio(){if(aspectRatio.SelectedItem is not string value||value=="Free")return null;var p=value.Split(':');return double.Parse(p[0],System.Globalization.CultureInfo.InvariantCulture)/double.Parse(p[1],System.Globalization.CultureInfo.InvariantCulture);}
     private bool BeginCropGesture(Point point)
     {
-        cropGesture=null;if(tool is not ("crop" or "cropVideo")||selection is null||selection.Width<1||selection.Height<1)return false;
+        cropGesture=null;if(!CropInteractionActive||selection is null||selection.Width<1||selection.Height<1)return false;
         cropBefore=new(Canvas.GetLeft(selection),Canvas.GetTop(selection),selection.Width,selection.Height);var tolerance=Math.Max(10,drawing.Width/45);
         var corners=new[]{("NW",cropBefore.TopLeft),("NE",cropBefore.TopRight),("SW",cropBefore.BottomLeft),("SE",cropBefore.BottomRight)};
         foreach(var (kind,corner) in corners)if((point-corner).Length<=tolerance){cropGesture=kind;return true;}
@@ -30,6 +30,6 @@ public sealed partial class ToolEditor
     private void SetCrop(Rect rect)
     {
         if(selection is null){selection=new Rectangle{Stroke=Theme.Brush("Gold"),StrokeThickness=Math.Max(2,drawing.Width/350),Fill=new SolidColorBrush(Color.FromArgb(35,182,63,104)),IsHitTestVisible=false};drawing.Children.Add(selection);}
-        Canvas.SetLeft(selection,rect.X);Canvas.SetTop(selection,rect.Y);selection.Width=rect.Width;selection.Height=rect.Height;fields["X"].Text=Number(Math.Floor(rect.X));fields["Y"].Text=Number(Math.Floor(rect.Y));fields["Width"].Text=Number(Math.Floor(rect.Width));fields["Height"].Text=Number(Math.Floor(rect.Height));
+        Canvas.SetLeft(selection,rect.X);Canvas.SetTop(selection,rect.Y);selection.Width=rect.Width;selection.Height=rect.Height;if(tool=="editImage"){StorePhotoCrop(rect);return;}fields["X"].Text=Number(Math.Floor(rect.X));fields["Y"].Text=Number(Math.Floor(rect.Y));fields["Width"].Text=Number(Math.Floor(rect.Width));fields["Height"].Text=Number(Math.Floor(rect.Height));
     }
 }

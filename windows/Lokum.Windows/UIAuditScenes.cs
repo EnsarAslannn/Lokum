@@ -16,6 +16,7 @@ public sealed partial class ToolEditor
         get
         {
             if (bitmap is null || drawing.Children.Count == 0 || drawing.Children[0] is not Image { Source: BitmapSource source }) return bitmap is null;
+            if(tool=="editImage")return photoPreviewValid&&photoPreview is {IsEnabled:false}&&previewGate.CurrentCount==1;
             if (tool != "frameImage") return true;
             // The initial frame scene queues a real preview on Loaded. Await its final dimensions,
             // not just the original image or a timer interval, before claiming the scene is ready.

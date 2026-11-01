@@ -90,10 +90,11 @@ public sealed partial class ToolEditor:Window
             options.Children.Add(L10n.Label(new TextBlock{Text="Drawing tool"}));options.Children.Add(drawingTool);TextField("Annotation text","Note");TextField("Ink color","#FF5200");Field("Stroke width",3);Field("Font size",24);options.Children.Add(L10n.Label(new TextBlock{Text="Drag to draw. One active tool per stroke.",TextWrapping=TextWrapping.Wrap,Margin=new(4,12,4,12)}));
             options.Children.Add(MainWindow.Button("Undo last mark",()=>{UndoAnnotation();}));
         }
-        BuildPhotoOptions(inputs??[input]);BuildInputOrder(inputs??[input]);BuildCropOptions();BuildCompressionOptions();BuildDocumentOptions();BuildMediaOptions();
+        BuildPhotoOptions(inputs??[input]);BuildInputOrder(inputs??[input]);if(tool!="editImage")BuildCropOptions();BuildCompressionOptions();BuildDocumentOptions();BuildMediaOptions();
         if(options.Children.Count==1)options.Children.Add(L10n.Label(new TextBlock{Text="Ready to make a fresh copy. No extra settings needed.",TextWrapping=TextWrapping.Wrap,Margin=new(4,20,4,0)}));
         var footer=new DockPanel{Margin=new(0,20,0,0),LastChildFill=false};Grid.SetRow(footer,2);grid.Children.Add(footer);var save=MainWindow.Button("Save new copy  ↗",Save);save.Background=Theme.Primary;save.Foreground=Theme.PrimaryInk;DockPanel.SetDock(save,Dock.Right);footer.Children.Add(save);var cancel=MainWindow.Button("Cancel",()=>DialogResult=false);DockPanel.SetDock(cancel,Dock.Left);footer.Children.Add(cancel);var reset=MainWindow.Button("↶ Reset",Reset);DockPanel.SetDock(reset,Dock.Left);footer.Children.Add(reset);var safe=L10n.Label(new TextBlock{Text="Original stays safe",Foreground=Theme.Brush("Muted"),FontSize=12,VerticalAlignment=VerticalAlignment.Center,Margin=new(0,0,16,0)});DockPanel.SetDock(safe,Dock.Right);footer.Children.Add(safe);
         var clock=new System.Windows.Threading.DispatcherTimer{Interval=TimeSpan.FromMilliseconds(100)};
+        saveCopy=save;UpdatePhotoCropButtons();
         clock.Tick+=(_,_)=>{if(!scrubber.IsMouseCaptureWithin&&!scrubber.IsKeyboardFocusWithin)scrubber.Value=Math.Clamp(player.Position.TotalSeconds,0,duration);if(playing){time.Text=$"{player.Position:mm\\:ss\\.fff} / {TimeSpan.FromSeconds(duration):mm\\:ss\\.fff}";if(playingRange&&player.Position.TotalSeconds>=rangePlaybackEnd){player.Pause();playing=false;playingRange=false;}}};
         player.MediaEnded+=(_,_)=>{playing=false;player.Pause();};clock.Start();
         PreviewKeyDown+=OnKey;Closed+=(_,_)=>{clock.Stop();player.Close();previewLifetime.Cancel();DeletePreviewFiles();};
@@ -104,6 +105,7 @@ public sealed partial class ToolEditor:Window
     private Action? resetCompression,resetPhotoView,resetPreviewZoom,applyExportProfile;
     private void Reset()
     {
+        ResetIntegratedCrop();
         if(processingPreview){time.Text="Wait for the processed preview to finish before resetting.";return;}
         if(media is not null){if(processedPlayback)PlayOriginalPreview();player.Pause();playing=false;Seek(0);}
         resetCompression?.Invoke();resetPhotoView?.Invoke();resetPreviewZoom?.Invoke();
@@ -124,7 +126,7 @@ public sealed partial class ToolEditor:Window
     }
     private void BeginDraw(object sender,MouseButtonEventArgs e)
     {
-        if(tool is not ("crop" or "cropVideo" or "redactVideo" or "redactImage" or "annotate"))return;
+        if(tool is not ("crop" or "cropVideo" or "redactVideo" or "redactImage" or "annotate")&&!(tool=="editImage"&&photoCropEditing&&photoPreviewValid))return;
         drawing.Focus();origin=e.GetPosition(drawing);dragging=drawing.CaptureMouse();
         if(BeginCropGesture(origin)){e.Handled=true;return;}
         if(tool=="annotate"){try{AnnotationStart();}catch(ArgumentException error){dragging=false;drawing.ReleaseMouseCapture();if(App.IsSmokeTest)throw;MessageBox.Show(this,L10n.Text(error.Message),L10n.Text("Check drawing settings"));}e.Handled=true;return;}
@@ -143,12 +145,13 @@ public sealed partial class ToolEditor:Window
         if(tool=="annotate"){AnnotationMove(p);return;}
         if(activeStroke is not null){activeStroke.Points.Add(p);return;}
         if(activeRectangle is null)return;var dx=p.X-origin.X;var dy=p.Y-origin.Y;
-        if(tool is "crop" or "cropVideo" && (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)||CropRatio() is not null))
+        if(CropInteractionActive && (Keyboard.Modifiers.HasFlag(ModifierKeys.Shift)||CropRatio() is not null))
         {
             var ratio=CropRatio()??1d;var width=Math.Min(Math.Abs(dx),Math.Abs(dy)*ratio);var height=width/ratio;p=new(origin.X+Math.CopySign(width,dx),origin.Y+Math.CopySign(height,dy));
         }
         var x=Math.Min(origin.X,p.X);var y=Math.Min(origin.Y,p.Y);var w=Math.Abs(p.X-origin.X);var h=Math.Abs(p.Y-origin.Y);
         Canvas.SetLeft(activeRectangle,x);Canvas.SetTop(activeRectangle,y);activeRectangle.Width=w;activeRectangle.Height=h;
+        if(tool=="editImage"){StorePhotoCrop(new(x,y,w,h));return;}
         if(tool!="annotate"){fields["X"].Text=Number(Math.Floor(x));fields["Y"].Text=Number(Math.Floor(y));fields["Width"].Text=Number(Math.Max(1,Math.Floor(w)));fields["Height"].Text=Number(Math.Max(1,Math.Floor(h)));}
     }
     private void EndDraw(object sender,MouseButtonEventArgs e)
@@ -180,7 +183,7 @@ public sealed partial class ToolEditor:Window
     }
     private void SyncTimeline(){if(fields.ContainsKey("Start")&&fields.ContainsKey("End"))timeline.Set(duration,Value("Start"),Value("End",duration));}
     private double FineSeekStep=>media?.Video is {} video?1/Math.Max(1,video.FrameRate):.1;
-    private void Save()=>ReadSettings(true);
+    private void Save(){if(tool=="editImage"&&photoCropEditing){FinishPhotoCrop();return;}if(tool=="editImage"&&!photoPreviewValid&&!showingOriginal)return;ReadSettings(true);}
     private bool ReadSettings(bool accept)
     {
         try

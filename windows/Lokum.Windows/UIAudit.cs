@@ -21,7 +21,9 @@ internal static class UIAudit
     [
         "home.empty", "home.selected", "library", "settings.general", "settings.formats",
         "settings.updates", "wheel.pdf-multiple", "editor.crop-image", "editor.annotate-image", "editor.frame-image", "editor.remove-background",
-        "editor.metadata-empty", "editor.metadata-filled", "editor.redact-image"
+        "editor.metadata-empty", "editor.metadata-filled", "editor.redact-image",
+        "editor.background-cutout", "editor.background-color", "editor.background-image", "editor.background-batch",
+        "editor.edit-image", "editor.edit-image-cropped", "editor.background-palette", "wheel.image"
     ];
     private static readonly string[] Appearances = ["light", "dark"];
     private static readonly string[] Languages = ["en", "tr"];
@@ -169,7 +171,7 @@ internal static class UIAudit
         var library = new LibraryStore(directory);
         var initial = capture.Scene switch
         {
-            "home.selected" => new[] { fixtures.Image },
+            "home.selected" or "wheel.image" => new[] { fixtures.Image },
             "wheel.pdf-multiple" => fixtures.Pdfs,
             _ => null
         };
@@ -185,10 +187,14 @@ internal static class UIAudit
                 "home.empty" or "home.selected" or "library" => owner,
                 "settings.general" or "settings.formats" or "settings.updates" => Settings(owner, preferences, library, capture.Scene),
                 "wheel.pdf-multiple" => new WheelWindow(owner, owner.UIAuditToolChoices, _ => { }),
+                "wheel.image" => new WheelWindow(owner, owner.UIAuditToolChoices, _ => { }),
+                "editor.edit-image" or "editor.edit-image-cropped" => new ToolEditor(owner,"editImage","Edit Image",fixtures.Image,preview:fixtures.Bitmap),
                 "editor.crop-image" => new ToolEditor(owner, "crop", "Crop Image", fixtures.Image, preview: fixtures.Bitmap),
                 "editor.annotate-image" => new ToolEditor(owner, "annotate", "Annotate", fixtures.Image, preview: fixtures.Bitmap),
                 "editor.frame-image" => new ToolEditor(owner, "frameImage", "Frame Image", fixtures.Image, preview: fixtures.Bitmap),
                 "editor.remove-background" => new BackgroundRemovalWindow(owner,fixtures.Image),
+                "editor.background-cutout" or "editor.background-color" or "editor.background-image" or "editor.background-palette" => new BackgroundRemovalWindow(owner,fixtures.Image),
+                "editor.background-batch" => new BackgroundRemovalWindow(owner,new[]{fixtures.Image,fixtures.Image}),
                 "editor.metadata-empty" => new MetadataEditor(owner, MetadataEditorChecks.Fixture(fixtures.Image, false)),
                 "editor.metadata-filled" => new MetadataEditor(owner, MetadataEditorChecks.Fixture(fixtures.Image, true)),
                 "editor.redact-image" => new ToolEditor(owner, "redactImage", "Redact Photo", fixtures.Image, preview: fixtures.Bitmap),
@@ -200,6 +206,13 @@ internal static class UIAudit
             capture.Checks["privateLibrary"] = Path.GetFullPath(library.DirectoryPath).StartsWith(Path.GetFullPath(stateRoot) + Path.DirectorySeparatorChar, StringComparison.OrdinalIgnoreCase);
             capture.Checks["language"] = L10n.Language == capture.Language;
             capture.Checks["appearance"] = Theme.Dark == (capture.Appearance == "dark");
+            if(subject is BackgroundRemovalWindow background&&capture.Scene!="editor.remove-background")
+            {
+                if(capture.Scene=="editor.background-batch")BackgroundEditorChecks.Batch(background);
+                else BackgroundEditorChecks.Prepare(background,capture.Scene=="editor.background-palette"?"editor.background-color":capture.Scene,fixtures.Image,fixtures.Outputs);
+                if(capture.Scene=="editor.background-palette")ImageWorkspaceUiChecks.Palette(background);
+            }
+            if(subject is ToolEditor photo&&capture.Scene is "editor.edit-image" or "editor.edit-image-cropped")ImageWorkspaceUiChecks.Verify(photo,fixtures.Bitmap,fixtures.Image,fixtures.Outputs,capture.Scene.EndsWith("-cropped"));
             AssertActualScene(subject, owner, fixtures, capture);
             if (!ready) capture.Issues.Add("Scene did not reach loaded, arranged and artwork-ready state within 8 seconds.");
             subject.UpdateLayout();
@@ -304,7 +317,7 @@ internal static class UIAudit
         if (!window.IsLoaded || !window.IsVisible || window.Content is not FrameworkElement content ||
             !content.IsMeasureValid || !content.IsArrangeValid || content.ActualWidth < 1 || content.ActualHeight < 1) return false;
         return (window is not ToolEditor editor || editor.UIAuditPreviewReady)
-            && (window is not BackgroundRemovalWindow removal || removal.PreviewReady)
+            && (window is not BackgroundRemovalWindow removal || removal.EditorReady)
             && Descendants<Image>(window).All(image => image.Source is not BitmapImage bitmap || !bitmap.IsDownloading)
             && ArtworkReady(window);
     }
@@ -338,6 +351,7 @@ internal static class UIAudit
 
     private static void AssertActualScene(Window subject, MainWindow owner, Fixtures fixtures, Capture capture)
     {
+        if(capture.Scene=="home.selected"){ImageWorkspaceUiChecks.Menu(owner);capture.Checks["consolidatedImageMenu"]=true;}
         capture.Checks["actualScene"] = capture.Scene switch
         {
             "home.empty" => subject == owner && !owner.LibraryVisible && owner.SelectedFiles.Count == 0,
@@ -348,12 +362,14 @@ internal static class UIAudit
                 Descendants<ListBox>(subject).Any(list => Equals(list.SelectedItem, capture.Scene.Split('.')[1] switch { "formats" => "Formats", "updates" => "Updates", _ => "General" })),
             "wheel.pdf-multiple" => subject is WheelWindow && owner.SelectedFiles.SequenceEqual(fixtures.Pdfs) &&
                 Descendants<System.Windows.Shapes.Path>(subject).Count(path => path.Data is StreamGeometry) == FeatureCatalog.Tools(fixtures.Pdfs).Length,
+            "wheel.image" => subject is WheelWindow&&owner.UIAuditToolChoices.Count(c=>c.Id=="removeBackground")==1&&!owner.UIAuditToolChoices.Any(c=>c.Id is "crop" or "cropImage" or "frameImage")&&owner.UIAuditToolChoices.Any(c=>c.Id=="editImage"),
+            "editor.edit-image" or "editor.edit-image-cropped" => subject is ToolEditor photo&&photo.UIAuditPreviewReady,
             "editor.crop-image" => subject is ToolEditor crop && crop.FieldForTest("Width").Text == fixtures.Bitmap.PixelWidth.ToString(CultureInfo.CurrentCulture),
             "editor.annotate-image" => subject is ToolEditor && Descendants<ComboBox>(subject).Any(combo => Equals(combo.SelectedItem, "Marker")),
             "editor.frame-image" => subject is ToolEditor frame && frame.UIAuditPreviewReady &&
                 Descendants<Image>(subject).Any(image => image.Source is BitmapSource source && source.PixelWidth == fixtures.Bitmap.PixelWidth + 160 && source.PixelHeight == fixtures.Bitmap.PixelHeight + 160),
-            "editor.remove-background" => subject is BackgroundRemovalWindow removal && removal.PreviewReady &&
-                Descendants<Image>(subject).Count(image=>image.Source is BitmapSource source&&source.PixelWidth==fixtures.Bitmap.PixelWidth&&source.PixelHeight==fixtures.Bitmap.PixelHeight)==2,
+            "editor.remove-background" => subject is BackgroundRemovalWindow removal && removal.EditorReady && !removal.PreviewReady,
+            "editor.background-cutout" or "editor.background-color" or "editor.background-image" or "editor.background-batch" or "editor.background-palette" => subject is BackgroundRemovalWindow edited&&edited.PreviewReady,
             "editor.metadata-empty" or "editor.metadata-filled" => subject is MetadataEditor,
             "editor.redact-image" => subject is ToolEditor,
             _ => false
@@ -368,6 +384,11 @@ internal static class UIAudit
         {
             try { ImageRedactionChecks.Verify(redaction, fixtures.Bitmap, fixtures.Image, fixtures.Outputs); capture.Checks["redactionPreviewAndExport"] = true; }
             catch (Exception error) { capture.Checks["redactionPreviewAndExport"] = false; capture.Issues.Add((error.InnerException ?? error).ToString()); }
+        }
+        if(subject is BackgroundRemovalWindow background&&capture.Scene=="editor.remove-background")
+        {
+            try{BackgroundEditorChecks.Initial(background);capture.Checks["manualBackgroundSelectionRequired"]=true;}
+            catch(Exception error){capture.Checks["manualBackgroundSelectionRequired"]=false;capture.Issues.Add(error.Message);}
         }
     }
 
@@ -415,7 +436,7 @@ internal static class UIAudit
         var canvas = Descendants<Canvas>(wheel).FirstOrDefault();
         var petals = canvas?.Children.OfType<System.Windows.Shapes.Path>().Where(path => path.Data is StreamGeometry).ToArray() ?? [];
         var captions = canvas?.Children.OfType<Button>().Take(petals.Length).ToArray() ?? [];
-        var fits = petals.Length == 5 && captions.Length == petals.Length;
+        var fits = petals.Length == (capture.Scene=="wheel.image"?7:5) && captions.Length == petals.Length;
         if (canvas is not null)
         for (var index = 0; index < captions.Length; index++)
         {

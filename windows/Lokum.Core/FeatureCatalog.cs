@@ -9,7 +9,7 @@ public static class FeatureCatalog
     private static Contract Load(){using var stream=typeof(FeatureCatalog).Assembly.GetManifestResourceStream("Lokum.FeatureCatalog.json")!;return JsonSerializer.Deserialize<Contract>(stream,new JsonSerializerOptions{PropertyNameCaseInsensitive=true})!;}
     public static IReadOnlyDictionary<string,string[]> Conversions=>Data.ConversionMatrix;
     // Windows-only additions stay separate from the shared Swift catalog.
-    private static readonly Dictionary<string,string> WindowsToolNames=new(Data.ToolNames){["removeBackground"]="Remove Background"};
+    private static readonly Dictionary<string,string> WindowsToolNames=new(Data.ToolNames){["removeBackground"]="Edit Background",["editImage"]="Edit Image",["redactImage"]="Redact Image",["readQRCode"]="Read QR Code"};
     public static IReadOnlyDictionary<string,string> ToolNames=>WindowsToolNames;
     public static string Extension(string path)=>Path.GetExtension(path).TrimStart('.').ToLowerInvariant() switch{"jpeg"=>"jpg","tif"=>"tiff","heif"=>"heic","aif"=>"aiff","markdown"=>"md","gzip" or "tgz"=>"gz",var ext=>ext};
     public static bool IsImage(string path)=>new[]{"jpg","png","webp","heic","tiff","svg","avif","bmp"}.Contains(Extension(path));
@@ -21,7 +21,13 @@ public static class FeatureCatalog
     {
         var result=Intersect(inputs,inputs.Count>1?Data.MultipleTools:Data.SingleTools).ToList();
         if(inputs.Count>0&&inputs.All(p=>IsImage(p)||Extension(p)=="pdf"))result.Add("readQRCode");
-        if(inputs.Count>0&&inputs.All(p=>IsImage(p)&&!Directory.Exists(p)))result.Add("removeBackground");
+        if(inputs.Count>0&&inputs.All(p=>IsImage(p)&&!Directory.Exists(p)))
+        {
+            // Keep stored legacy action IDs usable, while presenting one workspace
+            // per image task in every catalog consumer (wheel, menu and shortcuts).
+            result=result.Where(id=>id!="frameImage").Select(id=>id=="cropImage"?"editImage":id).Distinct().ToList();
+            result.Add("removeBackground");
+        }
         return result.ToArray();
     }
     private static string[] Intersect(IReadOnlyList<string> inputs,Dictionary<string,string[]> table)

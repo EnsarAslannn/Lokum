@@ -12,6 +12,7 @@ public sealed record ImageOptions(int? Width=null,int? Height=null,int Rotation=
     public string RedactionStyle{get;init;}="blur";public Rect[] Redactions{get;init;}=[];
     public long? TargetBytes{get;init;}public double? ReductionPercent{get;init;}
     public bool FlipHorizontal{get;init;}public bool FlipVertical{get;init;}
+    public Rect? NormalizedCrop{get;init;}
     public string? EncoderPath{get;init;}
 }
 public static partial class ImageEngine
@@ -85,7 +86,15 @@ public static partial class ImageEngine
     {
         if(options.Width is {} ew&&options.Height is {} eh&&(ew!=image.PixelWidth||eh!=image.PixelHeight)){if(ew<1||eh<1||ew>30000||eh>30000||(long)ew*eh>100_000_000)throw new ArgumentException("Choose valid image dimensions.");image=new TransformedBitmap(image,new ScaleTransform((double)ew/image.PixelWidth,(double)eh/image.PixelHeight));}
         if(options.FlipHorizontal||options.FlipVertical)image=new TransformedBitmap(image,new ScaleTransform(options.FlipHorizontal?-1:1,options.FlipVertical?-1:1));
-        if(options.Rotation%360!=0)image=new TransformedBitmap(image,new RotateTransform(options.Rotation));image.Freeze();return image;
+        if(options.Rotation%360!=0)image=new TransformedBitmap(image,new RotateTransform(options.Rotation));
+        if(options.NormalizedCrop is {} crop)
+        {
+            if(!double.IsFinite(crop.X)||!double.IsFinite(crop.Y)||!double.IsFinite(crop.Width)||!double.IsFinite(crop.Height)||crop.X<0||crop.Y<0||crop.Width<=0||crop.Height<=0||crop.Right>1.00000001||crop.Bottom>1.00000001)throw new ArgumentException("Drag a crop inside the image.");
+            var x=Math.Clamp((int)Math.Round(crop.X*image.PixelWidth),0,image.PixelWidth-1);var y=Math.Clamp((int)Math.Round(crop.Y*image.PixelHeight),0,image.PixelHeight-1);
+            var right=Math.Clamp((int)Math.Round(crop.Right*image.PixelWidth),x+1,image.PixelWidth);var bottom=Math.Clamp((int)Math.Round(crop.Bottom*image.PixelHeight),y+1,image.PixelHeight);
+            image=new CroppedBitmap(image,new(x,y,right-x,bottom-y));
+        }
+        image.Freeze();return image;
     }
     public static void Save(BitmapSource image,string output,string format,int quality=85,string? encoderPath=null,CancellationToken token=default)
     {

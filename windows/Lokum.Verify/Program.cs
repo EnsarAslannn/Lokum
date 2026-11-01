@@ -27,6 +27,20 @@ if(args.Contains("--background-removal-only"))
     Console.WriteLine("PASS background removal: "+backgroundChecks);return;
 }
 
+if(args.Contains("--background-editing-only"))
+{
+    var count=0;var output=Path.GetFullPath(args.SkipWhile(a=>a!="--output").Skip(1).FirstOrDefault()??"build/background-editing-tests");
+    BackgroundEditingChecks.Run((ok,message)=>{if(!ok)throw new Exception(message);count++;},output);
+    File.WriteAllText(Path.Combine(output,"verification.json"),JsonSerializer.Serialize(new{passed=true,checks=count,manualSelection=true,transparentExport=true,colorReplacement=true,imageReplacement=true,batchSelections=true,originalPreserved=true},new JsonSerializerOptions{WriteIndented=true}));
+    Console.WriteLine("PASS background editing: "+count);return;
+}
+
+if(args.Contains("--image-workspace-only"))
+{
+    var count=0;ImageWorkspaceChecks.Run((ok,message)=>{if(!ok)throw new Exception(message);count++;});
+    Console.WriteLine("PASS image workspace: "+count);return;
+}
+
 if(args.Contains("--update-isolation-only"))
 {
     var updateChecks=0;var directory=Path.Combine(Path.GetTempPath(),"Lokum-Update-Checks-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(directory);
@@ -51,6 +65,7 @@ try
     await DownloadChecks.Run(Check,root);
     ToolSetupChecks.Run(Check,root);
     var parityRoot=Path.Combine(root,"Parity");Directory.CreateDirectory(parityRoot);try{ParityChecks.Run(Check,parityRoot);}finally{Directory.Delete(parityRoot,true);}
+    ImageWorkspaceChecks.Run(Check);
     Check(FeatureCatalog.IsVideo("Clip.m4v")&&FeatureCatalog.IsAudio("Clip.aac"),"Media preview classification differs from Mac aliases");
     foreach(var area in new[]{new WindowFrame(0,24,1511,910),new WindowFrame(-1920,-1030,1920,1006),new WindowFrame(1512,40,1727,1090)})
     {

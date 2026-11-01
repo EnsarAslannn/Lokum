@@ -46,6 +46,13 @@ jobs:
         run: |
           dotnet run --project windows/Lokum.Verify -c Release -- --metadata-unicode-only
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Foreground selection and replacement backgrounds
+        shell: pwsh
+        run: |
+          dotnet run --project windows/Lokum.Verify -c Release -- --background-editing-only --output build/background-editing-tests
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          dotnet run --project windows/Lokum.Verify -c Release -- --image-workspace-only
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Install verified media tools and exercise real exports
         shell: pwsh
         env:
@@ -122,5 +129,6 @@ jobs:
           path: |
             build/Lokum-Windows-x64.zip
             build/windows-smoke
+            build/background-editing-tests
           retention-days: 7
           if-no-files-found: error

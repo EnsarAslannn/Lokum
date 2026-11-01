@@ -20,6 +20,7 @@ public sealed partial class ToolEditor
         collageInputs=inputs.ToArray();
         if(tool=="editImage")
         {
+            BuildIntegratedCrop();
             Field("Width",bitmap?.PixelWidth??1280);Field("Height",bitmap?.PixelHeight??720);Field("Degrees",0);options.Children.Add(flipHorizontal);options.Children.Add(flipVertical);flipHorizontal.Click+=(_,_)=>QueuePhotoPreview();flipVertical.Click+=(_,_)=>QueuePhotoPreview();
             var rotation=new WrapPanel();rotation.Children.Add(MainWindow.Button("Rotate Left",()=>RotatePhoto(-90)));rotation.Children.Add(MainWindow.Button("Rotate Right",()=>RotatePhoto(90)));options.Children.Add(rotation);
             PhotoGroup("Light",[("Exposure",-3,3),("Brightness",-1,1),("Contrast",0,2),("Highlights",-1,1),("Shadows",-1,1),("Whites",-1,1),("Blacks",-1,1),("Gamma",.2,3)]);
@@ -48,7 +49,7 @@ public sealed partial class ToolEditor
         {
             photoPreview=new(){Interval=TimeSpan.FromMilliseconds(300)};photoPreview.Tick+=async(_,_)=>{photoPreview.Stop();await PreviewPhoto();};
             foreach(var box in fields.Values)box.TextChanged+=(_,_)=>QueuePhotoPreview();backdrop.SelectionChanged+=(_,_)=>QueuePhotoPreview();collageLayout.SelectionChanged+=(_,_)=>QueuePhotoPreview();redactionStyle.SelectionChanged+=(_,_)=>QueuePhotoPreview();Closed+=(_,_)=>photoPreview.Stop();
-            var original=L10n.Content(new CheckBox{Content="Show original",Margin=new(4,14,4,4)});original.Checked+=(_,_)=>{showingOriginal=true;photoPreview.Stop();photoGeneration++;SetPhotoPreview(bitmap!);};original.Unchecked+=(_,_)=>{showingOriginal=false;QueuePhotoPreview();};resetPhotoView=()=>original.IsChecked=false;previewStack.Children.Add(original);Loaded+=(_,_)=>QueuePhotoPreview();
+            var original=L10n.Content(new CheckBox{Content="Show original",Margin=new(4,14,4,4)});original.Checked+=(_,_)=>{showingOriginal=true;photoPreview.Stop();photoGeneration++;SetPhotoPreview(bitmap!);};original.Unchecked+=(_,_)=>{showingOriginal=false;QueuePhotoPreview();};photoOriginalToggle=original;resetPhotoView=()=>original.IsChecked=false;previewStack.Children.Add(original);Loaded+=(_,_)=>QueuePhotoPreview();
         }
         if(tool=="annotate")options.Children.Add(MainWindow.Button("Choose annotation image…",()=>{var picker=new OpenFileDialog{Filter="Images|*.png;*.jpg;*.webp;*.heic;*.avif;*.bmp"};if(picker.ShowDialog(this)==true){annotationImage=picker.FileName;drawingTool.SelectedIndex=9;}}));
     }
@@ -78,9 +79,10 @@ public sealed partial class ToolEditor
         controls.Children.Add(MainWindow.Button("−",()=>Apply(zoom/1.25)));controls.Children.Add(MainWindow.Button("Fit",()=>Apply(1)));controls.Children.Add(MainWindow.Button("+",()=>Apply(zoom*1.25)));controls.Children.Add(percent);result.Children.Add(controls);result.Children.Add(scroll);System.Windows.Automation.AutomationProperties.SetAutomationId(scroll,"ImagePreviewViewport");scroll.SizeChanged+=(_,_)=>SetZoom(zoom);scroll.ScrollChanged+=(_,e)=>{if(Math.Abs(e.ViewportWidthChange)>.1||Math.Abs(e.ViewportHeightChange)>.1)SetZoom(zoom);};SizeChanged+=(_,_)=>SetZoom(zoom);return result;
     }
     private void MoveImage(int delta){var index=imageOrder.SelectedIndex;var next=index+delta;if(index<0||next<0||next>=imageOrder.Items.Count)return;var item=imageOrder.Items[index];imageOrder.Items.RemoveAt(index);imageOrder.Items.Insert(next,item);imageOrder.SelectedIndex=next;QueuePhotoPreview();}
-    private void QueuePhotoPreview(){if(photoPreview is null||showingOriginal)return;photoGeneration++;photoPreview.Stop();photoPreview.Start();}
+    private void QueuePhotoPreview(){if(photoPreview is null||showingOriginal)return;photoGeneration++;if(tool=="editImage"){photoPreviewValid=false;UpdatePhotoCropButtons();}photoPreview.Stop();photoPreview.Start();}
     private ImageOptions PhotoSettings(ImageOptions original)
     {
+        if(tool=="editImage")original=original with{NormalizedCrop=photoCrop};
         var changes=new Dictionary<string,double>();foreach(var property in typeof(PhotoAdjustments).GetProperties())changes[property.Name]=Value(property.Name,(double)property.GetValue(new PhotoAdjustments())!);
         var adjustments=System.Text.Json.JsonSerializer.Deserialize<PhotoAdjustments>(System.Text.Json.JsonSerializer.Serialize(changes))!;
         return original with{TargetBytes=Value("Target size (KB; 0 = auto)")>0?(long)(Value("Target size (KB; 0 = auto)")*1024):null,ReductionPercent=Value("Reduction (%; 0 = auto)")>0?Value("Reduction (%; 0 = auto)"):null,FlipHorizontal=flipHorizontal.IsChecked==true,FlipVertical=flipVertical.IsChecked==true,Adjustments=adjustments,Frame=new((int)Value("Padding",80),Value("Corner radius",24),fields.GetValueOrDefault("Background color")?.Text??"#FFFFFF",backdrop.SelectedItem as string??"solid",fields.GetValueOrDefault("Gradient end")?.Text??"#FFD85C",backgroundImage,Value("Background blur"),Value("Shadow radius",24),Value("Shadow opacity",.25),fields.ContainsKey("Canvas width")?(int)Value("Canvas width"):null,fields.ContainsKey("Canvas height")?(int)Value("Canvas height"):null,Value("Image scale",1),Value("Position X",.5),Value("Position Y",.5)),Collage=new(collageLayout.SelectedItem as string??"grid",(int)Value("Columns",2),(int)Value("Canvas width",2048),(int)Value("Canvas height",2048),(int)Value("Spacing",12),(int)Value("Padding",16),Value("Corner radius"),fields.GetValueOrDefault("Background color")?.Text??"#FFFFFF",fitCollage.IsChecked==true,imageOrder.Items.Count>0?imageOrder.Items.Cast<ListBoxItem>().Select(i=>(int)i.Tag).ToArray():null),Redactions=photoRegions.ToArray(),RedactionStyle=redactionStyle.SelectedItem as string??"blur"};
@@ -92,11 +94,13 @@ public sealed partial class ToolEditor
         try
         {
             var settings=PhotoSettings(new((int)Value("Width",bitmap.PixelWidth),(int)Value("Height",bitmap.PixelHeight),(int)Value("Degrees",0)));BitmapSource result;
+            if(tool=="editImage"&&photoCropEditing)settings=settings with{NormalizedCrop=null};
             if(tool=="editImage"){var factor=Math.Min(1,1200d/Math.Max(bitmap.PixelWidth,bitmap.PixelHeight));var source=factor<1?new TransformedBitmap(bitmap,new ScaleTransform(factor,factor)):(BitmapSource)bitmap;var png=ImageEngine.PngBytes(source);result=ImageEngine.FromPng(await Task.Run(()=>PhotoCodec.Adjust(png,settings.Adjustments)));result=ImageEngine.TransformPhoto(result,settings with{Width=Math.Max(1,(int)Math.Round((settings.Width??bitmap.PixelWidth)*factor)),Height=Math.Max(1,(int)Math.Round((settings.Height??bitmap.PixelHeight)*factor))});}
             else if(tool=="frameImage")result=ImageEngine.Frame(bitmap,settings.Frame);
             else if(tool=="redactImage")result=settings.Redactions.Length==0?bitmap:await Task.Run(()=>ImageEngine.Redact(bitmap,settings.Redactions,settings.RedactionStyle));
             else result=ImageEngine.Collage(collageInputs,settings.Collage,CancellationToken.None);
             if(!IsVisible||showingOriginal||generation!=photoGeneration)return;SetPhotoPreview(result);
+            if(tool=="editImage"){photoPreviewValid=true;drawing.IsHitTestVisible=true;ShowPhotoCropOverlay();UpdatePhotoCropButtons();L10n.SetText(photoEditStatus,photoCropEditing?"Select an area, then preview the crop before saving.":"Preview ready. Save a new copy when you like the result.");}
         }
         catch(Exception error)when(error is ArgumentException or FormatException or InvalidDataException or ImageMagick.MagickException or IOException or NotSupportedException){ToolTip=error.Message;}finally{previewGate.Release();}
     }

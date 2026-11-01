@@ -27,4 +27,22 @@ While dragging in Explorer or another application, **Ctrl** opens tools, **Shift
 
 Media editors use **Space** for play/pause, **Left/Right** for one-second seeking, **Shift+Left/Right** for frame steps, **I/O** for range marks and **Shift+Space** to play the selected range. Crop supports drag, Shift ratio lock, selection move/resize, aspect presets and Enter save. Annotation supports Select/Move, Delete and Ctrl+Z. Normal text-field editing is preserved.
 
+**Edit Background** is the single wheel entry for the two-step background editor.
+Draw freehand around the area to keep or drag a rectangle; everything outside the
+selection becomes transparent. Automatic selection is optional and runs locally;
+manual regions can restore or subtract pixels afterward. Once the cutout is ready,
+choose transparency, a solid color from the hue/saturation/value palette (or enter
+`#RRGGBB`), or a replacement image, then save a new
+PNG. Replacement images fill the original canvas with a centered cover crop.
+For a batch, select each image independently before saving; the background setting
+is shared. Originals remain unchanged. **Ctrl+Z**, **Ctrl+A**, **Ctrl+S** and **Esc**
+undo, select all, save and cancel respectively, outside text fields.
+
+**Edit Image** includes cropping alongside resize, rotate, flip and photo
+adjustments. Choose **Crop image**, drag a selection and choose **Preview crop**
+to see the actual cut image before saving. Re-enter cropping to adjust the same
+selection; **Remove crop** restores the full canvas and retains other adjustments.
+The separate image Crop wheel entry has been removed. Video cropping remains.
+Related image tools are named **Redact Image** and **Read QR Code**.
+
 `Lokum.Verify` checks the shared engine and security foundation. `Lokum --smoke-test` runs real Windows keyboard, clipboard, OLE drag, Library, editor and export checks and writes diagnostic JSON/PNG artifacts. See [verification details](FEATURE-PARITY.md#commands-and-evidence) before interpreting a CI artifact as a completed test or official release.
