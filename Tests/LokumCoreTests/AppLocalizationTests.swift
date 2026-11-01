@@ -8,7 +8,8 @@ final class AppLocalizationTests:XCTestCase {
         }
         XCTAssertEqual(AppLocalization.text("Language",language:"tr"),"Dil")
         XCTAssertEqual(AppLocalization.text("Library",language:"tr"),"Kitaplık")
-        XCTAssertEqual(AppLocalization.text("READ QR CODES",language:"tr"),"QR KODLARINI OKU")
+        XCTAssertEqual(AppLocalization.text("READ QR CODES",language:"tr"),"QR KOD OKU")
+        XCTAssertTrue(AppLocalization.matches("Read QR Codes",query:"QR Kod Oku",language:"tr"))
         XCTAssertEqual(AppLocalization.text("Resize Image".uppercased(),language:"tr"),"GÖRSELİ BOYUTLANDIR")
     }
     func testTurkishUppercaseKeepsLatinProductAndKeyNames() {
