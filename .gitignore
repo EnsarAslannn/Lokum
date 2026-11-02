@@ -42,3 +42,5 @@ Desktop.ini
 *.pem
 .envrc
 lokum-updates.local.json
+
+.fake
