@@ -228,6 +228,7 @@ public sealed partial class MainWindow:Window
             choice=choice with{Id=choice.Id switch{"cropImage"=>"crop","annotateImage"=>"annotate","mergePDF"=>"mergePDFs",_=>choice.Id}};
             if(Images&&choice.Id is "crop" or "cropImage")choice=new("editImage",FeatureCatalog.ToolNames["editImage"],ToolSymbol("editImage"));
             if(Images&&choice.Id=="frameImage")choice=new("removeBackground",FeatureCatalog.ToolNames["removeBackground"],ToolSymbol("removeBackground"));
+            if(Video&&choice.Id=="splitVideo")choice=new("trimVideo",FeatureCatalog.ToolNames["trimVideo"],ToolSymbol("trimVideo"));
             SetBusy(true);var imageSelection=Images;var mediaSelection=Video||Audio;var selected=files.ToArray();MediaInfo? info=null;BitmapSource? preview=null;var input=selected[0];
             if(choice.Id=="removeBackground"||imageSelection&&choice.Id=="frameImage"){SetBusy(false);await RemoveBackgroundAsync(selected,choice.Id=="frameImage");return;}
             if(choice.Id=="removeMetadata"){SetBusy(false);await EditMetadataAsync(selected);return;}

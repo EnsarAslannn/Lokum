@@ -33,6 +33,7 @@ public sealed record MediaOptions
     public bool TrimSilence { get; init; }
     public double[] SnapshotTimes { get; init; } = [0];
     public double[] SplitPoints { get; init; } = [];
+    public MediaRange[] VideoClips { get; init; } = [];
     public int? EqualClips { get; init; }
     public double SplitInterval { get; init; } = 30;
     public int[] DiscardedClips { get; init; } = [];
@@ -137,7 +138,15 @@ public sealed class MediaEngine(string ffmpeg, string ffprobe)
         var args=new List<string>{"-i",input};double? duration=info.Duration;
         switch(tool)
         {
-            case "muteVideo": RequireVideo(info);args.AddRange(["-map","0:v:0","-c:v","copy","-an"]);break;
+            case "muteVideo":
+                RequireVideo(info);
+                if(options.Start>0||options.End is not null)
+                {
+                    RequireAudio(info);var muteRange=TimeRange(options.Start,options.End,info.Duration);
+                    args.AddRange(["-map","0:v:0","-map","0:a:0","-c:v","copy","-af",$"volume=0:enable='gte(t,{Number(muteRange.Start)})*lt(t,{Number(muteRange.End)})'",..AudioEncoding(ext switch{"webm"=>"opus","avi"=>"mp3","wmv"=>"wma",_=>"m4a"},options)]);
+                }
+                else args.AddRange(["-map","0:v:0","-c:v","copy","-an"]);
+                break;
             case "removeMetadata":
                 if(options.RemoveAllMetadata)
                 {
@@ -155,6 +164,8 @@ public sealed class MediaEngine(string ffmpeg, string ffprobe)
                 break;
             case "trimVideo":case "trimAudio":
                 if(tool=="trimAudio")RequireAudio(info);else RequireVideo(info);
+                if(tool=="trimVideo"&&options.VideoClips.Length>0)return await CutClipsAsync(input,info,directory,options,progress,token);
+                if(tool=="trimVideo"&&(options.SplitPoints.Length>0||options.EqualClips>1))return await SplitAsync(input,info,directory,options,progress,token);
                 var range=TimeRange(options.Start,options.End,info.Duration);duration=range.End-range.Start;
                 args.AddRange(["-ss",Number(range.Start),"-t",Number(duration.Value)]);
                 if(tool=="trimAudio")
@@ -276,25 +287,45 @@ public sealed class MediaEngine(string ffmpeg, string ffprobe)
         throw new IOException("This size cannot be reached. Choose a larger target or smaller dimensions.");
     }
 
+    private async Task<IReadOnlyList<string>> CutClipsAsync(string input,MediaInfo info,string directory,MediaOptions options,Action<OperationProgress> progress,CancellationToken token)
+    {
+        if(options.VideoClips.Length>1000)throw new ArgumentException("Choose at most 1,000 clips.");
+        // Each interval belongs to one clip. Gaps, overlaps and source-time order
+        // are intentional; output order is the order of the user's clip list.
+        var ranges=options.VideoClips.Select(r=>TimeRange(r.Start,r.End,info.Duration)).ToArray();
+        var folder=Path.Combine(directory,"clips-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(folder);
+        var clips=new List<string>();var ext=Path.GetExtension(input).TrimStart('.').ToLowerInvariant();
+        for(var n=0;n<ranges.Length;n++)
+        {
+            var range=ranges[n];var local=options with{Start=range.Start,End=range.End,VideoClips=[],SplitPoints=[],EqualClips=null};
+            var produced=await ApplyAsync("trimVideo",input,info,folder,local,p=>progress(p with{Fraction=(n+(p.Fraction??0))/ranges.Length*.95,Label=$"Saving clip {n+1} of {ranges.Length}"}),token);
+            var clip=Path.Combine(folder,options.JoinSplitClips?$"segment-{n}.{ext}":Path.GetFileNameWithoutExtension(input)+$" Part {n+1}.{ext}");File.Move(produced[0],clip);clips.Add(clip);
+        }
+        if(!options.JoinSplitClips||clips.Count==1)return clips;
+        var joined=Output(directory,input,ext," Cut");
+        await ConcatAsync(clips,joined,ranges.Sum(r=>r.End-r.Start),progress,token);Directory.Delete(folder,true);return [joined];
+    }
+
     private async Task<IReadOnlyList<string>> SplitAsync(string input,MediaInfo info,string directory,MediaOptions options,Action<OperationProgress> progress,CancellationToken token)
     {
         RequireVideo(info);if(info.Duration<=0)throw new ArgumentException("Splitting requires a known duration.");
+        var range=TimeRange(options.Start,options.End,info.Duration);
         var points=options.SplitPoints.ToList();
         if(points.Count==0)
         {
-            var count=options.EqualClips??(int)Math.Ceiling(info.Duration/options.SplitInterval);
+            var count=options.EqualClips??(int)Math.Ceiling((range.End-range.Start)/options.SplitInterval);
             if(count<1||count>10000)throw new ArgumentException("Choose at most 10,000 clips.");
-            points=Enumerable.Range(1,count-1).Select(n=>options.EqualClips is null?options.SplitInterval*n:info.Duration*n/count).ToList();
+            points=Enumerable.Range(1,count-1).Select(n=>range.Start+(options.EqualClips is null?options.SplitInterval*n:(range.End-range.Start)*n/count)).ToList();
         }
-        if(points.Any(p=>!double.IsFinite(p)||p<=0||p>=info.Duration))throw new ArgumentException("A split point lies outside the video.");
-        var bounds=new[]{0d}.Concat(points.Distinct().Order()).Append(info.Duration).ToArray();
+        if(points.Any(p=>!double.IsFinite(p)||p<=range.Start||p>=range.End))throw new ArgumentException("A split point lies outside the selected range.");
+        var bounds=new[]{range.Start}.Concat(points.Distinct().Order()).Append(range.End).ToArray();
         if(bounds.Zip(bounds.Skip(1)).Any(p=>p.Second-p.First<.05))throw new ArgumentException("Keep split points at least 0.05 seconds apart.");
         if(options.DiscardedClips.Any(n=>n<0||n>=bounds.Length-1))throw new ArgumentException("A discarded clip is outside the range.");
         var retained=Enumerable.Range(0,bounds.Length-1).Except(options.DiscardedClips).ToList();if(retained.Count==0)throw new ArgumentException("Keep at least one clip.");
         var folder=Path.Combine(directory,"clips-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(folder);var clips=new List<string>();var ext=Path.GetExtension(input).TrimStart('.').ToLowerInvariant();
         for(var n=0;n<retained.Count;n++)
         {
-            var index=retained[n];var local=options with{Start=bounds[index],End=bounds[index+1]};
+            var index=retained[n];var local=options with{Start=bounds[index],End=bounds[index+1],SplitPoints=[],EqualClips=null};
             var produced=await ApplyAsync("trimVideo",input,info,folder,local,p=>progress(p with{Fraction=(n+(p.Fraction??0))/retained.Count*.95,Label=$"Saving clip {n+1} of {retained.Count}"}),token);
             var clip=Path.Combine(folder,options.JoinSplitClips?$"segment-{n}.{ext}":Path.GetFileNameWithoutExtension(input)+$" Part {index+1}.{ext}");File.Move(produced[0],clip);clips.Add(clip);
         }

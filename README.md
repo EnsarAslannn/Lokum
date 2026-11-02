@@ -21,7 +21,7 @@ Kütüphane ve ayarlar `%LOCALAPPDATA%/Lokum` altında saklanır. Orijinal Nashi
 - **45 girdi formatı, 27 araç, 275 dönüşüm yolu:** ortak katalog ve seçim kuralları korunur.
 - **Görseller:** dönüştürme, sıkıştırma, boyutlandırma, döndürme/yansıtma, kırpma, işaretleme, çerçeve, kolaj, metadata, gizleme ve QR okuma.
 - **Windows arka plan düzenleme:** serbest veya dikdörtgen seçimle korunacak alanı belirleme, isteğe bağlı yerel otomatik kesim, şeffaf PNG, düz renk veya görsel arka plan. Tek görsel ve toplu seçim desteklenir.
-- **Video ve ses:** dönüştürme, sıkıştırma, kırpma, birleştirme, hız değiştirme, kare çıkarma, normalizasyon, kanal ayarları, sessize alma ve gizleme araçları.
+- **Video ve ses:** dönüştürme, sıkıştırma, görüntü kırpma, klip sayısı ve elle ayarlanan sınırlarla kesme/bölme, birleştirme, hız değiştirme, normalizasyon ve kanal ayarları. Windows'ta videonun tamamını veya yalnızca seçili zaman aralığını sessize alıp sonucu önizleyebilirsin. Video sansürü, seçilen kaplama stilini gerçek işlenmiş önizlemede gösterir; ayrı bölme ve kare alma çark seçenekleri kaldırılmıştır. [Kullanım](README.tr.md#sık-kullanılan-akışlar).
 - **Belgeler ve arşivler:** PDF oluşturma/birleştirme/bölme/düzenleme, Office/Pages/EPUB/tablo/sunum/altyazı dönüşümleri ve arşiv işlemleri.
 - **Günlük akış:** araç çarkı, sürükleme kısayolları, pano içe aktarma, Float rafı, kütüphane, klasör otomasyonu ve pencere düzenleri.
 - **Web:** desteklenen herkese açık medya bağlantılarından video, ses ve görsel indirme.

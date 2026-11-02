@@ -9,7 +9,7 @@ public static class FeatureCatalog
     private static Contract Load(){using var stream=typeof(FeatureCatalog).Assembly.GetManifestResourceStream("Lokum.FeatureCatalog.json")!;return JsonSerializer.Deserialize<Contract>(stream,new JsonSerializerOptions{PropertyNameCaseInsensitive=true})!;}
     public static IReadOnlyDictionary<string,string[]> Conversions=>Data.ConversionMatrix;
     // Windows-only additions stay separate from the shared Swift catalog.
-    private static readonly Dictionary<string,string> WindowsToolNames=new(Data.ToolNames){["removeBackground"]="Edit Background",["editImage"]="Edit Image",["redactImage"]="Redact Image",["readQRCode"]="Read QR Code"};
+    private static readonly Dictionary<string,string> WindowsToolNames=new(Data.ToolNames){["removeBackground"]="Edit Background",["editImage"]="Edit Image",["redactImage"]="Redact Image",["readQRCode"]="Read QR Code",["trimVideo"]="Cut Video"};
     public static IReadOnlyDictionary<string,string> ToolNames=>WindowsToolNames;
     public static string Extension(string path)=>Path.GetExtension(path).TrimStart('.').ToLowerInvariant() switch{"jpeg"=>"jpg","tif"=>"tiff","heif"=>"heic","aif"=>"aiff","markdown"=>"md","gzip" or "tgz"=>"gz",var ext=>ext};
     public static bool IsImage(string path)=>new[]{"jpg","png","webp","heic","tiff","svg","avif","bmp"}.Contains(Extension(path));
@@ -20,6 +20,7 @@ public static class FeatureCatalog
     public static string[] Tools(IReadOnlyList<string> inputs)
     {
         var result=Intersect(inputs,inputs.Count>1?Data.MultipleTools:Data.SingleTools).ToList();
+        if(inputs.Count>0&&inputs.All(IsVideo))result.RemoveAll(id=>id is "splitVideo" or "videoSnapshots");
         if(inputs.Count>0&&inputs.All(p=>IsImage(p)||Extension(p)=="pdf"))result.Add("readQRCode");
         if(inputs.Count>0&&inputs.All(p=>IsImage(p)&&!Directory.Exists(p)))
         {

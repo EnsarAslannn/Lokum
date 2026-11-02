@@ -61,6 +61,20 @@ jobs:
         run: |
           dotnet run --project windows/Lokum.Verify -c Release
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Video cut range mute and processed preview regression
+        shell: pwsh
+        run: |
+          $tools = Join-Path $env:RUNNER_TEMP 'Lokum-Test-Tools'
+          $env:LOKUM_VERIFY_FFMPEG = Join-Path $tools 'ffmpeg.exe'
+          $env:LOKUM_VERIFY_FFPROBE = Join-Path $tools 'ffprobe.exe'
+          dotnet run --project windows/Lokum.Verify -c Release --no-restore -- --video-workspace-only --output build/video-workspace-tests
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $source = (Resolve-Path 'build/video-workspace-tests/Video with tone.mp4').Path
+          $app = (Resolve-Path 'build/windows/Lokum/Lokum.exe').Path
+          $process = Start-Process -FilePath $app -ArgumentList @('--video-workspace-ui', ('"' + (Join-Path $PWD 'build/video-workspace-ui') + '"'), ('"' + $source + '"'), ('"' + $tools + '"')) -WindowStyle Hidden -PassThru
+          if (!$process.WaitForExit(180000)) { $process.Kill($true); throw 'Video preview regression exceeded three minutes' }
+          if ($process.ExitCode -ne 0) { throw 'Video preview regression failed' }
+          Get-Content build/video-workspace-ui/verification.json
       - name: Windows native image PDF ZIP and WPF render checks
         shell: pwsh
         env:
@@ -130,5 +144,7 @@ jobs:
             build/Lokum-Windows-x64.zip
             build/windows-smoke
             build/background-editing-tests
+            build/video-workspace-tests
+            build/video-workspace-ui
           retention-days: 7
           if-no-files-found: error

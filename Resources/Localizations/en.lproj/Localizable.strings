@@ -60,6 +60,7 @@
 "A PHOTO IS UNAVAILABLE. TRY A FRESH PUBLIC POST LINK." = "A PHOTO IS UNAVAILABLE. TRY A FRESH PUBLIC POST LINK.";
 "A PLACE FOR FRESH FILES." = "A PLACE FOR FRESH FILES.";
 "A SELECTED ITEM IS MISSING." = "A SELECTED ITEM IS MISSING.";
+"A SPLIT POINT LIES OUTSIDE THE SELECTED RANGE." = "A SPLIT POINT LIES OUTSIDE THE SELECTED RANGE.";
 "A SPLIT POINT LIES OUTSIDE THE VIDEO." = "A SPLIT POINT LIES OUTSIDE THE VIDEO.";
 "A SUBTITLE CUE ENDS BEFORE IT STARTS." = "A SUBTITLE CUE ENDS BEFORE IT STARTS.";
 "A TABLE CELL SPAN IS INVALID OR EXCEEDS 1,024 COLUMNS." = "A TABLE CELL SPAN IS INVALID OR EXCEEDS 1,024 COLUMNS.";
@@ -83,6 +84,7 @@
 "A photo is unavailable. Try a fresh public post link." = "A photo is unavailable. Try a fresh public post link.";
 "A place for fresh files." = "A place for fresh files.";
 "A selected item is missing." = "A selected item is missing.";
+"A split point lies outside the selected range." = "A split point lies outside the selected range.";
 "A split point lies outside the video." = "A split point lies outside the video.";
 "A subtitle cue ends before it starts." = "A subtitle cue ends before it starts.";
 "A table cell span is invalid or exceeds 1,024 columns." = "A table cell span is invalid or exceeds 1,024 columns.";
@@ -100,6 +102,7 @@
 "ADD METADATA FIELD" = "ADD METADATA FIELD";
 "ADD METADATA FIELDS" = "ADD METADATA FIELDS";
 "ADD REDACTION" = "ADD REDACTION";
+"ADD SELECTED AREA" = "ADD SELECTED AREA";
 "ADD SELECTED RANGE" = "ADD SELECTED RANGE";
 "ADD SPLIT" = "ADD SPLIT";
 "ADD TO AN EXISTING FLOAT" = "ADD TO AN EXISTING FLOAT";
@@ -126,6 +129,7 @@
 "ANOTHER TASK IS RUNNING. YOUR LINK IS READY WHEN IT FINISHES." = "ANOTHER TASK IS RUNNING. YOUR LINK IS READY WHEN IT FINISHES.";
 "APPEARANCE" = "APPEARANCE";
 "APPEARANCE COULD NOT BE SAVED" = "APPEARANCE COULD NOT BE SAVED";
+"APPLY CLIP COUNT" = "APPLY CLIP COUNT";
 "ARCHIVE CONTAINS A LINK." = "ARCHIVE CONTAINS A LINK.";
 "ARCHIVE CONTAINS DUPLICATE NAMES." = "ARCHIVE CONTAINS DUPLICATE NAMES.";
 "ARCHIVE CONTAINS DUPLICATE PATHS OR LINKS." = "ARCHIVE CONTAINS DUPLICATE PATHS OR LINKS.";
@@ -169,6 +173,7 @@
 "Add a bleep or silence range." = "Add a bleep or silence range.";
 "Add files" = "Add files";
 "Add metadata fields" = "Add metadata fields";
+"Add selected area" = "Add selected area";
 "Add selected range" = "Add selected range";
 "Add to an existing Float" = "Add to an existing Float";
 "Additional options" = "Additional options";
@@ -198,6 +203,7 @@
 "Another task is running. Your link is ready when it finishes." = "Another task is running. Your link is ready when it finishes.";
 "Appearance" = "Appearance";
 "Appearance could not be saved" = "Appearance could not be saved";
+"Apply clip count" = "Apply clip count";
 "Archive contains a link." = "Archive contains a link.";
 "Archive contains duplicate names." = "Archive contains duplicate names.";
 "Archive contains duplicate paths or links." = "Archive contains duplicate paths or links.";
@@ -303,6 +309,7 @@
 "CHOOSE 2–100 IMAGES FOR A COLLAGE." = "CHOOSE 2–100 IMAGES FOR A COLLAGE.";
 "CHOOSE A BACKGROUND IMAGE." = "CHOOSE A BACKGROUND IMAGE.";
 "CHOOSE A CANVAS WITHIN 100 MP AND 30,000 PIXELS." = "CHOOSE A CANVAS WITHIN 100 MP AND 30,000 PIXELS.";
+"CHOOSE A CLIP AND ADJUST ITS OWN START AND END. OTHER CLIPS STAY UNCHANGED; GAPS, OVERLAPS AND ANY SOURCE-TIME ORDER ARE ALLOWED. APPLYING A NEW COUNT RESETS ALL CLIP RANGES." = "CHOOSE A CLIP AND ADJUST ITS OWN START AND END. OTHER CLIPS STAY UNCHANGED; GAPS, OVERLAPS AND ANY SOURCE-TIME ORDER ARE ALLOWED. APPLYING A NEW COUNT RESETS ALL CLIP RANGES.";
 "CHOOSE A COLOR IN #RRGGBB FORMAT." = "CHOOSE A COLOR IN #RRGGBB FORMAT.";
 "CHOOSE A COMPLETE RTFD FOLDER CONTAINING TXT.RTF." = "CHOOSE A COMPLETE RTFD FOLDER CONTAINING TXT.RTF.";
 "CHOOSE A DESTINATION OUTSIDE THE FOLDER BEING MOVED." = "CHOOSE A DESTINATION OUTSIDE THE FOLDER BEING MOVED.";
@@ -322,6 +329,7 @@
 "CHOOSE A VALID RANGE FIRST." = "CHOOSE A VALID RANGE FIRST.";
 "CHOOSE A VALID RANGE." = "CHOOSE A VALID RANGE.";
 "CHOOSE A VALID TIME RANGE." = "CHOOSE A VALID TIME RANGE.";
+"CHOOSE A WHOLE CLIP COUNT WITH AT LEAST 0.05 SECONDS PER CLIP." = "CHOOSE A WHOLE CLIP COUNT WITH AT LEAST 0.05 SECONDS PER CLIP.";
 "CHOOSE AN EXISTING MEDIA FILE." = "CHOOSE AN EXISTING MEDIA FILE.";
 "CHOOSE AN IMAGE." = "CHOOSE AN IMAGE.";
 "CHOOSE AN INPUT FORMAT TO SEE ITS AVAILABLE OUTPUTS." = "CHOOSE AN INPUT FORMAT TO SEE ITS AVAILABLE OUTPUTS.";
@@ -330,6 +338,7 @@
 "CHOOSE AT LEAST ONE FRAME." = "CHOOSE AT LEAST ONE FRAME.";
 "CHOOSE AT LEAST TWO PDFS." = "CHOOSE AT LEAST TWO PDFS.";
 "CHOOSE AT LEAST TWO VIDEOS." = "CHOOSE AT LEAST TWO VIDEOS.";
+"CHOOSE AT MOST 1,000 CLIPS." = "CHOOSE AT MOST 1,000 CLIPS.";
 "CHOOSE AT MOST 10,000 CLIPS." = "CHOOSE AT MOST 10,000 CLIPS.";
 "CHOOSE BACKGROUND IMAGE…" = "CHOOSE BACKGROUND IMAGE…";
 "CHOOSE BETWEEN 1 AND 1,000 PAGES PER FILE." = "CHOOSE BETWEEN 1 AND 1,000 PAGES PER FILE.";
@@ -373,8 +382,10 @@
 "CLEAR" = "CLEAR";
 "CLEAR FLOAT" = "CLEAR FLOAT";
 "CLEAR SELECTION" = "CLEAR SELECTION";
+"CLIP" = "CLIP";
 "CLIPBOARD IS BUSY. TRY AGAIN." = "CLIPBOARD IS BUSY. TRY AGAIN.";
 "CLIPBOARD IS BUSY. TRY PASTE AGAIN." = "CLIPBOARD IS BUSY. TRY PASTE AGAIN.";
+"CLIPS" = "CLIPS";
 "CLOSE FLOAT WITHOUT DELETING FILES" = "CLOSE FLOAT WITHOUT DELETING FILES";
 "CLOSE WINDOW" = "CLOSE WINDOW";
 "COLLAPSE FLOAT" = "COLLAPSE FLOAT";
@@ -432,6 +443,8 @@
 "CTRL+SHIFT+D  USE A COPIED LINK  ·  PUBLIC, DOWNLOADABLE MEDIA" = "CTRL+SHIFT+D  USE A COPIED LINK  ·  PUBLIC, DOWNLOADABLE MEDIA";
 "CUSTOM DIMENSIONS" = "CUSTOM DIMENSIONS";
 "CUT" = "CUT";
+"CUT VIDEO" = "CUT VIDEO";
+"CUT VIDEO · LOKUM" = "CUT VIDEO · LOKUM";
 "Callout" = "Callout";
 "Camera manufacturer" = "Camera manufacturer";
 "Camera model" = "Camera model";
@@ -476,6 +489,7 @@
 "Choose a PDF with 1 to 1,000 pages." = "Choose a PDF with 1 to 1,000 pages.";
 "Choose a background image." = "Choose a background image.";
 "Choose a canvas within 100 MP and 30,000 pixels." = "Choose a canvas within 100 MP and 30,000 pixels.";
+"Choose a clip and adjust its own Start and End. Other clips stay unchanged; gaps, overlaps and any source-time order are allowed. Applying a new count resets all clip ranges." = "Choose a clip and adjust its own Start and End. Other clips stay unchanged; gaps, overlaps and any source-time order are allowed. Applying a new count resets all clip ranges.";
 "Choose a color in #RRGGBB format." = "Choose a color in #RRGGBB format.";
 "Choose a complete RTFD folder containing TXT.rtf." = "Choose a complete RTFD folder containing TXT.rtf.";
 "Choose a destination outside the folder being moved." = "Choose a destination outside the folder being moved.";
@@ -493,6 +507,7 @@
 "Choose a valid range first." = "Choose a valid range first.";
 "Choose a valid range." = "Choose a valid range.";
 "Choose a valid time range." = "Choose a valid time range.";
+"Choose a whole clip count with at least 0.05 seconds per clip." = "Choose a whole clip count with at least 0.05 seconds per clip.";
 "Choose an Instagram photo post link." = "Choose an Instagram photo post link.";
 "Choose an existing media file." = "Choose an existing media file.";
 "Choose an image." = "Choose an image.";
@@ -501,6 +516,7 @@
 "Choose at least one frame." = "Choose at least one frame.";
 "Choose at least two PDFs." = "Choose at least two PDFs.";
 "Choose at least two videos." = "Choose at least two videos.";
+"Choose at most 1,000 clips." = "Choose at most 1,000 clips.";
 "Choose at most 10,000 clips." = "Choose at most 10,000 clips.";
 "Choose background image…" = "Choose background image…";
 "Choose between 1 and 1,000 pages per file." = "Choose between 1 and 1,000 pages per file.";
@@ -536,10 +552,12 @@
 "Clear Float" = "Clear Float";
 "Clear Selection" = "Clear Selection";
 "Clear selection" = "Clear selection";
+"Clip" = "Clip";
 "Clip %@" = "Clip %@";
 "Clip %lld" = "Clip %lld";
 "Clipboard is busy. Try Paste again." = "Clipboard is busy. Try Paste again.";
 "Clipboard is busy. Try again." = "Clipboard is busy. Try again.";
+"Clips" = "Clips";
 "Close Float without deleting files" = "Close Float without deleting files";
 "Close Window" = "Close Window";
 "Collapse Float" = "Collapse Float";
@@ -604,6 +622,8 @@
 "Ctrl+Shift+D  Use a copied link  ·  Public, downloadable media" = "Ctrl+Shift+D  Use a copied link  ·  Public, downloadable media";
 "Custom dimensions" = "Custom dimensions";
 "Cut" = "Cut";
+"Cut Video" = "Cut Video";
+"Cut Video · Lokum" = "Cut Video · Lokum";
 "DARK" = "DARK";
 "DATE TAKEN" = "DATE TAKEN";
 "DEFAULTS COULD NOT BE RESTORED" = "DEFAULTS COULD NOT BE RESTORED";
@@ -738,6 +758,7 @@
 "Drop it like it’s… a file." = "Drop it like it’s… a file.";
 "Drop something good." = "Drop something good.";
 "Duplicate" = "Duplicate";
+"EACH CLIP MUST BE AT LEAST 0.05 SECONDS LONG." = "EACH CLIP MUST BE AT LEAST 0.05 SECONDS LONG.";
 "EDIT" = "EDIT";
 "EDIT BACKGROUND" = "EDIT BACKGROUND";
 "EDIT IMAGE" = "EDIT IMAGE";
@@ -765,6 +786,7 @@
 "EXPOSURE" = "EXPOSURE";
 "EXTRACT ARCHIVE" = "EXTRACT ARCHIVE";
 "EXTRACT LOKUM INTO ITS OWN WRITABLE FOLDER FIRST." = "EXTRACT LOKUM INTO ITS OWN WRITABLE FOLDER FIRST.";
+"Each clip must be at least 0.05 seconds long." = "Each clip must be at least 0.05 seconds long.";
 "Edit" = "Edit";
 "Edit Background" = "Edit Background";
 "Edit Image" = "Edit Image";
@@ -1043,6 +1065,7 @@
 "Join retained clips into one video" = "Join retained clips into one video";
 "KEEP AT LEAST ONE CLIP." = "KEEP AT LEAST ONE CLIP.";
 "KEEP AT LEAST ONE PAGE." = "KEEP AT LEAST ONE PAGE.";
+"KEEP CLIP EDGES ORDERED AND AT LEAST 0.05 SECONDS APART." = "KEEP CLIP EDGES ORDERED AND AT LEAST 0.05 SECONDS APART.";
 "KEEP DRAGGING\nDROP A FILE OR LINK" = "KEEP DRAGGING\nDROP A FILE OR LINK";
 "KEEP ORIGINAL DIMENSIONS" = "KEEP ORIGINAL DIMENSIONS";
 "KEEP REDACTION AREAS INSIDE THE IMAGE." = "KEEP REDACTION AREAS INSIDE THE IMAGE.";
@@ -1055,6 +1078,7 @@
 "KEYWORDS" = "KEYWORDS";
 "Keep at least one clip." = "Keep at least one clip.";
 "Keep at least one page." = "Keep at least one page.";
+"Keep clip edges ordered and at least 0.05 seconds apart." = "Keep clip edges ordered and at least 0.05 seconds apart.";
 "Keep dragging\nDrop a file or link" = "Keep dragging\nDrop a file or link";
 "Keep original dimensions" = "Keep original dimensions";
 "Keep redaction areas inside the image." = "Keep redaction areas inside the image.";
@@ -1073,6 +1097,7 @@
 "LAUNCH AT LOGIN" = "LAUNCH AT LOGIN";
 "LAUNCH AT LOGIN IS UNAVAILABLE FOR THIS COPY." = "LAUNCH AT LOGIN IS UNAVAILABLE FOR THIS COPY.";
 "LAYOUT" = "LAYOUT";
+"LEAVE THIS OFF TO REMOVE ALL AUDIO. TURN IT ON TO KEEP THE SOUND BEFORE AND AFTER THE SELECTED RANGE. PREVIEW THE RESULT BEFORE SAVING." = "LEAVE THIS OFF TO REMOVE ALL AUDIO. TURN IT ON TO KEEP THE SOUND BEFORE AND AFTER THE SELECTED RANGE. PREVIEW THE RESULT BEFORE SAVING.";
 "LEFT" = "LEFT";
 "LEFT HALF" = "LEFT HALF";
 "LEFT THIRD" = "LEFT THIRD";
@@ -1111,6 +1136,7 @@
 "Launch at login" = "Launch at login";
 "Launch at login is unavailable for this copy." = "Launch at login is unavailable for this copy.";
 "Layout" = "Layout";
+"Leave this off to remove all audio. Turn it on to keep the sound before and after the selected range. Preview the result before saving." = "Leave this off to remove all audio. Turn it on to keep the sound before and after the selected range. Preview the result before saving.";
 "Left" = "Left";
 "Left half" = "Left half";
 "Left third" = "Left third";
@@ -1182,6 +1208,7 @@
 "MOVE UP" = "MOVE UP";
 "MOVED OR REMOVED" = "MOVED OR REMOVED";
 "MUTE" = "MUTE";
+"MUTE ONLY THE SELECTED RANGE" = "MUTE ONLY THE SELECTED RANGE";
 "MUTE VIDEO" = "MUTE VIDEO";
 "MUTE VIDEO · LOKUM" = "MUTE VIDEO · LOKUM";
 "Made for your Mac" = "Made for your Mac";
@@ -1227,6 +1254,7 @@
 "Mute" = "Mute";
 "Mute Video" = "Mute Video";
 "Mute Video · Lokum" = "Mute Video · Lokum";
+"Mute only the selected range" = "Mute only the selected range";
 "NEXT" = "NEXT";
 "NEXT FRAME" = "NEXT FRAME";
 "NEXT PAGE" = "NEXT PAGE";
@@ -1387,6 +1415,7 @@
 "PIXELATE" = "PIXELATE";
 "PLAY" = "PLAY";
 "PLAY / PAUSE" = "PLAY / PAUSE";
+"PLAY RESULT" = "PLAY RESULT";
 "PLAY SELECTED RANGE" = "PLAY SELECTED RANGE";
 "PLAYBACK / DOCUMENT ORDER" = "PLAYBACK / DOCUMENT ORDER";
 "PLAYBACK SPEED" = "PLAYBACK SPEED";
@@ -1407,6 +1436,7 @@
 "PREVIEW" = "PREVIEW";
 "PREVIEW CROP" = "PREVIEW CROP";
 "PREVIEW LEFT" = "PREVIEW LEFT";
+"PREVIEW PROCESSED" = "PREVIEW PROCESSED";
 "PREVIEW READY · EXPORT USES YOUR ORIGINAL FILE." = "PREVIEW READY · EXPORT USES YOUR ORIGINAL FILE.";
 "PREVIEW READY. SAVE A NEW COPY WHEN YOU LIKE THE RESULT." = "PREVIEW READY. SAVE A NEW COPY WHEN YOU LIKE THE RESULT.";
 "PREVIEW RIGHT" = "PREVIEW RIGHT";
@@ -1442,6 +1472,7 @@
 "Pixelate" = "Pixelate";
 "Play" = "Play";
 "Play / pause" = "Play / pause";
+"Play Result" = "Play Result";
 "Play Selected Range" = "Play Selected Range";
 "Play selected range" = "Play selected range";
 "Playback / document order" = "Playback / document order";
@@ -1462,6 +1493,7 @@
 "Preset" = "Preset";
 "Preview" = "Preview";
 "Preview Left" = "Preview Left";
+"Preview Processed" = "Preview Processed";
 "Preview Right" = "Preview Right";
 "Preview crop" = "Preview crop";
 "Preview ready · export uses your original file." = "Preview ready · export uses your original file.";
@@ -1672,6 +1704,7 @@
 "SEE ALL RECENT FILES" = "SEE ALL RECENT FILES";
 "SELECT / MOVE" = "SELECT / MOVE";
 "SELECT A CLIP AND PRESS DELETE TO REMOVE IT FROM THE RESULT." = "SELECT A CLIP AND PRESS DELETE TO REMOVE IT FROM THE RESULT.";
+"SELECT A TIME RANGE AND DRAW AN AREA ON ORIGINAL. THE PROCESSED PREVIEW USES YOUR CHOSEN COVER STYLE. RETURN TO ORIGINAL TO ADD ANOTHER AREA." = "SELECT A TIME RANGE AND DRAW AN AREA ON ORIGINAL. THE PROCESSED PREVIEW USES YOUR CHOSEN COVER STYLE. RETURN TO ORIGINAL TO ADD ANOTHER AREA.";
 "SELECT ALL" = "SELECT ALL";
 "SELECT AN AREA ON THE LEFT TO CREATE YOUR CUTOUT." = "SELECT AN AREA ON THE LEFT TO CREATE YOUR CUTOUT.";
 "SELECT AN AREA TO KEEP OR USE AUTOMATIC REMOVAL." = "SELECT AN AREA TO KEEP OR USE AUTOMATIC REMOVAL.";
@@ -1720,6 +1753,7 @@
 "SHOW IN FINDER" = "SHOW IN FINDER";
 "SHOW LOKUM IN FINDER" = "SHOW LOKUM IN FINDER";
 "SHOW ORIGINAL" = "SHOW ORIGINAL";
+"SHOW RESULT" = "SHOW RESULT";
 "SIGNED UPDATES USE YOUR CONFIGURED LOKUM RELEASE CHANNEL. THIS BUILD HAS NO CHANNEL CONNECTED YET." = "SIGNED UPDATES USE YOUR CONFIGURED LOKUM RELEASE CHANNEL. THIS BUILD HAS NO CHANNEL CONNECTED YET.";
 "SILENCE THRESHOLD" = "SILENCE THRESHOLD";
 "SKIP TOUR" = "SKIP TOUR";
@@ -1817,6 +1851,7 @@
 "Select / Move" = "Select / Move";
 "Select All" = "Select All";
 "Select a clip and press Delete to remove it from the result." = "Select a clip and press Delete to remove it from the result.";
+"Select a time range and draw an area on Original. The processed preview uses your chosen cover style. Return to Original to add another area." = "Select a time range and draw an area on Original. The processed preview uses your chosen cover style. Return to Original to add another area.";
 "Select all" = "Select all";
 "Select an area on the left to create your cutout." = "Select an area on the left to create your cutout.";
 "Select an area to keep or use automatic removal." = "Select an area to keep or use automatic removal.";
@@ -1865,6 +1900,7 @@
 "Shift locks the ratio · Return crops\nDrag inside to move; drag a handle to resize." = "Shift locks the ratio · Return crops\nDrag inside to move; drag a handle to resize.";
 "Show Lokum in Finder" = "Show Lokum in Finder";
 "Show Original" = "Show Original";
+"Show Result" = "Show Result";
 "Show in Explorer" = "Show in Explorer";
 "Show in Finder" = "Show in Finder";
 "Show original" = "Show original";

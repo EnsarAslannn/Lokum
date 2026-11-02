@@ -6,6 +6,14 @@ if(args.Contains("--runner-only")){Environment.ExitCode=await VerificationRunner
 Environment.ExitCode=await VerificationRunner.RunAsync(async()=>
 {
 
+if(args.Contains("--video-workspace-only"))
+{
+    var count=0;var output=Path.GetFullPath(args.SkipWhile(a=>a!="--output").Skip(1).FirstOrDefault()??"build/video-workspace-tests");
+    await VideoWorkspaceChecks.Run((ok,message)=>{if(!ok)throw new Exception(message);count++;},output,Environment.GetEnvironmentVariable("LOKUM_VERIFY_FFMPEG")!,Environment.GetEnvironmentVariable("LOKUM_VERIFY_FFPROBE")!);
+    File.WriteAllText(Path.Combine(output,"verification.json"),JsonSerializer.Serialize(new{passed=true,checks=count},new JsonSerializerOptions{WriteIndented=true}));
+    Console.WriteLine("PASS video workspace: "+count);return;
+}
+
 if(args.Contains("--metadata-unicode-only"))
 {
     var metadataChecks=0;
@@ -149,6 +157,7 @@ if(Environment.GetEnvironmentVariable("LOKUM_VERIFY_FFMPEG") is {} encoder && En
     var directory=Path.Combine(Path.GetTempPath(),"Lokum-Media-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(directory);
     try
     {
+        await VideoWorkspaceChecks.Run(Check,Path.Combine(directory,"Video workspace"),encoder,probe);
         var source=Path.Combine(directory,"Source ' $().mp4");
         await ProcessRunner.RunAsync(encoder,["-v","error","-f","lavfi","-i","testsrc2=size=128x72:rate=12:duration=2","-f","lavfi","-i","sine=duration=2:sample_rate=48000","-c:v","libx264","-c:a","aac",source]);
         var original=System.Security.Cryptography.SHA256.HashData(await File.ReadAllBytesAsync(source));

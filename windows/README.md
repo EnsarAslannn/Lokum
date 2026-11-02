@@ -27,6 +27,33 @@ While dragging in Explorer or another application, **Ctrl** opens tools, **Shift
 
 Media editors use **Space** for play/pause, **Left/Right** for one-second seeking, **Shift+Left/Right** for frame steps, **I/O** for range marks and **Shift+Space** to play the selected range. Crop supports drag, Shift ratio lock, selection move/resize, aspect presets and Enter save. Annotation supports Select/Move, Delete and Ctrl+Z. Normal text-field editing is preserved.
 
+**Cut Video** combines trimming and splitting. Set the clip count, apply it, select
+a clip and adjust its own Start/End handles. Each range is independent: gaps,
+overlaps and arbitrary source-time order are allowed. **Play Result** previews only
+the selected intervals in list order; export can save separate files or join them. The separate
+Split Video and Video Snapshots entries are hidden in the Windows video wheel.
+Spatial **Crop Video** remains independent. **Mute Video** retains whole-track
+removal by default and adds an optional selected time range, with processed
+playback that preserves audio elsewhere. Video redaction restores its original
+draw-and-save workflow with black selection markers and an explicit **Show Result**
+button. No automatic preview runs after area/style changes; use **Original**
+to draw more regions. Rounded display endpoints are normalized to the exact source
+duration, so an untouched full-duration selection remains valid.
+
+**Redact Video**, video **Compress**, **Change Video Speed** and **Crop Video**
+all offer **Original** and **Show Result** in the fixed footer, outside scrolling
+options. Show Result renders with the same settings used by Save, then plays the
+actual result. Changing settings returns to the editable source; request a new
+result explicitly. MP4 results play directly, while MOV/MKV are remuxed for playback
+without another encoding pass. Compression previews therefore retain the actual
+output quality and size limit. Previewing never saves over the source or commits
+an export to the user's output folder.
+
+Focused real-media checks: `dotnet run --project windows/Lokum.Verify -c Release -- --video-workspace-only --output build/video-workspace-tests`
+with `LOKUM_VERIFY_FFMPEG` and `LOKUM_VERIFY_FFPROBE` set to absolute executable paths.
+Own-window controls and preview pixels: `Lokum.exe --video-workspace-ui OUTPUT INPUT_VIDEO TOOLS_DIRECTORY`.
+This mode uses disposable files and no global input, clipboard, hooks, tray or user preferences.
+
 **Edit Background** is the single wheel entry for the two-step background editor.
 Draw freehand around the area to keep or drag a rectangle; everything outside the
 selection becomes transparent. Automatic selection is optional and runs locally;

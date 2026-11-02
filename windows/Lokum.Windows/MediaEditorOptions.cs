@@ -12,7 +12,8 @@ public sealed partial class ToolEditor
     private void BuildMediaOptions()
     {
         if(media is null)return;
-        if(tool is "trimAudio" or "trimVideo")options.Children.Add(trimSilence);
+        if(tool=="trimAudio")options.Children.Add(trimSilence);
+        BuildVideoCuts();BuildVideoMute();
         if(tool=="normalizeAudio")Field("Loudness range",11);
         if(tool=="splitVideo"){TextField("Split points (seconds; separated by semicolons)","");TextField("Remove clips (numbers; separated by semicolons)","");options.Children.Add(joinClips);}
         if(tool=="audioToVideo")
@@ -21,20 +22,26 @@ public sealed partial class ToolEditor
         }
         if(tool=="redactAudio")
         {
-            options.Children.Add(L10n.Label(new TextBlock{Text="Replace selected audio with"}));options.Children.Add(bleepMode);options.Children.Add(MainWindow.Button("Add selected range",()=>{try{var a=Value("Start");var b=Value("End",duration);if(a<0||b<=a||b>duration)throw new ArgumentException("Choose a valid range first.");bleepRanges.Add(new(a,b));ReloadRanges();}catch(ArgumentException error){MessageBox.Show(this,L10n.Text(error.Message),L10n.Text("Check selected range"));}}));options.Children.Add(rangesList);options.Children.Add(MainWindow.Button("Remove selected range",()=>{if(rangesList.SelectedIndex is var i&&i>=0&&i<bleepRanges.Count){bleepRanges.RemoveAt(i);ReloadRanges();}}));
+            options.Children.Add(L10n.Label(new TextBlock{Text="Replace selected audio with"}));options.Children.Add(bleepMode);options.Children.Add(MainWindow.Button("Add selected range",()=>{try{var a=Value("Start");var b=Value("End",duration);
+        // Displayed milliseconds can round a valid source endpoint slightly upward.
+        var displayedEnd=double.Parse(Number(duration),CultureInfo.CurrentCulture);
+        if(b==displayedEnd&&Math.Abs(b-duration)<=.0005001)b=duration;if(a<0||b<=a||b>duration)throw new ArgumentException("Choose a valid range first.");bleepRanges.Add(new(a,b));ReloadRanges();}catch(ArgumentException error){MessageBox.Show(this,L10n.Text(error.Message),L10n.Text("Check selected range"));}}));options.Children.Add(rangesList);options.Children.Add(MainWindow.Button("Remove selected range",()=>{if(rangesList.SelectedIndex is var i&&i>=0&&i<bleepRanges.Count){bleepRanges.RemoveAt(i);ReloadRanges();}}));
         }
-        if(tool=="redactVideo"){options.Children.Add(L10n.Label(new TextBlock{Text="Cover style"}));options.Children.Add(redactMode);options.Children.Add(rangesList);options.Children.Add(MainWindow.Button("Remove selected area",()=>{var i=rangesList.SelectedIndex;if(i>=0&&i<videoRegions.Count){videoRegions.RemoveAt(i);var shape=drawing.Children.OfType<System.Windows.Shapes.Rectangle>().ElementAtOrDefault(i);if(shape is not null)drawing.Children.Remove(shape);ReloadRanges();}}));}
+        if(tool=="redactVideo"){options.Children.Add(L10n.Label(new TextBlock{Text="Cover style"}));options.Children.Add(redactMode);options.Children.Add(rangesList);options.Children.Add(MainWindow.Button("Remove selected area",()=>{var i=rangesList.SelectedIndex;if(i>=0&&i<videoRegions.Count){videoRegions.RemoveAt(i);var shape=drawing.Children.OfType<System.Windows.Shapes.Rectangle>().ElementAtOrDefault(i);if(shape is not null)drawing.Children.Remove(shape);ReloadRanges();MediaSettingsChanged();}}));}
     }
     private void ReloadRanges(){rangesList.ItemsSource=null;rangesList.ItemsSource=tool=="redactAudio"?bleepRanges.Select((r,i)=>$"{i+1} · {r.Start:0.###}–{r.End:0.###} s").ToArray():videoRegions.Select((r,i)=>$"{i+1} · {r.Width:0}×{r.Height:0} · {r.Start:0.###}–{r.End:0.###} s").ToArray();}
     private (double Start,double End) ReadPlaybackRange()
     {
         var a=Value("Start");var b=Value("End",duration);
+        // Displayed milliseconds can round a valid source endpoint slightly upward.
+        var displayedEnd=double.Parse(Number(duration),CultureInfo.CurrentCulture);
+        if(b==displayedEnd&&Math.Abs(b-duration)<=.0005001)b=duration;
         if(a<0||b<=a||b>duration)throw new ArgumentException("Start must be before End, within the media duration.");
         return(a,b);
     }
     private void PlayRange()
     {
-        try{var (a,b)=ReadPlaybackRange();Seek(a);rangePlaybackEnd=b;playingRange=true;player.Play();playing=true;}
+        try{var (a,b)=ReadPlaybackRange();if(processedPlayback)RestoreOriginalPreview(false);Seek(a);rangePlaybackEnd=b;playingRange=true;player.Play();playing=true;}
         catch(ArgumentException error){player.Pause();playing=false;playingRange=false;time.Text=error.Message;}
     }
     private MediaOptions MoreMediaSettings(MediaOptions original)
