@@ -12,6 +12,8 @@ internal static class ImageWorkspaceChecks
             check(tools.Distinct().Count()==tools.Length,"Consolidated image tools contain duplicate entries.");
         }
         check(FeatureCatalog.Tools(["movie.mp4"]).Contains("cropVideo"),"Combining image tools removed video cropping.");
+        foreach(var input in new[]{"photo.png","clip.mp4","text.txt","archive.zip"})check(FeatureCatalog.WheelTools([input]).Count(id=>id=="convert")==1,"Convertible files need one entry on the tool wheel: "+input);
+        check(!FeatureCatalog.WheelTools(["unknown.invalid"]).Contains("convert")&&!FeatureCatalog.WheelTools(["image.png","audio.mp3"]).Contains("convert"),"Conversion wheel entry must require a common target format");
         foreach(var item in new[]{("removeBackground","Arka Plan Düzenle"),("editImage","Görsel Düzenle"),("redactImage","Görsel Sansürle"),("readQRCode","QR Kod Oku")})
             check(AppLocalization.Text(FeatureCatalog.ToolNames[item.Item1],"tr")==item.Item2,"The visible image tool name is incorrect: "+item.Item1);
         foreach(var source in new[]{"Read QR Codes","Read QR codes","READ QR CODES"})

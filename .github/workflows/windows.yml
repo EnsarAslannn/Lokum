@@ -131,6 +131,20 @@ jobs:
             if (!(Test-Path (Join-Path $directory 'smoke.json'))) { throw 'No native smoke result' }
             Get-Content (Join-Path $directory 'smoke.json')
           }
+      - name: Every conversion target previews before saving
+        shell: pwsh
+        env:
+          LOKUM_VERIFY_OFFICE_TOOLS: '${{ runner.temp }}\Lokum-Parity-Runtimes'
+        run: |
+          $tools = Join-Path $env:RUNNER_TEMP 'Lokum-Test-Tools'
+          $app = (Resolve-Path 'build/windows/Lokum/Lokum.exe').Path
+          $proof = Join-Path $PWD 'build/conversion-workspace-ui'
+          $process = Start-Process -FilePath $app -ArgumentList @('--conversion-workspace-ui', ('"' + $proof + '"'), ('"' + $tools + '"')) -WindowStyle Hidden -PassThru
+          if (!$process.WaitForExit(600000)) { $process.Kill($true); throw 'Conversion preview regression exceeded ten minutes' }
+          if ($process.ExitCode -ne 0) { Get-Content (Join-Path $proof 'error.txt'); throw 'Conversion preview regression failed' }
+          $report = Get-Content (Join-Path $proof 'verification.json') -Raw | ConvertFrom-Json
+          if (!$report.passed -or !$report.officeAvailable -or $report.formats.Count -ne 39) { throw 'Not all conversion targets were verified' }
+          Get-Content (Join-Path $proof 'verification.json')
       - name: Package portable app
         shell: pwsh
         run: |
@@ -146,5 +160,6 @@ jobs:
             build/background-editing-tests
             build/video-workspace-tests
             build/video-workspace-ui
+            build/conversion-workspace-ui
           retention-days: 7
           if-no-files-found: error

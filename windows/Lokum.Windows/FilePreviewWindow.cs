@@ -48,6 +48,18 @@ internal sealed class FilePreviewWindow:Window
         {
             if(Directory.Exists(path)){content.Content=L10n.Label(new TextBlock{Text="Folder · "+Path.GetFileName(path)+"\nUse Open to view its contents.",TextWrapping=TextWrapping.Wrap});return;}
             if(!File.Exists(path))throw new FileNotFoundException("This file has moved or was removed.");
+            if(FeatureCatalog.IsArchive(path))
+            {
+                Directory.CreateDirectory(temporary);
+                var folder=(await Task.Run(()=>ArchiveEngine.Extract(path,temporary,null,null,token),token))[0];token.ThrowIfCancellationRequested();
+                var rows=Directory.EnumerateFileSystemEntries(folder,"*",SearchOption.AllDirectories).Select(entry=>Path.GetRelativePath(folder,entry)+(Directory.Exists(entry)?"/":"")).OrderBy(entry=>entry,StringComparer.OrdinalIgnoreCase);
+                content.Content=new TextBox{Text=string.Join(Environment.NewLine,rows),IsReadOnly=true,TextWrapping=TextWrapping.NoWrap,HorizontalScrollBarVisibility=ScrollBarVisibility.Auto,VerticalScrollBarVisibility=ScrollBarVisibility.Auto};return;
+            }
+            if(FeatureCatalog.Extension(path)=="html"&&office.Executable is {} officeExecutable)
+            {
+                Directory.CreateDirectory(temporary);var safe=Path.Combine(temporary,"preview.html");await File.WriteAllTextAsync(safe,OfficeDocuments.SanitizedHtml(await File.ReadAllTextAsync(path,token)),token);
+                path=await new OfficeDocuments(officeExecutable,tools.Ready?tools.Executable("deno"):"",AppContext.BaseDirectory).OfficeAsync(safe,"pdf",temporary,token);token.ThrowIfCancellationRequested();
+            }
             if(new[]{"docx","doc","rtf","rtfd","pages","xlsx","xls","ods","pptx","ppt","odp","epub"}.Contains(FeatureCatalog.Extension(path)))
             {
                 if(office.Executable is null){content.Content=L10n.Label(new TextBlock{Text="Set up office tools in Lokum to preview this document here, or use Open.",TextWrapping=TextWrapping.Wrap});return;}

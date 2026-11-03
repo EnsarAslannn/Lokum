@@ -31,8 +31,8 @@ public sealed partial class MainWindow
     {
         if(choice.Id=="convert")
         {
-            var editor=new ToolEditor(this,"convert","Convert",selected[0],inputs:selected,outputFormats:FeatureCatalog.Formats(selected));editor.ConfigureProfiles(preferences,requestedFormat);if(editor.ShowDialog()!=true)return;
-            await RunAsync((destination,p,t)=>new DocumentConversion(officeRuntime,tools).ConvertAsync(selected,editor.Format,destination,editor.DocumentOptions,p,t),"Convert to "+editor.Format.ToUpperInvariant());return;
+            var editor=new ToolEditor(this,"convert","Convert",selected[0],inputs:selected,outputFormats:FeatureCatalog.Formats(selected));editor.ConfigureProfiles(preferences,requestedFormat);editor.ConfigureConversionRuntime(tools,officeRuntime,metadataService);if(editor.ShowDialog()!=true)return;
+            await RunAsync(editor.ExportConversionAsync,"Convert to "+editor.Format.ToUpperInvariant());return;
         }
         if(choice.Id=="organizePDF")
         {

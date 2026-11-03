@@ -9,7 +9,7 @@ public static class FeatureCatalog
     private static Contract Load(){using var stream=typeof(FeatureCatalog).Assembly.GetManifestResourceStream("Lokum.FeatureCatalog.json")!;return JsonSerializer.Deserialize<Contract>(stream,new JsonSerializerOptions{PropertyNameCaseInsensitive=true})!;}
     public static IReadOnlyDictionary<string,string[]> Conversions=>Data.ConversionMatrix;
     // Windows-only additions stay separate from the shared Swift catalog.
-    private static readonly Dictionary<string,string> WindowsToolNames=new(Data.ToolNames){["removeBackground"]="Edit Background",["editImage"]="Edit Image",["redactImage"]="Redact Image",["readQRCode"]="Read QR Code",["trimVideo"]="Cut Video"};
+    private static readonly Dictionary<string,string> WindowsToolNames=new(Data.ToolNames){["removeBackground"]="Edit Background",["editImage"]="Edit Image",["redactImage"]="Redact Image",["readQRCode"]="Read QR Code",["trimVideo"]="Cut Video",["convert"]="Convert"};
     public static IReadOnlyDictionary<string,string> ToolNames=>WindowsToolNames;
     public static string Extension(string path)=>Path.GetExtension(path).TrimStart('.').ToLowerInvariant() switch{"jpeg"=>"jpg","tif"=>"tiff","heif"=>"heic","aif"=>"aiff","markdown"=>"md","gzip" or "tgz"=>"gz",var ext=>ext};
     public static bool IsImage(string path)=>new[]{"jpg","png","webp","heic","tiff","svg","avif","bmp"}.Contains(Extension(path));
@@ -17,6 +17,7 @@ public static class FeatureCatalog
     public static bool IsAudio(string path)=>new[]{"mp3","m4a","wav","flac","ogg","opus","aiff","wma","aac"}.Contains(Extension(path));
     public static bool IsArchive(string path)=>new[]{"zip","tar","gz","rar"}.Contains(Extension(path));
     public static string[] Formats(IReadOnlyList<string> inputs)=>Intersect(inputs,Data.ConversionMatrix);
+    public static string[] WheelTools(IReadOnlyList<string> inputs)=>Formats(inputs).Length>0?["convert",..Tools(inputs)]:Tools(inputs);
     public static string[] Tools(IReadOnlyList<string> inputs)
     {
         var result=Intersect(inputs,inputs.Count>1?Data.MultipleTools:Data.SingleTools).ToList();

@@ -4,6 +4,15 @@ These features are included in the published [0.7.5 release](https://github.com/
 
 `Resources/FeatureCatalog.json` is the shared availability contract: 45 input formats, 27 tools, single/multiple-selection rules and conversion intersections. `scripts/check-feature-parity.py` compares it with the Swift catalog on every source check. The catalog check establishes matching choices; engine and native desktop checks establish behavior.
 
+Windows adds a **Convert** entry to the tools wheel when a common output format is
+available, without duplicating it in the Fine-tune menu. Conversion previews generate
+the real target file through the same pipeline as Save; all 39 target types have
+own-window preview coverage. Office documents/HTML use rendered PDF, archives show
+their file list, and images/text/audio/video use their corresponding viewer. Batch
+navigation and target changes are covered. Preview files remain temporary and do
+not write to Library or the user's output folder. Video compression reports actual
+result/original KB after preview, including automatic targets.
+
 Windows additionally offers **Remove Background** for raster images and SVG,
 including mixed image batches. This is an explicit Windows-only addition in
 `FeatureCatalog.cs`; it does not change the shared Swift catalog. U2NETP weights

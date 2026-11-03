@@ -25,6 +25,17 @@ While dragging in Explorer or another application, **Ctrl** opens tools, **Shift
 
 **Ctrl+O** chooses files; **Ctrl+V** imports files/text/images/links outside text fields; **Ctrl+1/2** switches Home/Library; **Ctrl+F** searches; **Ctrl+U** checks updates. **Ctrl+Space** opens the selected files' tools wheel. Arrows/Tab choose a tool, Enter opens it and Escape closes it.
 
+The tools wheel includes **Convert** whenever the selection has a common target
+format, including the Ctrl-drag wheel. In every conversion editor, **Show Result**
+creates the actual selected-format file in disposable storage and opens its
+image/PDF/document/text/media/archive preview. Batch results have file navigation.
+Close the preview to edit settings or save; format changes invalidate the previous
+summary. Preview and Save use the same conversion and metadata pipeline. Office
+previews require the existing Office runtime; media playback uses the media runtime
+when Windows needs a codec proxy. No Library or output-folder export is recorded
+until Save. Video compression also shows the real output and original sizes in KB
+after Show Result, including automatic compression with zero size/reduction fields.
+
 Media editors use **Space** for play/pause, **Left/Right** for one-second seeking, **Shift+Left/Right** for frame steps, **I/O** for range marks and **Shift+Space** to play the selected range. Crop supports drag, Shift ratio lock, selection move/resize, aspect presets and Enter save. Annotation supports Select/Move, Delete and Ctrl+Z. Normal text-field editing is preserved.
 
 **Cut Video** combines trimming and splitting. Set the clip count, apply it, select

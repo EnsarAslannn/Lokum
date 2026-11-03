@@ -325,6 +325,7 @@
 "CHOOSE A POSITIVE TARGET SIZE OR A REDUCTION BETWEEN 0 AND 100%." = "POZİTİF BİR HEDEF BOYUT VEYA %0 İLE %100 ARASINDA BİR KÜÇÜLTME SEÇ.";
 "CHOOSE A RECTANGLE INSIDE THE VIDEO." = "VİDEONUN İÇİNDE KALAN BİR DİKDÖRTGEN SEÇ.";
 "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT." = "DESTEKLENEN BİR MAKSİMUM VİDEO YÜKSEKLİĞİ SEÇ.";
+"CHOOSE A SUPPORTED OUTPUT FORMAT." = "DESTEKLENEN BİR ÇIKTI BİÇİMİ SEÇ.";
 "CHOOSE A TARGET OF AT LEAST 2 KB." = "EN AZ 2 KB'LIK BİR HEDEF SEÇ.";
 "CHOOSE A VALID RANGE FIRST." = "ÖNCE GEÇERLİ BİR ARALIK SEÇ.";
 "CHOOSE A VALID RANGE." = "GEÇERLİ BİR ARALIK SEÇ.";
@@ -503,6 +504,7 @@
 "Choose a positive target size or a reduction between 0 and 100%." = "Pozitif bir hedef boyut veya %0 ile %100 arasında bir küçültme seç.";
 "Choose a rectangle inside the video." = "Videonun içinde kalan bir dikdörtgen seç.";
 "Choose a supported maximum video height." = "Desteklenen bir maksimum video yüksekliği seç.";
+"Choose a supported output format." = "Desteklenen bir çıktı biçimi seç.";
 "Choose a target of at least 2 KB." = "En az 2 KB'lık bir hedef seç.";
 "Choose a valid range first." = "Önce geçerli bir aralık seç.";
 "Choose a valid range." = "Geçerli bir aralık seç.";
@@ -590,6 +592,14 @@
 "Convert to %lld" = "%lld biçimine dönüştür";
 "Convert · while dragging" = "Dönüştür · sürüklerken";
 "Convert, fine-tune, and send them on their way." = "Dönüştür, ince ayar yap ve paylaş.";
+"Converted result: %@ · %@ KB · %@ files" = "Dönüştürülmüş sonuç: %@ · %@ KB · %@ dosya";
+"Converted result: %@ · %@ KB · %lld files" = "Dönüştürülmüş sonuç: %@ · %@ KB · %lld dosya";
+"Converted result: %@ · %lld KB · %@ files" = "Dönüştürülmüş sonuç: %@ · %lld KB · %@ dosya";
+"Converted result: %@ · %lld KB · %lld files" = "Dönüştürülmüş sonuç: %@ · %lld KB · %lld dosya";
+"Converted result: %lld · %@ KB · %@ files" = "Dönüştürülmüş sonuç: %lld · %@ KB · %@ dosya";
+"Converted result: %lld · %@ KB · %lld files" = "Dönüştürülmüş sonuç: %lld · %@ KB · %lld dosya";
+"Converted result: %lld · %lld KB · %@ files" = "Dönüştürülmüş sonuç: %lld · %lld KB · %@ dosya";
+"Converted result: %lld · %lld KB · %lld files" = "Dönüştürülmüş sonuç: %lld · %lld KB · %lld dosya";
 "Copy" = "Kopyala";
 "Copy Path" = "Yolu Kopyala";
 "Copy a file, some text, an image or a public media link first." = "Önce bir dosya, metin, görsel veya herkese açık bir medya bağlantısı kopyala.";
@@ -1425,6 +1435,7 @@
 "POSITION X" = "X KONUMU";
 "POSITION Y" = "Y KONUMU";
 "PREPARING A LOCAL PREVIEW…" = "YEREL ÖNİZLEME HAZIRLANIYOR…";
+"PREPARING CONVERTED RESULT…" = "DÖNÜŞTÜRÜLMÜŞ SONUÇ HAZIRLANIYOR…";
 "PREPARING PREVIEW…" = "ÖNİZLEME HAZIRLANIYOR…";
 "PREPARING PROCESSED PREVIEW…" = "İŞLENMİŞ ÖNİZLEME HAZIRLANIYOR…";
 "PREPARING TRANSPARENT PNG…" = "ŞEFFAF PNG HAZIRLANIYOR…";
@@ -1483,6 +1494,7 @@
 "Position X" = "X konumu";
 "Position Y" = "Y konumu";
 "Preparing a local preview…" = "Yerel önizleme hazırlanıyor…";
+"Preparing converted result…" = "Dönüştürülmüş sonuç hazırlanıyor…";
 "Preparing preview…" = "Önizleme hazırlanıyor…";
 "Preparing processed preview…" = "İşlenmiş önizleme hazırlanıyor…";
 "Preparing transparent PNG…" = "Şeffaf PNG hazırlanıyor…";
@@ -1644,6 +1656,10 @@
 "Restore Defaults" = "Varsayılanlara Dön";
 "Restore defaults" = "Varsayılanlara dön";
 "Result" = "Sonuç";
+"Result: %@ KB · Original: %@ KB" = "Sonuç: %@ KB · Orijinal: %@ KB";
+"Result: %@ KB · Original: %lld KB" = "Sonuç: %@ KB · Orijinal: %lld KB";
+"Result: %lld KB · Original: %@ KB" = "Sonuç: %lld KB · Orijinal: %@ KB";
+"Result: %lld KB · Original: %lld KB" = "Sonuç: %lld KB · Orijinal: %lld KB";
 "Reveal finished files in Explorer" = "Tamamlanan dosyaları Dosya Gezgini'nde göster";
 "Reveal finished files in Finder" = "Tamamlanan dosyaları Finder'da göster";
 "Right" = "Sağ";

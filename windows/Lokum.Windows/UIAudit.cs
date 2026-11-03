@@ -361,7 +361,7 @@ internal static class UIAudit
             "settings.general" or "settings.formats" or "settings.updates" => subject is SettingsWindow &&
                 Descendants<ListBox>(subject).Any(list => Equals(list.SelectedItem, capture.Scene.Split('.')[1] switch { "formats" => "Formats", "updates" => "Updates", _ => "General" })),
             "wheel.pdf-multiple" => subject is WheelWindow && owner.SelectedFiles.SequenceEqual(fixtures.Pdfs) &&
-                Descendants<System.Windows.Shapes.Path>(subject).Count(path => path.Data is StreamGeometry) == FeatureCatalog.Tools(fixtures.Pdfs).Length,
+                Descendants<System.Windows.Shapes.Path>(subject).Count(path => path.Data is StreamGeometry) == FeatureCatalog.WheelTools(fixtures.Pdfs).Length&&owner.UIAuditToolChoices.Count(c=>c.Id=="convert")==1,
             "wheel.image" => subject is WheelWindow&&owner.UIAuditToolChoices.Count(c=>c.Id=="removeBackground")==1&&!owner.UIAuditToolChoices.Any(c=>c.Id is "crop" or "cropImage" or "frameImage")&&owner.UIAuditToolChoices.Any(c=>c.Id=="editImage"),
             "editor.edit-image" or "editor.edit-image-cropped" => subject is ToolEditor photo&&photo.UIAuditPreviewReady,
             "editor.crop-image" => subject is ToolEditor crop && crop.FieldForTest("Width").Text == fixtures.Bitmap.PixelWidth.ToString(CultureInfo.CurrentCulture),
@@ -436,7 +436,7 @@ internal static class UIAudit
         var canvas = Descendants<Canvas>(wheel).FirstOrDefault();
         var petals = canvas?.Children.OfType<System.Windows.Shapes.Path>().Where(path => path.Data is StreamGeometry).ToArray() ?? [];
         var captions = canvas?.Children.OfType<Button>().Take(petals.Length).ToArray() ?? [];
-        var fits = petals.Length == (capture.Scene=="wheel.image"?7:5) && captions.Length == petals.Length;
+        var fits = petals.Length == (capture.Scene=="wheel.image"?8:6) && captions.Length == petals.Length;
         if (canvas is not null)
         for (var index = 0; index < captions.Length; index++)
         {

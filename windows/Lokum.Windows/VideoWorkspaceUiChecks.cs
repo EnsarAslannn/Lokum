@@ -135,7 +135,7 @@ internal static class VideoWorkspaceUiChecks
             {
                 main.Show();main.UpdateLayout();var choices=main.UIAuditToolChoices;
                 Check(choices.Single(c=>c.Id=="trimVideo").Title=="Cut Video"&&choices.Single(c=>c.Id=="cropVideo").Title=="Crop Video","The wheel distinguishes temporal cutting from spatial cropping");
-                Check(choices.Count==7&&!choices.Any(c=>c.Id is "videoSnapshots" or "splitVideo"),"The visible video wheel has no redundant split or screenshot actions");
+                Check(choices.Count==8&&choices.Count(c=>c.Id=="convert")==1&&!choices.Any(c=>c.Id is "videoSnapshots" or "splitVideo"),"The video wheel includes conversion without redundant split or screenshot actions");
                 var wheel=new WheelWindow(main,choices,_=>{});
                 try{wheel.Show();wheel.UpdateLayout();Capture(wheel,"video-wheel");}finally{wheel.Close();}
             }

@@ -6,7 +6,7 @@ namespace Lokum.Windows;
 // Read-only scene inspection keeps the audit on production components without exposing OS input.
 public sealed partial class MainWindow
 {
-    internal IReadOnlyList<ToolChoice> UIAuditToolChoices => Choices();
+    internal IReadOnlyList<ToolChoice> UIAuditToolChoices => Choices(true);
 }
 
 public sealed partial class ToolEditor

@@ -39,12 +39,24 @@ internal static class VideoResultPreviewUiChecks
                 check(show.IsVisible&&rect.Top>=0&&rect.Bottom<=editor.ActualHeight&&rect.Right<=editor.ActualWidth,tool+": the result action fits the compact window");
                 DependencyObject? parent=show;while(parent is not null&&parent is not ScrollViewer)parent=VisualTreeHelper.GetParent(parent);
                 check(parent is null,tool+": result preview stays visible outside scrolling editor options");
+                if(tool=="compress")
+                {
+                    editor.FieldForTest("Target size (KB; 0 = auto)").Text="";editor.FieldForTest("Reduction (%; 0 = auto)").Text="";
+                    var valid=false;try{valid=(bool)typeof(ToolEditor).GetMethod("ReadSettings",System.Reflection.BindingFlags.NonPublic|System.Reflection.BindingFlags.Instance)!.Invoke(editor,[false])!;}catch(System.Reflection.TargetInvocationException){}
+                    check(valid,"Empty compression size and reduction fields use automatic settings");
+                }
                 Configure(false);
                 await Preview();var first=editor.ProcessedPreviewPath!;var firstInfo=await engine.InspectAsync(first);
                 check(editor.ProcessedPlayback,tool+": result action switches the player to the processed video");
                 if(tool=="changeVideoSpeed")check(Math.Abs(firstInfo.Duration-3)<.2,"Speed preview renders the selected 2x speed");
                 if(tool=="cropVideo")check(firstInfo.Video is {Width:80,Height:48},"Crop preview shows the actual cropped dimensions");
                 if(tool=="compress")check(new FileInfo(first).Length<=info.Bytes*.8,"Compression preview plays the actual size-limited export without a second compression");
+                if(tool=="compress")
+                {
+                    var summary=Find<TextBlock>(editor).SingleOrDefault(t=>AutomationProperties.GetAutomationId(t)=="media.result.summary");
+                    var kilobytes=(new FileInfo(first).Length/1024d).ToString("0.0",System.Globalization.CultureInfo.CurrentCulture);
+                    check(summary is {IsVisible:true}&&summary.Text.Contains(kilobytes),"Automatic compression shows the actual result size in KB before saving");
+                }
                 var saved=(await engine.ToolAsync(tool,[mediaInput],output,editor.MediaOptions))[0];
                 var previewPixels=await Frame(first,tool+"-"+entry.Format+"-preview");var savedPixels=await Frame(saved,tool+"-"+entry.Format+"-saved");
                 check(previewPixels.SequenceEqual(savedPixels),tool+": preview pixels match the saved result exactly");
@@ -61,7 +73,7 @@ internal static class VideoResultPreviewUiChecks
 
                 void Configure(bool changed)
                 {
-                    if(tool=="compress")editor.FieldForTest("Reduction (%; 0 = auto)").Text=changed?"30":"20";
+                    if(tool=="compress")editor.FieldForTest("Reduction (%; 0 = auto)").Text=changed?"30":"0";
                     if(tool=="changeVideoSpeed")editor.FieldForTest("Speed").Text=changed?"3":"2";
                     if(tool=="cropVideo"){editor.FieldForTest("X").Text="16";editor.FieldForTest("Y").Text="8";editor.FieldForTest("Width").Text=changed?"64":"80";editor.FieldForTest("Height").Text="48";}
                     if(tool=="redactVideo"){editor.FieldForTest("Width").Text="96";editor.FieldForTest("Height").Text="64";Find<ComboBox>(editor).Single(c=>c.Items.Contains("blur")).SelectedItem=changed?"pixelate":"blur";}

@@ -95,6 +95,12 @@ public sealed partial class ToolEditor:Window
         var footer=new DockPanel{Margin=new(0,20,0,0),LastChildFill=false};Grid.SetRow(footer,2);grid.Children.Add(footer);var save=MainWindow.Button("Save new copy  ↗",Save);save.Background=Theme.Primary;save.Foreground=Theme.PrimaryInk;DockPanel.SetDock(save,Dock.Right);footer.Children.Add(save);var cancel=MainWindow.Button("Cancel",()=>DialogResult=false);DockPanel.SetDock(cancel,Dock.Left);footer.Children.Add(cancel);var reset=MainWindow.Button("↶ Reset",Reset);DockPanel.SetDock(reset,Dock.Left);footer.Children.Add(reset);var safe=L10n.Label(new TextBlock{Text="Original stays safe",Foreground=Theme.Brush("Muted"),FontSize=12,VerticalAlignment=VerticalAlignment.Center,Margin=new(0,0,16,0)});DockPanel.SetDock(safe,Dock.Right);footer.Children.Add(safe);
         var clock=new System.Windows.Threading.DispatcherTimer{Interval=TimeSpan.FromMilliseconds(100)};
         if(HasVideoResultPreview&&mediaComparison is not null){safe.Visibility=Visibility.Collapsed;DockPanel.SetDock(mediaComparison,Dock.Left);footer.Children.Add(mediaComparison);}
+        BuildConversionPreview(footer);
+        if(tool=="convert"||tool=="compress"&&media?.Video is not null)
+        {
+            System.Windows.Automation.AutomationProperties.SetAutomationId(resultSummary,tool=="convert"?"conversion.result.summary":"media.result.summary");
+            var footerArea=new StackPanel{Margin=new(0,16,0,0)};Grid.SetRow(footerArea,2);grid.Children.Remove(footer);footer.Margin=new(0);footerArea.Children.Add(resultSummary);footerArea.Children.Add(footer);grid.Children.Add(footerArea);
+        }
         saveCopy=save;UpdatePhotoCropButtons();WireMediaPreviewChanges();
         clock.Tick+=(_,_)=>{if(!scrubber.IsMouseCaptureWithin&&!scrubber.IsKeyboardFocusWithin)scrubber.Value=Math.Clamp(player.Position.TotalSeconds,0,PlaybackDuration);if(playing){time.Text=$"{player.Position:mm\\:ss\\.fff} / {TimeSpan.FromSeconds(PlaybackDuration):mm\\:ss\\.fff}";if(playingRange&&player.Position.TotalSeconds>=rangePlaybackEnd){player.Pause();playing=false;playingRange=false;}}};
         player.MediaEnded+=(_,_)=>{playing=false;player.Pause();};clock.Start();
@@ -123,6 +129,7 @@ public sealed partial class ToolEditor:Window
     private double Value(string key,double fallback=0)
     {
         if(!fields.TryGetValue(key,out var box))return fallback;
+        if(string.IsNullOrWhiteSpace(box.Text)&&key is "Target size (KB; 0 = auto)" or "Reduction (%; 0 = auto)")return fallback;
         if(!double.TryParse(box.Text,NumberStyles.Float,CultureInfo.CurrentCulture,out var value)&&!double.TryParse(box.Text,NumberStyles.Float,CultureInfo.InvariantCulture,out value)||!double.IsFinite(value))throw new ArgumentException("Enter a valid number for "+key+".");return value;
     }
     private void BeginDraw(object sender,MouseButtonEventArgs e)

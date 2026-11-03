@@ -7,6 +7,7 @@ public sealed partial class ToolEditor
     private CancellationTokenSource? processedCancellation;private int previewRequest;
     private double processedDuration;
     private WrapPanel? mediaComparison;
+    private readonly TextBlock resultSummary=new(){TextWrapping=System.Windows.TextWrapping.Wrap,Margin=new(4,0,4,8),Visibility=System.Windows.Visibility.Collapsed};
     private bool HasVideoResultPreview=>media?.Video is not null&&tool is "compress" or "changeVideoSpeed" or "cropVideo" or "redactVideo";
     private double PlaybackDuration=>processedPlayback?processedDuration:duration;
     internal string? ProcessedPreviewPath{get;private set;}
@@ -34,6 +35,7 @@ public sealed partial class ToolEditor
         if(media is null)return;
         if(processedPlayback||processingPreview){var position=player.Position.TotalSeconds;RestoreOriginalPreview(false);Seek(Math.Min(position,duration));}
         ProcessedPreviewPath=null;
+        resultSummary.Text="";resultSummary.Visibility=System.Windows.Visibility.Collapsed;
     }
     private async Task PreviewProcessed()
     {
@@ -65,6 +67,7 @@ public sealed partial class ToolEditor
             else playable=(await engine.ConvertAsync([rendered],media?.Video is null&&tool!="audioToVideo"?"wav":"mp4",PreviewDirectory(),new(){PreserveMetadata=false},null,cancellation.Token))[0];
             var info=await engine.InspectAsync(playable,cancellation.Token);
             if(cancellation.IsCancellationRequested||request!=previewRequest)return;
+            if(tool=="compress")SetResultSummary(string.Format(System.Globalization.CultureInfo.CurrentCulture,L10n.Text("Result: {0} KB · Original: {1} KB"),(new FileInfo(rendered).Length/1024d).ToString("0.0",System.Globalization.CultureInfo.CurrentCulture),(new FileInfo(input).Length/1024d).ToString("0.0",System.Globalization.CultureInfo.CurrentCulture)));
             ProcessedPreviewPath=playable;processedDuration=info.Duration;processedPlayback=true;player.SpeedRatio=1;
             player.Source=new Uri(playable);scrubber.Maximum=processedDuration;drawing.IsEnabled=false;drawing.Visibility=System.Windows.Visibility.Hidden;
             Seek(tool=="redactVideo"?Math.Min(settings.Regions.Select(r=>r.Start).DefaultIfEmpty(0).Min(),Math.Max(0,processedDuration-.05)):0);
@@ -82,4 +85,5 @@ public sealed partial class ToolEditor
             }
         }
     }
+    private void SetResultSummary(string text){resultSummary.Text=text;resultSummary.Visibility=System.Windows.Visibility.Visible;}
 }

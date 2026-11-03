@@ -210,16 +210,16 @@ public sealed partial class MainWindow:Window
     private bool Images=>files.Count>0&&files.All(FeatureCatalog.IsImage);
     private bool Video=>All(["mp4","mov","mkv","webm","avi","wmv","m4v","gif"]);
     private bool Audio=>All(["mp3","m4a","wav","flac","ogg","opus","aiff","aif","wma","aac"]);
-    private IReadOnlyList<ToolChoice> Choices()
+    private IReadOnlyList<ToolChoice> Choices(bool includeConversion=false)
     {
-        return FeatureCatalog.Tools(files).Select(id=>new ToolChoice(id switch{"cropImage"=>"crop","annotateImage"=>"annotate","mergePDF"=>"mergePDFs",_=>id},FeatureCatalog.ToolNames[id],ToolSymbol(id))).ToArray();
+        return (includeConversion?FeatureCatalog.WheelTools(files):FeatureCatalog.Tools(files)).Select(id=>new ToolChoice(id switch{"cropImage"=>"crop","annotateImage"=>"annotate","mergePDF"=>"mergePDFs",_=>id},FeatureCatalog.ToolNames[id],ToolSymbol(id))).ToArray();
     }
     private void Refresh()
     {
         selectionPill.Text=files.Count==0?"✦  START HERE":"✦  READY WHEN YOU ARE";selection.Text=files.Count==0?"Drop something good.":files.Count==1?Path.GetFileName(files[0]):$"{files.Count} files, ready to go.";fileDescription.Text=files.Count==0?"Images, videos, documents, and all the little things in between.":files.Count==1?Path.GetDirectoryName(files[0])!:"Keep them together, or give each one a fresh start.";if(chooseFilesButton is not null){chooseFilesButton.Content=files.Count==0?"Choose files":"Add or change files";if(files.Count==0){chooseFilesButton.Background=Theme.Primary;chooseFilesButton.Foreground=Theme.PrimaryInk;}else{chooseFilesButton.SetResourceReference(Control.BackgroundProperty,"Surface");chooseFilesButton.SetResourceReference(Control.ForegroundProperty,"Ink");}}if(openWheelButton is not null)openWheelButton.Visibility=files.Count>0?Visibility.Visible:Visibility.Collapsed;list.Visibility=manage.Visibility=files.Count==0?Visibility.Collapsed:Visibility.Visible;actions.Children.Clear();garden.SetSelected(files.Count>0);
         BuildSelectionActions();
     }
-    private void ShowWheel(){if(!busy&&Choices().Count>0)new WheelWindow(this,Choices(),async choice=>await EditAsync(choice)).Show();}
+    private void ShowWheel(){if(!busy&&Choices(true).Count>0)new WheelWindow(this,Choices(true),async choice=>await EditAsync(choice)).Show();}
     private async Task EditAsync(ToolChoice choice)
     {
         if(busy||files.Count==0)return;string? temporary=null;try
@@ -245,7 +245,8 @@ public sealed partial class MainWindow:Window
                     await ProcessRunner.RunAsync(tools.Executable("ffmpeg"),["-v","error","-i",input,"-frames:v","1",temporary]);preview=ImageEngine.Load(temporary);
                 }
             }
-            SetBusy(false);var editor=new ToolEditor(this,choice.Id,choice.Title,input,info,preview,selected,choice.Id=="convert"?FeatureCatalog.Formats(selected):null);editor.ConfigureProfiles(preferences,requestedFormat);editor.ConfigureMediaRuntime(tools);var accepted=editor.ShowDialog()==true;if(temporary is not null)File.Delete(temporary);if(!accepted)return;
+            SetBusy(false);var editor=new ToolEditor(this,choice.Id,choice.Title,input,info,preview,selected,choice.Id=="convert"?FeatureCatalog.Formats(selected):null);editor.ConfigureProfiles(preferences,requestedFormat);editor.ConfigureMediaRuntime(tools);if(choice.Id=="convert")editor.ConfigureConversionRuntime(tools,officeRuntime,metadataService);var accepted=editor.ShowDialog()==true;if(temporary is not null)File.Delete(temporary);if(!accepted)return;
+            if(choice.Id=="convert"){await RunAsync(editor.ExportConversionAsync,"Convert to "+editor.Format.ToUpperInvariant());return;}
             var inputs=choice.Id is "cropVideo" or "redactVideo" or "annotate"?new[]{input}:editor.OrderedInputs;
             if(imageSelection)await RunAsync(async(destination,p,t)=>
             {
@@ -274,7 +275,7 @@ public sealed partial class MainWindow:Window
         catch(Exception error){toast.Close();MessageBox.Show(this,L10n.Text(error.Message),L10n.Text("Couldn’t finish"),MessageBoxButton.OK,MessageBoxImage.Information);}
         finally{SetBusy(false);}
     }
-    private static Task<IReadOnlyList<string>> OnStaAsync(Func<IReadOnlyList<string>> work)
+    internal static Task<IReadOnlyList<string>> OnStaAsync(Func<IReadOnlyList<string>> work)
     {
         var completion=new TaskCompletionSource<IReadOnlyList<string>>(TaskCreationOptions.RunContinuationsAsynchronously);
         var thread=new Thread(()=>{try{completion.SetResult(work());}catch(Exception error){completion.SetException(error);}}){IsBackground=true};thread.SetApartmentState(ApartmentState.STA);thread.Start();return completion.Task;

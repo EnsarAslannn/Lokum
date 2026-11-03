@@ -325,6 +325,7 @@
 "CHOOSE A POSITIVE TARGET SIZE OR A REDUCTION BETWEEN 0 AND 100%." = "CHOOSE A POSITIVE TARGET SIZE OR A REDUCTION BETWEEN 0 AND 100%.";
 "CHOOSE A RECTANGLE INSIDE THE VIDEO." = "CHOOSE A RECTANGLE INSIDE THE VIDEO.";
 "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT." = "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT.";
+"CHOOSE A SUPPORTED OUTPUT FORMAT." = "CHOOSE A SUPPORTED OUTPUT FORMAT.";
 "CHOOSE A TARGET OF AT LEAST 2 KB." = "CHOOSE A TARGET OF AT LEAST 2 KB.";
 "CHOOSE A VALID RANGE FIRST." = "CHOOSE A VALID RANGE FIRST.";
 "CHOOSE A VALID RANGE." = "CHOOSE A VALID RANGE.";
@@ -503,6 +504,7 @@
 "Choose a positive target size or a reduction between 0 and 100%." = "Choose a positive target size or a reduction between 0 and 100%.";
 "Choose a rectangle inside the video." = "Choose a rectangle inside the video.";
 "Choose a supported maximum video height." = "Choose a supported maximum video height.";
+"Choose a supported output format." = "Choose a supported output format.";
 "Choose a target of at least 2 KB." = "Choose a target of at least 2 KB.";
 "Choose a valid range first." = "Choose a valid range first.";
 "Choose a valid range." = "Choose a valid range.";
@@ -590,6 +592,14 @@
 "Convert to %lld" = "Convert to %lld";
 "Convert · while dragging" = "Convert · while dragging";
 "Convert, fine-tune, and send them on their way." = "Convert, fine-tune, and send them on their way.";
+"Converted result: %@ · %@ KB · %@ files" = "Converted result: %@ · %@ KB · %@ files";
+"Converted result: %@ · %@ KB · %lld files" = "Converted result: %@ · %@ KB · %lld files";
+"Converted result: %@ · %lld KB · %@ files" = "Converted result: %@ · %lld KB · %@ files";
+"Converted result: %@ · %lld KB · %lld files" = "Converted result: %@ · %lld KB · %lld files";
+"Converted result: %lld · %@ KB · %@ files" = "Converted result: %lld · %@ KB · %@ files";
+"Converted result: %lld · %@ KB · %lld files" = "Converted result: %lld · %@ KB · %lld files";
+"Converted result: %lld · %lld KB · %@ files" = "Converted result: %lld · %lld KB · %@ files";
+"Converted result: %lld · %lld KB · %lld files" = "Converted result: %lld · %lld KB · %lld files";
 "Copy" = "Copy";
 "Copy Path" = "Copy Path";
 "Copy a file, some text, an image or a public media link first." = "Copy a file, some text, an image or a public media link first.";
@@ -1425,6 +1435,7 @@
 "POSITION X" = "POSITION X";
 "POSITION Y" = "POSITION Y";
 "PREPARING A LOCAL PREVIEW…" = "PREPARING A LOCAL PREVIEW…";
+"PREPARING CONVERTED RESULT…" = "PREPARING CONVERTED RESULT…";
 "PREPARING PREVIEW…" = "PREPARING PREVIEW…";
 "PREPARING PROCESSED PREVIEW…" = "PREPARING PROCESSED PREVIEW…";
 "PREPARING TRANSPARENT PNG…" = "PREPARING TRANSPARENT PNG…";
@@ -1483,6 +1494,7 @@
 "Position X" = "Position X";
 "Position Y" = "Position Y";
 "Preparing a local preview…" = "Preparing a local preview…";
+"Preparing converted result…" = "Preparing converted result…";
 "Preparing preview…" = "Preparing preview…";
 "Preparing processed preview…" = "Preparing processed preview…";
 "Preparing transparent PNG…" = "Preparing transparent PNG…";
@@ -1644,6 +1656,10 @@
 "Restore Defaults" = "Restore Defaults";
 "Restore defaults" = "Restore defaults";
 "Result" = "Result";
+"Result: %@ KB · Original: %@ KB" = "Result: %@ KB · Original: %@ KB";
+"Result: %@ KB · Original: %lld KB" = "Result: %@ KB · Original: %lld KB";
+"Result: %lld KB · Original: %@ KB" = "Result: %lld KB · Original: %@ KB";
+"Result: %lld KB · Original: %lld KB" = "Result: %lld KB · Original: %lld KB";
 "Reveal finished files in Explorer" = "Reveal finished files in Explorer";
 "Reveal finished files in Finder" = "Reveal finished files in Finder";
 "Right" = "Right";
