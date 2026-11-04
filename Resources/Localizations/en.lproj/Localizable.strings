@@ -440,6 +440,8 @@
 "CROP IMAGE" = "CROP IMAGE";
 "CROP IMAGE · LOKUM" = "CROP IMAGE · LOKUM";
 "CROP VIDEO" = "CROP VIDEO";
+"CTRL + RIGHT-CLICK A MEDIA FILE OR BROWSER IMAGE/VIDEO TO OPEN ITS TOOLS." = "CTRL + RIGHT-CLICK A MEDIA FILE OR BROWSER IMAGE/VIDEO TO OPEN ITS TOOLS.";
+"CTRL + RIGHT-CLICK COULD NOT BE REGISTERED. DRAG A FILE WITH CTRL TO OPEN ITS TOOLS." = "CTRL + RIGHT-CLICK COULD NOT BE REGISTERED. DRAG A FILE WITH CTRL TO OPEN ITS TOOLS.";
 "CTRL+O  CHOOSE FILES\nCTRL+V  PASTE FILES, TEXT, AN IMAGE OR LINK\nCTRL+SPACE / ENTER  OPEN TOOLS\nCTRL+1 / CTRL+2  HOME / LIBRARY\nCTRL+F  FIND IN LIBRARY\nCTRL+SHIFT+D  USE A COPIED DOWNLOAD LINK\nCTRL+U  CHECK FOR UPDATES\n\nWHEEL: ARROWS / TAB TO CHOOSE, ENTER TO OPEN, ESC TO CLOSE\nMEDIA: SPACE PLAY/PAUSE, ←/→ 1 SECOND, SHIFT+←/→ 1/30S, I/O SET RANGE\nCROP: DRAG, SHIFT LOCKS RATIO, ENTER SAVES\nEDITING TEXT: NORMAL PASTE AND ARROW KEYS ARE PRESERVED." = "CTRL+O  CHOOSE FILES\nCTRL+V  PASTE FILES, TEXT, AN IMAGE OR LINK\nCTRL+SPACE / ENTER  OPEN TOOLS\nCTRL+1 / CTRL+2  HOME / LIBRARY\nCTRL+F  FIND IN LIBRARY\nCTRL+SHIFT+D  USE A COPIED DOWNLOAD LINK\nCTRL+U  CHECK FOR UPDATES\n\nWHEEL: ARROWS / TAB TO CHOOSE, ENTER TO OPEN, ESC TO CLOSE\nMEDIA: SPACE PLAY/PAUSE, ←/→ 1 SECOND, SHIFT+←/→ 1/30S, I/O SET RANGE\nCROP: DRAG, SHIFT LOCKS RATIO, ENTER SAVES\nEDITING TEXT: NORMAL PASTE AND ARROW KEYS ARE PRESERVED.";
 "CTRL+SHIFT+D  USE A COPIED LINK  ·  PUBLIC, DOWNLOADABLE MEDIA" = "CTRL+SHIFT+D  USE A COPIED LINK  ·  PUBLIC, DOWNLOADABLE MEDIA";
 "CUSTOM DIMENSIONS" = "CUSTOM DIMENSIONS";
@@ -628,6 +630,8 @@
 "Crop Video" = "Crop Video";
 "Crop area" = "Crop area";
 "Crop image" = "Crop image";
+"Ctrl + right-click a media file or browser image/video to open its tools." = "Ctrl + right-click a media file or browser image/video to open its tools.";
+"Ctrl + right-click could not be registered. Drag a file with Ctrl to open its tools." = "Ctrl + right-click could not be registered. Drag a file with Ctrl to open its tools.";
 "Ctrl+O  Choose files\nCtrl+V  Paste files, text, an image or link\nCtrl+Space / Enter  Open tools\nCtrl+1 / Ctrl+2  Home / Library\nCtrl+F  Find in Library\nCtrl+Shift+D  Use a copied download link\nCtrl+U  Check for updates\n\nWheel: arrows / Tab to choose, Enter to open, Esc to close\nMedia: Space play/pause, ←/→ 1 second, Shift+←/→ 1/30s, I/O set range\nCrop: drag, Shift locks ratio, Enter saves\nEditing text: normal paste and arrow keys are preserved." = "Ctrl+O  Choose files\nCtrl+V  Paste files, text, an image or link\nCtrl+Space / Enter  Open tools\nCtrl+1 / Ctrl+2  Home / Library\nCtrl+F  Find in Library\nCtrl+Shift+D  Use a copied download link\nCtrl+U  Check for updates\n\nWheel: arrows / Tab to choose, Enter to open, Esc to close\nMedia: Space play/pause, ←/→ 1 second, Shift+←/→ 1/30s, I/O set range\nCrop: drag, Shift locks ratio, Enter saves\nEditing text: normal paste and arrow keys are preserved.";
 "Ctrl+Shift+D  Use a copied link  ·  Public, downloadable media" = "Ctrl+Shift+D  Use a copied link  ·  Public, downloadable media";
 "Custom dimensions" = "Custom dimensions";
@@ -781,6 +785,7 @@
 "EMBEDDED IMAGE EXCEEDS 20 MB." = "EMBEDDED IMAGE EXCEEDS 20 MB.";
 "ENABLE LOKUM" = "ENABLE LOKUM";
 "ENABLE LOKUM DRAG SHORTCUTS" = "ENABLE LOKUM DRAG SHORTCUTS";
+"ENABLE LOKUM SHORTCUTS" = "ENABLE LOKUM SHORTCUTS";
 "ENCODED PIXELS, COLOR PROFILE AND DISPLAY ORIENTATION ARE PRESERVED." = "ENCODED PIXELS, COLOR PROFILE AND DISPLAY ORIENTATION ARE PRESERVED.";
 "END" = "END";
 "ENTER A FINITE NUMBER." = "ENTER A FINITE NUMBER.";
@@ -809,6 +814,7 @@
 "Embedded image exceeds 20 MB." = "Embedded image exceeds 20 MB.";
 "Enable Lokum" = "Enable Lokum";
 "Enable Lokum drag shortcuts" = "Enable Lokum drag shortcuts";
+"Enable Lokum shortcuts" = "Enable Lokum shortcuts";
 "Encoded pixels, color profile and display orientation are preserved." = "Encoded pixels, color profile and display orientation are preserved.";
 "End" = "End";
 "Enter a finite number." = "Enter a finite number.";
@@ -1986,6 +1992,7 @@
 "THE DOWNLOAD CONNECTION WAS INTERRUPTED." = "THE DOWNLOAD CONNECTION WAS INTERRUPTED.";
 "THE DOWNLOAD STOPPED RESPONDING. PLEASE TRY AGAIN." = "THE DOWNLOAD STOPPED RESPONDING. PLEASE TRY AGAIN.";
 "THE DOWNLOADED FILE CONTAINS NO VIDEO." = "THE DOWNLOADED FILE CONTAINS NO VIDEO.";
+"THE DOWNLOADED FILE IS NOT A SUPPORTED IMAGE, VIDEO OR AUDIO FILE." = "THE DOWNLOADED FILE IS NOT A SUPPORTED IMAGE, VIDEO OR AUDIO FILE.";
 "THE DOWNLOADED TOOLS ARE INCOMPLETE. PLEASE TRY SETUP AGAIN." = "THE DOWNLOADED TOOLS ARE INCOMPLETE. PLEASE TRY SETUP AGAIN.";
 "THE IMAGE DOWNLOAD ENDED EARLY." = "THE IMAGE DOWNLOAD ENDED EARLY.";
 "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE." = "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE.";
@@ -2010,6 +2017,7 @@
 "THIS IMAGE IS TOO LARGE (100 MP LIMIT)." = "THIS IMAGE IS TOO LARGE (100 MP LIMIT).";
 "THIS IMAGE IS TOO LARGE TO PASTE. CHOOSE THE IMAGE FILE INSTEAD." = "THIS IMAGE IS TOO LARGE TO PASTE. CHOOSE THE IMAGE FILE INSTEAD.";
 "THIS LINK DID NOT RETURN A DOWNLOADABLE IMAGE." = "THIS LINK DID NOT RETURN A DOWNLOADABLE IMAGE.";
+"THIS MEDIA ADDRESS IS UNAVAILABLE. SAVE THE FILE, THEN OPEN ITS TOOLS IN LOKUM." = "THIS MEDIA ADDRESS IS UNAVAILABLE. SAVE THE FILE, THEN OPEN ITS TOOLS IN LOKUM.";
 "THIS OUTPUT FORMAT HAS NO ADJUSTABLE CONVERSION DEFAULTS." = "THIS OUTPUT FORMAT HAS NO ADJUSTABLE CONVERSION DEFAULTS.";
 "THIS PDF CONTAINS NO PAGES." = "THIS PDF CONTAINS NO PAGES.";
 "THIS PDF PAGE COULD NOT BE READ." = "THIS PDF PAGE COULD NOT BE READ.";
@@ -2019,6 +2027,7 @@
 "THIS SIZE CANNOT BE REACHED. CHOOSE A LARGER TARGET OR SMALLER DIMENSIONS." = "THIS SIZE CANNOT BE REACHED. CHOOSE A LARGER TARGET OR SMALLER DIMENSIONS.";
 "THIS TEXT IS TOO LARGE TO PASTE. CHOOSE A TEXT FILE INSTEAD." = "THIS TEXT IS TOO LARGE TO PASTE. CHOOSE A TEXT FILE INSTEAD.";
 "THIS TEXT IS TOO LARGE TO PREVIEW. USE OPEN TO READ THE COMPLETE FILE." = "THIS TEXT IS TOO LARGE TO PREVIEW. USE OPEN TO READ THE COMPLETE FILE.";
+"THIS TOOL IS NOT AVAILABLE FOR THE DOWNLOADED MEDIA FORMAT." = "THIS TOOL IS NOT AVAILABLE FOR THE DOWNLOADED MEDIA FORMAT.";
 "THIS WINDOW COULD NOT BE ARRANGED. THE APP MAY RESTRICT RESIZING." = "THIS WINDOW COULD NOT BE ARRANGED. THE APP MAY RESTRICT RESIZING.";
 "THIS WINDOWS CODEC CANNOT PLAY DIRECTLY. SET UP MEDIA TOOLS TO CREATE A LOCAL PREVIEW." = "THIS WINDOWS CODEC CANNOT PLAY DIRECTLY. SET UP MEDIA TOOLS TO CREATE A LOCAL PREVIEW.";
 "THOSE FILES ARE NO LONGER AVAILABLE." = "THOSE FILES ARE NO LONGER AVAILABLE.";
@@ -2074,6 +2083,7 @@
 "The download connection was interrupted." = "The download connection was interrupted.";
 "The download stopped responding. Please try again." = "The download stopped responding. Please try again.";
 "The downloaded file contains no video." = "The downloaded file contains no video.";
+"The downloaded file is not a supported image, video or audio file." = "The downloaded file is not a supported image, video or audio file.";
 "The downloaded tools are incomplete. Please try setup again." = "The downloaded tools are incomplete. Please try setup again.";
 "The image download ended early." = "The image download ended early.";
 "The image order must include every image once." = "The image order must include every image once.";
@@ -2104,12 +2114,14 @@
 "This image is too large (100 MP limit)." = "This image is too large (100 MP limit).";
 "This image is too large to paste. Choose the image file instead." = "This image is too large to paste. Choose the image file instead.";
 "This link did not return a downloadable image." = "This link did not return a downloadable image.";
+"This media address is unavailable. Save the file, then open its tools in Lokum." = "This media address is unavailable. Save the file, then open its tools in Lokum.";
 "This output format has no adjustable conversion defaults." = "This output format has no adjustable conversion defaults.";
 "This post contains videos. Use its Reel link to download video." = "This post contains videos. Use its Reel link to download video.";
 "This repository is private" = "This repository is private";
 "This size cannot be reached. Choose a larger target or smaller dimensions." = "This size cannot be reached. Choose a larger target or smaller dimensions.";
 "This text is too large to paste. Choose a text file instead." = "This text is too large to paste. Choose a text file instead.";
 "This text is too large to preview. Use Open to read the complete file." = "This text is too large to preview. Use Open to read the complete file.";
+"This tool is not available for the downloaded media format." = "This tool is not available for the downloaded media format.";
 "This window could not be arranged. The app may restrict resizing." = "This window could not be arranged. The app may restrict resizing.";
 "Those files are no longer available." = "Those files are no longer available.";
 "Thumbnail" = "Thumbnail";

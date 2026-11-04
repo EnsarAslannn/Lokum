@@ -440,6 +440,8 @@
 "CROP IMAGE" = "GÖRSELİ KIRP";
 "CROP IMAGE · LOKUM" = "GÖRSELİ KIRP · LOKUM";
 "CROP VIDEO" = "VİDEOYU KIRP";
+"CTRL + RIGHT-CLICK A MEDIA FILE OR BROWSER IMAGE/VIDEO TO OPEN ITS TOOLS." = "BİR MEDYA DOSYASININ VEYA TARAYICIDAKİ GÖRSEL/VİDEONUN ÜZERİNDE CTRL + SAĞ TIK İLE ARAÇLARINI AÇ.";
+"CTRL + RIGHT-CLICK COULD NOT BE REGISTERED. DRAG A FILE WITH CTRL TO OPEN ITS TOOLS." = "CTRL + SAĞ TIK KAYDEDİLEMEDİ. ARAÇLARI AÇMAK İÇİN DOSYAYI CTRL İLE SÜRÜKLE.";
 "CTRL+O  CHOOSE FILES\nCTRL+V  PASTE FILES, TEXT, AN IMAGE OR LINK\nCTRL+SPACE / ENTER  OPEN TOOLS\nCTRL+1 / CTRL+2  HOME / LIBRARY\nCTRL+F  FIND IN LIBRARY\nCTRL+SHIFT+D  USE A COPIED DOWNLOAD LINK\nCTRL+U  CHECK FOR UPDATES\n\nWHEEL: ARROWS / TAB TO CHOOSE, ENTER TO OPEN, ESC TO CLOSE\nMEDIA: SPACE PLAY/PAUSE, ←/→ 1 SECOND, SHIFT+←/→ 1/30S, I/O SET RANGE\nCROP: DRAG, SHIFT LOCKS RATIO, ENTER SAVES\nEDITING TEXT: NORMAL PASTE AND ARROW KEYS ARE PRESERVED." = "CTRL+O  DOSYA SEÇ\nCTRL+V  DOSYA, METİN, GÖRSEL VEYA BAĞLANTI YAPIŞTIR\nCTRL+SPACE / ENTER  ARAÇLARI AÇ\nCTRL+1 / CTRL+2  ANA SAYFA / KİTAPLIK\nCTRL+F  KİTAPLIKTA ARA\nCTRL+SHIFT+D  KOPYALANAN İNDİRME BAĞLANTISINI KULLAN\nCTRL+U  GÜNCELLEMELERİ DENETLE\n\nÇARK: SEÇMEK İÇİN OKLAR / TAB, AÇMAK İÇİN ENTER, KAPATMAK İÇİN ESC\nMEDYA: SPACE OYNAT/DURAKLAT, ←/→ 1 SANİYE, SHIFT+←/→ 1/30 SN, I/O ARALIĞI AYARLA\nKIRPMA: SÜRÜKLE, SHIFT ORANI KİLİTLER, ENTER KAYDEDER\nMETİN DÜZENLERKEN: NORMAL YAPIŞTIRMA VE OK TUŞLARI OLDUĞU GİBİ ÇALIŞIR.";
 "CTRL+SHIFT+D  USE A COPIED LINK  ·  PUBLIC, DOWNLOADABLE MEDIA" = "CTRL+SHIFT+D  KOPYALANAN BAĞLANTIYI KULLAN  ·  HERKESE AÇIK, İNDİRİLEBİLİR MEDYA";
 "CUSTOM DIMENSIONS" = "ÖZEL BOYUTLAR";
@@ -628,6 +630,8 @@
 "Crop Video" = "Videoyu Kırp";
 "Crop area" = "Kırpma alanı";
 "Crop image" = "Görseli kırp";
+"Ctrl + right-click a media file or browser image/video to open its tools." = "Bir medya dosyasının veya tarayıcıdaki görsel/videonun üzerinde Ctrl + sağ tık ile araçlarını aç.";
+"Ctrl + right-click could not be registered. Drag a file with Ctrl to open its tools." = "Ctrl + sağ tık kaydedilemedi. Araçları açmak için dosyayı Ctrl ile sürükle.";
 "Ctrl+O  Choose files\nCtrl+V  Paste files, text, an image or link\nCtrl+Space / Enter  Open tools\nCtrl+1 / Ctrl+2  Home / Library\nCtrl+F  Find in Library\nCtrl+Shift+D  Use a copied download link\nCtrl+U  Check for updates\n\nWheel: arrows / Tab to choose, Enter to open, Esc to close\nMedia: Space play/pause, ←/→ 1 second, Shift+←/→ 1/30s, I/O set range\nCrop: drag, Shift locks ratio, Enter saves\nEditing text: normal paste and arrow keys are preserved." = "Ctrl+O  Dosya seç\nCtrl+V  Dosya, metin, görsel veya bağlantı yapıştır\nCtrl+Space / Enter  Araçları aç\nCtrl+1 / Ctrl+2  Ana Sayfa / Kitaplık\nCtrl+F  Kitaplıkta ara\nCtrl+Shift+D  Kopyalanan indirme bağlantısını kullan\nCtrl+U  Güncellemeleri denetle\n\nÇark: seçmek için oklar / Tab, açmak için Enter, kapatmak için Esc\nMedya: Space oynat/duraklat, ←/→ 1 saniye, Shift+←/→ 1/30 sn, I/O aralığı ayarla\nKırpma: sürükle, Shift oranı kilitler, Enter kaydeder\nMetin düzenlerken: normal yapıştırma ve ok tuşları olduğu gibi çalışır.";
 "Ctrl+Shift+D  Use a copied link  ·  Public, downloadable media" = "Ctrl+Shift+D  Kopyalanan bağlantıyı kullan  ·  Herkese açık, indirilebilir medya";
 "Custom dimensions" = "Özel boyutlar";
@@ -781,6 +785,7 @@
 "EMBEDDED IMAGE EXCEEDS 20 MB." = "GÖMÜLÜ GÖRSEL 20 MB'I AŞIYOR.";
 "ENABLE LOKUM" = "LOKUM'Yİ ETKİNLEŞTİR";
 "ENABLE LOKUM DRAG SHORTCUTS" = "LOKUM SÜRÜKLEME KISAYOLLARINI ETKİNLEŞTİR";
+"ENABLE LOKUM SHORTCUTS" = "LOKUM KISAYOLLARINI ETKİNLEŞTİR";
 "ENCODED PIXELS, COLOR PROFILE AND DISPLAY ORIENTATION ARE PRESERVED." = "KODLANMIŞ PİKSELLER, RENK PROFİLİ VE GÖRÜNTÜ YÖNÜ KORUNUR.";
 "END" = "BİTİŞ";
 "ENTER A FINITE NUMBER." = "GEÇERLİ BİR SAYI GİR.";
@@ -809,6 +814,7 @@
 "Embedded image exceeds 20 MB." = "Gömülü görsel 20 MB'ı aşıyor.";
 "Enable Lokum" = "Lokum'yi etkinleştir";
 "Enable Lokum drag shortcuts" = "Lokum sürükleme kısayollarını etkinleştir";
+"Enable Lokum shortcuts" = "Lokum kısayollarını etkinleştir";
 "Encoded pixels, color profile and display orientation are preserved." = "Kodlanmış pikseller, renk profili ve görüntü yönü korunur.";
 "End" = "Bitiş";
 "Enter a finite number." = "Geçerli bir sayı gir.";
@@ -1986,6 +1992,7 @@
 "THE DOWNLOAD CONNECTION WAS INTERRUPTED." = "İNDİRME BAĞLANTISI KESİLDİ.";
 "THE DOWNLOAD STOPPED RESPONDING. PLEASE TRY AGAIN." = "İNDİRME YANIT VERMİYOR. LÜTFEN TEKRAR DENE.";
 "THE DOWNLOADED FILE CONTAINS NO VIDEO." = "İNDİRİLEN DOSYADA VİDEO YOK.";
+"THE DOWNLOADED FILE IS NOT A SUPPORTED IMAGE, VIDEO OR AUDIO FILE." = "İNDİRİLEN DOSYA DESTEKLENEN BİR GÖRSEL, VİDEO VEYA SES DOSYASI DEĞİL.";
 "THE DOWNLOADED TOOLS ARE INCOMPLETE. PLEASE TRY SETUP AGAIN." = "İNDİRİLEN ARAÇLAR EKSİK. KURULUMU TEKRAR DENE.";
 "THE IMAGE DOWNLOAD ENDED EARLY." = "GÖRSEL İNDİRMESİ ERKEN SONA ERDİ.";
 "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE." = "GÖRSEL SIRASINDA HER GÖRSEL BİR KEZ YER ALMALI.";
@@ -2010,6 +2017,7 @@
 "THIS IMAGE IS TOO LARGE (100 MP LIMIT)." = "BU GÖRSEL ÇOK BÜYÜK (SINIR 100 MP).";
 "THIS IMAGE IS TOO LARGE TO PASTE. CHOOSE THE IMAGE FILE INSTEAD." = "BU GÖRSEL YAPIŞTIRMAK İÇİN ÇOK BÜYÜK. BUNUN YERİNE GÖRSEL DOSYASINI SEÇ.";
 "THIS LINK DID NOT RETURN A DOWNLOADABLE IMAGE." = "BU BAĞLANTIDAN İNDİRİLEBİLİR BİR GÖRSEL GELMEDİ.";
+"THIS MEDIA ADDRESS IS UNAVAILABLE. SAVE THE FILE, THEN OPEN ITS TOOLS IN LOKUM." = "BU MEDYANIN BAĞLANTISI KULLANILAMIYOR. DOSYAYI KAYDEDİP LOKUM’DA ARAÇLARINI AÇ.";
 "THIS OUTPUT FORMAT HAS NO ADJUSTABLE CONVERSION DEFAULTS." = "BU ÇIKTI BİÇİMİNİN AYARLANABİLİR DÖNÜŞTÜRME TERCİHİ YOK.";
 "THIS PDF CONTAINS NO PAGES." = "BU PDF'DE SAYFA YOK.";
 "THIS PDF PAGE COULD NOT BE READ." = "BU PDF SAYFASI OKUNAMADI.";
@@ -2019,6 +2027,7 @@
 "THIS SIZE CANNOT BE REACHED. CHOOSE A LARGER TARGET OR SMALLER DIMENSIONS." = "BU BOYUTA İNİLEMİYOR. DAHA BÜYÜK BİR HEDEF VEYA DAHA KÜÇÜK BOYUTLAR SEÇ.";
 "THIS TEXT IS TOO LARGE TO PASTE. CHOOSE A TEXT FILE INSTEAD." = "BU METİN YAPIŞTIRMAK İÇİN ÇOK BÜYÜK. BUNUN YERİNE BİR METİN DOSYASI SEÇ.";
 "THIS TEXT IS TOO LARGE TO PREVIEW. USE OPEN TO READ THE COMPLETE FILE." = "BU METİN ÖNİZLEME İÇİN ÇOK BÜYÜK. DOSYANIN TAMAMINI OKUMAK İÇİN AÇ'I KULLAN.";
+"THIS TOOL IS NOT AVAILABLE FOR THE DOWNLOADED MEDIA FORMAT." = "BU ARAÇ İNDİRİLEN MEDYANIN BİÇİMİ İÇİN KULLANILAMIYOR.";
 "THIS WINDOW COULD NOT BE ARRANGED. THE APP MAY RESTRICT RESIZING." = "BU PENCERE DÜZENLENEMEDİ. UYGULAMA YENİDEN BOYUTLANDIRMAYI KISITLIYOR OLABİLİR.";
 "THIS WINDOWS CODEC CANNOT PLAY DIRECTLY. SET UP MEDIA TOOLS TO CREATE A LOCAL PREVIEW." = "BU WINDOWS CODEC'İ DOĞRUDAN OYNATILAMIYOR. YEREL ÖNİZLEME OLUŞTURMAK İÇİN MEDYA ARAÇLARINI KUR.";
 "THOSE FILES ARE NO LONGER AVAILABLE." = "BU DOSYALARA ARTIK ULAŞILAMIYOR.";
@@ -2074,6 +2083,7 @@
 "The download connection was interrupted." = "İndirme bağlantısı kesildi.";
 "The download stopped responding. Please try again." = "İndirme yanıt vermiyor. Lütfen tekrar dene.";
 "The downloaded file contains no video." = "İndirilen dosyada video yok.";
+"The downloaded file is not a supported image, video or audio file." = "İndirilen dosya desteklenen bir görsel, video veya ses dosyası değil.";
 "The downloaded tools are incomplete. Please try setup again." = "İndirilen araçlar eksik. Kurulumu tekrar dene.";
 "The image download ended early." = "Görsel indirmesi erken sona erdi.";
 "The image order must include every image once." = "Görsel sırasında her görsel bir kez yer almalı.";
@@ -2104,12 +2114,14 @@
 "This image is too large (100 MP limit)." = "Bu görsel çok büyük (sınır 100 MP).";
 "This image is too large to paste. Choose the image file instead." = "Bu görsel yapıştırmak için çok büyük. Bunun yerine görsel dosyasını seç.";
 "This link did not return a downloadable image." = "Bu bağlantıdan indirilebilir bir görsel gelmedi.";
+"This media address is unavailable. Save the file, then open its tools in Lokum." = "Bu medyanın bağlantısı kullanılamıyor. Dosyayı kaydedip Lokum’da araçlarını aç.";
 "This output format has no adjustable conversion defaults." = "Bu çıktı biçiminin ayarlanabilir dönüştürme tercihi yok.";
 "This post contains videos. Use its Reel link to download video." = "Bu gönderide video var. Videoyu indirmek için Reel bağlantısını kullan.";
 "This repository is private" = "Bu depo gizli";
 "This size cannot be reached. Choose a larger target or smaller dimensions." = "Bu boyuta inilemiyor. Daha büyük bir hedef veya daha küçük boyutlar seç.";
 "This text is too large to paste. Choose a text file instead." = "Bu metin yapıştırmak için çok büyük. Bunun yerine bir metin dosyası seç.";
 "This text is too large to preview. Use Open to read the complete file." = "Bu metin önizleme için çok büyük. Dosyanın tamamını okumak için Aç'ı kullan.";
+"This tool is not available for the downloaded media format." = "Bu araç indirilen medyanın biçimi için kullanılamıyor.";
 "This window could not be arranged. The app may restrict resizing." = "Bu pencere düzenlenemedi. Uygulama yeniden boyutlandırmayı kısıtlıyor olabilir.";
 "Those files are no longer available." = "Bu dosyalara artık ulaşılamıyor.";
 "Thumbnail" = "Küçük resim";

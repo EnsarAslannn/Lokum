@@ -75,7 +75,7 @@ internal sealed class GlobalDropWheel:Window
     }
     private void Track(DragEventArgs e)
     {
-        var files=e.Data.GetData(DataFormats.FileDrop) as string[]??[];var updated=Choices(files,Payload(e.Data));
+        var files=e.Data.GetData(DataFormats.FileDrop) as string[]??[];var updated=mode=="tools"&&MediaToolSource.FromDrop(e.Data,hint()) is {} media?media.Choices:Choices(files,Payload(e.Data));
         // Replacing the hit-test target during DragEnter causes OLE to enter
         // again instead of advancing to DragOver. Keep the visual tree stable
         // until the payload actually changes, and select on entry as well.
@@ -88,6 +88,7 @@ internal sealed class GlobalDropWheel:Window
     private WebMediaPayload? Payload(IDataObject data)=>DragPayload.Parse(data,hint());
     private IReadOnlyList<ToolChoice> Choices(string[] files,WebMediaPayload? web)
     {
+        if(mode=="tools"&&web is not null&&files.Length==0)return MediaToolSource.FromWeb(web).Choices;
         if(files.Length>0&&web is null)
         {
             if(mode=="convert")return FeatureCatalog.Formats(files).Select(f=>new ToolChoice("convert:"+f,f.ToUpperInvariant(),"↗")).ToArray();

@@ -15,6 +15,21 @@ public partial class App:Application
         }
         DispatcherUnhandledException+=(_,error)=>{var folder=Environment.GetEnvironmentVariable("LOKUM_SMOKE_DIRECTORY");if(folder is not null){Directory.CreateDirectory(folder);File.WriteAllText(Path.Combine(folder,"dispatcher-error.txt"),error.Exception.ToString());error.Handled=true;Shutdown(1);}};
         base.OnStartup(e);
+        if(e.Args.Length==2&&e.Args[0]=="--web-media-import-checks")
+        {
+            IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;
+            Dispatcher.BeginInvoke(async()=>{try{await WebMediaImportChecks.Run(e.Args[1]);Shutdown(0);}catch(Exception error){Directory.CreateDirectory(e.Args[1]);File.WriteAllText(Path.Combine(e.Args[1],"error.txt"),error.ToString());Shutdown(1);}});return;
+        }
+        if(e.Args.Length==2&&e.Args[0] is "--context-media-native" or "--browser-media-native")
+        {
+            IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;
+            Dispatcher.BeginInvoke(()=>{try{ContextMediaChecks.Native(e.Args[1],e.Args[0]=="--browser-media-native");Shutdown(0);}catch(Exception error){Directory.CreateDirectory(e.Args[1]);File.WriteAllText(Path.Combine(e.Args[1],"error.txt"),error.ToString());Shutdown(1);}});return;
+        }
+        if(e.Args.Length==2&&e.Args[0]=="--context-media-checks")
+        {
+            IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;
+            Dispatcher.BeginInvoke(async()=>{try{await ContextMediaChecks.Run(e.Args[1]);Shutdown(0);}catch(Exception error){Directory.CreateDirectory(e.Args[1]);File.WriteAllText(Path.Combine(e.Args[1],"error.txt"),error.ToString());Shutdown(1);}});return;
+        }
         if(e.Args.Length==3&&e.Args[0]=="--conversion-workspace-ui")
         {
             IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;

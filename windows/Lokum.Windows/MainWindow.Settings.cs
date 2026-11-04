@@ -13,9 +13,10 @@ public sealed partial class MainWindow
     private void SetupDesktop()
     {
         globalDrag=new(this,preferences,OnGlobalDrop,OpenCopiedLink);
+        mediaContext=new(this,preferences,(source,choice)=>_ = OpenMediaToolAsync(source,choice),message=>L10n.SetText(status,message));
         try{tray=new(this,ShowMain,TrayMenu);}catch(InvalidOperationException error){L10n.SetText(status,error.Message);}
         Closing+=(_,e)=>{if(!e.Cancel&&tray is not null&&preferences.Value.KeepInTray&&!quitting){e.Cancel=true;Hide();}};
-        Closed+=(_,_)=>{launchTimer?.Stop();tray?.Dispose();};if(Environment.GetCommandLineArgs().Contains("--background"))Hide();
+        Closed+=(_,_)=>{launchTimer?.Stop();mediaContext?.Dispose();tray?.Dispose();};if(Environment.GetCommandLineArgs().Contains("--background"))Hide();
     }
     private void ShowMain(){Show();WindowState=WindowState.Normal;Activate();if(monitorToolSetup)Dispatcher.BeginInvoke(OfferFirstRunTools);}
     private System.Windows.Controls.ContextMenu TrayMenu()
@@ -40,6 +41,7 @@ public sealed partial class MainWindow
         Dispatcher.BeginInvoke(async()=>
         {
             if(busy)return;
+            if(MediaToolSource.TryTool(action,out _,out _)&&MediaToolSource.FromDrop(data,hint) is {} media){await OpenMediaToolAsync(media,new(action,"Tools","✦"));return;}
             if(paths is {Length:>0}&&!action.StartsWith("download:",StringComparison.Ordinal)){files.Clear();Add(paths);if(action.StartsWith("convert:",StringComparison.Ordinal))await EditAsync(new(action,"Convert","↗"));else if(new[]{"share","float","copy","move","copyPath","terminal"}.Contains(action))await PerformFileAction(action,paths);else await EditAsync(new(action,FeatureCatalog.ToolNames.GetValueOrDefault(action,action),"✦"));}
             else if(payload is not null){link.Text=payload.Url;SetDownloadKind(payload,action.StartsWith("download:",StringComparison.Ordinal)?action[9..]:null);Show();WindowState=WindowState.Normal;Activate();OpenDownload();}
         });

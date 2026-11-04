@@ -75,6 +75,15 @@ jobs:
           if (!$process.WaitForExit(180000)) { $process.Kill($true); throw 'Video preview regression exceeded three minutes' }
           if ($process.ExitCode -ne 0) { throw 'Video preview regression failed' }
           Get-Content build/video-workspace-ui/verification.json
+      - name: Context media wheel editor routing and clipboard snapshot regression
+        shell: pwsh
+        run: |
+          $app = (Resolve-Path 'build/windows/Lokum/Lokum.exe').Path
+          $proof = Join-Path $PWD 'build/context-media-checks'
+          $process = Start-Process -FilePath $app -ArgumentList @('--context-media-checks', ('"' + $proof + '"')) -WindowStyle Hidden -PassThru
+          if (!$process.WaitForExit(60000)) { $process.Kill($true); throw 'Context media checks exceeded one minute' }
+          if ($process.ExitCode -ne 0) { Get-Content (Join-Path $proof 'error.txt'); throw 'Context media checks failed' }
+          Get-Content (Join-Path $proof 'verification.json')
       - name: Windows native image PDF ZIP and WPF render checks
         shell: pwsh
         env:
@@ -161,5 +170,6 @@ jobs:
             build/video-workspace-tests
             build/video-workspace-ui
             build/conversion-workspace-ui
+            build/context-media-checks
           retention-days: 7
           if-no-files-found: error

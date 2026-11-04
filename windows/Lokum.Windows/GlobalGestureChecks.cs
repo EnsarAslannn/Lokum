@@ -15,6 +15,7 @@ internal static class GlobalGestureChecks
     [DllImport("user32.dll",CharSet=CharSet.Unicode)]private static extern int GetWindowText(IntPtr window,System.Text.StringBuilder text,int count);
     [DllImport("user32.dll")]private static extern bool GetWindowRect(IntPtr handle,out NativeRect rect);
     [DllImport("user32.dll")]private static extern bool SetForegroundWindow(IntPtr handle);
+    [DllImport("user32.dll")]private static extern IntPtr GetForegroundWindow();
     [DllImport("user32.dll")]private static extern bool PostMessage(IntPtr handle,uint message,IntPtr w,IntPtr l);
     internal static void Run(Window owner,string root,string original,Action<bool,string> check)
     {
@@ -46,7 +47,7 @@ internal static class GlobalGestureChecks
             phase="dragging "+mode;selected=null;string? state=null;SetForegroundWindow(handle);DesktopInput.Pump(200);var start=new Point(bounds.Left+bounds.Width/2,bounds.Top+bounds.Height/2);
             var driver=Task.Run(()=>
             {
-                DesktopInput.MovePointer(start);Thread.Sleep(100);DesktopInput.HoldMouse(true);Thread.Sleep(150);
+                if(GetForegroundWindow()!=handle)throw new Exception("Explorer fixture lost focus; no drag input will be sent.");DesktopInput.MovePointer(start);Thread.Sleep(100);DesktopInput.HoldMouse(true);Thread.Sleep(150);
                 try
                 {
                     DesktopInput.MovePointer(new(start.X+45,start.Y+20));Thread.Sleep(150);DesktopInput.Hold(modifier,true);var wheel=IntPtr.Zero;for(var n=0;n<30&&wheel==IntPtr.Zero;n++){Thread.Sleep(100);wheel=FindWindow(null,"Lokum · "+mode);}if(wheel==IntPtr.Zero||!GetWindowRect(wheel,out var r))throw new Exception("The global "+mode+" wheel did not open during the Explorer drag.");
@@ -59,6 +60,21 @@ internal static class GlobalGestureChecks
         try
         {
             Drag(Key.LeftCtrl,"tools","convert");Drag(Key.LeftAlt,"actions","share");Drag(Key.LeftShift,"convert","convert:"+FeatureCatalog.Formats([file])[0]);
+            phase="Ctrl right-click media";
+            MediaToolSource? clickedSource=null;ToolChoice? clickedChoice=null;string? contextNotice=null;
+            using(var context=new ContextMediaController(owner,settings,(media,choice)=>{clickedSource=media;clickedChoice=choice;},message=>contextNotice=message))
+            {
+                var click=Task.Run(()=>
+                {
+                    SetForegroundWindow(handle);Thread.Sleep(250);if(GetForegroundWindow()!=handle)throw new Exception("Explorer fixture lost focus; no context input will be sent.");DesktopInput.MovePointer(new(bounds.Left+bounds.Width/2,bounds.Top+bounds.Height/2));DesktopInput.Hold(Key.LeftCtrl,true);DesktopInput.HoldMouse(true,secondary:true);Thread.Sleep(200);DesktopInput.HoldMouse(false,secondary:true);DesktopInput.Hold(Key.LeftCtrl,false);
+                    nint menu=0;for(var n=0;n<50&&menu==0;n++){Thread.Sleep(100);menu=FindWindow(null,"Lokum tools");}
+                    if(menu==0||!GetWindowRect(menu,out var r))throw new Exception("Ctrl + right-click did not open the image tools wheel; "+contextNotice);
+                    DesktopInput.MovePointer(new((r.Left+r.Right)/2d,r.Top+(r.Bottom-r.Top)*.18));Thread.Sleep(150);DesktopInput.HoldMouse(true);DesktopInput.HoldMouse(false);
+                });
+                var deadline=DateTime.UtcNow.AddSeconds(12);while(!click.IsCompleted&&DateTime.UtcNow<deadline)DesktopInput.Pump(30);
+                if(!click.IsCompleted)throw new TimeoutException("Ctrl + right-click timed out");click.GetAwaiter().GetResult();DesktopInput.Pump(250);
+                check(clickedSource?.Paths.SingleOrDefault()==file&&clickedChoice?.Id=="convert","Explorer Ctrl + right-click opens the real image tools wheel and selects a local tool without downloading");
+            }
             if(controller.LinkShortcutRegistered){DesktopInput.Key(owner,Key.D,control:true,shift:true);check(selected=="link-shortcut","Global copied-link shortcut Ctrl+Shift+D");}
             var main=owner as MainWindow;var beforeLaunch=main?.SelectedFiles.ToArray();var modal=new Window{Owner=owner,Width=300,Height=200,WindowStartupLocation=WindowStartupLocation.CenterOwner,Content=new System.Windows.Controls.Border{Background=System.Windows.Media.Brushes.DarkOliveGreen}};Exception? modalError=null;
             modal.Dispatcher.BeginInvoke(()=>

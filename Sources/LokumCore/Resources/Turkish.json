@@ -1,4 +1,10 @@
 {
+  "Enable Lokum shortcuts": "Lokum kısayollarını etkinleştir",
+  "Ctrl + right-click a media file or browser image/video to open its tools.": "Bir medya dosyasının veya tarayıcıdaki görsel/videonun üzerinde Ctrl + sağ tık ile araçlarını aç.",
+  "Ctrl + right-click could not be registered. Drag a file with Ctrl to open its tools.": "Ctrl + sağ tık kaydedilemedi. Araçları açmak için dosyayı Ctrl ile sürükle.",
+  "This media address is unavailable. Save the file, then open its tools in Lokum.": "Bu medyanın bağlantısı kullanılamıyor. Dosyayı kaydedip Lokum’da araçlarını aç.",
+  "The downloaded file is not a supported image, video or audio file.": "İndirilen dosya desteklenen bir görsel, video veya ses dosyası değil.",
+  "This tool is not available for the downloaded media format.": "Bu araç indirilen medyanın biçimi için kullanılamıyor.",
   "Language": "Dil",
   "General": "Genel",
   "Formats": "Biçimler",

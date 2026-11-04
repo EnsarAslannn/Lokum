@@ -23,6 +23,30 @@ Library and preferences live in `%LOCALAPPDATA%/Lokum`, outside the portable app
 
 While dragging in Explorer or another application, **Ctrl** opens tools, **Shift** conversion and **Alt** file actions. Settings can change the three chords. **Ctrl+Shift+D** opens a copied public media link. The app can remain in the system tray.
 
+**Ctrl + right-click** on an image/video file in Explorer or on the desktop opens
+its media tools wheel. In a browser, Lokum reads the native **Copy image/video
+address** command (Turkish/English), then opens the same tools wheel. The clipboard
+is restored after reading the address; an unrelated newer copy is never replaced.
+Choose a tool to download the public source into Lokum imports and open the editor.
+Saving uses your output preference; the default for imported web media is your
+configured Downloads folder. Ctrl-dragged web images/videos also offer editing tools
+instead of only download actions. Shift/Alt download workflows remain available.
+Chrome, Edge and Firefox native media menus are recognized. Browser-internal video
+addresses can use a current public YouTube/Reel page; protected, private or otherwise
+unexposed media cannot always be retrieved. Unsupported menus retain their normal
+behavior. Disable **Enable Lokum shortcuts** to turn off Ctrl-right-click and drag
+shortcuts together.
+
+`Lokum --context-media-checks OUTPUT` checks wheel routing, exact media targets,
+clipboard snapshots and editor launch using isolated state. Set
+`LOKUM_CONTEXT_CLIPBOARD_TESTS=1` only on an isolated desktop to additionally test
+live native-menu commands and the system clipboard.
+`--context-media-native OUTPUT` tests Explorer with actual input.
+`--browser-media-native OUTPUT` is an explicit interactive Edge Guest regression;
+it requires the test window to be foreground and refuses to send input otherwise.
+`--web-media-import-checks OUTPUT` uses public PNG/MP4 fixtures to verify actual
+downloads, editing and save destination; it requires installed media tools/network.
+
 **Ctrl+O** chooses files; **Ctrl+V** imports files/text/images/links outside text fields; **Ctrl+1/2** switches Home/Library; **Ctrl+F** searches; **Ctrl+U** checks updates. **Ctrl+Space** opens the selected files' tools wheel. Arrows/Tab choose a tool, Enter opens it and Escape closes it.
 
 The tools wheel includes **Convert** whenever the selection has a common target
