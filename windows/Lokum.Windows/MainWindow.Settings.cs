@@ -13,10 +13,11 @@ public sealed partial class MainWindow
     private void SetupDesktop()
     {
         globalDrag=new(this,preferences,OnGlobalDrop,OpenCopiedLink);
-        mediaContext=new(this,preferences,(source,choice)=>_ = OpenMediaToolAsync(source,choice),message=>L10n.SetText(status,message));
+        StartChromeMedia();
+        mediaContext=new(this,preferences,(source,choice)=>_ = OpenMediaToolAsync(source,choice),message=>L10n.SetText(status,message),OpenUnresolvedDownload);
         try{tray=new(this,ShowMain,TrayMenu);}catch(InvalidOperationException error){L10n.SetText(status,error.Message);}
         Closing+=(_,e)=>{if(!e.Cancel&&tray is not null&&preferences.Value.KeepInTray&&!quitting){e.Cancel=true;Hide();}};
-        Closed+=(_,_)=>{launchTimer?.Stop();mediaContext?.Dispose();tray?.Dispose();};if(Environment.GetCommandLineArgs().Contains("--background"))Hide();
+        Closed+=(_,_)=>{launchTimer?.Stop();chromeMedia?.Dispose();chromeWheel?.Close();mediaContext?.Dispose();tray?.Dispose();};if(Environment.GetCommandLineArgs().Contains("--background"))Hide();
     }
     private void ShowMain(){Show();WindowState=WindowState.Normal;Activate();if(monitorToolSetup)Dispatcher.BeginInvoke(OfferFirstRunTools);}
     private System.Windows.Controls.ContextMenu TrayMenu()

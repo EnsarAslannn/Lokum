@@ -21,6 +21,8 @@
 "1 item" = "1 öğe";
 "1 · SELECT WHAT TO KEEP" = "1 · KORUNACAK ALANI SEÇ";
 "1 · Select what to keep" = "1 · Korunacak alanı seç";
+"1. PREPARE THE CONNECTION ON THIS PC." = "1. BU BİLGİSAYARDA BAĞLANTIYI HAZIRLA.";
+"1. Prepare the connection on this PC." = "1. Bu bilgisayarda bağlantıyı hazırla.";
 "1/3 LEFT · MIDDLE · RIGHT   /   1/2 LEFT · RIGHT   /   2/3 LEFT · RIGHT" = "1/3 SOL · ORTA · SAĞ   /   1/2 SOL · SAĞ   /   2/3 SOL · SAĞ";
 "1/3 left · middle · right   /   1/2 left · right   /   2/3 left · right" = "1/3 sol · orta · sağ   /   1/2 sol · sağ   /   2/3 sol · sağ";
 "1280 PX LONGEST EDGE" = "UZUN KENAR 1280 PX";
@@ -31,10 +33,14 @@
 "1920 px longest edge" = "Uzun kenar 1920 px";
 "2 · CHOOSE A BACKGROUND" = "2 · ARKA PLAN SEÇ";
 "2 · Choose a background" = "2 · Arka plan seç";
+"2. IN CHROME EXTENSIONS, TURN ON DEVELOPER MODE AND CHOOSE LOAD UNPACKED." = "2. CHROME UZANTILARINDA GELİŞTİRİCİ MODU’NU AÇIP PAKETLENMEMİŞ ÖĞE YÜKLE’Yİ SEÇ.";
+"2. In Chrome extensions, turn on Developer mode and choose Load unpacked." = "2. Chrome uzantılarında Geliştirici modu’nu açıp Paketlenmemiş öğe yükle’yi seç.";
 "24-BIT INTEGER" = "24 BİT TAM SAYI";
 "24-bit integer" = "24 bit tam sayı";
 "2560 PX LONGEST EDGE" = "UZUN KENAR 2560 PX";
 "2560 px longest edge" = "Uzun kenar 2560 px";
+"3. SELECT THIS FOLDER. REFRESH THE PAGE YOU WANT TO USE." = "3. BU KLASÖRÜ SEÇ. KULLANMAK İSTEDİĞİN WEB SAYFASINI YENİLE.";
+"3. Select this folder. Refresh the page you want to use." = "3. Bu klasörü seç. Kullanmak istediğin web sayfasını yenile.";
 "32-BIT FLOAT" = "32 BİT KAYAN NOKTA";
 "32-BIT INTEGER" = "32 BİT TAM SAYI";
 "32-bit float" = "32 bit kayan nokta";
@@ -379,6 +385,11 @@
 "CHOOSE VISUALIZATION IMAGE…" = "GÖRSELLEŞTİRME GÖRSELİ SEÇ…";
 "CHOOSE WHAT YOUR FILE SHARES." = "DOSYANIN NE PAYLAŞTIĞINI SEN SEÇ.";
 "CHOOSE ZIP, TAR OR GZIP." = "ZIP, TAR VEYA GZIP SEÇ.";
+"CHROME CONNECTION" = "CHROME BAĞLANTISI";
+"CHROME CONNECTION PREPARED. ADD THE EXTENSION ONCE, THEN REFRESH YOUR WEB PAGE." = "CHROME BAĞLANTISI HAZIRLANDI. UZANTIYI BİR KEZ EKLEYİP WEB SAYFANI YENİLE.";
+"CHROME CONNECTION · LOKUM" = "CHROME BAĞLANTISI · LOKUM";
+"CHROME EXTENSION (OPTIONAL)" = "CHROME UZANTISI (İSTEĞE BAĞLI)";
+"CHROME MEDIA TOOLS" = "CHROME MEDYA ARAÇLARI";
 "CLARITY" = "NETLİK";
 "CLEAR" = "TEMİZLE";
 "CLEAR FLOAT" = "YÜZEN PENCEREYİ TEMİZLE";
@@ -415,11 +426,13 @@
 "CONVERT TO" = "ŞUNA DÖNÜŞTÜR";
 "CONVERT · WHILE DRAGGING" = "DÖNÜŞTÜR · SÜRÜKLERKEN";
 "CONVERT, FINE-TUNE, AND SEND THEM ON THEIR WAY." = "DÖNÜŞTÜR, İNCE AYAR YAP VE PAYLAŞ.";
+"COPIED EXTENSION FOLDER." = "UZANTI KLASÖRÜ KOPYALANDI.";
 "COPY" = "KOPYALA";
 "COPY A FILE, SOME TEXT, AN IMAGE OR A PUBLIC MEDIA LINK FIRST." = "ÖNCE BİR DOSYA, METİN, GÖRSEL VEYA HERKESE AÇIK BİR MEDYA BAĞLANTISI KOPYALA.";
 "COPY A LINK → ⌃⇧D, OR DRAG IT WITH ⌘." = "BAĞLANTIYI KOPYALA → ⌃⇧D VEYA ⌘ İLE SÜRÜKLE.";
 "COPY A LINK, THEN CHOOSE DOWNLOAD LINK FROM THE LOKUM MENU." = "BİR BAĞLANTI KOPYALA, SONRA LOKUM MENÜSÜNDEN BAĞLANTIDAN İNDİR'İ SEÇ.";
 "COPY A PUBLIC MEDIA LINK FIRST." = "ÖNCE HERKESE AÇIK BİR MEDYA BAĞLANTISI KOPYALA.";
+"COPY EXTENSION FOLDER" = "UZANTI KLASÖRÜNÜ KOPYALA";
 "COPY PATH" = "YOLU KOPYALA";
 "COPYRIGHT" = "TELİF HAKKI";
 "CORNER RADIUS" = "KÖŞE YUVARLAKLIĞI";
@@ -440,6 +453,7 @@
 "CROP IMAGE" = "GÖRSELİ KIRP";
 "CROP IMAGE · LOKUM" = "GÖRSELİ KIRP · LOKUM";
 "CROP VIDEO" = "VİDEOYU KIRP";
+"CTRL + LEFT-CLICK AN IMAGE OR VIDEO ON THE WEB TO OPEN ITS LOKUM TOOLS. YOUR LOCAL FILE SHORTCUTS STAY THE SAME." = "WEB’DEKİ GÖRSEL VEYA VİDEONUN ÜZERİNDE CTRL + SOL TIK İLE LOKUM ARAÇLARINI AÇ. YEREL DOSYA KISAYOLLARIN AYNI KALIR.";
 "CTRL + RIGHT-CLICK A MEDIA FILE OR BROWSER IMAGE/VIDEO TO OPEN ITS TOOLS." = "BİR MEDYA DOSYASININ VEYA TARAYICIDAKİ GÖRSEL/VİDEONUN ÜZERİNDE CTRL + SAĞ TIK İLE ARAÇLARINI AÇ.";
 "CTRL + RIGHT-CLICK COULD NOT BE REGISTERED. DRAG A FILE WITH CTRL TO OPEN ITS TOOLS." = "CTRL + SAĞ TIK KAYDEDİLEMEDİ. ARAÇLARI AÇMAK İÇİN DOSYAYI CTRL İLE SÜRÜKLE.";
 "CTRL+O  CHOOSE FILES\nCTRL+V  PASTE FILES, TEXT, AN IMAGE OR LINK\nCTRL+SPACE / ENTER  OPEN TOOLS\nCTRL+1 / CTRL+2  HOME / LIBRARY\nCTRL+F  FIND IN LIBRARY\nCTRL+SHIFT+D  USE A COPIED DOWNLOAD LINK\nCTRL+U  CHECK FOR UPDATES\n\nWHEEL: ARROWS / TAB TO CHOOSE, ENTER TO OPEN, ESC TO CLOSE\nMEDIA: SPACE PLAY/PAUSE, ←/→ 1 SECOND, SHIFT+←/→ 1/30S, I/O SET RANGE\nCROP: DRAG, SHIFT LOCKS RATIO, ENTER SAVES\nEDITING TEXT: NORMAL PASTE AND ARROW KEYS ARE PRESERVED." = "CTRL+O  DOSYA SEÇ\nCTRL+V  DOSYA, METİN, GÖRSEL VEYA BAĞLANTI YAPIŞTIR\nCTRL+SPACE / ENTER  ARAÇLARI AÇ\nCTRL+1 / CTRL+2  ANA SAYFA / KİTAPLIK\nCTRL+F  KİTAPLIKTA ARA\nCTRL+SHIFT+D  KOPYALANAN İNDİRME BAĞLANTISINI KULLAN\nCTRL+U  GÜNCELLEMELERİ DENETLE\n\nÇARK: SEÇMEK İÇİN OKLAR / TAB, AÇMAK İÇİN ENTER, KAPATMAK İÇİN ESC\nMEDYA: SPACE OYNAT/DURAKLAT, ←/→ 1 SANİYE, SHIFT+←/→ 1/30 SN, I/O ARALIĞI AYARLA\nKIRPMA: SÜRÜKLE, SHIFT ORANI KİLİTLER, ENTER KAYDEDER\nMETİN DÜZENLERKEN: NORMAL YAPIŞTIRMA VE OK TUŞLARI OLDUĞU GİBİ ÇALIŞIR.";
@@ -551,6 +565,11 @@
 "Choose video, audio, thumbnail or images." = "Video, ses, küçük resim veya görsel seç.";
 "Choose visualization image…" = "Görselleştirme görseli seç…";
 "Choose what your file shares." = "Dosyanın ne paylaştığını sen seç.";
+"Chrome connection" = "Chrome bağlantısı";
+"Chrome connection prepared. Add the extension once, then refresh your web page." = "Chrome bağlantısı hazırlandı. Uzantıyı bir kez ekleyip web sayfanı yenile.";
+"Chrome connection · Lokum" = "Chrome bağlantısı · Lokum";
+"Chrome extension (optional)" = "Chrome uzantısı (isteğe bağlı)";
+"Chrome media tools" = "Chrome medya araçları";
 "Clarity" = "Netlik";
 "Clear" = "Temizle";
 "Clear Float" = "Yüzen Pencereyi Temizle";
@@ -602,12 +621,14 @@
 "Converted result: %lld · %@ KB · %lld files" = "Dönüştürülmüş sonuç: %lld · %@ KB · %lld dosya";
 "Converted result: %lld · %lld KB · %@ files" = "Dönüştürülmüş sonuç: %lld · %lld KB · %@ dosya";
 "Converted result: %lld · %lld KB · %lld files" = "Dönüştürülmüş sonuç: %lld · %lld KB · %lld dosya";
+"Copied extension folder." = "Uzantı klasörü kopyalandı.";
 "Copy" = "Kopyala";
 "Copy Path" = "Yolu Kopyala";
 "Copy a file, some text, an image or a public media link first." = "Önce bir dosya, metin, görsel veya herkese açık bir medya bağlantısı kopyala.";
 "Copy a link → ⌃⇧D, or drag it with ⌘." = "Bağlantıyı kopyala → ⌃⇧D veya ⌘ ile sürükle.";
 "Copy a link, then choose Download Link from the Lokum menu." = "Bir bağlantı kopyala, sonra Lokum menüsünden Bağlantıdan İndir'i seç.";
 "Copy a public media link first." = "Önce herkese açık bir medya bağlantısı kopyala.";
+"Copy extension folder" = "Uzantı klasörünü kopyala";
 "Copy path" = "Yolu kopyala";
 "Copyright" = "Telif hakkı";
 "Corner radius" = "Köşe yuvarlaklığı";
@@ -630,6 +651,7 @@
 "Crop Video" = "Videoyu Kırp";
 "Crop area" = "Kırpma alanı";
 "Crop image" = "Görseli kırp";
+"Ctrl + left-click an image or video on the web to open its Lokum tools. Your local file shortcuts stay the same." = "Web’deki görsel veya videonun üzerinde Ctrl + sol tık ile Lokum araçlarını aç. Yerel dosya kısayolların aynı kalır.";
 "Ctrl + right-click a media file or browser image/video to open its tools." = "Bir medya dosyasının veya tarayıcıdaki görsel/videonun üzerinde Ctrl + sağ tık ile araçlarını aç.";
 "Ctrl + right-click could not be registered. Drag a file with Ctrl to open its tools." = "Ctrl + sağ tık kaydedilemedi. Araçları açmak için dosyayı Ctrl ile sürükle.";
 "Ctrl+O  Choose files\nCtrl+V  Paste files, text, an image or link\nCtrl+Space / Enter  Open tools\nCtrl+1 / Ctrl+2  Home / Library\nCtrl+F  Find in Library\nCtrl+Shift+D  Use a copied download link\nCtrl+U  Check for updates\n\nWheel: arrows / Tab to choose, Enter to open, Esc to close\nMedia: Space play/pause, ←/→ 1 second, Shift+←/→ 1/30s, I/O set range\nCrop: drag, Shift locks ratio, Enter saves\nEditing text: normal paste and arrow keys are preserved." = "Ctrl+O  Dosya seç\nCtrl+V  Dosya, metin, görsel veya bağlantı yapıştır\nCtrl+Space / Enter  Araçları aç\nCtrl+1 / Ctrl+2  Ana Sayfa / Kitaplık\nCtrl+F  Kitaplıkta ara\nCtrl+Shift+D  Kopyalanan indirme bağlantısını kullan\nCtrl+U  Güncellemeleri denetle\n\nÇark: seçmek için oklar / Tab, açmak için Enter, kapatmak için Esc\nMedya: Space oynat/duraklat, ←/→ 1 saniye, Shift+←/→ 1/30 sn, I/O aralığı ayarla\nKırpma: sürükle, Shift oranı kilitler, Enter kaydeder\nMetin düzenlerken: normal yapıştırma ve ok tuşları olduğu gibi çalışır.";
@@ -671,6 +693,7 @@
 "DOWNLOAD IS LARGER THAN THE SUPPORTED LIMIT." = "İNDİRİLECEK DOSYA DESTEKLENEN SINIRDAN BÜYÜK.";
 "DOWNLOAD LIBREOFFICE 26.8.1 (~360 MB) FROM THE DOCUMENT FOUNDATION? ITS SHA-256 IS CHECKED, THEN THE PACKAGE IS EXTRACTED INTO LOKUM’S USER TOOLS FOLDER. NO ADMINISTRATOR PASSWORD OR OFFICE SUBSCRIPTION IS NEEDED. LIBREOFFICE RETAINS ITS UPSTREAM LICENSES." = "LIBREOFFICE 26.8.1 (~360 MB) THE DOCUMENT FOUNDATİON'DAN İNDİRİLSİN Mİ? SHA-256 ÖZETİ KONTROL EDİLİR, ARDINDAN PAKET LOKUM'NİN ARAÇ KLASÖRÜNE AÇILIR. YÖNETİCİ PAROLASI VEYA OFFICE ABONELİĞİ GEREKMEZ. LIBREOFFICE KENDİ LİSANSLARINI KORUR.";
 "DOWNLOAD LINK…" = "BAĞLANTIDAN İNDİR…";
+"DOWNLOAD MEDIA" = "MEDYAYI İNDİR";
 "DOWNLOAD MEDIA TOOLS" = "MEDYA ARAÇLARINI İNDİR";
 "DOWNLOAD MISSING TOOLS" = "EKSİK ARAÇLARI İNDİR";
 "DOWNLOAD OFFICE TOOLS" = "OFFICE ARAÇLARINI İNDİR";
@@ -730,6 +753,7 @@
 "Download FFmpeg (~180 MB), yt-dlp and Deno directly from their official GitHub releases? SHA-256 hashes are verified before use. FFmpeg is GPL; the other upstream licenses and source links are listed on our Features page. No administrator password is needed." = "FFmpeg (~180 MB), yt-dlp ve Deno resmi GitHub sürümlerinden indirilsin mi? SHA-256 özetleri kullanılmadan önce doğrulanır. FFmpeg GPL lisanslıdır; diğer lisanslar ve kaynak bağlantıları Özellikler sayfamızda yer alır. Yönetici parolası gerekmez.";
 "Download LibreOffice 26.8.1 (~360 MB) from The Document Foundation? Its SHA-256 is checked, then the package is extracted into Lokum’s user tools folder. No administrator password or Office subscription is needed. LibreOffice retains its upstream licenses." = "LibreOffice 26.8.1 (~360 MB) The Document Foundation'dan indirilsin mi? SHA-256 özeti kontrol edilir, ardından paket Lokum'nin araç klasörüne açılır. Yönetici parolası veya Office aboneliği gerekmez. LibreOffice kendi lisanslarını korur.";
 "Download Link…" = "Bağlantıdan İndir…";
+"Download Media" = "Medyayı indir";
 "Download a link" = "Bağlantıdan indir";
 "Download audio" = "Sesi indir";
 "Download cancelled. No partial files were kept." = "İndirme iptal edildi. Yarım kalan dosyalar silindi.";
@@ -786,6 +810,7 @@
 "ENABLE LOKUM" = "LOKUM'Yİ ETKİNLEŞTİR";
 "ENABLE LOKUM DRAG SHORTCUTS" = "LOKUM SÜRÜKLEME KISAYOLLARINI ETKİNLEŞTİR";
 "ENABLE LOKUM SHORTCUTS" = "LOKUM KISAYOLLARINI ETKİNLEŞTİR";
+"ENABLE LOKUM SHORTCUTS IN SETTINGS FIRST." = "ÖNCE AYARLAR’DAN LOKUM KISAYOLLARINI ETKİNLEŞTİR.";
 "ENCODED PIXELS, COLOR PROFILE AND DISPLAY ORIENTATION ARE PRESERVED." = "KODLANMIŞ PİKSELLER, RENK PROFİLİ VE GÖRÜNTÜ YÖNÜ KORUNUR.";
 "END" = "BİTİŞ";
 "ENTER A FINITE NUMBER." = "GEÇERLİ BİR SAYI GİR.";
@@ -815,6 +840,7 @@
 "Enable Lokum" = "Lokum'yi etkinleştir";
 "Enable Lokum drag shortcuts" = "Lokum sürükleme kısayollarını etkinleştir";
 "Enable Lokum shortcuts" = "Lokum kısayollarını etkinleştir";
+"Enable Lokum shortcuts in Settings first." = "Önce Ayarlar’dan Lokum kısayollarını etkinleştir.";
 "Encoded pixels, color profile and display orientation are preserved." = "Kodlanmış pikseller, renk profili ve görüntü yönü korunur.";
 "End" = "Bitiş";
 "Enter a finite number." = "Geçerli bir sayı gir.";
@@ -1133,6 +1159,7 @@
 "LITTLE TWEAKS. A WHOLE NEW LOOK." = "KÜÇÜK DOKUNUŞLAR. YEPYENİ BİR GÖRÜNÜM.";
 "LOADING BACKGROUND IMAGE…" = "ARKA PLAN GÖRSELİ YÜKLENİYOR…";
 "LOCAL BY DESIGN" = "VERİLERİN CİHAZINDA KALIR";
+"LOCAL FILES: USE YOUR USUAL CTRL SHORTCUT. CHROME WEB MEDIA: CTRL + LEFT-CLICK WITH THE LOKUM EXTENSION." = "YEREL DOSYALARDA NORMAL CTRL KISAYOLUNU KULLAN. CHROME’DAKİ WEB MEDYASINDA LOKUM UZANTISIYLA CTRL + SOL TIK YAP.";
 "LOKUM CHECKS ONCE AN HOUR WHILE IT’S RUNNING. YOU CHOOSE WHEN TO DOWNLOAD AND INSTALL." = "LOKUM ÇALIŞIRKEN SAATTE BİR DENETLER. İNDİRME VE KURULUM ZAMANINI SEN SEÇERSİN.";
 "LOKUM IS ALREADY RUNNING BUT IS STILL STARTING. OPEN IT FROM THE SYSTEM TRAY OR TRY AGAIN IN A MOMENT." = "LOKUM ZATEN ÇALIŞIYOR AMA HÂLÂ AÇILIYOR. SİSTEM TEPSİSİNDEN AÇ VEYA BİRAZDAN TEKRAR DENE.";
 "LOKUM IS STILL RUNNING." = "LOKUM HÂLÂ ÇALIŞIYOR.";
@@ -1174,6 +1201,7 @@
 "Local by design" = "Verilerin cihazında kalır";
 "Local by design · MIT source\nVersion %@" = "Verilerin cihazında kalır · MIT lisanslı kaynak kodu\nSürüm %@";
 "Local by design · MIT source\nVersion %lld" = "Verilerin cihazında kalır · MIT lisanslı kaynak kodu\nSürüm %lld";
+"Local files: use your usual Ctrl shortcut. Chrome web media: Ctrl + left-click with the Lokum extension." = "Yerel dosyalarda normal Ctrl kısayolunu kullan. Chrome’daki web medyasında Lokum uzantısıyla Ctrl + sol tık yap.";
 "Lokum Settings" = "Lokum Ayarları";
 "Lokum checks once an hour while it’s running. You choose when to download and install." = "Lokum çalışırken saatte bir denetler. İndirme ve kurulum zamanını sen seçersin.";
 "Lokum is already running but is still starting. Open it from the system tray or try again in a moment." = "Lokum zaten çalışıyor ama hâlâ açılıyor. Sistem tepsisinden aç veya birazdan tekrar dene.";
@@ -1200,6 +1228,7 @@
 "MAXIMUM VIDEO HEIGHT" = "EN FAZLA VİDEO YÜKSEKLİĞİ";
 "MAXIMUM VIDEO HEIGHT (0 = ORIGINAL)" = "EN FAZLA VİDEO YÜKSEKLİĞİ (0 = ORİJİNAL)";
 "MAXIMUM WIDTH" = "EN FAZLA GENİŞLİK";
+"MEDIA DOWNLOADED. CHOOSE A LOCAL TOOL TO EDIT IT." = "MEDYA İNDİRİLDİ. DÜZENLEMEK İÇİN YEREL ARAÇLARDAN BİRİNİ SEÇ.";
 "MEDIA SETUP" = "MEDYA KURULUMU";
 "MEDIA TOOLS" = "MEDYA ARAÇLARI";
 "MEDIA TOOLS ARE ALREADY INSTALLED." = "MEDYA ARAÇLARI ZATEN KURULU.";
@@ -1242,6 +1271,7 @@
 "Maximum video height" = "En fazla video yüksekliği";
 "Maximum video height (0 = original)" = "En fazla video yüksekliği (0 = orijinal)";
 "Maximum width" = "En fazla genişlik";
+"Media downloaded. Choose a local tool to edit it." = "Medya indirildi. Düzenlemek için yerel araçlardan birini seç.";
 "Media setup" = "Medya kurulumu";
 "Media tools" = "Medya araçları";
 "Media tools are already installed." = "Medya araçları zaten kurulu.";
@@ -1340,6 +1370,8 @@
 "ONE OR MORE MEDIA SETTINGS ARE OUTSIDE THEIR SUPPORTED RANGE." = "BİR VEYA DAHA FAZLA MEDYA AYARI DESTEKLENEN ARALIĞIN DIŞINDA.";
 "ONE TOOL GROUP IS READY. DOWNLOAD THE REMAINING TOOLS TO FINISH SETUP." = "BİR ARAÇ GRUBU HAZIR. KURULUMU TAMAMLAMAK İÇİN KALAN ARAÇLARI İNDİR.";
 "OPEN" = "AÇ";
+"OPEN A SPECIFIC YOUTUBE VIDEO OR SHORT, THEN TRY AGAIN." = "BELİRLİ BİR YOUTUBE VİDEOSUNU VEYA SHORTS’U AÇIP TEKRAR DENE.";
+"OPEN CHROME EXTENSIONS" = "CHROME UZANTILARINI AÇ";
 "OPEN IN TERMINAL" = "TERMINAL'DE AÇ";
 "OPEN LINK" = "BAĞLANTIYI AÇ";
 "OPEN LOGIN ITEMS" = "GİRİŞ ÖĞELERİNİ AÇ";
@@ -1376,8 +1408,10 @@
 "One or more media settings are outside their supported range." = "Bir veya daha fazla medya ayarı desteklenen aralığın dışında.";
 "One tool group is ready. Download the remaining tools to finish setup." = "Bir araç grubu hazır. Kurulumu tamamlamak için kalan araçları indir.";
 "Open" = "Aç";
+"Open Chrome extensions" = "Chrome uzantılarını aç";
 "Open Login Items" = "Giriş Öğelerini Aç";
 "Open Lokum" = "Lokum'yi Aç";
+"Open a specific YouTube video or Short, then try again." = "Belirli bir YouTube videosunu veya Shorts’u açıp tekrar dene.";
 "Open in Terminal" = "Terminal'de Aç";
 "Open link" = "Bağlantıyı aç";
 "Open permission settings…" = "İzin ayarlarını aç…";
@@ -1401,6 +1435,7 @@
 "PAGES INPUT EXCEEDS 200 MB." = "PAGES DOSYASI 200 MB'I AŞIYOR.";
 "PAGES PER FILE" = "DOSYA BAŞINA SAYFA";
 "PASTE" = "YAPIŞTIR";
+"PASTE A MEDIA LINK TO DOWNLOAD." = "İNDİRMEK İÇİN BİR MEDYA BAĞLANTISI YAPIŞTIR.";
 "PASTE A PUBLIC HTTP(S) MEDIA OR PAGE LINK." = "HERKESE AÇIK BİR HTTP(S) MEDYA VEYA SAYFA BAĞLANTISI YAPIŞTIR.";
 "PASTE A PUBLIC MEDIA LINK TO BEGIN." = "BAŞLAMAK İÇİN HERKESE AÇIK BİR MEDYA BAĞLANTISI YAPIŞTIR.";
 "PASTE A PUBLIC VIDEO, IMAGE OR AUDIO PAGE LINK" = "HERKESE AÇIK VİDEO, GÖRSEL VEYA SES BAĞLANTISI YAPIŞTIR";
@@ -1440,6 +1475,7 @@
 "PORTRAIT · 9:16" = "DİKEY · 9:16";
 "POSITION X" = "X KONUMU";
 "POSITION Y" = "Y KONUMU";
+"PREPARE CHROME CONNECTION" = "CHROME BAĞLANTISINI HAZIRLA";
 "PREPARING A LOCAL PREVIEW…" = "YEREL ÖNİZLEME HAZIRLANIYOR…";
 "PREPARING CONVERTED RESULT…" = "DÖNÜŞTÜRÜLMÜŞ SONUÇ HAZIRLANIYOR…";
 "PREPARING PREVIEW…" = "ÖNİZLEME HAZIRLANIYOR…";
@@ -1475,6 +1511,7 @@
 "Pages input exceeds 200 MB." = "Pages dosyası 200 MB'ı aşıyor.";
 "Pages per file" = "Dosya başına sayfa";
 "Paste" = "Yapıştır";
+"Paste a media link to download." = "İndirmek için bir medya bağlantısı yapıştır.";
 "Paste a public http(s) media or page link." = "Herkese açık bir http(s) medya veya sayfa bağlantısı yapıştır.";
 "Paste a public media link to begin." = "Başlamak için herkese açık bir medya bağlantısı yapıştır.";
 "Paste a public video, image or audio page link" = "Herkese açık video, görsel veya ses bağlantısı yapıştır";
@@ -1499,6 +1536,7 @@
 "Portrait · 9:16" = "Dikey · 9:16";
 "Position X" = "X konumu";
 "Position Y" = "Y konumu";
+"Prepare Chrome connection" = "Chrome bağlantısını hazırla";
 "Preparing a local preview…" = "Yerel önizleme hazırlanıyor…";
 "Preparing converted result…" = "Dönüştürülmüş sonuç hazırlanıyor…";
 "Preparing preview…" = "Önizleme hazırlanıyor…";
@@ -1587,9 +1625,11 @@
 "RESET" = "SIFIRLA";
 "RESIZE" = "YENİDEN BOYUTLANDIR";
 "RESIZE IMAGE" = "GÖRSELİ BOYUTLANDIR";
+"RESTART LOKUM FROM ITS SYSTEM TRAY, THEN TRY THE CHROME SHORTCUT AGAIN." = "LOKUM’U SİSTEM TEPSİSİNDEN TAMAMEN KAPATIP YENİDEN AÇ; ARDINDAN CHROME KISAYOLUNU TEKRAR DENE.";
 "RESTORE CLIPS" = "KLİPLERİ GERİ GETİR";
 "RESTORE DEFAULTS" = "VARSAYILANLARA DÖN";
 "RESULT" = "SONUÇ";
+"RETURN TO CHROME AND TRY CTRL + LEFT-CLICK AGAIN." = "CHROME’A DÖNÜP CTRL + SOL TIK İLE TEKRAR DENE.";
 "REVEAL FINISHED FILES IN EXPLORER" = "TAMAMLANAN DOSYALARI DOSYA GEZGİNİ'NDE GÖSTER";
 "REVEAL FINISHED FILES IN FINDER" = "TAMAMLANAN DOSYALARI FINDER'DA GÖSTER";
 "RIGHT" = "SAĞ";
@@ -1658,6 +1698,7 @@
 "Reset" = "Sıfırla";
 "Resize" = "Yeniden Boyutlandır";
 "Resize Image" = "Görseli Boyutlandır";
+"Restart Lokum from its system tray, then try the Chrome shortcut again." = "Lokum’u sistem tepsisinden tamamen kapatıp yeniden aç; ardından Chrome kısayolunu tekrar dene.";
 "Restore Clips" = "Klipleri Geri Getir";
 "Restore Defaults" = "Varsayılanlara Dön";
 "Restore defaults" = "Varsayılanlara dön";
@@ -1666,6 +1707,7 @@
 "Result: %@ KB · Original: %lld KB" = "Sonuç: %@ KB · Orijinal: %lld KB";
 "Result: %lld KB · Original: %@ KB" = "Sonuç: %lld KB · Orijinal: %@ KB";
 "Result: %lld KB · Original: %lld KB" = "Sonuç: %lld KB · Orijinal: %lld KB";
+"Return to Chrome and try Ctrl + left-click again." = "Chrome’a dönüp Ctrl + sol tık ile tekrar dene.";
 "Reveal finished files in Explorer" = "Tamamlanan dosyaları Dosya Gezgini'nde göster";
 "Reveal finished files in Finder" = "Tamamlanan dosyaları Finder'da göster";
 "Right" = "Sağ";
@@ -1717,6 +1759,7 @@
 "SAVED 1 NEW FILE. ORIGINALS KEPT." = "1 YENİ DOSYA KAYDEDİLDİ. ORİJİNAL KORUNDU.";
 "SAVED IN POST ORDER IN A NEW INSTAGRAM FOLDER." = "GÖNDERİ SIRASIYLA YENİ BİR INSTAGRAM KLASÖRÜNE KAYDEDİLİR.";
 "SAVED METADATA FIELDS" = "KAYITLI META VERİ ALANLARI";
+"SAVES TO YOUR CONFIGURED DOWNLOADS FOLDER." = "AYARLARDAKİ İNDİRİLENLER KLASÖRÜNE KAYDEDER.";
 "SAVING BACKGROUND EDITS…" = "ARKA PLAN DÜZENLEMELERİ KAYDEDİLİYOR…";
 "SCAN AGAIN" = "YENİDEN TARA";
 "SEARCH FORMATS" = "BİÇİMLERDE ARA";
@@ -1863,6 +1906,7 @@
 "Saved 1 new file. Originals kept." = "1 yeni dosya kaydedildi. Orijinal korundu.";
 "Saved in post order in a new Instagram folder." = "Gönderi sırasıyla yeni bir Instagram klasörüne kaydedilir.";
 "Saved metadata fields" = "Kayıtlı meta veri alanları";
+"Saves to your configured Downloads folder." = "Ayarlardaki İndirilenler klasörüne kaydeder.";
 "Saving background edits…" = "Arka plan düzenlemeleri kaydediliyor…";
 "Scan again" = "Yeniden tara";
 "Search formats" = "Biçimlerde ara";
@@ -1994,6 +2038,7 @@
 "THE DOWNLOADED FILE CONTAINS NO VIDEO." = "İNDİRİLEN DOSYADA VİDEO YOK.";
 "THE DOWNLOADED FILE IS NOT A SUPPORTED IMAGE, VIDEO OR AUDIO FILE." = "İNDİRİLEN DOSYA DESTEKLENEN BİR GÖRSEL, VİDEO VEYA SES DOSYASI DEĞİL.";
 "THE DOWNLOADED TOOLS ARE INCOMPLETE. PLEASE TRY SETUP AGAIN." = "İNDİRİLEN ARAÇLAR EKSİK. KURULUMU TEKRAR DENE.";
+"THE EXTENSION ONLY SENDS THE MEDIA YOU CTRL-CLICK TO LOKUM ON THIS COMPUTER. IT DOES NOT USE YOUR CLIPBOARD." = "UZANTI YALNIZCA CTRL İLE TIKLADIĞIN MEDYANIN BAĞLANTISINI BU BİLGİSAYARDAKİ LOKUM’A İLETİR. PANONU KULLANMAZ.";
 "THE IMAGE DOWNLOAD ENDED EARLY." = "GÖRSEL İNDİRMESİ ERKEN SONA ERDİ.";
 "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE." = "GÖRSEL SIRASINDA HER GÖRSEL BİR KEZ YER ALMALI.";
 "THE MEDIA SERVER REDIRECTED TO AN INSECURE URL." = "MEDYA SUNUCUSU GÜVENLİ OLMAYAN BİR ADRESE YÖNLENDİRDİ.";
@@ -2085,6 +2130,7 @@
 "The downloaded file contains no video." = "İndirilen dosyada video yok.";
 "The downloaded file is not a supported image, video or audio file." = "İndirilen dosya desteklenen bir görsel, video veya ses dosyası değil.";
 "The downloaded tools are incomplete. Please try setup again." = "İndirilen araçlar eksik. Kurulumu tekrar dene.";
+"The extension only sends the media you Ctrl-click to Lokum on this computer. It does not use your clipboard." = "Uzantı yalnızca Ctrl ile tıkladığın medyanın bağlantısını bu bilgisayardaki Lokum’a iletir. Panonu kullanmaz.";
 "The image download ended early." = "Görsel indirmesi erken sona erdi.";
 "The image order must include every image once." = "Görsel sırasında her görsel bir kez yer almalı.";
 "The media server redirected to an insecure URL." = "Medya sunucusu güvenli olmayan bir adrese yönlendirdi.";
@@ -2240,6 +2286,8 @@
 "Vignette" = "Vinyet";
 "Visualization" = "Görselleştirme";
 "WAVEFORM" = "DALGA BİÇİMİ";
+"WEB MEDIA" = "WEB MEDYASI";
+"WEB: CTRL + RIGHT-CLICK TO DOWNLOAD MEDIA. USE LOCAL TOOLS AFTER DOWNLOADING." = "WEB’DE CTRL + SAĞ TIK İLE MEDYAYI İNDİR. İNDİRDİKTEN SONRA YEREL ARAÇLARI KULLAN.";
 "WELCOME TO LOKUM" = "LOKUM'YE HOŞ GELDİN";
 "WELCOME…" = "HOŞ GELDİN…";
 "WHEEL FINISH" = "ÇARK GÖRÜNÜMÜ";
@@ -2254,6 +2302,8 @@
 "WINDOWS COULD NOT CREATE A TRAY ICON." = "WINDOWS TEPSİ SİMGESİNİ OLUŞTURAMADI.";
 "WORKING…" = "İŞLENİYOR…";
 "Waveform" = "Dalga biçimi";
+"Web media" = "Web medyası";
+"Web: Ctrl + right-click to download media. Use local tools after downloading." = "Web’de Ctrl + sağ tık ile medyayı indir. İndirdikten sonra yerel araçları kullan.";
 "Welcome to Lokum" = "Lokum'ye Hoş Geldin";
 "Welcome…" = "Hoş Geldin…";
 "Wheel finish" = "Çark görünümü";

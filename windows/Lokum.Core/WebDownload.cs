@@ -10,6 +10,7 @@ public sealed partial class WebDownload(Toolchain tools)
     {
         if(maximumHeight is <2 or >16384)throw new ArgumentException("Choose a supported maximum video height.");
         var payload=WebMediaPayload.Parse(input);var uri=Validate(kind=="image"?input:payload?.Url??input);if(kind is not ("video" or "audio" or "thumbnail" or "photos" or "image"))throw new ArgumentException("Choose video, audio, thumbnail or images.");
+        if(kind is "video" or "audio"&&(uri.Host=="youtube.com"||uri.Host.EndsWith(".youtube.com",StringComparison.OrdinalIgnoreCase)||uri.Host=="youtu.be")&&WebMediaPayload.YoutubeId(uri) is null&&!uri.AbsolutePath.StartsWith("/clip/",StringComparison.Ordinal))throw new ArgumentException("Open a specific YouTube video or Short, then try again.");
         using var tx=new ExportTransaction(destination);
         if(kind=="image"||payload?.Kind=="image")return tx.Publish([await WebPhotos.DownloadImageAsync(uri.AbsoluteUri,tx.StagingDirectory,progress,token)],token);
         if(kind=="thumbnail"&&WebMediaPayload.YoutubeId(uri) is {} id)return tx.Publish([await WebPhotos.YoutubeThumbnail(id,tx.StagingDirectory,progress,token)],token);

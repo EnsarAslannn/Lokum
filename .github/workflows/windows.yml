@@ -28,6 +28,27 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lokum
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Chrome Ctrl-left-click media and native bridge regression
+        shell: pwsh
+        run: |
+          python -m pip install -r scripts/requirements-browser-tests.txt
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -m playwright install chromium
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/test-chrome-media.py --output build/chrome-dom
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          node scripts/test-chrome-protocol.cjs
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/test-chrome-shorts.py --output build/chrome-shorts
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/test-chrome-native-host.py build/windows/Lokum/Lokum.exe --output build/chrome-native-host
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $app = (Resolve-Path 'build/windows/Lokum/Lokum.exe').Path
+          $proof = Join-Path $PWD 'build/chrome-bridge-checks'
+          $process = Start-Process -FilePath $app -ArgumentList @('--chrome-bridge-checks', ('"' + $proof + '"')) -WindowStyle Hidden -PassThru
+          if (!$process.WaitForExit(60000)) { $process.Kill($true); throw 'Chrome bridge checks exceeded one minute' }
+          if ($process.ExitCode -ne 0) { Get-Content (Join-Path $proof 'error.txt'); throw 'Chrome bridge checks failed' }
+          Get-Content (Join-Path $proof 'verification.json')
       - name: Verification failures exit cleanly
         shell: pwsh
         run: |
@@ -83,6 +104,17 @@ jobs:
           $process = Start-Process -FilePath $app -ArgumentList @('--context-media-checks', ('"' + $proof + '"')) -WindowStyle Hidden -PassThru
           if (!$process.WaitForExit(60000)) { $process.Kill($true); throw 'Context media checks exceeded one minute' }
           if ($process.ExitCode -ne 0) { Get-Content (Join-Path $proof 'error.txt'); throw 'Context media checks failed' }
+          Get-Content (Join-Path $proof 'verification.json')
+      - name: Native browser Download Media popup and local file workflow
+        # Native right-click downloads use an isolated local fixture in CI;
+        # real public PNG/YouTube downloads are verified separately on demand.
+        shell: pwsh
+        run: |
+          $app = (Resolve-Path 'build/windows/Lokum/Lokum.exe').Path
+          $proof = Join-Path $PWD 'build/browser-download-checks'
+          $process = Start-Process -FilePath $app -ArgumentList @('--browser-download-checks', ('"' + $proof + '"')) -WindowStyle Hidden -PassThru
+          if (!$process.WaitForExit(60000)) { $process.Kill($true); throw 'Browser download checks exceeded one minute' }
+          if ($process.ExitCode -ne 0) { Get-Content (Join-Path $proof 'error.txt'); throw 'Browser download checks failed' }
           Get-Content (Join-Path $proof 'verification.json')
       - name: Windows native image PDF ZIP and WPF render checks
         shell: pwsh
@@ -171,5 +203,10 @@ jobs:
             build/video-workspace-ui
             build/conversion-workspace-ui
             build/context-media-checks
+            build/browser-download-checks
+            build/chrome-dom
+            build/chrome-shorts
+            build/chrome-native-host
+            build/chrome-bridge-checks
           retention-days: 7
           if-no-files-found: error

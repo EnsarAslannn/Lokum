@@ -14,6 +14,12 @@ internal static class DownloadChecks
     }
     public static async Task Run(Action<bool,string> check,string root)
     {
+        try
+        {
+            await new WebDownload(new Toolchain(Path.Combine(root,"Unused media tools"))).DownloadAsync("https://www.youtube.com/","video",Path.Combine(root,"Invalid YouTube target"));
+            throw new Exception("A YouTube homepage was accepted as a single video.");
+        }
+        catch(ArgumentException){check(true,"A YouTube homepage is rejected before starting a downloader or requesting tools");}
         var uri=new Uri("https://download.example/fixture");var output=Path.Combine(root,"Download.bin");var bytes=new byte[]{1,2,3};
         HttpResponseMessage Response(HttpRequestMessage request,HttpContent? content=null)=>new(HttpStatusCode.OK){RequestMessage=request,Content=content??new ByteArrayContent(bytes)};
         using(var handler=new Handler((request,n)=>n==1?throw new HttpRequestException("Transient connection failure"):Response(request))){await VerifiedDownload.FetchForTest(uri,output,10,null,CancellationToken.None,handler,TimeSpan.FromSeconds(1));check(handler.Calls==2&&File.ReadAllBytes(output).SequenceEqual(bytes),"Interrupted download did not retry safely");File.Delete(output);}

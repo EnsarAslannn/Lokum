@@ -13,6 +13,7 @@
     <Resource Include="../../Resources/Brand/LokumMarkHappy.png" Link="Assets/LokumMarkHappy.png" />
     <Resource Include="../../Resources/Sounds/WheelSelection.wav" Link="Assets/WheelSelection.wav" />
     <Content Include="../../Resources/PagesInterop.js" Link="PagesInterop.js" CopyToOutputDirectory="PreserveNewest" />
+    <Content Include="../../browser/chrome/**" Link="ChromeExtension/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../scripts/pages-windows.js" Link="pages-windows.js" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../../Resources/licenses/cupertino-files/**" Link="licenses/cupertino-files/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
     <Content Include="../licenses/**" Link="licenses/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />

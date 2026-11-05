@@ -39,6 +39,13 @@ internal static class DesktopGeometry
         var dpi=96u;try{if(GetDpiForMonitor(monitor,0,out var actual,out _)==0)dpi=actual;}catch(DllNotFoundException){}var size=(int)Math.Round(logicalSize*dpi/96d);size=Math.Min(size,Math.Min(info.Work.Right-info.Work.Left,info.Work.Bottom-info.Work.Top));
         var left=Math.Clamp(x-size/2,info.Work.Left,info.Work.Right-size);var top=Math.Clamp(y-size/2,info.Work.Top,info.Work.Bottom-size);SetWindowPos(new WindowInteropHelper(window).Handle,IntPtr.Zero,left,top,size,size,0x14);
     }
+    internal static void PlacePopup(Window window,int x,int y)
+    {
+        window.UpdateLayout();var info=new MonitorInfo{Size=Marshal.SizeOf<MonitorInfo>()};if(!GetMonitorInfo(MonitorFromPoint(new(){X=x,Y=y},2),ref info))return;
+        var dpi=96u;try{if(GetDpiForMonitor(MonitorFromPoint(new(){X=x,Y=y},2),0,out var actual,out _)==0)dpi=actual;}catch(DllNotFoundException){}
+        var width=Math.Min((int)Math.Ceiling(window.ActualWidth*dpi/96d),info.Work.Right-info.Work.Left);var height=Math.Min((int)Math.Ceiling(window.ActualHeight*dpi/96d),info.Work.Bottom-info.Work.Top);
+        var left=Math.Clamp(x+8,info.Work.Left,info.Work.Right-width);var top=Math.Clamp(y+8,info.Work.Top,info.Work.Bottom-height);SetWindowPos(new WindowInteropHelper(window).Handle,IntPtr.Zero,left,top,width,height,0x14);
+    }
     internal static string? Snap(Window window,string? edge,bool detect=false)
     {
         var handle=new WindowInteropHelper(window).Handle;var info=new MonitorInfo{Size=Marshal.SizeOf<MonitorInfo>()};if(!GetMonitorInfo(MonitorFromWindow(handle,2),ref info)||!GetWindowRect(handle,out var r))return edge;

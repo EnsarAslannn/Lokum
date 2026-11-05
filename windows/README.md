@@ -23,19 +23,39 @@ Library and preferences live in `%LOCALAPPDATA%/Lokum`, outside the portable app
 
 While dragging in Explorer or another application, **Ctrl** opens tools, **Shift** conversion and **Alt** file actions. Settings can change the three chords. **Ctrl+Shift+D** opens a copied public media link. The app can remain in the system tray.
 
+For **Ctrl + left-click on Chrome web media**, install the bundled Chrome extension
+once using **Settings → Chrome connection**. It detects the actual page image/video
+and sends that typed target through Chrome native messaging to this same portable
+executable. A current-user named pipe routes the request to the running app; an
+inactive app starts in the tray. Local-file shortcuts keep their existing behavior.
+See [Chrome setup, limits and tests](../browser/README.md). The native host branch
+does not create UI, register global hooks, inspect the clipboard or acquire the
+normal app singleton. It validates caller origin, framing, version and media URLs.
+
 **Ctrl + right-click** on an image/video file in Explorer or on the desktop opens
-its media tools wheel. In a browser, Lokum reads the native **Copy image/video
-address** command (Turkish/English), then opens the same tools wheel. The clipboard
-is restored after reading the address; an unrelated newer copy is never replaced.
-Choose a tool to download the public source into Lokum imports and open the editor.
-Saving uses your output preference; the default for imported web media is your
-configured Downloads folder. Ctrl-dragged web images/videos also offer editing tools
-instead of only download actions. Shift/Alt download workflows remain available.
-Chrome, Edge and Firefox native media menus are recognized. Browser-internal video
-addresses can use a current public YouTube/Reel page; protected, private or otherwise
-unexposed media cannot always be retrieved. Unsupported menus retain their normal
-behavior. Disable **Enable Lokum shortcuts** to turn off Ctrl-right-click and drag
-shortcuts together.
+its media tools wheel. In a browser it opens a small native **Download Media**
+popup, using the native **Copy image/video address** command (Turkish/English) or
+the current public YouTube/Reel page. This path needs no browser extension. The
+clipboard is restored after reading an exposed address. Downloading saves to the
+configured Downloads folder, records the result in Library and selects it for
+normal local tools; it never automatically opens an editor. If the browser hides
+the address, the download dialog asks for a media link. Private/protected media
+may remain unavailable. Ctrl-drag and the optional Chrome Ctrl-left-click wheel
+remain separate workflows. Disable **Enable Lokum shortcuts** to turn off native
+Ctrl-right-click and drag shortcuts together.
+The right-click monitor observes secondary-button transitions independently of
+mouse movement, avoiding a UI-thread low-level hook that Windows can silently
+remove after a slow callback. An owned browser context popup counts as part of
+the source window; an unrelated window, including another window in the same
+browser process, cancels the pending popup. Native menus are dismissed before
+Lokum's popup is shown.
+
+`--browser-download-checks OUTPUT` checks the menu, save destination, Library,
+local tool selection and missing-address fallback using a local fixture. It also
+checks press/release transitions and native owned-window identity without
+sending physical input or inspecting a user's browser. Set
+`LOKUM_BROWSER_DOWNLOAD_WEB=1` for a real public image download and
+`LOKUM_BROWSER_DOWNLOAD_VIDEO=URL` to also verify a real public video.
 
 `Lokum --context-media-checks OUTPUT` checks wheel routing, exact media targets,
 clipboard snapshots and editor launch using isolated state. Set

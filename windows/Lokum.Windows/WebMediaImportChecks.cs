@@ -15,7 +15,7 @@ internal static class WebMediaImportChecks
         var owner=new MainWindow(library:library,checkForUpdates:false,offerToolSetup:false);owner.Show();
         try
         {
-            foreach(var fixture in new[]{(Url:"https://www.w3.org/Icons/w3c_home.png",Kind:"image",Tool:"editImage"),(Url:"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",Kind:"video",Tool:"muteVideo")})
+            foreach(var fixture in new[]{(Url:"https://www.w3.org/Icons/w3c_home.png",Kind:"image",Tool:"editImage"),(Url:Environment.GetEnvironmentVariable("LOKUM_WEB_VIDEO_FIXTURE")??"https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4",Kind:"video",Tool:"muteVideo")})
             {
                 Task? opening=null;var source=MediaToolSource.Address(fixture.Url,fixture.Kind)!;var open=typeof(MainWindow).GetMethod("OpenMediaToolAsync",BindingFlags.Instance|BindingFlags.NonPublic)!;
                 _ = owner.Dispatcher.BeginInvoke(()=>opening=(Task)open.Invoke(owner,[source,new ToolChoice($"web:{fixture.Kind}:{fixture.Tool}","Tools","✦")])!);

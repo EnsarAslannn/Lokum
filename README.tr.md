@@ -4,13 +4,17 @@ Lokum, Nashi'nin MIT lisanslı kaynaklarından türetilen dosya araç kutusudur.
 
 ## Başlangıç
 
-**Ctrl + sağ tık:** Explorer veya masaüstündeki görsel/video dosyasında ilgili araç
-çarkını açar. Tarayıcıdaki görsel/videoda da, tarayıcının sunduğu gerçek medya
-bağlantısını alıp aynı çarkı açar. Aracı seçince kaynak dosya Lokum’a indirilir ve
-editör açılır; yeni kopya varsayılan olarak ayarlardaki İndirilenler klasörüne gider.
-Pano içeriği korunur. Bu yol Chrome/Edge/Firefox’un Türkçe ve İngilizce yerel medya
-menülerini tanır; korumalı veya bağlantısını gizleyen medya her zaman alınamaz.
-Ctrl ile web medyası sürüklemek de artık ilgili düzenleme araçlarını gösterir.
+**Web’de Ctrl + sağ tık → Medyayı indir:** Lokum’un küçük indirme menüsü açılır.
+Lokum sistem tepsisinde açıkken Ctrl tuşunu basılı tutup sağ tuşa bir kez basıp
+bırak; sürüklemek gerekmez. “Sürüklemeye devam et” yazısı ayrı sürükleme çarkıdır.
+Chrome uzantısı gerekmez. Dosya ayarlardaki **İndirilenler** klasörüne kaydedilir
+ve Lokum’da seçilir; ardından bilgisayarındaki dosyalarla aynı araçları kullanırsın.
+Tarayıcı bağlantıyı paylaşmıyorsa bağlantı yapıştırabileceğin indirme ekranı açılır.
+Korumalı veya giriş gerektiren bazı medyalar indirilemeyebilir.
+
+Explorer/masaüstündeki dosyalar için mevcut Ctrl kısayolları çalışmaya devam eder.
+Doğrudan web araç çarkı isteyenler için Chrome uzantısı isteğe bağlıdır:
+**Ayarlar → Chrome uzantısı (isteğe bağlı)**. [Ayrıntılar](browser/README.md).
 
 1. Hazır paket yayımlandığında [Releases](https://github.com/EnsarAslannn/Lokum/releases) sayfasından edin. Elindeki `Lokum-Windows-x64.zip` paketinin tamamını yazılabilir bir klasöre çıkar. Kaynak kodunu indirdiysen önce [derleme adımlarını](README.md#kaynaktan-derleme) uygula.
 2. Çıkardığın veya derlediğin klasördeki `Lokum.exe` dosyasını aç. Paketin tüm dosyalarını birlikte tut.

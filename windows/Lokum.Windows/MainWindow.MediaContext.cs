@@ -13,6 +13,7 @@ public sealed partial class MainWindow
     private async Task OpenMediaToolAsync(MediaToolSource source,ToolChoice choice)
     {
         if(busy||!DesktopGeometry.IsInteractive(this))return;
+        if(choice.Id=="download:media"){await DownloadContextMediaAsync(source);return;}
         var tool=choice.Id;if(MediaToolSource.TryTool(tool,out _,out var selected))tool=selected;
         if(!FeatureCatalog.WheelTools(source.CatalogPaths).Contains(tool))return;
         ShowMain();
@@ -36,5 +37,31 @@ public sealed partial class MainWindow
         if(source.Paths.Any(path=>!File.Exists(path)))return;
         files.Clear();Add(source.Paths);ShowLibrary(false);
         await EditAsync(new(tool,FeatureCatalog.ToolNames[tool],ToolSymbol(tool)));
+    }
+    private void OpenUnresolvedDownload()
+    {
+        if(busy)return;ShowMain();link.Text="";downloadKind.ItemsSource=new[]{"video","image","audio"};downloadKind.SelectedIndex=0;OpenDownload();
+        L10n.SetText(status,"Paste a media link to download.");
+    }
+    private async Task DownloadContextMediaAsync(MediaToolSource source)
+    {
+        if(source.Web is not null&&source.Kind!="image"&&!tools.Ready){ShowMain();MessageBox.Show(this,L10n.Text("Choose Set up media tools once to enable web downloads."),L10n.Text("Media setup"));return;}
+        ShowMain();IReadOnlyList<string> downloaded=[];
+        await RunAsync(async(destination,progress,token)=>
+        {
+            if(source.Web is not null)downloaded=await new WebDownload(tools).DownloadAsync(source.Web.Url,source.Kind,destination,progress,token);
+            else
+            {
+                using var transaction=new ExportTransaction(destination);var copies=new List<string>();
+                foreach(var input in source.Paths)
+                {
+                    token.ThrowIfCancellationRequested();var copy=SafePaths.Unique(transaction.StagingDirectory,Path.GetFileName(input));
+                    await using(var from=File.OpenRead(input))await using(var to=new FileStream(copy,FileMode.CreateNew,FileAccess.Write,FileShare.None,81920,true))await from.CopyToAsync(to,token);copies.Add(copy);
+                }
+                downloaded=transaction.Publish(copies,token);
+            }
+            return downloaded;
+        },"Download "+source.Kind,preferences.Value.DownloadFolder);
+        if(downloaded.Count>0){files.Clear();Add(downloaded);ShowLibrary(false);L10n.SetText(status,"Media downloaded. Choose a local tool to edit it.");}
     }
 }

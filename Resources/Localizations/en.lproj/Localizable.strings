@@ -21,6 +21,8 @@
 "1 item" = "1 item";
 "1 · SELECT WHAT TO KEEP" = "1 · SELECT WHAT TO KEEP";
 "1 · Select what to keep" = "1 · Select what to keep";
+"1. PREPARE THE CONNECTION ON THIS PC." = "1. PREPARE THE CONNECTION ON THIS PC.";
+"1. Prepare the connection on this PC." = "1. Prepare the connection on this PC.";
 "1/3 LEFT · MIDDLE · RIGHT   /   1/2 LEFT · RIGHT   /   2/3 LEFT · RIGHT" = "1/3 LEFT · MIDDLE · RIGHT   /   1/2 LEFT · RIGHT   /   2/3 LEFT · RIGHT";
 "1/3 left · middle · right   /   1/2 left · right   /   2/3 left · right" = "1/3 left · middle · right   /   1/2 left · right   /   2/3 left · right";
 "1280 PX LONGEST EDGE" = "1280 PX LONGEST EDGE";
@@ -31,10 +33,14 @@
 "1920 px longest edge" = "1920 px longest edge";
 "2 · CHOOSE A BACKGROUND" = "2 · CHOOSE A BACKGROUND";
 "2 · Choose a background" = "2 · Choose a background";
+"2. IN CHROME EXTENSIONS, TURN ON DEVELOPER MODE AND CHOOSE LOAD UNPACKED." = "2. IN CHROME EXTENSIONS, TURN ON DEVELOPER MODE AND CHOOSE LOAD UNPACKED.";
+"2. In Chrome extensions, turn on Developer mode and choose Load unpacked." = "2. In Chrome extensions, turn on Developer mode and choose Load unpacked.";
 "24-BIT INTEGER" = "24-BIT INTEGER";
 "24-bit integer" = "24-bit integer";
 "2560 PX LONGEST EDGE" = "2560 PX LONGEST EDGE";
 "2560 px longest edge" = "2560 px longest edge";
+"3. SELECT THIS FOLDER. REFRESH THE PAGE YOU WANT TO USE." = "3. SELECT THIS FOLDER. REFRESH THE PAGE YOU WANT TO USE.";
+"3. Select this folder. Refresh the page you want to use." = "3. Select this folder. Refresh the page you want to use.";
 "32-BIT FLOAT" = "32-BIT FLOAT";
 "32-BIT INTEGER" = "32-BIT INTEGER";
 "32-bit float" = "32-bit float";
@@ -379,6 +385,11 @@
 "CHOOSE VISUALIZATION IMAGE…" = "CHOOSE VISUALIZATION IMAGE…";
 "CHOOSE WHAT YOUR FILE SHARES." = "CHOOSE WHAT YOUR FILE SHARES.";
 "CHOOSE ZIP, TAR OR GZIP." = "CHOOSE ZIP, TAR OR GZIP.";
+"CHROME CONNECTION" = "CHROME CONNECTION";
+"CHROME CONNECTION PREPARED. ADD THE EXTENSION ONCE, THEN REFRESH YOUR WEB PAGE." = "CHROME CONNECTION PREPARED. ADD THE EXTENSION ONCE, THEN REFRESH YOUR WEB PAGE.";
+"CHROME CONNECTION · LOKUM" = "CHROME CONNECTION · LOKUM";
+"CHROME EXTENSION (OPTIONAL)" = "CHROME EXTENSION (OPTIONAL)";
+"CHROME MEDIA TOOLS" = "CHROME MEDIA TOOLS";
 "CLARITY" = "CLARITY";
 "CLEAR" = "CLEAR";
 "CLEAR FLOAT" = "CLEAR FLOAT";
@@ -415,11 +426,13 @@
 "CONVERT TO" = "CONVERT TO";
 "CONVERT · WHILE DRAGGING" = "CONVERT · WHILE DRAGGING";
 "CONVERT, FINE-TUNE, AND SEND THEM ON THEIR WAY." = "CONVERT, FINE-TUNE, AND SEND THEM ON THEIR WAY.";
+"COPIED EXTENSION FOLDER." = "COPIED EXTENSION FOLDER.";
 "COPY" = "COPY";
 "COPY A FILE, SOME TEXT, AN IMAGE OR A PUBLIC MEDIA LINK FIRST." = "COPY A FILE, SOME TEXT, AN IMAGE OR A PUBLIC MEDIA LINK FIRST.";
 "COPY A LINK → ⌃⇧D, OR DRAG IT WITH ⌘." = "COPY A LINK → ⌃⇧D, OR DRAG IT WITH ⌘.";
 "COPY A LINK, THEN CHOOSE DOWNLOAD LINK FROM THE LOKUM MENU." = "COPY A LINK, THEN CHOOSE DOWNLOAD LINK FROM THE LOKUM MENU.";
 "COPY A PUBLIC MEDIA LINK FIRST." = "COPY A PUBLIC MEDIA LINK FIRST.";
+"COPY EXTENSION FOLDER" = "COPY EXTENSION FOLDER";
 "COPY PATH" = "COPY PATH";
 "COPYRIGHT" = "COPYRIGHT";
 "CORNER RADIUS" = "CORNER RADIUS";
@@ -440,6 +453,7 @@
 "CROP IMAGE" = "CROP IMAGE";
 "CROP IMAGE · LOKUM" = "CROP IMAGE · LOKUM";
 "CROP VIDEO" = "CROP VIDEO";
+"CTRL + LEFT-CLICK AN IMAGE OR VIDEO ON THE WEB TO OPEN ITS LOKUM TOOLS. YOUR LOCAL FILE SHORTCUTS STAY THE SAME." = "CTRL + LEFT-CLICK AN IMAGE OR VIDEO ON THE WEB TO OPEN ITS LOKUM TOOLS. YOUR LOCAL FILE SHORTCUTS STAY THE SAME.";
 "CTRL + RIGHT-CLICK A MEDIA FILE OR BROWSER IMAGE/VIDEO TO OPEN ITS TOOLS." = "CTRL + RIGHT-CLICK A MEDIA FILE OR BROWSER IMAGE/VIDEO TO OPEN ITS TOOLS.";
 "CTRL + RIGHT-CLICK COULD NOT BE REGISTERED. DRAG A FILE WITH CTRL TO OPEN ITS TOOLS." = "CTRL + RIGHT-CLICK COULD NOT BE REGISTERED. DRAG A FILE WITH CTRL TO OPEN ITS TOOLS.";
 "CTRL+O  CHOOSE FILES\nCTRL+V  PASTE FILES, TEXT, AN IMAGE OR LINK\nCTRL+SPACE / ENTER  OPEN TOOLS\nCTRL+1 / CTRL+2  HOME / LIBRARY\nCTRL+F  FIND IN LIBRARY\nCTRL+SHIFT+D  USE A COPIED DOWNLOAD LINK\nCTRL+U  CHECK FOR UPDATES\n\nWHEEL: ARROWS / TAB TO CHOOSE, ENTER TO OPEN, ESC TO CLOSE\nMEDIA: SPACE PLAY/PAUSE, ←/→ 1 SECOND, SHIFT+←/→ 1/30S, I/O SET RANGE\nCROP: DRAG, SHIFT LOCKS RATIO, ENTER SAVES\nEDITING TEXT: NORMAL PASTE AND ARROW KEYS ARE PRESERVED." = "CTRL+O  CHOOSE FILES\nCTRL+V  PASTE FILES, TEXT, AN IMAGE OR LINK\nCTRL+SPACE / ENTER  OPEN TOOLS\nCTRL+1 / CTRL+2  HOME / LIBRARY\nCTRL+F  FIND IN LIBRARY\nCTRL+SHIFT+D  USE A COPIED DOWNLOAD LINK\nCTRL+U  CHECK FOR UPDATES\n\nWHEEL: ARROWS / TAB TO CHOOSE, ENTER TO OPEN, ESC TO CLOSE\nMEDIA: SPACE PLAY/PAUSE, ←/→ 1 SECOND, SHIFT+←/→ 1/30S, I/O SET RANGE\nCROP: DRAG, SHIFT LOCKS RATIO, ENTER SAVES\nEDITING TEXT: NORMAL PASTE AND ARROW KEYS ARE PRESERVED.";
@@ -551,6 +565,11 @@
 "Choose video, audio, thumbnail or images." = "Choose video, audio, thumbnail or images.";
 "Choose visualization image…" = "Choose visualization image…";
 "Choose what your file shares." = "Choose what your file shares.";
+"Chrome connection" = "Chrome connection";
+"Chrome connection prepared. Add the extension once, then refresh your web page." = "Chrome connection prepared. Add the extension once, then refresh your web page.";
+"Chrome connection · Lokum" = "Chrome connection · Lokum";
+"Chrome extension (optional)" = "Chrome extension (optional)";
+"Chrome media tools" = "Chrome media tools";
 "Clarity" = "Clarity";
 "Clear" = "Clear";
 "Clear Float" = "Clear Float";
@@ -602,12 +621,14 @@
 "Converted result: %lld · %@ KB · %lld files" = "Converted result: %lld · %@ KB · %lld files";
 "Converted result: %lld · %lld KB · %@ files" = "Converted result: %lld · %lld KB · %@ files";
 "Converted result: %lld · %lld KB · %lld files" = "Converted result: %lld · %lld KB · %lld files";
+"Copied extension folder." = "Copied extension folder.";
 "Copy" = "Copy";
 "Copy Path" = "Copy Path";
 "Copy a file, some text, an image or a public media link first." = "Copy a file, some text, an image or a public media link first.";
 "Copy a link → ⌃⇧D, or drag it with ⌘." = "Copy a link → ⌃⇧D, or drag it with ⌘.";
 "Copy a link, then choose Download Link from the Lokum menu." = "Copy a link, then choose Download Link from the Lokum menu.";
 "Copy a public media link first." = "Copy a public media link first.";
+"Copy extension folder" = "Copy extension folder";
 "Copy path" = "Copy path";
 "Copyright" = "Copyright";
 "Corner radius" = "Corner radius";
@@ -630,6 +651,7 @@
 "Crop Video" = "Crop Video";
 "Crop area" = "Crop area";
 "Crop image" = "Crop image";
+"Ctrl + left-click an image or video on the web to open its Lokum tools. Your local file shortcuts stay the same." = "Ctrl + left-click an image or video on the web to open its Lokum tools. Your local file shortcuts stay the same.";
 "Ctrl + right-click a media file or browser image/video to open its tools." = "Ctrl + right-click a media file or browser image/video to open its tools.";
 "Ctrl + right-click could not be registered. Drag a file with Ctrl to open its tools." = "Ctrl + right-click could not be registered. Drag a file with Ctrl to open its tools.";
 "Ctrl+O  Choose files\nCtrl+V  Paste files, text, an image or link\nCtrl+Space / Enter  Open tools\nCtrl+1 / Ctrl+2  Home / Library\nCtrl+F  Find in Library\nCtrl+Shift+D  Use a copied download link\nCtrl+U  Check for updates\n\nWheel: arrows / Tab to choose, Enter to open, Esc to close\nMedia: Space play/pause, ←/→ 1 second, Shift+←/→ 1/30s, I/O set range\nCrop: drag, Shift locks ratio, Enter saves\nEditing text: normal paste and arrow keys are preserved." = "Ctrl+O  Choose files\nCtrl+V  Paste files, text, an image or link\nCtrl+Space / Enter  Open tools\nCtrl+1 / Ctrl+2  Home / Library\nCtrl+F  Find in Library\nCtrl+Shift+D  Use a copied download link\nCtrl+U  Check for updates\n\nWheel: arrows / Tab to choose, Enter to open, Esc to close\nMedia: Space play/pause, ←/→ 1 second, Shift+←/→ 1/30s, I/O set range\nCrop: drag, Shift locks ratio, Enter saves\nEditing text: normal paste and arrow keys are preserved.";
@@ -671,6 +693,7 @@
 "DOWNLOAD IS LARGER THAN THE SUPPORTED LIMIT." = "DOWNLOAD IS LARGER THAN THE SUPPORTED LIMIT.";
 "DOWNLOAD LIBREOFFICE 26.8.1 (~360 MB) FROM THE DOCUMENT FOUNDATION? ITS SHA-256 IS CHECKED, THEN THE PACKAGE IS EXTRACTED INTO LOKUM’S USER TOOLS FOLDER. NO ADMINISTRATOR PASSWORD OR OFFICE SUBSCRIPTION IS NEEDED. LIBREOFFICE RETAINS ITS UPSTREAM LICENSES." = "DOWNLOAD LIBREOFFICE 26.8.1 (~360 MB) FROM THE DOCUMENT FOUNDATION? ITS SHA-256 IS CHECKED, THEN THE PACKAGE IS EXTRACTED INTO LOKUM’S USER TOOLS FOLDER. NO ADMINISTRATOR PASSWORD OR OFFICE SUBSCRIPTION IS NEEDED. LIBREOFFICE RETAINS ITS UPSTREAM LICENSES.";
 "DOWNLOAD LINK…" = "DOWNLOAD LINK…";
+"DOWNLOAD MEDIA" = "DOWNLOAD MEDIA";
 "DOWNLOAD MEDIA TOOLS" = "DOWNLOAD MEDIA TOOLS";
 "DOWNLOAD MISSING TOOLS" = "DOWNLOAD MISSING TOOLS";
 "DOWNLOAD OFFICE TOOLS" = "DOWNLOAD OFFICE TOOLS";
@@ -730,6 +753,7 @@
 "Download FFmpeg (~180 MB), yt-dlp and Deno directly from their official GitHub releases? SHA-256 hashes are verified before use. FFmpeg is GPL; the other upstream licenses and source links are listed on our Features page. No administrator password is needed." = "Download FFmpeg (~180 MB), yt-dlp and Deno directly from their official GitHub releases? SHA-256 hashes are verified before use. FFmpeg is GPL; the other upstream licenses and source links are listed on our Features page. No administrator password is needed.";
 "Download LibreOffice 26.8.1 (~360 MB) from The Document Foundation? Its SHA-256 is checked, then the package is extracted into Lokum’s user tools folder. No administrator password or Office subscription is needed. LibreOffice retains its upstream licenses." = "Download LibreOffice 26.8.1 (~360 MB) from The Document Foundation? Its SHA-256 is checked, then the package is extracted into Lokum’s user tools folder. No administrator password or Office subscription is needed. LibreOffice retains its upstream licenses.";
 "Download Link…" = "Download Link…";
+"Download Media" = "Download Media";
 "Download a link" = "Download a link";
 "Download audio" = "Download audio";
 "Download cancelled. No partial files were kept." = "Download cancelled. No partial files were kept.";
@@ -786,6 +810,7 @@
 "ENABLE LOKUM" = "ENABLE LOKUM";
 "ENABLE LOKUM DRAG SHORTCUTS" = "ENABLE LOKUM DRAG SHORTCUTS";
 "ENABLE LOKUM SHORTCUTS" = "ENABLE LOKUM SHORTCUTS";
+"ENABLE LOKUM SHORTCUTS IN SETTINGS FIRST." = "ENABLE LOKUM SHORTCUTS IN SETTINGS FIRST.";
 "ENCODED PIXELS, COLOR PROFILE AND DISPLAY ORIENTATION ARE PRESERVED." = "ENCODED PIXELS, COLOR PROFILE AND DISPLAY ORIENTATION ARE PRESERVED.";
 "END" = "END";
 "ENTER A FINITE NUMBER." = "ENTER A FINITE NUMBER.";
@@ -815,6 +840,7 @@
 "Enable Lokum" = "Enable Lokum";
 "Enable Lokum drag shortcuts" = "Enable Lokum drag shortcuts";
 "Enable Lokum shortcuts" = "Enable Lokum shortcuts";
+"Enable Lokum shortcuts in Settings first." = "Enable Lokum shortcuts in Settings first.";
 "Encoded pixels, color profile and display orientation are preserved." = "Encoded pixels, color profile and display orientation are preserved.";
 "End" = "End";
 "Enter a finite number." = "Enter a finite number.";
@@ -1133,6 +1159,7 @@
 "LITTLE TWEAKS. A WHOLE NEW LOOK." = "LITTLE TWEAKS. A WHOLE NEW LOOK.";
 "LOADING BACKGROUND IMAGE…" = "LOADING BACKGROUND IMAGE…";
 "LOCAL BY DESIGN" = "LOCAL BY DESIGN";
+"LOCAL FILES: USE YOUR USUAL CTRL SHORTCUT. CHROME WEB MEDIA: CTRL + LEFT-CLICK WITH THE LOKUM EXTENSION." = "LOCAL FILES: USE YOUR USUAL CTRL SHORTCUT. CHROME WEB MEDIA: CTRL + LEFT-CLICK WITH THE LOKUM EXTENSION.";
 "LOKUM CHECKS ONCE AN HOUR WHILE IT’S RUNNING. YOU CHOOSE WHEN TO DOWNLOAD AND INSTALL." = "LOKUM CHECKS ONCE AN HOUR WHILE IT’S RUNNING. YOU CHOOSE WHEN TO DOWNLOAD AND INSTALL.";
 "LOKUM IS ALREADY RUNNING BUT IS STILL STARTING. OPEN IT FROM THE SYSTEM TRAY OR TRY AGAIN IN A MOMENT." = "LOKUM IS ALREADY RUNNING BUT IS STILL STARTING. OPEN IT FROM THE SYSTEM TRAY OR TRY AGAIN IN A MOMENT.";
 "LOKUM IS STILL RUNNING." = "LOKUM IS STILL RUNNING.";
@@ -1174,6 +1201,7 @@
 "Local by design" = "Local by design";
 "Local by design · MIT source\nVersion %@" = "Local by design · MIT source\nVersion %@";
 "Local by design · MIT source\nVersion %lld" = "Local by design · MIT source\nVersion %lld";
+"Local files: use your usual Ctrl shortcut. Chrome web media: Ctrl + left-click with the Lokum extension." = "Local files: use your usual Ctrl shortcut. Chrome web media: Ctrl + left-click with the Lokum extension.";
 "Lokum Settings" = "Lokum Settings";
 "Lokum checks once an hour while it’s running. You choose when to download and install." = "Lokum checks once an hour while it’s running. You choose when to download and install.";
 "Lokum is already running but is still starting. Open it from the system tray or try again in a moment." = "Lokum is already running but is still starting. Open it from the system tray or try again in a moment.";
@@ -1200,6 +1228,7 @@
 "MAXIMUM VIDEO HEIGHT" = "MAXIMUM VIDEO HEIGHT";
 "MAXIMUM VIDEO HEIGHT (0 = ORIGINAL)" = "MAXIMUM VIDEO HEIGHT (0 = ORIGINAL)";
 "MAXIMUM WIDTH" = "MAXIMUM WIDTH";
+"MEDIA DOWNLOADED. CHOOSE A LOCAL TOOL TO EDIT IT." = "MEDIA DOWNLOADED. CHOOSE A LOCAL TOOL TO EDIT IT.";
 "MEDIA SETUP" = "MEDIA SETUP";
 "MEDIA TOOLS" = "MEDIA TOOLS";
 "MEDIA TOOLS ARE ALREADY INSTALLED." = "MEDIA TOOLS ARE ALREADY INSTALLED.";
@@ -1242,6 +1271,7 @@
 "Maximum video height" = "Maximum video height";
 "Maximum video height (0 = original)" = "Maximum video height (0 = original)";
 "Maximum width" = "Maximum width";
+"Media downloaded. Choose a local tool to edit it." = "Media downloaded. Choose a local tool to edit it.";
 "Media setup" = "Media setup";
 "Media tools" = "Media tools";
 "Media tools are already installed." = "Media tools are already installed.";
@@ -1340,6 +1370,8 @@
 "ONE OR MORE MEDIA SETTINGS ARE OUTSIDE THEIR SUPPORTED RANGE." = "ONE OR MORE MEDIA SETTINGS ARE OUTSIDE THEIR SUPPORTED RANGE.";
 "ONE TOOL GROUP IS READY. DOWNLOAD THE REMAINING TOOLS TO FINISH SETUP." = "ONE TOOL GROUP IS READY. DOWNLOAD THE REMAINING TOOLS TO FINISH SETUP.";
 "OPEN" = "OPEN";
+"OPEN A SPECIFIC YOUTUBE VIDEO OR SHORT, THEN TRY AGAIN." = "OPEN A SPECIFIC YOUTUBE VIDEO OR SHORT, THEN TRY AGAIN.";
+"OPEN CHROME EXTENSIONS" = "OPEN CHROME EXTENSIONS";
 "OPEN IN TERMINAL" = "OPEN IN TERMINAL";
 "OPEN LINK" = "OPEN LINK";
 "OPEN LOGIN ITEMS" = "OPEN LOGIN ITEMS";
@@ -1376,8 +1408,10 @@
 "One or more media settings are outside their supported range." = "One or more media settings are outside their supported range.";
 "One tool group is ready. Download the remaining tools to finish setup." = "One tool group is ready. Download the remaining tools to finish setup.";
 "Open" = "Open";
+"Open Chrome extensions" = "Open Chrome extensions";
 "Open Login Items" = "Open Login Items";
 "Open Lokum" = "Open Lokum";
+"Open a specific YouTube video or Short, then try again." = "Open a specific YouTube video or Short, then try again.";
 "Open in Terminal" = "Open in Terminal";
 "Open link" = "Open link";
 "Open permission settings…" = "Open permission settings…";
@@ -1401,6 +1435,7 @@
 "PAGES INPUT EXCEEDS 200 MB." = "PAGES INPUT EXCEEDS 200 MB.";
 "PAGES PER FILE" = "PAGES PER FILE";
 "PASTE" = "PASTE";
+"PASTE A MEDIA LINK TO DOWNLOAD." = "PASTE A MEDIA LINK TO DOWNLOAD.";
 "PASTE A PUBLIC HTTP(S) MEDIA OR PAGE LINK." = "PASTE A PUBLIC HTTP(S) MEDIA OR PAGE LINK.";
 "PASTE A PUBLIC MEDIA LINK TO BEGIN." = "PASTE A PUBLIC MEDIA LINK TO BEGIN.";
 "PASTE A PUBLIC VIDEO, IMAGE OR AUDIO PAGE LINK" = "PASTE A PUBLIC VIDEO, IMAGE OR AUDIO PAGE LINK";
@@ -1440,6 +1475,7 @@
 "PORTRAIT · 9:16" = "PORTRAIT · 9:16";
 "POSITION X" = "POSITION X";
 "POSITION Y" = "POSITION Y";
+"PREPARE CHROME CONNECTION" = "PREPARE CHROME CONNECTION";
 "PREPARING A LOCAL PREVIEW…" = "PREPARING A LOCAL PREVIEW…";
 "PREPARING CONVERTED RESULT…" = "PREPARING CONVERTED RESULT…";
 "PREPARING PREVIEW…" = "PREPARING PREVIEW…";
@@ -1475,6 +1511,7 @@
 "Pages input exceeds 200 MB." = "Pages input exceeds 200 MB.";
 "Pages per file" = "Pages per file";
 "Paste" = "Paste";
+"Paste a media link to download." = "Paste a media link to download.";
 "Paste a public http(s) media or page link." = "Paste a public http(s) media or page link.";
 "Paste a public media link to begin." = "Paste a public media link to begin.";
 "Paste a public video, image or audio page link" = "Paste a public video, image or audio page link";
@@ -1499,6 +1536,7 @@
 "Portrait · 9:16" = "Portrait · 9:16";
 "Position X" = "Position X";
 "Position Y" = "Position Y";
+"Prepare Chrome connection" = "Prepare Chrome connection";
 "Preparing a local preview…" = "Preparing a local preview…";
 "Preparing converted result…" = "Preparing converted result…";
 "Preparing preview…" = "Preparing preview…";
@@ -1587,9 +1625,11 @@
 "RESET" = "RESET";
 "RESIZE" = "RESIZE";
 "RESIZE IMAGE" = "RESIZE IMAGE";
+"RESTART LOKUM FROM ITS SYSTEM TRAY, THEN TRY THE CHROME SHORTCUT AGAIN." = "RESTART LOKUM FROM ITS SYSTEM TRAY, THEN TRY THE CHROME SHORTCUT AGAIN.";
 "RESTORE CLIPS" = "RESTORE CLIPS";
 "RESTORE DEFAULTS" = "RESTORE DEFAULTS";
 "RESULT" = "RESULT";
+"RETURN TO CHROME AND TRY CTRL + LEFT-CLICK AGAIN." = "RETURN TO CHROME AND TRY CTRL + LEFT-CLICK AGAIN.";
 "REVEAL FINISHED FILES IN EXPLORER" = "REVEAL FINISHED FILES IN EXPLORER";
 "REVEAL FINISHED FILES IN FINDER" = "REVEAL FINISHED FILES IN FINDER";
 "RIGHT" = "RIGHT";
@@ -1658,6 +1698,7 @@
 "Reset" = "Reset";
 "Resize" = "Resize";
 "Resize Image" = "Resize Image";
+"Restart Lokum from its system tray, then try the Chrome shortcut again." = "Restart Lokum from its system tray, then try the Chrome shortcut again.";
 "Restore Clips" = "Restore Clips";
 "Restore Defaults" = "Restore Defaults";
 "Restore defaults" = "Restore defaults";
@@ -1666,6 +1707,7 @@
 "Result: %@ KB · Original: %lld KB" = "Result: %@ KB · Original: %lld KB";
 "Result: %lld KB · Original: %@ KB" = "Result: %lld KB · Original: %@ KB";
 "Result: %lld KB · Original: %lld KB" = "Result: %lld KB · Original: %lld KB";
+"Return to Chrome and try Ctrl + left-click again." = "Return to Chrome and try Ctrl + left-click again.";
 "Reveal finished files in Explorer" = "Reveal finished files in Explorer";
 "Reveal finished files in Finder" = "Reveal finished files in Finder";
 "Right" = "Right";
@@ -1717,6 +1759,7 @@
 "SAVED 1 NEW FILE. ORIGINALS KEPT." = "SAVED 1 NEW FILE. ORIGINALS KEPT.";
 "SAVED IN POST ORDER IN A NEW INSTAGRAM FOLDER." = "SAVED IN POST ORDER IN A NEW INSTAGRAM FOLDER.";
 "SAVED METADATA FIELDS" = "SAVED METADATA FIELDS";
+"SAVES TO YOUR CONFIGURED DOWNLOADS FOLDER." = "SAVES TO YOUR CONFIGURED DOWNLOADS FOLDER.";
 "SAVING BACKGROUND EDITS…" = "SAVING BACKGROUND EDITS…";
 "SCAN AGAIN" = "SCAN AGAIN";
 "SEARCH FORMATS" = "SEARCH FORMATS";
@@ -1863,6 +1906,7 @@
 "Saved 1 new file. Originals kept." = "Saved 1 new file. Originals kept.";
 "Saved in post order in a new Instagram folder." = "Saved in post order in a new Instagram folder.";
 "Saved metadata fields" = "Saved metadata fields";
+"Saves to your configured Downloads folder." = "Saves to your configured Downloads folder.";
 "Saving background edits…" = "Saving background edits…";
 "Scan again" = "Scan again";
 "Search formats" = "Search formats";
@@ -1994,6 +2038,7 @@
 "THE DOWNLOADED FILE CONTAINS NO VIDEO." = "THE DOWNLOADED FILE CONTAINS NO VIDEO.";
 "THE DOWNLOADED FILE IS NOT A SUPPORTED IMAGE, VIDEO OR AUDIO FILE." = "THE DOWNLOADED FILE IS NOT A SUPPORTED IMAGE, VIDEO OR AUDIO FILE.";
 "THE DOWNLOADED TOOLS ARE INCOMPLETE. PLEASE TRY SETUP AGAIN." = "THE DOWNLOADED TOOLS ARE INCOMPLETE. PLEASE TRY SETUP AGAIN.";
+"THE EXTENSION ONLY SENDS THE MEDIA YOU CTRL-CLICK TO LOKUM ON THIS COMPUTER. IT DOES NOT USE YOUR CLIPBOARD." = "THE EXTENSION ONLY SENDS THE MEDIA YOU CTRL-CLICK TO LOKUM ON THIS COMPUTER. IT DOES NOT USE YOUR CLIPBOARD.";
 "THE IMAGE DOWNLOAD ENDED EARLY." = "THE IMAGE DOWNLOAD ENDED EARLY.";
 "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE." = "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE.";
 "THE MEDIA SERVER REDIRECTED TO AN INSECURE URL." = "THE MEDIA SERVER REDIRECTED TO AN INSECURE URL.";
@@ -2085,6 +2130,7 @@
 "The downloaded file contains no video." = "The downloaded file contains no video.";
 "The downloaded file is not a supported image, video or audio file." = "The downloaded file is not a supported image, video or audio file.";
 "The downloaded tools are incomplete. Please try setup again." = "The downloaded tools are incomplete. Please try setup again.";
+"The extension only sends the media you Ctrl-click to Lokum on this computer. It does not use your clipboard." = "The extension only sends the media you Ctrl-click to Lokum on this computer. It does not use your clipboard.";
 "The image download ended early." = "The image download ended early.";
 "The image order must include every image once." = "The image order must include every image once.";
 "The media server redirected to an insecure URL." = "The media server redirected to an insecure URL.";
@@ -2240,6 +2286,8 @@
 "Vignette" = "Vignette";
 "Visualization" = "Visualization";
 "WAVEFORM" = "WAVEFORM";
+"WEB MEDIA" = "WEB MEDIA";
+"WEB: CTRL + RIGHT-CLICK TO DOWNLOAD MEDIA. USE LOCAL TOOLS AFTER DOWNLOADING." = "WEB: CTRL + RIGHT-CLICK TO DOWNLOAD MEDIA. USE LOCAL TOOLS AFTER DOWNLOADING.";
 "WELCOME TO LOKUM" = "WELCOME TO LOKUM";
 "WELCOME…" = "WELCOME…";
 "WHEEL FINISH" = "WHEEL FINISH";
@@ -2254,6 +2302,8 @@
 "WINDOWS COULD NOT CREATE A TRAY ICON." = "WINDOWS COULD NOT CREATE A TRAY ICON.";
 "WORKING…" = "WORKING…";
 "Waveform" = "Waveform";
+"Web media" = "Web media";
+"Web: Ctrl + right-click to download media. Use local tools after downloading." = "Web: Ctrl + right-click to download media. Use local tools after downloading.";
 "Welcome to Lokum" = "Welcome to Lokum";
 "Welcome…" = "Welcome…";
 "Wheel finish" = "Wheel finish";

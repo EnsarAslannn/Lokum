@@ -1,0 +1,30 @@
+{
+  "manifest_version": 3,
+  "name": "Lokum · Medya Araçları",
+  "version": "1.0.1",
+  "description": "Web görseli veya videosunda Ctrl + sol tık ile Lokum araçlarını aç.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAov72lF1Trew7qOW0OTBBw80Glt/8aglQMyT989VYD8VM7kfNBwiEJTBsiJdigDP8HPs1ab1BLHmNLIpe+T0MOzptGPNy/Rh7uBQjiR2yRAZbEHkSGtzZ0HSq2j8SpkzoMEsoHyIIf/LfthCE7hIqXR+MB3H3+M/CSgqCWq4vTPe08UpNTS1HhMK14EI81opTu/42+7y5bVVUgdevsb3dIq+xq/mgMxJ7KC7r/DZimeBaOa0GKT8mM1UMbr/zV1GgZXNvuuE8k0zKvtg3aQ/W/t261+NpUWUxTurVD8CABQ7ZPD3zrbWy3zlzM5NbZDjEvm0LNPpKc+osuTCgMnx0pQIDAQAB",
+  "permissions": [
+    "nativeMessaging"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Lokum"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}

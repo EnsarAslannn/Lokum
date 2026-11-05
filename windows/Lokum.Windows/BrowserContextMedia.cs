@@ -16,6 +16,21 @@ internal static class BrowserContextMedia
     private delegate bool WindowVisitor(nint window,nint argument);
     [DllImport("user32.dll")]private static extern bool EnumWindows(WindowVisitor visit,nint argument);
     [DllImport("user32.dll")]private static extern bool IsWindowVisible(nint window);
+    [DllImport("user32.dll")]private static extern nint GetWindow(nint window,uint command);
+    [DllImport("user32.dll")]private static extern nint SendMessageTimeout(nint window,uint message,nint w,nint l,uint flags,uint timeout,out nuint result);
+    internal static bool IsSourceForeground(nint window)=>IsSourceWindow(window,GetForegroundWindow());
+    internal static bool IsSourceWindow(nint window,nint candidate)
+    {
+        if(window==0)return false;
+        for(var n=0;n<12&&candidate!=0;n++,candidate=GetWindow(candidate,4))if(candidate==window)return true;
+        return false;
+    }
+    internal static void DismissContextMenu(nint window)
+    {
+        var foreground=GetForegroundWindow();if(!IsSourceWindow(window,foreground))return;
+        if(foreground!=window)SendMessageTimeout(foreground,0x001F,0,0,2,150,out _);
+        SendMessageTimeout(window,0x001F,0,0,2,150,out _);
+    }
     internal static string? CommandKind(string name)
     {
         var normalized=new string(name.Replace("&","").Replace('ı','i').Replace('’','\'').Normalize(NormalizationForm.FormD).Where(c=>CharUnicodeInfo.GetUnicodeCategory(c)!=UnicodeCategory.NonSpacingMark).ToArray()).ToLowerInvariant().Trim();
@@ -30,8 +45,9 @@ internal static class BrowserContextMedia
     internal static async Task<MediaToolSource?> ReadAsync(int process,CancellationToken token,nint sourceWindow=0)
     {
         var command=await Task.Run(()=>FindCommand(process),token).WaitAsync(TimeSpan.FromSeconds(2),token);if(command is null)return null;
-        token.ThrowIfCancellationRequested();if(sourceWindow!=0&&GetForegroundWindow()!=sourceWindow)return null;
-        if(!command.Value.Item.Current.IsEnabled)return command.Value.Kind=="video"?await Task.Run(()=>KnownVideoPage(sourceWindow),token):null;
+        token.ThrowIfCancellationRequested();if(sourceWindow!=0&&!IsSourceForeground(sourceWindow))return null;
+        if(command.Value.Kind=="video"&&await KnownVideoPageAsync(sourceWindow,token) is {} known)return known;
+        if(!command.Value.Item.Current.IsEnabled)return null;
         // Snapshot every original format before invoking Copy Address. If a
         // clipboard provider cannot be snapshotted, leave its contents untouched.
         var sequence=GetClipboardSequenceNumber();var before=await ClipboardSnapshot.CaptureAsync(token);if(GetClipboardSequenceNumber()!=sequence)return null;uint copied=0;
@@ -46,7 +62,7 @@ internal static class BrowserContextMedia
                     GetWindowThreadProcessId(GetClipboardOwner(),out var clipboardProcess);
                     if(clipboardProcess!=process)return null;copied=current;
                     token.ThrowIfCancellationRequested();var text=Clipboard.ContainsText()?Clipboard.GetText():"";var media=MediaToolSource.Address(text,command.Value.Kind);
-                    return media??(command.Value.Kind=="video"?await Task.Run(()=>KnownVideoPage(sourceWindow),token):null);
+                    return media??(command.Value.Kind=="video"?await KnownVideoPageAsync(sourceWindow,token):null);
                 }
                 token.ThrowIfCancellationRequested();
                 await Task.Delay(30,token);
@@ -81,6 +97,7 @@ internal static class BrowserContextMedia
         var payload=Lokum.Core.WebMediaPayload.Parse(address);
         return payload?.Kind is "youtube" or "instagramReel"?MediaToolSource.FromWeb(payload,"video"):null;
     }
+    internal static Task<MediaToolSource?> KnownVideoPageAsync(nint window,CancellationToken token)=>Task.Run(()=>KnownVideoPage(window),token).WaitAsync(TimeSpan.FromSeconds(2),token);
     private static MediaToolSource? KnownVideoPage(nint window)
     {
         if(window==0)return null;var root=AutomationElement.FromHandle(window);
@@ -92,7 +109,8 @@ internal static class BrowserContextMedia
             var parent=TreeWalker.ControlViewWalker.GetParent(edit);var document=false;
             for(var n=0;n<12&&parent is not null;n++,parent=TreeWalker.ControlViewWalker.GetParent(parent))
             {if(parent.Current.ControlType==ControlType.Document){document=true;break;}if((nint)parent.Current.NativeWindowHandle==window)break;}
-            if(!document&&edit.TryGetCurrentPattern(ValuePattern.Pattern,out var pattern))return KnownVideoAddress(((ValuePattern)pattern).Current.Value);
+            if(document)continue;
+            if(edit.TryGetCurrentPattern(ValuePattern.Pattern,out var pattern))return KnownVideoAddress(((ValuePattern)pattern).Current.Value);
         }
         return null;
     }

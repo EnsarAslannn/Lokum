@@ -15,6 +15,25 @@ public partial class App:Application
         }
         DispatcherUnhandledException+=(_,error)=>{var folder=Environment.GetEnvironmentVariable("LOKUM_SMOKE_DIRECTORY");if(folder is not null){Directory.CreateDirectory(folder);File.WriteAllText(Path.Combine(folder,"dispatcher-error.txt"),error.Exception.ToString());error.Handled=true;Shutdown(1);}};
         base.OnStartup(e);
+        if(e.Args.Length==2&&e.Args[0]=="--browser-download-checks")
+        {
+            IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;
+            Dispatcher.BeginInvoke(async()=>{try{await BrowserDownloadChecks.Run(e.Args[1]);Shutdown(0);}catch(Exception error){Directory.CreateDirectory(e.Args[1]);File.WriteAllText(Path.Combine(e.Args[1],"error.txt"),error.ToString());Shutdown(1);}});return;
+        }
+        if(e.Args.Length==1&&e.Args[0]=="--install-chrome-bridge")
+        {
+            try{ChromeBridgeSetup.Register();Shutdown(0);}catch(Exception error)when(error is IOException or UnauthorizedAccessException or ArgumentException or InvalidDataException){Console.Error.WriteLine(error.Message);Shutdown(1);}return;
+        }
+        if(e.Args.Length==2&&e.Args[0]=="--chrome-bridge-checks")
+        {
+            IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;
+            Dispatcher.BeginInvoke(async()=>{try{await ChromeBridgeChecks.Run(e.Args[1]);Shutdown(0);}catch(Exception error){Directory.CreateDirectory(e.Args[1]);File.WriteAllText(Path.Combine(e.Args[1],"error.txt"),error.ToString());Shutdown(1);}});return;
+        }
+        if(e.Args.FirstOrDefault()?.StartsWith("chrome-extension://",StringComparison.Ordinal)==true)
+        {
+            ShutdownMode=ShutdownMode.OnExplicitShutdown;
+            Dispatcher.BeginInvoke(async()=>Shutdown(await ChromeNativeHost.RunAsync(e.Args[0])));return;
+        }
         if(e.Args.Length==2&&e.Args[0]=="--web-media-import-checks")
         {
             IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;

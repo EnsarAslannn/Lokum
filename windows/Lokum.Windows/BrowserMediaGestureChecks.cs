@@ -53,14 +53,14 @@ internal static class BrowserMediaGestureChecks
                 var click=Task.Run(()=>
                 {
                     SetForegroundWindow(handle);Thread.Sleep(250);if(GetForegroundWindow()!=handle)throw new Exception("Browser focus changed; context test cancelled before sending input.");DesktopInput.MovePointer(new(sourceBounds.Left+sourceBounds.Width/2,sourceBounds.Top+sourceBounds.Height/2));DesktopInput.Hold(Key.LeftCtrl,true);DesktopInput.HoldMouse(true,secondary:true);Thread.Sleep(180);DesktopInput.HoldMouse(false,secondary:true);DesktopInput.Hold(Key.LeftCtrl,false);
-                    nint menu=0;for(var n=0;n<80&&menu==0;n++){Thread.Sleep(100);menu=FindWindow(null,"Lokum tools");}
-                    if(menu==0||!GetWindowRect(menu,out var rect)){owner.Dispatcher.Invoke(()=>DesktopCapture.Save(Path.Combine(root,"browser-context-timeout.png")));throw new Exception("Browser Ctrl + right-click did not open "+fixture.Kind+" tools; "+notice);}
-                    DesktopInput.MovePointer(new((rect.Left+rect.Right)/2d,rect.Top+(rect.Bottom-rect.Top)*.18));Thread.Sleep(100);DesktopInput.HoldMouse(true);DesktopInput.HoldMouse(false);
+                    nint menu=0;for(var n=0;n<80&&menu==0;n++){Thread.Sleep(100);menu=FindWindow(null,BrowserDownloadMenu.WindowTitle);}
+                    if(menu==0||!GetWindowRect(menu,out var rect)){owner.Dispatcher.Invoke(()=>DesktopCapture.Save(Path.Combine(root,"browser-context-timeout.png")));throw new Exception("Browser Ctrl + right-click did not open the "+fixture.Kind+" download menu; "+notice);}
+                    DesktopInput.MovePointer(new((rect.Left+rect.Right)/2d,rect.Top+(rect.Bottom-rect.Top)*.5));Thread.Sleep(100);DesktopInput.HoldMouse(true);DesktopInput.HoldMouse(false);
                 });
                 var limit=DateTime.UtcNow.AddSeconds(12);while(!click.IsCompleted&&DateTime.UtcNow<limit)DesktopInput.Pump(30);if(!click.IsCompleted)throw new Exception("Browser context regression timed out");click.GetAwaiter().GetResult();DesktopInput.Pump(200);
-                if(received?.Kind!=fixture.Kind||received.Paths.SingleOrDefault()!=fixture.Path||chosen?.Id!="convert")DesktopCapture.Save(Path.Combine(root,"browser-context-failed.png"));
-                check(received?.Kind==fixture.Kind&&received.Paths.SingleOrDefault()==fixture.Path&&chosen?.Id=="convert","Edge Ctrl + right-click resolves the clicked "+fixture.Kind+" and opens its actual tools wheel; observed="+received?.Kind+"/"+string.Join(",",received?.Paths??[])+"/"+chosen?.Id);
-                check(received!.Choices.Any(choice=>choice.Id==fixture.Tool),"The "+fixture.Kind+" wheel includes its own editing tools");
+                if(received?.Kind!=fixture.Kind||received.Paths.SingleOrDefault()!=fixture.Path||chosen?.Id!="download:media")DesktopCapture.Save(Path.Combine(root,"browser-context-failed.png"));
+                check(received?.Kind==fixture.Kind&&received.Paths.SingleOrDefault()==fixture.Path&&chosen?.Id=="download:media","Edge Ctrl + right-click resolves the clicked "+fixture.Kind+" and offers Download Media; observed="+received?.Kind+"/"+string.Join(",",received?.Paths??[])+"/"+chosen?.Id);
+                check(received!.Choices.Any(choice=>choice.Id==fixture.Tool),"The resolved "+fixture.Kind+" can be used with its normal local editing tools after saving");
                 check(Clipboard.GetText()=="Lokum original clipboard fixture","Browser "+fixture.Kind+" address extraction restores the original clipboard");
             }
         }
