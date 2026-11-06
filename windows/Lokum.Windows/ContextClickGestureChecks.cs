@@ -15,6 +15,12 @@ internal static class ContextClickGestureChecks
         var stopped=ContextMediaController.ReadItemNameAsync(unresolved.Task,cancelled.Token);cancelled.Cancel();
         try{await stopped;check(false,"A canceled context click must stop awaiting its previous Explorer lookup");}
         catch(OperationCanceledException){check(true,"A newer or canceled click stops waiting for the previous Explorer lookup");}
+        var menuClosed=false;
+        var retryName=await ContextMediaController.ResolveItemNameAsync(Task.FromResult<string?>(null),()=>{menuClosed=true;return true;},()=>Task.FromResult<string?>(menuClosed?"Source screenshot.png":null),CancellationToken.None);
+        check(retryName=="Source screenshot.png","An initial hit test obscured by the native context menu resolves the clicked item after dismissing that menu");
+        var retried=false;
+        var switched=await ContextMediaController.ResolveItemNameAsync(Task.FromResult<string?>(null),()=>false,()=>{retried=true;return Task.FromResult<string?>("Unrelated file.png");},CancellationToken.None);
+        check(switched is null&&!retried,"Switching to another window prevents the context menu from reading an unrelated item on retry");
     }
     internal static void Run(Action<bool,string> check)
     {

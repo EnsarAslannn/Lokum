@@ -30,6 +30,12 @@ internal sealed class ContextMediaController:IDisposable
         timer=new(){Interval=TimeSpan.FromMilliseconds(16)};timer.Tick+=(_,_)=>Poll();timer.Start();
     }
     private bool Available=>!disposed&&preferences.Value.Enabled&&DesktopGeometry.IsInteractive(owner);
+    internal static async Task<string?> ResolveItemNameAsync(Task<string?> initial,Func<bool> prepareRetry,Func<Task<string?>> retry,CancellationToken token)
+    {
+        var name=await ReadItemNameAsync(initial,token);token.ThrowIfCancellationRequested();
+        if(name is not null||!prepareRetry())return name;
+        return await ReadItemNameAsync(retry(),token);
+    }
     internal static async Task<string?> ReadItemNameAsync(Task<string?> name,CancellationToken token)
     {
         try{return await name.WaitAsync(TimeSpan.FromSeconds(3),token);}
@@ -44,9 +50,7 @@ internal sealed class ContextMediaController:IDisposable
             Trace.WriteLine("Context secondary click captured");
             pressed=null;pending?.Cancel();
             if(!GetCursorPos(out var point))return;
-            // A browser may create its context popup on button-down, before
-            // this poll. Resolve its owning frame rather than that popup HWND.
-            var window=GetAncestor(WindowFromPoint(point),3);GetWindowThreadProcessId(window,out var process);
+            var window=GetAncestor(WindowFromPoint(point),2);GetWindowThreadProcessId(window,out var process);
             if(window!=0&&process!=Environment.ProcessId)pressed=(point,window,Task.Run(()=>ShellMediaSource.ItemAt(point)));
         }
         else if(phase==ContextClickPhase.Released&&pressed is {} target)
@@ -67,11 +71,27 @@ internal sealed class ContextMediaController:IDisposable
             await Task.Delay(150,token);
             if(name=="explorer")
             {
-                var nameHint=await ReadItemNameAsync(itemName,token);if(nameHint is null){Trace.WriteLine("Explorer context item name unavailable");return;}source=await ShellMediaSource.AtAsync(window,nameHint,token);
+                var nameHint=await ResolveItemNameAsync(itemName,()=>
+                {
+                    if(!BrowserContextMedia.IsSourceForeground(window))return false;
+                    Trace.WriteLine("Retry Explorer hit test after dismissing its native menu");BrowserContextMedia.DismissContextMenu(window);return true;
+                },async()=>
+                {
+                    await Task.Delay(75,token);
+                    if(!BrowserContextMedia.IsSourceForeground(window)||!BrowserContextMedia.IsSourceWindow(window,GetAncestor(WindowFromPoint(point),2)))return null;
+                    return await Task.Run(()=>ShellMediaSource.ItemAt(point),token);
+                },token);
+                if(nameHint is null){Trace.WriteLine("Explorer context item name unavailable");return;}
+                if(!BrowserContextMedia.IsSourceForeground(window))return;
+                BrowserContextMedia.DismissContextMenu(window);
+                source=await ShellMediaSource.AtAsync(window,nameHint,token).WaitAsync(TimeSpan.FromSeconds(3),token);
                 if(source is not null)PostMessage(window,0x001F,0,0); // Cancel Explorer's native context menu.
             }
             else if(browser)
             {
+                // Chrome may already have opened an owned popup on button-down.
+                // Explorer retains its shell-view HWND for COM path resolution.
+                window=GetAncestor(window,3);
                 try{source=await BrowserContextMedia.ReadAsync((int)processId,token,window);}
                 catch(Exception error)when(error is TimeoutException or ArgumentException or System.Windows.Automation.ElementNotAvailableException||ClipboardImport.IsClipboardError(error)){Trace.WriteLine(error);source=null;}
                 if(source is null)try{source=await BrowserContextMedia.KnownVideoPageAsync(window,token);}catch(Exception error)when(error is TimeoutException or ArgumentException or System.Windows.Automation.ElementNotAvailableException||ClipboardImport.IsClipboardError(error)){Trace.WriteLine(error);}
