@@ -5,6 +5,16 @@ namespace Lokum.Windows;
 
 internal static class ShellMediaSource
 {
+    internal static string? ItemNameFromElement(AutomationElement element,AutomationElement? root,Point point)
+    {
+        for(var n=0;n<6&&element is not null;n++,element=TreeWalker.ControlViewWalker.GetParent(element))
+        {
+            if(element.Current.IsPassword)return null;
+            if(element.Current.ControlType==ControlType.Edit)break; // Read only the containing file row, never edit text/value.
+            if(element.Current.ControlType==ControlType.ListItem||element.Current.ControlType==ControlType.DataItem)return element.Current.Name;
+        }
+        return root is null?null:ItemNameAt(root,point);
+    }
     internal static string? ItemNameAt(AutomationElement root,Point point)
     {
         var items=root.FindAll(TreeScope.Descendants,new OrCondition(
@@ -48,15 +58,10 @@ internal static class ShellMediaSource
             }
             var element=AutomationElement.FromPoint(new Point(point.X,point.Y));
             System.Diagnostics.Trace.WriteLine("Explorer hit control: "+element.Current.ControlType.ProgrammaticName);
-            for(var n=0;n<6&&element is not null;n++,element=TreeWalker.ControlViewWalker.GetParent(element))
-            {
-                if(element.Current.ControlType==ControlType.Edit||element.Current.IsPassword)return null;
-                if(element.Current.ControlType==ControlType.ListItem||element.Current.ControlType==ControlType.DataItem)return element.Current.Name;
-            }
             // Details-view cells can hit-test to the view or an adjacent column,
             // rather than the file row. Use a unique actual row containing the
             // original click, scoped to this Explorer window, never selection alone.
-            if(sourceWindow!=0)return ItemNameAt(AutomationElement.FromHandle(sourceWindow),new Point(point.X,point.Y));
+            return ItemNameFromElement(element,sourceWindow==0?null:AutomationElement.FromHandle(sourceWindow),new Point(point.X,point.Y));
         }
         catch(Exception error)when(error is InvalidOperationException or COMException){}
         return null;

@@ -28,6 +28,15 @@ jobs:
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lokum
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Native Explorer context gestures
+        shell: pwsh
+        run: |
+          $app = (Resolve-Path 'build/windows/Lokum/Lokum.exe').Path
+          $proof = Join-Path $PWD 'build/context-media-native'
+          $process = Start-Process -FilePath $app -ArgumentList @('--context-media-native', ('"' + $proof + '"')) -WindowStyle Hidden -PassThru
+          if (!$process.WaitForExit(90000)) { $process.Kill($true); throw 'Explorer context gesture checks exceeded 90 seconds' }
+          if ($process.ExitCode -ne 0) { Get-Content (Join-Path $proof 'context-trace.log') -ErrorAction SilentlyContinue; Get-Content (Join-Path $proof 'error.txt'); throw 'Explorer context gestures failed' }
+          Get-Content (Join-Path $proof 'verification.json')
       - name: Chrome Ctrl-left-click media and native bridge regression
         shell: pwsh
         run: |
@@ -203,6 +212,7 @@ jobs:
             build/video-workspace-ui
             build/conversion-workspace-ui
             build/context-media-checks
+            build/context-media-native
             build/browser-download-checks
             build/chrome-dom
             build/chrome-shorts

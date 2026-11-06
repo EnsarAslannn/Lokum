@@ -8,7 +8,8 @@ internal static class ContextClickGestureChecks
 {
     internal static async Task ExplorerRowBounds(Action<bool,string> check)
     {
-        var row=new ListBoxItem{Content="Source screenshot.png"};AutomationProperties.SetName(row,"Source screenshot.png");
+        var cell=new TextBox{Text="Displayed cell",IsReadOnly=true};AutomationProperties.SetAutomationId(cell,"file-row-cell");
+        var row=new ListBoxItem{Content=cell,HorizontalContentAlignment=HorizontalAlignment.Stretch};AutomationProperties.SetName(row,"Source screenshot.png");
         var list=new ListBox();list.Items.Add(row);
         var window=new Window{Title="Lokum file row fixture",Width=360,Height=160,ShowInTaskbar=false,ShowActivated=false,Content=list};window.Show();window.UpdateLayout();
         try
@@ -18,6 +19,12 @@ internal static class ContextClickGestureChecks
             var outside=window.PointToScreen(new Point(window.ActualWidth+20,20));
             var result=await Task.Run(()=>ShellMediaSource.ItemNameAt(AutomationElement.FromHandle(handle),inside));
             check(result=="Source screenshot.png","A point in the file row beyond its filename cell still resolves the actual containing file item");
+            var edited=await Task.Run(()=>
+            {
+                var root=AutomationElement.FromHandle(handle);var element=root.FindFirst(TreeScope.Descendants,new PropertyCondition(AutomationElement.AutomationIdProperty,"file-row-cell"));
+                return ShellMediaSource.ItemNameFromElement(element,root,inside);
+            });
+            check(edited=="Source screenshot.png","An Explorer edit-role display cell still resolves only its containing file row without reading edit text");
             check(await Task.Run(()=>ShellMediaSource.ItemNameAt(AutomationElement.FromHandle(handle),outside)) is null,"A point outside the file row never falls back to an unrelated selected item");
         }
         finally{window.Close();}

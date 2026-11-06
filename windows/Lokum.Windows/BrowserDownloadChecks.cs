@@ -23,6 +23,7 @@ internal static class BrowserDownloadChecks
         try
         {
             var original=Path.Combine(output,"Source.png");var bitmap=BitmapSource.Create(2,2,96,96,PixelFormats.Bgra32,null,Enumerable.Repeat((byte)200,16).ToArray(),8);ImageEngine.Save(bitmap,original,"png");
+            await PhotoPreviewThreadChecks.Run(owner,original,Check);
             var source=Environment.GetEnvironmentVariable("LOKUM_BROWSER_DOWNLOAD_WEB")=="1"?MediaToolSource.Address("https://www.w3.org/Icons/w3c_home.png","image")!:MediaToolSource.Local([original])!;
             var open=typeof(MainWindow).GetMethod("OpenMediaToolAsync",BindingFlags.Instance|BindingFlags.NonPublic)!;
             await (Task)open.Invoke(owner,[source,new ToolChoice("download:media","Download Media","↓")])!;
