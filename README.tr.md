@@ -57,4 +57,6 @@ Lokum için ayrı bir yayın deposu ve imza anahtarı tanımlanana kadar güncel
 
 ## Lisans
 
+Lokum, [Nashi](https://github.com/orkunisitmak/nashi-app) projesinin MIT lisanslı kodu üzerine geliştirilmiştir; REA inceleme ve geliştirmeye yardımcı araç olarak kullanılmıştır. [Köken ve geliştirme açıklaması](README.md#köken-ve-geliştirme).
+
 [MIT lisansı](LICENSE) ile üçüncü taraf lisans ve telif bildirimleri korunur. Proje sorumlusu: [EnsarAslannn](https://github.com/EnsarAslannn).
