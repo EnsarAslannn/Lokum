@@ -12,7 +12,7 @@ final class BrandMigrationTests:XCTestCase {
         let suite="LokumBrandMigrationTests.\(UUID())"
         let defaults=UserDefaults(suiteName:suite)!
         defer { defaults.removePersistentDomain(forName:suite) }
-        defaults.set("orkunisitmak/tangerine",forKey:"TangerineUpdateGitHubRepository")
+        defaults.set("example/legacy-app",forKey:"TangerineUpdateGitHubRepository")
         defaults.set(true,forKey:"TangerineUpdateGitHubSavedToken")
         defaults.set(true,forKey:"TangerineUpdateGitHubRequiresToken")
         defaults.set(false,forKey:"TangerineUpdateGitHubAutomaticChecks")
@@ -20,22 +20,22 @@ final class BrandMigrationTests:XCTestCase {
         let store=UnusedCredentials()
         let updater=await MainActor.run { AppUpdater(credentials:store,defaults:defaults) }
         await MainActor.run { XCTAssertNil(updater.repository);XCTAssertFalse(updater.hasSavedToken);XCTAssertNil(updater.officialRepository) }
-        XCTAssertEqual(defaults.string(forKey:"TangerineUpdateGitHubRepository"),"orkunisitmak/tangerine")
+        XCTAssertEqual(defaults.string(forKey:"TangerineUpdateGitHubRepository"),"example/legacy-app")
         XCTAssertFalse(defaults.bool(forKey:"TangerineUpdateGitHubAutomaticChecks"));XCTAssertEqual(defaults.string(forKey:"history"),"preserved history");XCTAssertEqual(store.reads,0)
     }
     func testSelectedRepositoryAndCredentialAccountAreNeverRemapped() throws {
-        for slug in ["example/lokum","example/private","orkunisitmak/nashi"] {
+        for slug in ["example/lokum","example/private","example/other-app"] {
             let selected=try GitHubRepository(slug)
             XCTAssertEqual(UpdateBrandMigration.credentialAccount(selected),selected)
             XCTAssertEqual(UpdateBrandMigration.canonical(selected),selected)
         }
     }
     func testOriginalAppArchiveURLsAreNotAcceptedAsLokumUpdates() throws {
-        let url=URL(string:"https://github.com/orkunisitmak/tangerine/releases/download/v0.6.0-24/Lokum-0.6.0-24.zip")!
+        let url=URL(string:"https://github.com/example/legacy-app/releases/download/v0.6.0-24/Lokum-0.6.0-24.zip")!
         let current=GitHubUpdateClient(repository:try GitHubRepository("example/lokum"),token:nil)
         XCTAssertThrowsError(try current.archiveReference(for:url))
         XCTAssertEqual(try current.archiveReference(for:URL(string:"https://github.com/example/lokum/releases/download/v1/Lokum.zip")!),.release(tag:"v1",filename:"Lokum.zip"))
-        for slug in ["other/lokum","orkunisitmak/unrelated"] {
+        for slug in ["other/lokum","example/unrelated"] {
             let unrelated=GitHubUpdateClient(repository:try GitHubRepository(slug),token:nil)
             XCTAssertThrowsError(try unrelated.archiveReference(for:url))
         }

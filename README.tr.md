@@ -1,6 +1,8 @@
 # Lokum · Kullanım
 
-Lokum, Nashi'nin MIT lisanslı kaynaklarından türetilen dosya araç kutusudur. Aynı 45 format / 27 araç kataloğunu yeni lokum simgesi ve gül kurusu–krem temasıyla sunar. Tam kurulum, derleme ve kaynak bilgileri [ana rehberdedir](README.md).
+[🇹🇷 TR](README.md) | [🇬🇧 EN](README.en.md)
+
+Lokum; görsel, video, ses ve belgeleri yerelde dönüştürüp düzenleyebildiğin bir dosya araç kutusudur. Tam kurulum ve derleme bilgileri [ana rehberdedir](README.md).
 
 ## Başlangıç
 
@@ -29,11 +31,10 @@ Dışa aktarımlar kaynak dosyanın üzerine yazmaz; mevcut çıktı adları da 
 - **Dönüştürme ve sonuç önizleme (Windows):** çarktaki **Dönüştür** girişinden veya ana ekrandaki dönüştürme menüsünden biçimi seç. **Sonucu göster**, seçilen biçimde gerçek bir geçici dosya üretir. Video/sesi oynatabilir, görselleri ve PDF sayfalarını görebilir, belge/metin içeriklerini veya arşiv dosya listesini inceleyebilirsin. Çoklu dosyada önizlemedeki oklarla gez. Önizlemeyi kapatıp ayarları değiştirirsen yeniden **Sonucu göster** düğmesine bas. Sonuç biçimi, toplam KB ve dosya sayısı editörde görünür kalır. **Yeni kopya kaydet** ayrı adımdır; önizleme dosyaları Kütüphane'ye veya çıktı klasörüne eklenmez. Belge önizlemeleri için Office araçlarının, medya için medya araçlarının kurulu olması gerekir.
 - **Video sıkıştırma sonucu (Windows):** hedef boyut ve küçültme yüzdesini boş/0 bıraktığında da **Sonucu göster** sonrasında **Sonuç: … KB · Orijinal: … KB** bilgisi görünür. Gösterilen boyut gerçek sıkıştırılmış dosyanın boyutudur.
 
-- **Görsel kırpma:** görseli seç, çarktan kırpmayı aç, alanı sürükleyerek belirle. Shift oranı kilitler; Enter yeni kırpılmış kopyayı kaydeder.
 - **Arka plan düzenleme (Windows):** **İnce ayar → Arka Plan Düzenle** tek editörü açar. Önce serbest/dikdörtgen seçimle korunacak alanı belirle; seçimin dışı şeffaflaşır. İstersen **Otomatik seç** kullan, alan ekle veya **Seçimden çıkar** ile düzelt. Ardından şeffaf, paletten düz renk veya görsel arka plan seçip **Yeni PNG kaydet** düğmesine bas. Çoklu seçimde her görselin alanını ayrı belirle. Özgün dosyalar korunur; model yerelde çalışır. [Ayrıntılı kullanım](README.md#arka-plan-kaldırma-windows).
 - **Görsel düzenleme ve kırpma (Windows):** çarktaki **Görsel Düzenle** içinde **Görseli kırp → alan seç → Kırpmayı önizle** akışını kullan. Kesilmiş hali görüp kaydet veya seçimi yeniden düzenle. **Kırpmayı kaldır** diğer düzenlemeleri korur. Ayrı görsel kırpma seçeneği kaldırılmıştır.
 - **İşaretleme:** kalem, marker, şekil, ok veya metin aracını seç. Seç/Taşı ile düzenle; Ctrl+Z son çizimi geri alır.
-- **Görsel sansürü (Windows):** çarktan **Fotoğrafı Sansürle** aracını açıp gizlemek istediğin alanı sürükle. Varsayılan stil **Bulanıklaştır**; sonucu önizlemede görürsün. Birden fazla alan seçebilir, **Alanı geri al** ile son seçimi kaldırabilirsin. **Yeni kopya kaydet** bulanıklaştırılmış bir PNG oluşturur; özgün dosya korunur. Düz kaplama ve pikselleştirme de kaplama stili listesindedir.
+- **Görsel sansürü (Windows):** çarktan **Görsel Sansürle** aracını açıp gizlemek istediğin alanı sürükle. Varsayılan stil **Bulanıklaştır**; sonucu önizlemede görürsün. Birden fazla alan seçebilir, **Alanı geri al** ile son seçimi kaldırabilirsin. **Yeni kopya kaydet** bulanıklaştırılmış bir PNG oluşturur; özgün dosya korunur. Düz kaplama ve pikselleştirme de kaplama stili listesindedir.
 - **Videoyu Kes (Windows):** klip sayısını girip **Klip sayısını uygula** düğmesine bas. Listeden her klibi ayrı seç ve başlangıç/bitişini tutamaçlarla veya saniye alanlarıyla belirle. Örneğin ilk klip 1–3, ikinci 4–5 saniye olabilir; bir klibi değiştirmek diğerini etkilemez. Aralıklar örtüşebilir ve kaynak videodaki zaman sırasından farklı seçilebilir. **Sonucu oynat**, yalnızca seçilen aralıkları listedeki sırayla önizler; aradaki boşlukları eklemez. Klipleri ayrı kaydet veya **Kalan klipleri tek videoda birleştir** seçeneğini kullan. Yeni klip sayısını uygulamak mevcut aralıkları sıfırlar. Ayrı bölme ve kare alma çark seçenekleri kaldırılmıştır. Görüntünün alanını değiştiren **Videoyu Kırp** ayrı kalır.
 - **Video sesini kaldırma (Windows):** **Videoyu Sessize Al** varsayılan olarak tüm ses kanalını kaldırır. **Yalnızca seçili aralığın sesini kaldır** seçeneğini açıp örneğin 2–4 saniye aralığını belirle; öncesi ve sonrası sesli kalır. **Sonucu önizle** ile işlenmiş videoyu dinleyip izle, ardından yeni kopyayı kaydet.
 - **Video sansürü (Windows):** önceki alan çizme ve kaydetme akışı kullanılır. Zaman aralığı ve alan seçip kaplama stilini belirle; **Sonucu göster** düğmesiyle işlenmiş videoyu izle. Seçim üzerindeki siyah bant alanı belirtir; sonuç seçtiğin düz kaplama, bulanıklık veya pikselleştirme stilini uygular. Yeni alan çizmek için **Orijinal** düğmesine bas.
@@ -56,4 +57,4 @@ Lokum için ayrı bir yayın deposu ve imza anahtarı tanımlanana kadar güncel
 
 ## Lisans
 
-Orijinal proje: [Nashi — Orkun Işıtmak ve katkıcıları](https://github.com/orkunisitmak/nashi-app). [MIT lisansı](LICENSE) ile üçüncü taraf lisansları korunmuştur.
+[MIT lisansı](LICENSE) ile üçüncü taraf lisans ve telif bildirimleri korunur. Proje sorumlusu: [EnsarAslannn](https://github.com/EnsarAslannn).

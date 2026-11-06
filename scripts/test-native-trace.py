@@ -16,7 +16,6 @@ install = library.InstallTrace  # Fails if the build accidentally compiled the E
 install.argtypes = []
 install.restype = None
 with tempfile.TemporaryDirectory(prefix='Lokum-Trace-') as directory:
-    os.environ.pop('NASHI_SMOKE_DIRECTORY', None)
     os.environ['LOKUM_SMOKE_DIRECTORY'] = directory
     install()
     trace = Path(directory) / 'native-exception-stack.txt'

@@ -1,11 +1,10 @@
 # Lokum showcase media
 
-`lokum-windows-light.png` and `lokum-windows-dark.png` show the Lokum Windows application's own-window WPF rendering in the isolated visual audit. They demonstrate the rebranded light/dark appearance, not pointer/keyboard interaction or macOS runtime behavior.
+`lokum-windows-light.png` and `lokum-windows-dark.png` show the Lokum Windows application's own-window WPF rendering in the isolated visual audit.
 
-The remaining older files in this directory are inherited **Nashi reference media**. They are preserved for provenance and comparison, not displayed as Lokum captures on the EN/TR landing pages:
+The README wheel images use the current Windows application's `WheelWindow`, actual image/video tool catalogs, native resources and translations:
 
-- `mac-home.png`, `mac-wheel.png`, `mac-crop.png`, `mac-trim.png`, `mac-window-management-view.png`: original Nashi macOS reference captures.
-- `windows-home-preview.png`: the original Nashi Windows reference capture from upstream PR #1.
-- `lokum-demo.mp4`, `lokum-demo.gif`, `demo-poster.jpg`, `demo-en.vtt`, `demo-tr.vtt`: inherited Nashi macOS recording and captions. The filenames were carried through the source rebrand; the recorded product is Nashi, not a tested Lokum macOS build.
+- `lokum-image-wheel-tr.png` and `lokum-video-wheel-tr.png`: Turkish image/video wheels.
+- `lokum-image-wheel-en.png` and `lokum-video-wheel-en.png`: English image/video wheels.
 
-Upstream provenance: [orkunisitmak/nashi-app](https://github.com/orkunisitmak/nashi-app), source commit `295c74f79f0313e89ad1542fe39e8fd4c64c88b2`. Copyright and license notices are retained in the repository. A real Mac is required to build and verify Lokum's macOS application.
+Wheel images are 640 × 640 transparent PNGs rendered at twice the default wheel size with a solid light theme. They use generated fixture filenames, no user media or personal paths. These are own-window renders, not desktop recordings or proof of physical input. A Mac is required to build and verify the macOS application.

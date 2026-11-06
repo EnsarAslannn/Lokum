@@ -6,8 +6,8 @@ import re
 import urllib.error
 import urllib.request
 
-REPOSITORY = "orkunisitmak/nashi-app"
-OWNER_ID = 68860338
+REPOSITORY = "EnsarAslannn/Lokum"
+OWNER_ID = 149324307
 ACTIONS_APP_ID = 15368
 REQUIRED_CHECKS = {"security", "mac-source", "windows"}
 

@@ -1,12 +1,21 @@
 <p align="center"><img src="Resources/Brand/LokumIcon.png" width="128" alt="Lokum"></p>
 <h1 align="center">Lokum</h1>
 <p align="center">Dosyaların için tatlı bir kolaylık.</p>
+<p align="center"><a href="README.md"><strong>🇹🇷 TR</strong></a> | <a href="README.en.md">🇬🇧 EN</a></p>
 
-Lokum; görsel, video, ses ve belge dosyalarını dönüştüren, düzenleyen ve düzenli tutan yerel bir masaüstü uygulamasıdır. [Nashi](https://github.com/orkunisitmak/nashi-app) kaynaklarının MIT lisanslı bir türevidir. Araçlar ve sürükle–çark düzeni korunur; isim, simge ve görünüm Lokum'a aittir. Yeni görünüm gül kurusu, krem ve fıstık yeşili tonlarında açık ve koyu temalar içerir.
+Lokum; görsel, video, ses ve belge dosyalarını bilgisayarında dönüştürüp düzenleyebildiğin bir masaüstü uygulamasıdır. Dosyanı seç, çarktan bir araç aç, sonucu önizle ve yeni bir kopya kaydet. Gül kurusu, krem ve fıstık yeşili tonlarında açık ve koyu temaları; Türkçe ve İngilizce arayüzü bulunur.
 
 [Türkçe kullanım](README.tr.md) · [Etkileşimli tanıtım kaynakları](docs/tr/index.html) · [Özellik ve platform matrisi](windows/FEATURE-PARITY.md) · [Bağımlılıklar](docs/dependencies.md)
 
 **Proje deposu:** [EnsarAslannn/Lokum](https://github.com/EnsarAslannn/Lokum) · [Hata bildir / öneri paylaş](https://github.com/EnsarAslannn/Lokum/issues)
+
+## Araç çarkları
+
+Seçtiğin dosyanın türüne göre çarkın araçları değişir. Aşağıdaki görüntüler, güncel Windows uygulamasının kendi arayüzünden oluşturulmuştur.
+
+| Görsel araçları | Video araçları |
+| :---: | :---: |
+| <img src="docs/assets/showcase/lokum-image-wheel-tr.png" width="420" alt="Lokum görsel araçları çarkı"> | <img src="docs/assets/showcase/lokum-video-wheel-tr.png" width="420" alt="Lokum video araçları çarkı"> |
 
 ## Çalıştırma
 
@@ -14,19 +23,25 @@ Bu depo kaynak kodunu içerir; derlenmiş uygulama ve indirilen araçlar Git'e e
 
 İlk açılışta **Kurulumu tamamla → Eksik araçları indir** akışını kullan. FFmpeg/ffprobe, yt-dlp, Deno, LibreOffice ve metadata araçları ilgili işlevler için kullanılır; uygulama bunları kendi kurulum akışından, sabitlenmiş sürüm ve SHA-256 kontrolleriyle edinir. Yerel görsel ve temel PDF işlemleri hemen kullanılabilir. İndirme iptal edilirse veya başarısız olursa aynı ekrandan yeniden denenebilir.
 
-Kütüphane ve ayarlar `%LOCALAPPDATA%/Lokum` altında saklanır. Orijinal Nashi uygulamasının ayar ve dosya geçmişi ayrı kalır.
+Kütüphane ve ayarlar `%LOCALAPPDATA%/Lokum` altında saklanır.
 
-## Korunan özellikler
+## Özellikler
 
 - **45 girdi formatı, 27 araç, 275 dönüşüm yolu:** ortak katalog ve seçim kuralları korunur.
 - **Görseller:** dönüştürme, sıkıştırma, boyutlandırma, döndürme/yansıtma, kırpma, işaretleme, çerçeve, kolaj, metadata, gizleme ve QR okuma.
 - **Windows arka plan düzenleme:** serbest veya dikdörtgen seçimle korunacak alanı belirleme, isteğe bağlı yerel otomatik kesim, şeffaf PNG, düz renk veya görsel arka plan. Tek görsel ve toplu seçim desteklenir.
-- **Video ve ses:** dönüştürme, sıkıştırma, görüntü kırpma, klip sayısı ve elle ayarlanan sınırlarla kesme/bölme, birleştirme, hız değiştirme, normalizasyon ve kanal ayarları. Windows'ta videonun tamamını veya yalnızca seçili zaman aralığını sessize alıp sonucu önizleyebilirsin. Video sansürü, seçilen kaplama stilini gerçek işlenmiş önizlemede gösterir; ayrı bölme ve kare alma çark seçenekleri kaldırılmıştır. [Kullanım](README.tr.md#sık-kullanılan-akışlar).
+- **Video ve ses:** dönüştürme, sıkıştırma, görüntü kırpma, bağımsız başlangıç/bitiş aralıklarıyla klip kesme, birleştirme, hız değiştirme, normalizasyon ve kanal ayarları. Windows'ta videonun tamamını veya yalnızca seçili zaman aralığını sessize alıp sonucu önizleyebilirsin. Video sansürü, seçilen kaplama stilini gerçek işlenmiş önizlemede gösterir. [Kullanım](README.tr.md#sık-kullanılan-akışlar).
 - **Belgeler ve arşivler:** PDF oluşturma/birleştirme/bölme/düzenleme, Office/Pages/EPUB/tablo/sunum/altyazı dönüşümleri ve arşiv işlemleri.
 - **Günlük akış:** araç çarkı, sürükleme kısayolları, pano içe aktarma, Float rafı, kütüphane, klasör otomasyonu ve pencere düzenleri.
 - **Web:** desteklenen herkese açık medya bağlantılarından video, ses ve görsel indirme.
 
 İşlevlerin işletim sistemi, dosya yapısı, kurulu codec ve harici araç gereksinimleri [platform matrisinde](windows/FEATURE-PARITY.md) açıklanır. Karmaşık belge dönüşümleri kaynak belgenin bütün özelliklerini korumayabilir. Web indirme desteği ilgili sitenin davranışına bağlıdır.
+
+### Web’den medya indirme
+
+Lokum sistem tepsisinde çalışırken Chrome’da bir görsel veya videonun üzerinde **Ctrl + sağ tık → Medyayı indir** seçeneğini kullan. Sürüklemek gerekmez; Chrome uzantısı zorunlu değildir. Dosya ayarlardaki **İndirilenler** klasörüne kaydedilir ve yerel araçlarla düzenlemek için Lokum’da seçilir. Medya adresi alınamazsa bağlantı yapıştırabileceğin indirme ekranı açılır. [İsteğe bağlı Chrome uzantısı](browser/README.md) da bulunur.
+
+**Sonucu göster**, desteklenen video araçları ve tüm dönüşüm hedeflerinde gerçek çıktıyı kaydetmeden incelemeni sağlar. Video sıkıştırma sonucu hazır olduğunda orijinal ve çıktı boyutu KB olarak görünür; hedef alanları boş bırakılabilir.
 
 ## Arka plan kaldırma (Windows)
 
@@ -152,10 +167,10 @@ Derleme çıktıları (`build`, `bin`, `obj`), indirilen araçlar, yerel ayarlar
 
 Dönüştürme ve düzenleme yerelde çalışır. Web indirmeleri seçilen siteye, eksik araçların kurulumu ilgili resmi dağıtım kaynağına bağlanır. Analytics, bulut hesabı veya tarayıcı çerezi içe aktarma bulunmaz.
 
-Lokum'un imzalı güncelleme mekanizması korunur. Bu türev için ayrı bir yayın deposu ve güvenilir imza anahtarı yapılandırılana kadar otomatik güncelleme kanalı bağlı değildir. Lokum, Nashi'nin güncelleme paketiyle değiştirilmez. [Kanal yapılandırma notları](docs/LOKUM.md) yayınlayan kişi içindir.
+Lokum imzalı güncellemeleri destekler. Bir yayın deposu ve güvenilir imza anahtarı yapılandırılana kadar otomatik güncelleme kanalı bağlı değildir. [Kanal yapılandırma notları](docs/LOKUM.md) yayınlayan kişi içindir.
 
-## Kaynak ve lisans
+## Lisans
 
-Temel: [orkunisitmak/nashi-app](https://github.com/orkunisitmak/nashi-app), commit [`295c74f79f0313e89ad1542fe39e8fd4c64c88b2`](https://github.com/orkunisitmak/nashi-app/commit/295c74f79f0313e89ad1542fe39e8fd4c64c88b2). Nashi'nin orijinal kodu Orkun Işıtmak ve katkıcılarına aittir. [MIT lisansı ve telif bildirimi](LICENSE) korunmuştur. Lokum bağımsız bir türevdir; Nashi veya Tangerine'nin resmi sürümü değildir.
+[MIT lisansı](LICENSE). Proje sorumlusu: [EnsarAslannn](https://github.com/EnsarAslannn).
 
 Harici araç ve kütüphanelerin kendi lisansları geçerlidir: [macOS bildirimleri](Resources/THIRD-PARTY-NOTICES.txt), [Windows bildirimleri](windows/THIRD-PARTY-NOTICES.txt).

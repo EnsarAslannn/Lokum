@@ -8,11 +8,11 @@ internal static class UpdateIsolationChecks
 {
     internal static async Task Run(Action<bool,string> check,string root)
     {
-        var upstream=new WindowsUpdate("99.0.0.0","https://github.com/orkunisitmak/nashi-app/releases/download/test/Nashi.zip",1,Convert.ToBase64String(new byte[64]));
+        var upstream=new WindowsUpdate("99.0.0.0","https://github.com/example/other-app/releases/download/test/OtherApp.zip",1,Convert.ToBase64String(new byte[64]));
         var rejected=false;
         try { PublicUpdates.Validate(upstream); }
         catch(Exception error)when(error is InvalidDataException or InvalidOperationException){rejected=true;}
-        check(rejected,"A default Lokum build still trusts the upstream Nashi release channel");
+        check(rejected,"A default Lokum build still trusts the unrelated release channel");
         try{await PublicUpdates.CheckAsync(new Version(1,0));throw new Exception("An unconfigured Lokum build attempted a network update check");}
         catch(InvalidOperationException error){check(error.Message.Contains("not connected",StringComparison.Ordinal),"Missing release channel did not explain how updates become available");}
         check(PublicUpdates.LoadChannel(Path.Combine(root,"missing-channel.json")) is null,"A missing release channel invented publisher trust");

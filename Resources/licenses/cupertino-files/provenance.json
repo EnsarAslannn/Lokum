@@ -44,5 +44,5 @@
     "sha256": "b51370134eed50a6e19ac1c6f0515d3c315b15312bbfa77cf3e5d47d6545d45e"
   },
   "runtime": "macOS JavaScriptCore; no Node process, network or Apple Pages automation",
-  "brandMigration": "Nashi: adapter/global callback identifiers renamed; upstream pinned packages, donor source and licenses are unchanged."
+  "brandMigration": "Adapter/global callback identifiers use Lokum; pinned packages, donor source and component licenses are unchanged."
 }

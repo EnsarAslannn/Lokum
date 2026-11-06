@@ -1,4 +1,4 @@
-Nashi for Mac. Independent implementation; not affiliated with LEAP STUDIO or its Tangerine product.
+Lokum for macOS. Component licenses and copyright notices follow. See LICENSE for the application license.
 
 FFmpeg 9.0 and ffprobe 9.0, Copyright FFmpeg contributors, GPL v2 or later.
 Public packages download the Apple Silicon tools directly from OSXExperts during setup: https://www.osxexperts.net/

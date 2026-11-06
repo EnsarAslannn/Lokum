@@ -27,25 +27,25 @@ final class WebMediaDragPayloadTests:XCTestCase {
         }
     }
     func testInstagramGridReelWinsOverCoverAndDropsTrackingParameters() throws {
-        let html="<a href='https://www.instagram.com/orkunisitmak/reel/DemKc58oBP4/?igsh=share'><img alt='Video' src='https://scontent.cdninstagram.com/v/test.jpg?x=1&amp;y=2'></a>"
-        let media=try XCTUnwrap(WebMediaDragPayload.parse(urls:["https://www.instagram.com/orkunisitmak/reel/DemKc58oBP4/"],html:[html]))
+        let html="<a href='https://www.instagram.com/examplecreator/reel/DemKc58oBP4/?igsh=share'><img alt='Video' src='https://scontent.cdninstagram.com/v/test.jpg?x=1&amp;y=2'></a>"
+        let media=try XCTUnwrap(WebMediaDragPayload.parse(urls:["https://www.instagram.com/examplecreator/reel/DemKc58oBP4/"],html:[html]))
         XCTAssertEqual(media.videoURL?.absoluteString,"https://www.instagram.com/reel/DemKc58oBP4/")
         XCTAssertNil(media.imageURL)
         XCTAssertEqual(media.urls,[media.primaryURL])
     }
     func testRelativeInstagramAnchorUsesOnlyTheProvidedSourceAsBase() throws {
-        let html="<A HREF=/orkunisitmak/reel/DemKc58oBP4/><IMG SRC='//cdn.example.org/cover.jpg?a=1&#x26;b=2'></A>"
+        let html="<A HREF=/examplecreator/reel/DemKc58oBP4/><IMG SRC='//cdn.example.org/cover.jpg?a=1&#x26;b=2'></A>"
         let media=try XCTUnwrap(WebMediaDragPayload.parse(urls:[],html:[html],baseURLs:["https://www.instagram.com"]))
         XCTAssertEqual(media.videoURL?.absoluteString,"https://www.instagram.com/reel/DemKc58oBP4/")
         XCTAssertNil(media.imageURL)
-        XCTAssertNil(WebMediaDragPayload.parse(urls:[],baseURLs:["https://www.instagram.com/orkunisitmak/"]))
+        XCTAssertNil(WebMediaDragPayload.parse(urls:[],baseURLs:["https://www.instagram.com/examplecreator/"]))
     }
     func testOrdinaryLinkedImageStillSavesTheImageRatherThanItsPage() throws {
         let media=try XCTUnwrap(WebMediaDragPayload.parse(urls:["https://example.org/article"],html:["<a href='https://example.org/article'><img src='https://cdn.example.org/photo.png'></a>"]))
         XCTAssertNil(media.videoURL);XCTAssertEqual(media.primaryURL.absoluteString,"https://cdn.example.org/photo.png");XCTAssertEqual(media.urls.count,1)
     }
     func testInstagramPhotoAndCarouselCardsPreserveThePostWithoutVideoChoices() throws {
-        for link in ["https://www.instagram.com/orkunisitmak/p/Dax2EpciOrn/?igsh=share","https://www.instagram.com/p/Dax2EpciOrn/"] {
+        for link in ["https://www.instagram.com/examplecreator/p/Dax2EpciOrn/?igsh=share","https://www.instagram.com/p/Dax2EpciOrn/"] {
             let html="<a href='\(link)'><img src='https://scontent.cdninstagram.com/cover.jpg'></a>"
             let media=try XCTUnwrap(WebMediaDragPayload.parse(urls:[link],html:[html]))
             XCTAssertTrue(media.isInstagramPhotoPost);XCTAssertNil(media.videoURL)

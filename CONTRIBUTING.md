@@ -15,16 +15,15 @@ New output formats and tools must preserve originals, choose unique output names
 clean partial exports on cancellation, and avoid shell interpolation. Test these
 boundaries and actual output metadata rather than only checking file existence.
 
-Lokum is independently developed and inspired by Tangerine's drag-and-wheel
-interaction. Do not contribute proprietary Tangerine code, binaries, artwork,
-screenshots or decompiled resources. Third-party licenses must be preserved.
+Only contribute code and assets that can be legally distributed with the project.
+Third-party licenses and required copyright notices must be preserved.
 
 ## Repository and pull requests
 
 Open issues and pull requests at [EnsarAslannn/Lokum](https://github.com/EnsarAslannn/Lokum).
-All pull requests are reviewed and merged manually. The upstream owner's automatic
-merge policy is disabled in Lokum. Keep unfinished work in draft and run the
+All pull requests are reviewed and merged manually. Automatic merging is disabled.
+Keep unfinished work in draft and run the
 checks relevant to your change before requesting review.
 
-Keep upstream attribution and the MIT license. Do not commit build outputs,
+Keep required copyright notices, component attribution and the MIT license. Do not commit build outputs,
 downloaded tools, local settings, personal test files or signing credentials.

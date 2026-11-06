@@ -1,6 +1,6 @@
 # Windows feature parity work
 
-These features are included in the published [0.7.5 release](https://github.com/orkunisitmak/nashi-app/releases/tag/v0.7.5-36). The native platform adaptations and evidence boundaries below still apply.
+Feature availability depends on the current source, installed tools and platform. The native adaptations and verification boundaries below apply.
 
 `Resources/FeatureCatalog.json` is the shared availability contract: 45 input formats, 27 tools, single/multiple-selection rules and conversion intersections. `scripts/check-feature-parity.py` compares it with the Swift catalog on every source check. The catalog check establishes matching choices; engine and native desktop checks establish behavior.
 
@@ -51,7 +51,7 @@ Windows uses Explorer, Windows keyboard conventions and Windows Share. Apple Air
 - `parity-progress.json` records the last completed assertion; `parity.json` and `smoke.json` are written only after their complete suites pass. Failure diagnostics must not be presented as a successful suite.
 - Native tests use Windows SendInput and OLE plus WPF render captures. They are not a physical Windows computer-use session or a claim that every third-party media site is always available.
 
-The released code passed 198 engine checks and two native runs of 231 assertions with actual exit code 0: [Windows evidence](https://github.com/orkunisitmak/nashi-app/actions/runs/39454458596). Post-publication update evidence is recorded in [the real update workflow](https://github.com/orkunisitmak/nashi-app/actions/runs/39458173367).
+Run the current Windows workflow and isolated native fixtures for this repository; old release results are not evidence for a current build.
 
 The combined desktop branch also includes the eight-layout window wheel (including Maximize) and the follow-up Home/Library/preview/clipboard/media alignment. See [the desktop comparison and shortcut map](../docs/DESKTOP-PARITY.md) for the current behavior and native platform adaptations.
 

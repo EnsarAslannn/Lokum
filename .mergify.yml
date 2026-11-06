@@ -38,20 +38,20 @@ pull_request_rules:
 # authenticate the person issuing a comment command.
 commands_restrictions:
   backport:
-    conditions: ["sender=orkunisitmak", "sender-permission=admin", "#files<0"]
+    conditions: ["sender=EnsarAslannn", "sender-permission=admin", "#files<0"]
   copy:
-    conditions: ["sender=orkunisitmak", "sender-permission=admin", "#files<0"]
+    conditions: ["sender=EnsarAslannn", "sender-permission=admin", "#files<0"]
   dequeue:
-    conditions: ["sender=orkunisitmak", "sender-permission=admin", "#files<0"]
+    conditions: ["sender=EnsarAslannn", "sender-permission=admin", "#files<0"]
   queue:
-    conditions: ["sender=orkunisitmak", "sender-permission=admin", "#files<0"]
+    conditions: ["sender=EnsarAslannn", "sender-permission=admin", "#files<0"]
   requeue:
-    conditions: ["sender=orkunisitmak", "sender-permission=admin", "#files<0"]
+    conditions: ["sender=EnsarAslannn", "sender-permission=admin", "#files<0"]
   rebase:
-    conditions: ["sender=orkunisitmak", "sender-permission=admin", "#files<0"]
+    conditions: ["sender=EnsarAslannn", "sender-permission=admin", "#files<0"]
   squash:
-    conditions: ["sender=orkunisitmak", "sender-permission=admin", "#files<0"]
+    conditions: ["sender=EnsarAslannn", "sender-permission=admin", "#files<0"]
   update:
-    conditions: ["sender=orkunisitmak", "sender-permission=admin", "#files<0"]
+    conditions: ["sender=EnsarAslannn", "sender-permission=admin", "#files<0"]
   refresh:
-    conditions: ["sender=orkunisitmak", "sender-permission=admin"]
+    conditions: ["sender=EnsarAslannn", "sender-permission=admin"]

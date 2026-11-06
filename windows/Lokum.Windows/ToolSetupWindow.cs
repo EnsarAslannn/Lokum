@@ -38,7 +38,7 @@ public sealed class ToolSetupWindow : Window
         var content = new StackPanel { Margin = new(28) }; root.Children.Add(new ScrollViewer { Content = content, VerticalScrollBarVisibility = ScrollBarVisibility.Auto });
         content.Children.Add(Label("FIRST-TIME SETUP", 11)); content.Children.Add(Label("A few tools. More possibilities.", 28));
         content.Children.Add(Label("One download per tool group. No account or GitHub token.", 14)); content.Children.Add(groups);
-        content.Children.Add(MainWindow.Button("Upstream versions, licenses and source links", () => MainWindow.OpenUrl("https://github.com/orkunisitmak/nashi-app/blob/main/docs/dependencies.md")));
+        content.Children.Add(MainWindow.Button("Upstream versions, licenses and source links", () => MainWindow.OpenUrl("https://github.com/EnsarAslannn/Lokum/blob/main/docs/dependencies.md")));
         Closing += (_, e) => { if (Working) { e.Cancel = true; cancellation?.Cancel(); } };
         Activated += (_, _) => { if (!Working) Refresh(); };
         PreviewKeyDown += (_, e) => { if (e.Key == Key.Escape) { if (Working) cancellation?.Cancel(); else Close(); e.Handled = true; } };

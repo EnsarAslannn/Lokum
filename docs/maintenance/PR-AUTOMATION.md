@@ -1,7 +1,7 @@
 # Lokum PR and issue assistance: staged setup
 
 Status: proposed, observation only. Do not mark the setup PR ready or merge it
-until Orkun approves the policy and the GitHub App installations separately.
+until the repository owner approves the policy and the GitHub App installations separately.
 No subscription, new token, bypass actor or branch-protection change is included.
 
 ## What this proposal does
@@ -19,7 +19,7 @@ No subscription, new token, bypass actor or branch-protection change is included
   Even a matching rule has **no action**. This is not a live merge lane, and the
   Markdown observation is not a claim that every Markdown change is safe.
 - All Mergify branch-writing/queue commands have an impossible `#files<0` guard;
-  only read-only refresh is allowed to `orkunisitmak` with admin permission.
+  only read-only refresh is allowed to `EnsarAslannn` with admin permission.
   This also removes Mergify's default permission for fork authors to rewrite their
   own heads through comment commands. Keep Merge Queue and Auto-Merge disabled
   in the dashboard; install-time capabilities are broader than this YAML.
@@ -47,14 +47,14 @@ PRs from immutable owner account `68860338` can merge after required checks and
 request post-merge CI/Pages. It does not rely on CodeRabbit or labels. **Draft is
 the required hold for this setup PR.** This proposal does not retrofit semantic
 bugfix classification into that older owner workflow. Do not mark feature/mixed,
-release or automation work ready without Orkun's explicit decision.
+release or automation work ready without the repository owner's explicit decision.
 
 ## Human authorization and future automatic work
 
 Every PR remains manual with respect to Mergify. AI approval, `bug`/`approved`
 labels, an issue's wording, author age and diff size are never merge authority.
 Features, mixed changes, refactors, dependencies, lockfiles, build/workflow/config,
-update trust, signing, security and release work require Orkun's decision.
+update trust, signing, security and release work require the repository owner's decision.
 
 Any later pure-bugfix lane needs a separate reviewed change and action-time
 approval. Before enabling it, prove all of the following end to end:
@@ -76,7 +76,7 @@ approval. Before enabling it, prove all of the following end to end:
 ## Installation and activation approval boundary
 
 The parent setup task coordinates installations. At the actual GitHub screens,
-show Orkun each App's **exact current** repository/account permissions, read/write
+show the repository owner each App's **exact current** repository/account permissions, read/write
 levels, selected repositories and any OAuth scopes, and request approval before
 granting access. Select only the intended repositories, not all repositories.
 Do not infer a grant from this configuration PR. No installation was performed
@@ -97,7 +97,7 @@ usage-based billing, paid scans/agents, or enter payment details.
 
 After explicit approval, install on the selected repo, validate/simulate using the
 hosted services on a disposable PR, inspect read/write effects and rerun negative
-cases. Keep this PR draft until Orkun approves its merge. Only then enable the
+cases. Keep this PR draft until the repository owner approves its merge. Only then enable the
 approved review/issue assistance. Queue/merge automation remains disabled.
 
 ## Reproduce local validation

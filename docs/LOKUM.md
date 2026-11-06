@@ -1,16 +1,16 @@
-# Lokum türev notları
+# Lokum yayın ve yapılandırma notları
 
-Lokum, Nashi kaynaklarından oluşturulan bağımsız bir türevdir. Kaynak sürümü, köken bağlantısı ve lisans bilgisi [ana rehberde](../README.md#kaynak-ve-lisans) bulunur.
+Lokum'un kurulum, derleme ve lisans bilgileri [ana rehberde](../README.md) bulunur.
 
 ## Marka ve veri ayrımı
 
-Uygulama, derleme ürünleri, ad alanları, dosya yolları ve yerel veri klasörü Lokum olarak adlandırılır. Windows kütüphanesi ve ayarları `%LOCALAPPDATA%/Lokum` içindedir. macOS için bağımsız paket kimliği kullanılır. Nashi'nin telif bildirimi ve üçüncü taraf lisansları korunur.
+Uygulama, derleme ürünleri, ad alanları, dosya yolları ve yerel veri klasörü Lokum olarak adlandırılır. Windows kütüphanesi ve ayarları `%LOCALAPPDATA%/Lokum` içindedir. macOS için bağımsız paket kimliği kullanılır. Telif bildirimleri ve üçüncü taraf lisansları dağıtımlara dahil edilir.
 
 ## Güncelleme kanalı
 
 Bu pakette bağımsız bir Lokum yayın deposu veya yayın imza anahtarı tanımlı değildir. Güncelleme kanalı başlangıçta bağlı değildir. İmzalı indirme, doğrulama, hazırlama ve güvenli değiştirme iş akışları kaynakta korunur.
 
-Bir kanal yayımlarken kendi HTTPS yayın deposunu ve kendi Ed25519 imza anahtarının **yalnızca genel anahtarını** yapılandır. Nashi'nin yayın deposunu ve anahtarını Lokum güncelleme kanalı olarak kullanma. Özel imzalama anahtarları uygulamaya veya depoya eklenmez.
+Bir kanal yayımlarken kendi HTTPS yayın deposunu ve kendi Ed25519 imza anahtarının **yalnızca genel anahtarını** yapılandır. Başka bir uygulamanın yayın deposunu veya anahtarını kullanma. Özel imzalama anahtarları uygulamaya veya depoya eklenmez.
 
 Windows'ta `Lokum.exe` yanına `lokum-updates.json` dosyası koy. Dosyada iki alan bulunur:
 
@@ -25,7 +25,7 @@ macOS yapılandırması `Configuration/Updates.plist` ve `scripts/configure-upda
 
 ## Depo otomasyonu
 
-Nashi sahibine özel otomatik PR birleştirme bu türevde etkin değildir. Normal kaynak ve Windows derleme iş akışları korunur. İmzalı Windows güncelleme denetimi yalnızca elle başlatılabilir; kendi Lokum sürümlerini yayımladıktan sonra depo değişkenlerinde `LOKUM_UPDATE_TESTS_ENABLED=true` ve `LOKUM_UPDATE_PUBLIC_KEY` genel anahtarını tanımla. İş akışına yükseltilecek başlangıç sürüm etiketini ver. Doğrulama yalnızca iş akışının çalıştığı deponun paketlerini kullanır.
+PR birleştirme elle yapılır; otomatik birleştirme etkin değildir. Kaynak ve Windows derleme iş akışları çalışır. İmzalı Windows güncelleme denetimi yalnızca elle başlatılabilir; kendi Lokum sürümlerini yayımladıktan sonra depo değişkenlerinde `LOKUM_UPDATE_TESTS_ENABLED=true` ve `LOKUM_UPDATE_PUBLIC_KEY` genel anahtarını tanımla. İş akışına yükseltilecek başlangıç sürüm etiketini ver. Doğrulama yalnızca iş akışının çalıştığı deponun paketlerini kullanır.
 
 ## Doğrulama sınırları
 

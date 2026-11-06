@@ -22,7 +22,7 @@ REQUIRED = {'security', 'mac-source', 'windows'}
 def snapshot(**changes):
     value = dict(base='main', draft=False, conflict=False, **{'from-fork': False},
                  files=['docs/testing/example.md'], checks=REQUIRED.copy(),
-                 sender='orkunisitmak', **{'sender-permission': 'admin'},
+                 sender='EnsarAslannn', **{'sender-permission': 'admin'},
                  labels=[], approvals=[], lines=1)
     value.update(changes)
     return value
@@ -101,8 +101,8 @@ class AutomationPolicyTests(unittest.TestCase):
                 self.assertTrue(matches(rule, snapshot(files=[path])))
 
     def test_labels_approvals_and_small_diffs_never_authorize_actions(self):
-        for actor in ['orkunisitmak', 'outside-contributor', 'coderabbitai[bot]', 'dependabot[bot]']:
-            for approvals in [[], ['coderabbitai[bot]'], ['orkunisitmak@old-sha']]:
+        for actor in ['EnsarAslannn', 'outside-contributor', 'coderabbitai[bot]', 'dependabot[bot]']:
+            for approvals in [[], ['coderabbitai[bot]'], ['EnsarAslannn@old-sha']]:
                 pr = snapshot(sender=actor, labels=['bug', 'safe-to-merge', 'approved'],
                               approvals=approvals, lines=1)
                 for rule in MG['pull_request_rules']:
@@ -113,7 +113,7 @@ class AutomationPolicyTests(unittest.TestCase):
         commands = MG['commands_restrictions']
         self.assertEqual(set(commands), {'backport', 'copy', 'dequeue', 'queue',
                                        'requeue', 'rebase', 'squash', 'update', 'refresh'})
-        for sender in ['orkunisitmak', 'outside-contributor', 'mergify[bot]']:
+        for sender in ['EnsarAslannn', 'outside-contributor', 'mergify[bot]']:
             for count in [0, 1, 100]:
                 for name, rule in commands.items():
                     if name != 'refresh':

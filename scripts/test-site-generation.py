@@ -33,7 +33,7 @@ class Page(HTMLParser):
 
 
 class SiteGenerationTests(unittest.TestCase):
-    def test_rebuilding_a_fork_does_not_advertise_upstream_release_packages(self):
+    def test_rebuilding_uses_project_links_and_current_product_media(self):
         # A stale upstream download would replace Lokum instructions with a non-existent
         # package, and a stale video would falsely present the original app as Lokum.
         with TemporaryDirectory(prefix='lokum-site-generation-') as directory:
@@ -58,8 +58,13 @@ class SiteGenerationTests(unittest.TestCase):
                 path = tree / 'docs' / language
                 page = Page(path.read_text(encoding='utf-8'))
                 with self.subTest(language=language):
-                    self.assertFalse([url for url in page.urls if '/nashi-app/releases/' in url],
-                                     'A Lokum page must not offer packages from the upstream channel')
+                    self.assertNotIn('derived from', path.read_text(encoding='utf-8').casefold(),
+                                     'The public product page must describe Lokum without origin marketing copy')
+                    self.assertNotIn('kaynaklarından türetil', path.read_text(encoding='utf-8').casefold())
+                    self.assertFalse([url for url in page.urls
+                                      if urlsplit(url).netloc == 'github.com'
+                                      and not urlsplit(url).path.startswith('/EnsarAslannn/Lokum')],
+                                     'Product source links must lead to the Lokum repository')
                     self.assertFalse(page.videos, 'Upstream Mac recordings are not Lokum recordings')
                     self.assertIn('download', page.ids, 'Run instructions must survive regeneration')
                     self.assertTrue(any(url.endswith('README.md#çalıştırma') for url in page.urls),
