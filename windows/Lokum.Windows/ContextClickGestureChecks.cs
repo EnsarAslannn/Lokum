@@ -4,6 +4,18 @@ namespace Lokum.Windows;
 
 internal static class ContextClickGestureChecks
 {
+    internal static async Task DelayedExplorerHint(Action<bool,string> check)
+    {
+        var hint=new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var pending=ContextMediaController.ReadItemNameAsync(hint.Task,CancellationToken.None);
+        await Task.Delay(200);hint.SetResult("Source screenshot.png");
+        check(await pending=="Source screenshot.png","An Explorer name lookup slower than the native-menu delay still opens tools for the clicked file");
+        using var cancelled=new CancellationTokenSource();
+        var unresolved=new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var stopped=ContextMediaController.ReadItemNameAsync(unresolved.Task,cancelled.Token);cancelled.Cancel();
+        try{await stopped;check(false,"A canceled context click must stop awaiting its previous Explorer lookup");}
+        catch(OperationCanceledException){check(true,"A newer or canceled click stops waiting for the previous Explorer lookup");}
+    }
     internal static void Run(Action<bool,string> check)
     {
         var gesture=new ContextClickGesture();

@@ -57,6 +57,7 @@ internal static class GlobalGestureChecks
             });
             var until=DateTime.UtcNow.AddSeconds(12);while(!driver.IsCompleted&&DateTime.UtcNow<until)DesktopInput.Pump(30);if(!driver.IsCompleted)throw new TimeoutException("Global Explorer drag timed out.");driver.GetAwaiter().GetResult();DesktopInput.Pump(350);check(selected==expected,"Real Explorer OLE drag: "+expected+"; observed="+selected+"; "+state);check(received?.SingleOrDefault()==file,"Explorer drop preserved the selected file path");
         }
+        using var trace=new TextWriterTraceListener(Path.Combine(root,"global-context-trace.log"));System.Diagnostics.Trace.Listeners.Add(trace);System.Diagnostics.Trace.AutoFlush=true;
         try
         {
             Drag(Key.LeftCtrl,"tools","convert");Drag(Key.LeftAlt,"actions","share");Drag(Key.LeftShift,"convert","convert:"+FeatureCatalog.Formats([file])[0]);
@@ -90,6 +91,6 @@ internal static class GlobalGestureChecks
             var data=new DataObject();using var stream=new MemoryStream(System.Text.Encoding.Unicode.GetBytes("https://www.instagram.com/p/FixtureCode/\0"));data.SetData("UniformResourceLocatorW",stream);check(DragPayload.Parse(data) is {Kind:"instagramPhotos"},"Browser URL stream was decoded as a photo post");
             data.SetData(DataFormats.Html,"<a href=\"https://www.instagram.com/reel/FixtureCode/\"><img src=\"https://cdn.example/preview.jpg\"></a>");check(DragPayload.Parse(data) is {Kind:"instagramReel"},"Browser HTML identified a reel without thumbnail actions");
         }
-        finally{DesktopInput.HoldMouse(false);DesktopInput.Hold(Key.LeftCtrl,false);DesktopInput.Hold(Key.LeftAlt,false);DesktopInput.Hold(Key.LeftShift,false);PostMessage(handle,0x10,IntPtr.Zero,IntPtr.Zero);}
+        finally{System.Diagnostics.Trace.Listeners.Remove(trace);DesktopInput.HoldMouse(false);DesktopInput.Hold(Key.LeftCtrl,false);DesktopInput.Hold(Key.LeftAlt,false);DesktopInput.Hold(Key.LeftShift,false);PostMessage(handle,0x10,IntPtr.Zero,IntPtr.Zero);}
     }
 }

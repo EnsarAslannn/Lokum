@@ -30,12 +30,18 @@ internal sealed class ContextMediaController:IDisposable
         timer=new(){Interval=TimeSpan.FromMilliseconds(16)};timer.Tick+=(_,_)=>Poll();timer.Start();
     }
     private bool Available=>!disposed&&preferences.Value.Enabled&&DesktopGeometry.IsInteractive(owner);
+    internal static async Task<string?> ReadItemNameAsync(Task<string?> name,CancellationToken token)
+    {
+        try{return await name.WaitAsync(TimeSpan.FromSeconds(3),token);}
+        catch(TimeoutException){return null;}
+    }
     private void Poll()
     {
         var phase=gesture.Update(PrimaryMouseButton.SecondaryIsPressed,(GetAsyncKeyState(0x11)&0x8000)!=0,(GetAsyncKeyState(0x10)&0x8000)!=0||(GetAsyncKeyState(0x12)&0x8000)!=0,Available);
         if(!Available){pressed=null;return;}
         if(phase==ContextClickPhase.Pressed)
         {
+            Trace.WriteLine("Context secondary click captured");
             pressed=null;pending?.Cancel();
             if(!GetCursorPos(out var point))return;
             // A browser may create its context popup on button-down, before
@@ -45,6 +51,7 @@ internal sealed class ContextMediaController:IDisposable
         }
         else if(phase==ContextClickPhase.Released&&pressed is {} target)
         {
+            Trace.WriteLine("Context secondary click released");
             pressed=null;_ = OpenAsync(target.Point,target.Window,target.Name);
         }
     }
@@ -60,7 +67,7 @@ internal sealed class ContextMediaController:IDisposable
             await Task.Delay(150,token);
             if(name=="explorer")
             {
-                var nameHint=itemName.IsCompletedSuccessfully?itemName.Result:null;if(nameHint is null)return;source=await ShellMediaSource.AtAsync(window,nameHint,token);
+                var nameHint=await ReadItemNameAsync(itemName,token);if(nameHint is null){Trace.WriteLine("Explorer context item name unavailable");return;}source=await ShellMediaSource.AtAsync(window,nameHint,token);
                 if(source is not null)PostMessage(window,0x001F,0,0); // Cancel Explorer's native context menu.
             }
             else if(browser)
@@ -70,9 +77,9 @@ internal sealed class ContextMediaController:IDisposable
                 if(source is null)try{source=await BrowserContextMedia.KnownVideoPageAsync(window,token);}catch(Exception error)when(error is TimeoutException or ArgumentException or System.Windows.Automation.ElementNotAvailableException||ClipboardImport.IsClipboardError(error)){Trace.WriteLine(error);}
             }
             else return;
-            token.ThrowIfCancellationRequested();if(!Available||(!browser&&source is null))return;
+            token.ThrowIfCancellationRequested();if(!Available||(!browser&&source is null)){Trace.WriteLine("Context source unavailable or owner disabled");return;}
             // Never steal focus after the user switched to a different application.
-            if(!BrowserContextMedia.IsSourceForeground(window))return;
+            if(!BrowserContextMedia.IsSourceForeground(window)){Trace.WriteLine("Context source is no longer foreground");return;}
             if(browser)BrowserContextMedia.DismissContextMenu(window);else PostMessage(window,0x001F,0,0);
             var target=source;
             Window menu=browser?new BrowserDownloadMenu(source,()=>{if(!Available)return;if(target is not null)chosen(target,new("download:media","Download Media","↓"));else unresolvedDownload?.Invoke();}):new WheelWindow(null,source!.Choices,choice=>{if(Available)chosen(target!,choice);}){Topmost=true};wheel=menu;

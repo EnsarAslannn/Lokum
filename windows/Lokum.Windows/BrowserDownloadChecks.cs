@@ -14,6 +14,7 @@ internal static class BrowserDownloadChecks
     {
         output=Path.GetFullPath(output);Directory.CreateDirectory(output);var checks=new List<string>();void Check(bool ok,string message){if(!ok)throw new Exception(message);checks.Add(message);}
         ContextClickGestureChecks.Run(Check);
+        await ContextClickGestureChecks.DelayedExplorerHint(Check);
         ContextClickGestureChecks.OwnedPopup(Check);
         var library=new LibraryStore(Path.Combine(output,"state"));var folder=Path.Combine(output,"downloads");Directory.CreateDirectory(folder);
         new PreferencesStore(library.DirectoryPath).Save(new(){Enabled=false,AutomaticUpdateChecks=false,KeepInTray=false,Feedback=false,Animations=false,DownloadFolder=folder,OutputMode="ask"});

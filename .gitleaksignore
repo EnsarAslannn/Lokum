@@ -1,0 +1,4 @@
+# Reviewed false positive: Chrome's manifest key is a public RSA SPKI key,
+# not a private key or access token. It fixes the extension's native-message ID.
+# Ignore only this immutable historical finding; all other findings remain active.
+179faafddfe711724463636b66914b8d20dd3a02:browser/chrome/manifest.json:generic-api-key:6
