@@ -1,9 +1,27 @@
 using System.Windows;
+using System.Windows.Automation;
+using System.Windows.Controls;
 using System.Windows.Interop;
 namespace Lokum.Windows;
 
 internal static class ContextClickGestureChecks
 {
+    internal static async Task ExplorerRowBounds(Action<bool,string> check)
+    {
+        var row=new ListBoxItem{Content="Source screenshot.png"};AutomationProperties.SetName(row,"Source screenshot.png");
+        var list=new ListBox();list.Items.Add(row);
+        var window=new Window{Title="Lokum file row fixture",Width=360,Height=160,ShowInTaskbar=false,ShowActivated=false,Content=list};window.Show();window.UpdateLayout();
+        try
+        {
+            var handle=new WindowInteropHelper(window).Handle;
+            var inside=row.PointToScreen(new Point(Math.Max(4,row.ActualWidth-12),row.ActualHeight/2));
+            var outside=window.PointToScreen(new Point(window.ActualWidth+20,20));
+            var result=await Task.Run(()=>ShellMediaSource.ItemNameAt(AutomationElement.FromHandle(handle),inside));
+            check(result=="Source screenshot.png","A point in the file row beyond its filename cell still resolves the actual containing file item");
+            check(await Task.Run(()=>ShellMediaSource.ItemNameAt(AutomationElement.FromHandle(handle),outside)) is null,"A point outside the file row never falls back to an unrelated selected item");
+        }
+        finally{window.Close();}
+    }
     internal static async Task DelayedExplorerHint(Action<bool,string> check)
     {
         var hint=new TaskCompletionSource<string?>(TaskCreationOptions.RunContinuationsAsynchronously);

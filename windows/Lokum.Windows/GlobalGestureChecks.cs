@@ -69,7 +69,7 @@ internal static class GlobalGestureChecks
                 {
                     SetForegroundWindow(handle);Thread.Sleep(250);if(GetForegroundWindow()!=handle)throw new Exception("Explorer fixture lost focus; no context input will be sent.");DesktopInput.MovePointer(new(bounds.Left+bounds.Width/2,bounds.Top+bounds.Height/2));DesktopInput.Hold(Key.LeftCtrl,true);DesktopInput.HoldMouse(true,secondary:true);Thread.Sleep(200);DesktopInput.HoldMouse(false,secondary:true);DesktopInput.Hold(Key.LeftCtrl,false);
                     nint menu=0;for(var n=0;n<100&&menu==0;n++){Thread.Sleep(100);menu=FindWindow(null,"Lokum tools");}
-                    if(menu==0||!GetWindowRect(menu,out var r))throw new Exception("Ctrl + right-click did not open the image tools wheel; "+contextNotice);
+                    if(menu==0||!GetWindowRect(menu,out var r)){owner.Dispatcher.Invoke(()=>DesktopCapture.Save(Path.Combine(root,"explorer-context-timeout.png")));throw new Exception("Ctrl + right-click did not open the image tools wheel; "+contextNotice);}
                     DesktopInput.MovePointer(new((r.Left+r.Right)/2d,r.Top+(r.Bottom-r.Top)*.18));Thread.Sleep(150);DesktopInput.HoldMouse(true);DesktopInput.HoldMouse(false);
                 });
                 var deadline=DateTime.UtcNow.AddSeconds(12);while(!click.IsCompleted&&DateTime.UtcNow<deadline)DesktopInput.Pump(30);

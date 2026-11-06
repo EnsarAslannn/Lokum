@@ -51,7 +51,7 @@ internal sealed class ContextMediaController:IDisposable
             pressed=null;pending?.Cancel();
             if(!GetCursorPos(out var point))return;
             var window=GetAncestor(WindowFromPoint(point),2);GetWindowThreadProcessId(window,out var process);
-            if(window!=0&&process!=Environment.ProcessId)pressed=(point,window,Task.Run(()=>ShellMediaSource.ItemAt(point)));
+            if(window!=0&&process!=Environment.ProcessId)pressed=(point,window,Task.Run(()=>ShellMediaSource.ItemAt(point,window)));
         }
         else if(phase==ContextClickPhase.Released&&pressed is {} target)
         {
@@ -79,7 +79,7 @@ internal sealed class ContextMediaController:IDisposable
                 {
                     await Task.Delay(75,token);
                     if(!BrowserContextMedia.IsSourceForeground(window)||!BrowserContextMedia.IsSourceWindow(window,GetAncestor(WindowFromPoint(point),2)))return null;
-                    return await Task.Run(()=>ShellMediaSource.ItemAt(point),token);
+                    return await Task.Run(()=>ShellMediaSource.ItemAt(point,window),token);
                 },token);
                 if(nameHint is null){Trace.WriteLine("Explorer context item name unavailable");return;}
                 if(!BrowserContextMedia.IsSourceForeground(window))return;
