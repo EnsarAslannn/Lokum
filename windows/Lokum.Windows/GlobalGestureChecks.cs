@@ -69,12 +69,21 @@ internal static class GlobalGestureChecks
                 {
                     SetForegroundWindow(handle);Thread.Sleep(250);if(GetForegroundWindow()!=handle)throw new Exception("Explorer fixture lost focus; no context input will be sent.");DesktopInput.MovePointer(new(bounds.Left+bounds.Width/2,bounds.Top+bounds.Height/2));DesktopInput.Hold(Key.LeftCtrl,true);DesktopInput.HoldMouse(true,secondary:true);Thread.Sleep(200);DesktopInput.HoldMouse(false,secondary:true);DesktopInput.Hold(Key.LeftCtrl,false);
                     nint menu=0;for(var n=0;n<100&&menu==0;n++){Thread.Sleep(100);menu=FindWindow(null,"Lokum tools");}
-                    if(menu==0||!GetWindowRect(menu,out var r)){owner.Dispatcher.Invoke(()=>DesktopCapture.Save(Path.Combine(root,"explorer-context-timeout.png")));throw new Exception("Ctrl + right-click did not open the image tools wheel; "+contextNotice);}
-                    DesktopInput.MovePointer(new((r.Left+r.Right)/2d,r.Top+(r.Bottom-r.Top)*.18));Thread.Sleep(150);DesktopInput.HoldMouse(true);DesktopInput.HoldMouse(false);
+                    if(menu==0){owner.Dispatcher.Invoke(()=>DesktopCapture.Save(Path.Combine(root,"explorer-context-timeout.png")));throw new Exception("Ctrl + right-click did not open the image tools wheel; "+contextNotice);}
+                    // HWND creation precedes Show/Loaded and PlaceWheel. Querying
+                    // the real button through UIA waits for that dispatcher work
+                    // and uses its final screen bounds, rather than a transient
+                    // window rectangle observed midway through showing the wheel.
+                    var firstTool=AutomationElement.FromHandle(menu).FindFirst(TreeScope.Descendants,new PropertyCondition(AutomationElement.ControlTypeProperty,ControlType.Button));
+                    if(firstTool is null||firstTool.Current.IsOffscreen||firstTool.Current.BoundingRectangle.IsEmpty)throw new Exception("The image wheel did not expose a visible tool button.");
+                    var target=firstTool.Current.BoundingRectangle;
+                    DesktopInput.MovePointer(new(target.Left+target.Width/2,target.Top+target.Height/2));Thread.Sleep(150);DesktopInput.HoldMouse(true);Thread.Sleep(80);DesktopInput.HoldMouse(false);
                 });
                 var deadline=DateTime.UtcNow.AddSeconds(12);while(!click.IsCompleted&&DateTime.UtcNow<deadline)DesktopInput.Pump(30);
                 if(!click.IsCompleted)throw new TimeoutException("Ctrl + right-click timed out");click.GetAwaiter().GetResult();DesktopInput.Pump(250);
-                check(clickedSource?.Paths.SingleOrDefault()==file&&clickedChoice?.Id=="convert","Explorer Ctrl + right-click opens the real image tools wheel and selects a local tool without downloading");
+                var selectedExpected=clickedSource?.Paths.SingleOrDefault()==file&&clickedChoice?.Id=="convert";
+                if(!selectedExpected)DesktopCapture.Save(Path.Combine(root,"explorer-context-selection.png"));
+                check(selectedExpected,"Explorer Ctrl + right-click opens the real image tools wheel and selects a local tool without downloading; observed choice="+clickedChoice?.Id+"; path="+clickedSource?.Paths.SingleOrDefault());
             }
             if(controller.LinkShortcutRegistered){DesktopInput.Key(owner,Key.D,control:true,shift:true);check(selected=="link-shortcut","Global copied-link shortcut Ctrl+Shift+D");}
             var main=owner as MainWindow;var beforeLaunch=main?.SelectedFiles.ToArray();var modal=new Window{Owner=owner,Width=300,Height=200,WindowStartupLocation=WindowStartupLocation.CenterOwner,Content=new System.Windows.Controls.Border{Background=System.Windows.Media.Brushes.DarkOliveGreen}};Exception? modalError=null;
