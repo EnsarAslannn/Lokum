@@ -128,14 +128,6 @@ Editing and conversion run locally. Web downloads connect to the selected site, 
 
 Signed updates are supported; no automatic update channel is connected until a release repository and trusted signing key are configured. See [release channel configuration](docs/LOKUM.md).
 
-## Origin and development
-
-Lokum is an independent derivative **based on the MIT-licensed open-source code** of [Nashi](https://github.com/orkunisitmak/nashi-app), developed by Orkun Işıtmak and contributors. The starting source revision, [`295c74f`](https://github.com/orkunisitmak/nashi-app/tree/295c74f79f0313e89ad1542fe39e8fd4c64c88b2), remains in the preserved Git history.
-
-Ensar Aslan adapted and extended the existing code with bug fixes and new features. These include the unified background editor, crop and conversion previews, independent video clip ranges, muting a selected time range, and downloading web media for local editing. [REA](https://github.com/morluto/rea) was used as a supporting analysis and development tool.
-
-Nashi's copyright and license notice is retained in [LICENSE](LICENSE). The contributors list also includes authors from the preserved Git history. Lokum is not an official release of the Nashi or REA teams and does not claim their endorsement or sponsorship.
-
 ## License
 
 [MIT license](LICENSE). External components retain their own licenses and notices: [Windows](windows/THIRD-PARTY-NOTICES.txt) · [macOS](Resources/THIRD-PARTY-NOTICES.txt).

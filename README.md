@@ -169,14 +169,6 @@ Dönüştürme ve düzenleme yerelde çalışır. Web indirmeleri seçilen sitey
 
 Lokum imzalı güncellemeleri destekler. Bir yayın deposu ve güvenilir imza anahtarı yapılandırılana kadar otomatik güncelleme kanalı bağlı değildir. [Kanal yapılandırma notları](docs/LOKUM.md) yayınlayan kişi içindir.
 
-## Köken ve geliştirme
-
-Lokum, Orkun Işıtmak ve katkıcılarının geliştirdiği [Nashi](https://github.com/orkunisitmak/nashi-app) projesinin **MIT lisanslı açık kaynak kodu temel alınarak** geliştirilmiş bağımsız bir türevdir. Başlangıç kaynak sürümü [`295c74f`](https://github.com/orkunisitmak/nashi-app/tree/295c74f79f0313e89ad1542fe39e8fd4c64c88b2) olarak Git geçmişinde korunur.
-
-Ensar Aslan tarafından mevcut kod üzerinde uyarlamalar, hata düzeltmeleri ve yeni özellikler geliştirilmiştir. Bunlar arasında birleşik arka plan düzenleyicisi, kırpma ve dönüşüm önizlemeleri, bağımsız video klip aralıkları, belirli zaman aralığını sessize alma ve web medyasını indirip yerel araçlarla düzenleme akışı bulunur. Geliştirme sürecinde [REA](https://github.com/morluto/rea) inceleme ve geliştirmeye yardımcı araç olarak kullanılmıştır.
-
-Nashi'nin telif ve lisans bildirimi [LICENSE](LICENSE) dosyasında korunur. Katkıda bulunanlar listesi, korunmuş Git geçmişindeki yazarları da içerir. Lokum, Nashi veya REA ekiplerinin resmî sürümü değildir; bu projeler tarafından desteklendiği veya onaylandığı iddia edilmez.
-
 ## Lisans
 
 [MIT lisansı](LICENSE). Proje sorumlusu: [EnsarAslannn](https://github.com/EnsarAslannn).
