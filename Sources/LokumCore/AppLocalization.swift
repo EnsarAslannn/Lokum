@@ -8,13 +8,13 @@ public enum AppLocalization {
         return [source,text(source,language:language)].contains { $0.range(of:query,options:[.caseInsensitive,.diacriticInsensitive],locale:locale) != nil }
     }
     public static let turkish: [String: String] = {
-        guard let url = Bundle.module.url(forResource: "Turkish", withExtension: "json", subdirectory: "Resources"),
+        guard let url = CoreResources.bundle?.url(forResource: "Turkish", withExtension: "json", subdirectory: "Resources"),
               let data = try? Data(contentsOf: url),
               let values = try? JSONDecoder().decode([String:String].self, from: data) else { return [:] }
         return values
     }()
     public static let latinWords: Set<String> = {
-        guard let url = Bundle.module.url(forResource: "LatinWords", withExtension: "json", subdirectory: "Resources"),
+        guard let url = CoreResources.bundle?.url(forResource: "LatinWords", withExtension: "json", subdirectory: "Resources"),
               let data = try? Data(contentsOf: url),
               let words = try? JSONDecoder().decode([String].self, from: data) else { return [] }
         return Set(words)

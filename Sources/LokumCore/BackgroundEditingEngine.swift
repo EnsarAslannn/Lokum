@@ -134,7 +134,7 @@ public enum BackgroundEditingEngine {
         return min(1,max(0,(Double(mask[y0*width+x0])*(1-fx)+Double(mask[y0*width+x1])*fx)*(1-fy)+(Double(mask[y1*width+x0])*(1-fx)+Double(mask[y1*width+x1])*fx)*fy))
     }
     private static func automaticMask(_ source:CGImage,token:CancellationToken)throws->[Float] {
-        guard let model=Bundle.module.url(forResource:"u2netp",withExtension:"onnx",subdirectory:"Resources") else {throw LokumError.missingDependency("Bundled background removal model")}
+        guard let model=CoreResources.bundle?.url(forResource:"u2netp",withExtension:"onnx",subdirectory:"Resources") else {throw LokumError.missingDependency("Bundled background removal model")}
         let digest=SHA256.hash(data:try Data(contentsOf:model)).map{String(format:"%02x",$0)}.joined()
         guard digest=="309c8469258dda742793dce0ebea8e6dd393174f89934733ecc8b14c76f4ddd8" else {throw LokumError.failed("The bundled background removal model failed its integrity check.")}
         let small=try rgba(ImageEngine.resized(source,width:320,height:320)),count=320*320
