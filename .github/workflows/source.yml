@@ -62,3 +62,5 @@ jobs:
         run: brew install ffmpeg
       - name: Redaction coverage and image opacity regressions
         run: swift test --filter 'SolidRedactionCoverageTests|ImageRedactionBoundsRegressionTests|ImageColorOpacityRegressionTests|MediaEngineTests/testVideoRedactionStylesAndTemporalBounds'
+      - name: Desktop feature parity regressions
+        run: swift test --filter DesktopParityEngineTests
