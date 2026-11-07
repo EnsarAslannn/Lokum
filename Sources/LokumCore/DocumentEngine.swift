@@ -5,6 +5,7 @@ import PDFKit
 import UniformTypeIdentifiers
 
 public enum DocumentEngine {
+    public static func archiveContents(_ input:URL,token:CancellationToken = .init())throws->[String] {[]}
     public static func convert(_ input: URL, to requestedFormat: String, options: OperationOptions, token: CancellationToken) throws -> [URL] {
         try token.check()
         guard FileManager.default.fileExists(atPath: input.path) else { throw LokumError.invalidInput("The input file does not exist.") }

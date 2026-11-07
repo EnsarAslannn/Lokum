@@ -64,7 +64,7 @@ jobs:
       - name: Redaction coverage and image opacity regressions
         run: swift test --filter 'SolidRedactionCoverageTests|ImageRedactionBoundsRegressionTests|ImageColorOpacityRegressionTests|MediaEngineTests/testVideoRedactionStylesAndTemporalBounds'
       - name: Desktop feature parity regressions
-        run: swift test --filter DesktopParityEngineTests
+        run: swift test --filter 'DesktopParityEngineTests|PlatformReliabilityTests'
       - name: Desktop feature selection and preview routing
         if: ${{ !cancelled() && steps.mac-build.outcome == 'success' }}
         run: |
