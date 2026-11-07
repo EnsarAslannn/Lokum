@@ -64,3 +64,13 @@ jobs:
         run: swift test --filter 'SolidRedactionCoverageTests|ImageRedactionBoundsRegressionTests|ImageColorOpacityRegressionTests|MediaEngineTests/testVideoRedactionStylesAndTemporalBounds'
       - name: Desktop feature parity regressions
         run: swift test --filter DesktopParityEngineTests
+      - name: Desktop feature selection and preview routing
+        if: ${{ !cancelled() }}
+        run: .build/debug/Lokum --desktop-feature-smoke build/desktop-feature-ui
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        if: always()
+        with:
+          name: mac-desktop-feature-parity
+          path: build/desktop-feature-ui
+          retention-days: 7
+          if-no-files-found: warn

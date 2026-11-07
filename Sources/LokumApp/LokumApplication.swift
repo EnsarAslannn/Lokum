@@ -13,6 +13,11 @@ enum LokumApplication {
     @MainActor static func main() {
         if CommandLine.arguments.count>1,["convert","tool","inspect","catalog","dependencies"].contains(CommandLine.arguments[1]) { exit(LokumCommandLine.run()) }
         let app=NSApplication.shared
+        if let index=CommandLine.arguments.firstIndex(of:"--desktop-feature-smoke"),CommandLine.arguments.count>index+1 {
+            let runner=DesktopFeatureSmoke(output:URL(fileURLWithPath:CommandLine.arguments[index+1],isDirectory:true))
+            app.delegate=runner;app.setActivationPolicy(.accessory)
+            withExtendedLifetime(runner){app.run()};return
+        }
         if CommandLine.arguments.contains("--ui-audit") {
             do {
                 let runner=UIAudit(options:try UIAuditOptions(arguments:CommandLine.arguments))
