@@ -1221,5 +1221,8 @@
   "Save Here": "Buraya kaydet",
   "Choose a crop rectangle inside the image.": "Görselin içinde bir kırpma alanı seç.",
   "Keep selection points inside the image.": "Seçim noktalarını görselin içinde tut.",
-  "Prepare a result before saving.": "Kaydetmeden önce sonucu hazırla."
+  "Prepare a result before saving.": "Kaydetmeden önce sonucu hazırla.",
+  "The files were copied, but these originals could not be removed:": "Dosyalar kopyalandı ancak şu özgün dosyalar kaldırılamadı:",
+  "The archive is empty.": "Arşiv boş.",
+  "Loading…": "Yükleniyor…"
 }

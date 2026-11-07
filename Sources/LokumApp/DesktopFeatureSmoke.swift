@@ -73,6 +73,26 @@ import LokumCore
         }
         conversion.invalidate()
         check(try Data(contentsOf:source)==originalBytes,"Conversion preview and save preserve the original input")
+        let board=NSPasteboard(name:NSPasteboard.Name("Lokum.ContextClipboard."+UUID().uuidString))
+        defer{board.releaseGlobally()}
+        let first=NSPasteboardItem(),second=NSPasteboardItem(),custom=NSPasteboard.PasteboardType("local.lokum.fixture")
+        first.setString("Original clipboard",forType:.string);first.setData(Data([0,2,255]),forType:custom)
+        second.setString(source.absoluteString,forType:.fileURL)
+        board.writeObjects([first,second])
+        let count=board.changeCount
+        if let snapshot=ContextClipboard.capture(board) {
+            check(board.changeCount==count,"Reading a context clipboard snapshot leaves the user's clipboard unchanged")
+            let menu=NSMenu(),copy=ContextCopyFixture(board:board)
+            let item=NSMenuItem(title:"Copy Image Address",action:#selector(ContextCopyFixture.copyAddress),keyEquivalent:"");item.target=copy;menu.addItem(item)
+            menu.performActionForItem(at:0)
+            check(board.string(forType:.string)=="https://cdn.example/image.png?signed=fixture","A real native menu copy action produces the selected media address")
+            snapshot.restore(board,ifChangeCount:board.changeCount)
+            check(board.pasteboardItems?.count==2 && board.pasteboardItems?[0].string(forType:.string)=="Original clipboard" && board.pasteboardItems?[0].data(forType:custom)==Data([0,2,255]) && board.pasteboardItems?[1].string(forType:.fileURL)==source.absoluteString,"Context copy restores every original item and format")
+            let staleCount=board.changeCount;board.clearContents();board.setString("New user content",forType:.string)
+            snapshot.restore(board,ifChangeCount:staleCount)
+            check(board.string(forType:.string)=="New user content","A concurrent clipboard change is never overwritten by context restoration")
+            check(ContextClipboard.capture(board,maximumBytes:8)==nil,"An oversized clipboard is rejected before a context copy can replace it")
+        }else{check(false,"Context copy can preserve the original multi-format clipboard")}
         let video=output.appendingPathComponent("Native video.mp4")
         try await Task.detached {try ProcessRunner.run(Dependencies.executable("ffmpeg"),["-y","-f","lavfi","-i","testsrc2=size=160x120:rate=10","-f","lavfi","-i","sine=frequency=440:sample_rate=48000","-t","4","-c:v","libx264","-pix_fmt","yuv420p","-c:a","aac",video.path])}.value
         for tool:ToolKind in [.compress,.changeVideoSpeed,.muteVideo,.trimVideo,.cropVideo,.redactVideo] {
@@ -94,8 +114,7 @@ import LokumCore
                 try await Task.sleep(nanoseconds:100_000_000)
             }
             let old=views(content).compactMap({$0 as? AVPlayerView}).first?.player?.currentItem
-            let action=elements(content).first{$0.accessibilityIdentifier()=="media.result.generate"}
-            check(action?.isAccessibilityEnabled()==true && action?.accessibilityPerformPress()==true,tool.title+" offers an enabled Show Result action after editing")
+            try UIAuditInteraction.click("media.result.generate",recorder:recorder,content:content,window:window)
             try await wait {
                 guard let item=self.views(content).compactMap({$0 as? AVPlayerView}).first?.player?.currentItem,let asset=item.asset as? AVURLAsset else{return false}
                 return item !== old && asset.url != video
@@ -109,26 +128,6 @@ import LokumCore
                 check(!FileManager.default.fileExists(atPath:asset.url.path),tool.title+" releases its owned processed preview when the window closes")
             }
         }
-        let board=NSPasteboard(name:NSPasteboard.Name("Lokum.ContextClipboard."+UUID().uuidString))
-        defer{board.releaseGlobally()}
-        let first=NSPasteboardItem(),second=NSPasteboardItem(),custom=NSPasteboard.PasteboardType("local.lokum.fixture")
-        first.setString("Original clipboard",forType:.string);first.setData(Data([0,2,255]),forType:custom)
-        second.setString(source.absoluteString,forType:.fileURL)
-        board.writeObjects([first,second])
-        let count=board.changeCount
-        if let snapshot=ContextClipboard.capture(board) {
-            check(board.changeCount==count,"Reading a context clipboard snapshot leaves the user's clipboard unchanged")
-            let menu=NSMenu(),copy=ContextCopyFixture(board:board)
-            let item=NSMenuItem(title:"Copy Image Address",action:#selector(ContextCopyFixture.copyAddress),keyEquivalent:"");item.target=copy;menu.addItem(item)
-            menu.performActionForItem(at:0)
-            check(board.string(forType:.string)=="https://cdn.example/image.png?signed=fixture","A real native menu copy action produces the selected media address")
-            snapshot.restore(board,ifChangeCount:board.changeCount)
-            check(board.pasteboardItems?.count==2 && board.pasteboardItems?[0].string(forType:.string)=="Original clipboard" && board.pasteboardItems?[0].data(forType:custom)==Data([0,2,255]) && board.pasteboardItems?[1].string(forType:.fileURL)==source.absoluteString,"Context copy restores every original item and format")
-            let staleCount=board.changeCount;board.clearContents();board.setString("New user content",forType:.string)
-            snapshot.restore(board,ifChangeCount:staleCount)
-            check(board.string(forType:.string)=="New user content","A concurrent clipboard change is never overwritten by context restoration")
-            check(ContextClipboard.capture(board,maximumBytes:8)==nil,"An oversized clipboard is rejected before a context copy can replace it")
-        }else{check(false,"Context copy can preserve the original multi-format clipboard")}
         let report:[String:Any]=["passed":failures.isEmpty,"checks":checks,"failures":failures]
         try JSONSerialization.data(withJSONObject:report,options:[.prettyPrinted,.sortedKeys]).write(to:output.appendingPathComponent("verification.json"))
         if !failures.isEmpty {throw NSError(domain:"Lokum desktop feature parity",code:1,userInfo:[NSLocalizedDescriptionKey:failures.joined(separator:"\n")])}

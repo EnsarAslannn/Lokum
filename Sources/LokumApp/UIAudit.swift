@@ -2,6 +2,19 @@ import AppKit
 import SwiftUI
 import PDFKit
 import LokumCore
+
+@MainActor enum UIAuditInteraction {
+    static func click(_ id:String,recorder:UIAuditLayout,content:NSView,window:NSWindow)throws {
+        content.layoutSubtreeIfNeeded()
+        guard let frame=recorder.frames[id],content.bounds.contains(frame) else {throw UIAuditError("The control is not visible: "+id)}
+        let local=NSPoint(x:frame.midX,y:content.isFlipped ? frame.midY:content.bounds.height-frame.midY)
+        let point=content.convert(local,to:nil)
+        for type in [NSEvent.EventType.leftMouseDown,.leftMouseUp] {
+            guard let event=NSEvent.mouseEvent(with:type,location:point,modifierFlags:[],timestamp:ProcessInfo.processInfo.systemUptime,windowNumber:window.windowNumber,context:nil,eventNumber:1,clickCount:1,pressure:1) else {throw UIAuditError("Could not create an own-window click")}
+            window.sendEvent(event)
+        }
+    }
+}
 import LokumUpdates
 
 struct UIAuditOptions {
@@ -159,9 +172,9 @@ struct UIAuditError:LocalizedError { let message:String;init(_ message:String){s
         try await settle(recorder:isEditor ? recorder:nil)
         guard let content=host.contentView else{throw UIAuditError("Scene has no content view")}
         if scene=="editor.edit-image-crop" {
-            guard let button=ownAccessibilityElements(content).first(where:{$0.accessibilityIdentifier()=="image.crop"}),button.accessibilityPerformPress() else {throw UIAuditError("The integrated crop action is not accessible")}
+            try UIAuditInteraction.click("image.crop",recorder:recorder,content:content,window:host)
             try await Task.sleep(nanoseconds:150_000_000);content.layoutSubtreeIfNeeded()
-            guard let save=ownAccessibilityElements(content).first(where:{$0.accessibilityIdentifier()=="editor.primary"}),!save.isAccessibilityEnabled() else {throw UIAuditError("Saving must wait until the crop is previewed")}
+            guard recorder.frames["image.crop.cancel"] != nil else {throw UIAuditError("The integrated crop action did not open the selection controls")}
         }
         observedPreferences=try await verifyPreferences(scene:scene,appearance:appearance,language:language,defaults:defaults,view:content)
         let issues=recorder.issues(in:content.bounds,editor:isEditor)

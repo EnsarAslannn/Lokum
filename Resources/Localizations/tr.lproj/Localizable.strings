@@ -1184,6 +1184,7 @@
 "LITTLE TWEAKS.\nBIG DIFFERENCE." = "KÜÇÜK DOKUNUŞLAR.\nBÜYÜK FARK.";
 "LITTLE TWEAKS. A WHOLE NEW LOOK." = "KÜÇÜK DOKUNUŞLAR. YEPYENİ BİR GÖRÜNÜM.";
 "LOADING BACKGROUND IMAGE…" = "ARKA PLAN GÖRSELİ YÜKLENİYOR…";
+"LOADING…" = "YÜKLENİYOR…";
 "LOCAL BY DESIGN" = "VERİLERİN CİHAZINDA KALIR";
 "LOCAL FILES: USE YOUR USUAL CTRL SHORTCUT. CHROME WEB MEDIA: CTRL + LEFT-CLICK WITH THE LOKUM EXTENSION." = "YEREL DOSYALARDA NORMAL CTRL KISAYOLUNU KULLAN. CHROME’DAKİ WEB MEDYASINDA LOKUM UZANTISIYLA CTRL + SOL TIK YAP.";
 "LOKUM CHECKS ONCE AN HOUR WHILE IT’S RUNNING. YOU CHOOSE WHEN TO DOWNLOAD AND INSTALL." = "LOKUM ÇALIŞIRKEN SAATTE BİR DENETLER. İNDİRME VE KURULUM ZAMANINI SEN SEÇERSİN.";
@@ -1224,6 +1225,7 @@
 "Little tweaks.\nBig difference." = "Küçük dokunuşlar.\nBüyük fark.";
 "Little tweaks. A whole new look." = "Küçük dokunuşlar. Yepyeni bir görünüm.";
 "Loading background image…" = "Arka plan görseli yükleniyor…";
+"Loading…" = "Yükleniyor…";
 "Local by design" = "Verilerin cihazında kalır";
 "Local by design · MIT source\nVersion %@" = "Verilerin cihazında kalır · MIT lisanslı kaynak kodu\nSürüm %@";
 "Local by design · MIT source\nVersion %lld" = "Verilerin cihazında kalır · MIT lisanslı kaynak kodu\nSürüm %lld";
@@ -2083,6 +2085,7 @@
 "THAT PDF SIZE CANNOT BE REACHED WHILE KEEPING SELECTABLE TEXT, LINKS AND ANNOTATIONS. CHOOSE A LARGER TARGET." = "SEÇİLEBİLİR METİN, BAĞLANTILAR VE NOTLAR KORUNARAK BU PDF BOYUTUNA İNİLEMİYOR. DAHA BÜYÜK BİR HEDEF SEÇ.";
 "THE ARCHIVE CONTAINS AN UNSAFE PATH." = "ARŞİVDE GÜVENLİ OLMAYAN BİR YOL VAR.";
 "THE ARCHIVE ENTRY LEAVES ITS DESTINATION." = "ARŞİVDEKİ BİR ÖĞE HEDEF KLASÖRÜN DIŞINA ÇIKIYOR.";
+"THE ARCHIVE IS EMPTY." = "ARŞİV BOŞ.";
 "THE BACKGROUND IMAGE FILLS THE ORIGINAL CANVAS AND IS CENTERED." = "ARKA PLAN GÖRSELİ TUVALİ DOLDURACAK ŞEKİLDE ORTALANIR.";
 "THE CLIPPING EXCEEDS 200 MB." = "METİN KIRPINTISI 200 MB'I AŞIYOR.";
 "THE CLIPPING HAS NO READABLE TEXT. INCLUDE ITS ORIGINAL RESOURCE FORK/APPLEDOUBLE SIDECAR, OR PASTE ITS TEXT INTO LOKUM." = "METİN KIRPINTISINDA OKUNABİLİR METİN YOK. ORİJİNAL RESOURCE FORK/APPLEDOUBLE DOSYASINI DA EKLE VEYA METNİNİ LOKUM'YE YAPIŞTIR.";
@@ -2094,6 +2097,7 @@
 "THE DOWNLOADED FILE IS NOT A SUPPORTED IMAGE, VIDEO OR AUDIO FILE." = "İNDİRİLEN DOSYA DESTEKLENEN BİR GÖRSEL, VİDEO VEYA SES DOSYASI DEĞİL.";
 "THE DOWNLOADED TOOLS ARE INCOMPLETE. PLEASE TRY SETUP AGAIN." = "İNDİRİLEN ARAÇLAR EKSİK. KURULUMU TEKRAR DENE.";
 "THE EXTENSION ONLY SENDS THE MEDIA YOU CTRL-CLICK TO LOKUM ON THIS COMPUTER. IT DOES NOT USE YOUR CLIPBOARD." = "UZANTI YALNIZCA CTRL İLE TIKLADIĞIN MEDYANIN BAĞLANTISINI BU BİLGİSAYARDAKİ LOKUM’A İLETİR. PANONU KULLANMAZ.";
+"THE FILES WERE COPIED, BUT THESE ORIGINALS COULD NOT BE REMOVED:" = "DOSYALAR KOPYALANDI ANCAK ŞU ÖZGÜN DOSYALAR KALDIRILAMADI:";
 "THE IMAGE DOWNLOAD ENDED EARLY." = "GÖRSEL İNDİRMESİ ERKEN SONA ERDİ.";
 "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE." = "GÖRSEL SIRASINDA HER GÖRSEL BİR KEZ YER ALMALI.";
 "THE MEDIA SERVER REDIRECTED TO AN INSECURE URL." = "MEDYA SUNUCUSU GÜVENLİ OLMAYAN BİR ADRESE YÖNLENDİRDİ.";
@@ -2173,6 +2177,7 @@
 "That PDF size cannot be reached while keeping selectable text, links and annotations. Choose a larger target." = "Seçilebilir metin, bağlantılar ve notlar korunarak bu PDF boyutuna inilemiyor. Daha büyük bir hedef seç.";
 "The archive contains an unsafe path." = "Arşivde güvenli olmayan bir yol var.";
 "The archive entry leaves its destination." = "Arşivdeki bir öğe hedef klasörün dışına çıkıyor.";
+"The archive is empty." = "Arşiv boş.";
 "The background image fills the original canvas and is centered." = "Arka plan görseli tuvali dolduracak şekilde ortalanır.";
 "The clipping exceeds 200 MB." = "Metin kırpıntısı 200 MB'ı aşıyor.";
 "The clipping has no readable text. Include its original resource fork/AppleDouble sidecar, or paste its text into Lokum." = "Metin kırpıntısında okunabilir metin yok. Orijinal resource fork/AppleDouble dosyasını da ekle veya metnini Lokum'ye yapıştır.";
@@ -2186,6 +2191,7 @@
 "The downloaded file is not a supported image, video or audio file." = "İndirilen dosya desteklenen bir görsel, video veya ses dosyası değil.";
 "The downloaded tools are incomplete. Please try setup again." = "İndirilen araçlar eksik. Kurulumu tekrar dene.";
 "The extension only sends the media you Ctrl-click to Lokum on this computer. It does not use your clipboard." = "Uzantı yalnızca Ctrl ile tıkladığın medyanın bağlantısını bu bilgisayardaki Lokum’a iletir. Panonu kullanmaz.";
+"The files were copied, but these originals could not be removed:" = "Dosyalar kopyalandı ancak şu özgün dosyalar kaldırılamadı:";
 "The image download ended early." = "Görsel indirmesi erken sona erdi.";
 "The image order must include every image once." = "Görsel sırasında her görsel bir kez yer almalı.";
 "The media server redirected to an insecure URL." = "Medya sunucusu güvenli olmayan bir adrese yönlendirdi.";

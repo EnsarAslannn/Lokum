@@ -60,10 +60,12 @@ jobs:
       - name: Update trust, web photo and window placement and setup regressions
         run: swift test --filter 'LokumUpdatesTests|WebMediaDragPayloadTests|InstagramPhotosTests|YouTubeThumbnailTests|WindowPlacementTests|AppLocalizationTests|ToolSetupTests'
       - name: Install FFmpeg for redaction regressions
+        if: ${{ !cancelled() && steps.mac-build.outcome == 'success' }}
         run: brew install ffmpeg
       - name: Redaction coverage and image opacity regressions
         run: swift test --filter 'SolidRedactionCoverageTests|ImageRedactionBoundsRegressionTests|ImageColorOpacityRegressionTests|MediaEngineTests/testVideoRedactionStylesAndTemporalBounds'
       - name: Desktop feature parity regressions
+        if: ${{ !cancelled() && steps.mac-build.outcome == 'success' }}
         run: swift test --filter 'DesktopParityEngineTests|PlatformReliabilityTests'
       - name: Desktop feature selection and preview routing
         if: ${{ !cancelled() && steps.mac-build.outcome == 'success' }}

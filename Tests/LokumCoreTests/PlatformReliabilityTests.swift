@@ -51,6 +51,27 @@ final class PlatformReliabilityTests:XCTestCase {
         XCTAssertEqual(try String(contentsOf:source,encoding:.utf8),"Keep")
         XCTAssertFalse(FileManager.default.fileExists(atPath:target.path))
     }
+    func testMovingAnEmptyFilePreservesItAsAnEmptyFile()throws {
+        let root=try directory();defer{try? FileManager.default.removeItem(at:root)}
+        let source=root.appendingPathComponent("Empty.txt"),target=root.appendingPathComponent("Target")
+        try Data().write(to:source)
+        let result=try FileTransferEngine.move([source],to:target)
+        XCTAssertEqual(result.outputs.count,1)
+        XCTAssertEqual(try Data(contentsOf:XCTUnwrap(result.outputs.first)),Data())
+        XCTAssertFalse(FileManager.default.fileExists(atPath:source.path))
+    }
+    func testMoveReportsRetainedOriginalsWhenDeletionIsDeniedAfterPublishing()throws {
+        let root=try directory();defer{try? FileManager.default.removeItem(at:root)}
+        let locked=root.appendingPathComponent("Locked"),target=root.appendingPathComponent("Target")
+        try FileManager.default.createDirectory(at:locked,withIntermediateDirectories:true)
+        let source=locked.appendingPathComponent("Keep.txt");try Data("Keep".utf8).write(to:source)
+        try FileManager.default.setAttributes([.posixPermissions:0o555],ofItemAtPath:locked.path)
+        defer{try? FileManager.default.setAttributes([.posixPermissions:0o755],ofItemAtPath:locked.path)}
+        let result=try FileTransferEngine.move([source],to:target)
+        XCTAssertEqual(result.retainedOriginals,[source]);XCTAssertEqual(result.outputs.count,1)
+        XCTAssertEqual(try String(contentsOf:source,encoding:.utf8),"Keep")
+        XCTAssertEqual(try String(contentsOf:XCTUnwrap(result.outputs.first),encoding:.utf8),"Keep")
+    }
     func testMediaContextCommandsIdentifyOnlyActualMediaAddressActions() {
         for name in ["Copy Image Address","Copy Image Link","Resim adresini kopyala","Resim Bağlantısını Kopyala"] {XCTAssertEqual(MediaContextCommand.kind(name),"image",name)}
         for name in ["Copy Video Address","Copy Video URL","Video bağlantısını kopyala"] {XCTAssertEqual(MediaContextCommand.kind(name),"video",name)}
