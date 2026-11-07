@@ -37,22 +37,51 @@ jobs:
           mkdir -p build/mac-engines
           set -o pipefail
           swift test 2>&1 | tee build/mac-engines/tests.log
-      - name: Build and verify the portable macOS app
-        env:
-          LOKUM_SIGNING_MODE: ad-hoc
-          LOKUM_EXTERNAL_TOOLS: 'true'
-          LOKUM_UPDATE_CONFIG: Configuration/Updates.public.plist
-        run: |
-          scripts/build-app.sh release
-          codesign --verify --deep --strict build/Lokum.app
-          build/Lokum.app/Contents/MacOS/Lokum tool removeBackground Tests/LokumCoreTests/Fixtures/astronaut.png --options '{"backgroundEditing":{"regions":[],"automatic":true,"fill":"transparent","color":"#FFFFFF","selections":{}},"outputDirectory":"build/mac-engines/background"}' --json > build/mac-engines/background.json
-          build/Lokum.app/Contents/MacOS/Lokum --desktop-feature-smoke build/mac-engines/packaged-ui
-          ditto -c -k --sequesterRsrc --keepParent build/Lokum.app build/mac-engines/Lokum-macOS.zip
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         if: always()
         with:
           name: mac-engine-results
           path: build/mac-engines
+          retention-days: 7
+          if-no-files-found: warn
+  mac-package:
+    runs-on: macos-15
+    timeout-minutes: 20
+    env:
+      LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
+      LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
+      LOKUM_DENO: ${{ github.workspace }}/Tools/deno
+      LOKUM_SIGNING_MODE: ad-hoc
+      LOKUM_EXTERNAL_TOOLS: 'true'
+      LOKUM_UPDATE_CONFIG: Configuration/Updates.public.plist
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Install verified package test runtimes
+        run: |
+          if [ ! -d /Applications/LibreOffice.app ]; then brew install --cask libreoffice; fi
+          scripts/setup-tools.sh
+          scripts/setup-exiftool.sh
+      - name: Build and verify the portable macOS app
+        run: |
+          scripts/build-app.sh release
+          codesign --verify --deep --strict build/Lokum.app
+      - name: Exercise the app without its build cache
+        run: |
+          mkdir -p build/mac-package
+          task_build_cache="$PWD/build/verification-swift-build"
+          test ! -e "$task_build_cache"
+          mv .build "$task_build_cache"
+          trap 'mv "$task_build_cache" "$PWD/.build"' EXIT
+          build/Lokum.app/Contents/MacOS/Lokum tool removeBackground Tests/LokumCoreTests/Fixtures/astronaut.png --options '{"backgroundEditing":{"regions":[],"automatic":true,"fill":"transparent","color":"#FFFFFF","selections":{}},"outputDirectory":"build/mac-package/background"}' --json > build/mac-package/background.json
+          build/Lokum.app/Contents/MacOS/Lokum --desktop-feature-smoke build/mac-package/packaged-ui
+          ditto -c -k --sequesterRsrc --keepParent build/Lokum.app build/mac-package/Lokum-macOS.zip
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        if: always()
+        with:
+          name: mac-package
+          path: build/mac-package
           retention-days: 7
           if-no-files-found: warn
   security:
