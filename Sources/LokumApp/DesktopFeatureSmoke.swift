@@ -103,7 +103,13 @@ import LokumCore
             window.isReleasedWhenClosed=false
             let content=NSHostingView(rootView:ToolEditor(state:editorState,tool:tool).uiAuditRoot(recorder));window.contentView=content;window.center();window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
             defer{window.close()}
-            try await wait {recorder.status=="ready" || recorder.status.hasPrefix("failed:")}
+            try await wait {
+                content.layoutSubtreeIfNeeded()
+                if recorder.status.hasPrefix("failed:") {return true}
+                return recorder.status=="ready" && self.views(content).contains {view in
+                    view is AVPlayerView && (view as? AVPlayerView)?.player?.currentItem != nil && view.bounds.width>1 && view.bounds.height>1
+                }
+            }
             guard recorder.status=="ready" else {throw NSError(domain:"Native media editor",code:1,userInfo:[NSLocalizedDescriptionKey:tool.title+": "+recorder.status])}
             if tool == .cropVideo || tool == .redactVideo {
                 guard let player=views(content).compactMap({$0 as? AVPlayerView}).first else {throw NSError(domain:"Native media editor",code:2)}
