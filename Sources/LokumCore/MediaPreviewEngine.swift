@@ -5,10 +5,17 @@ public struct MediaPreviewResult: Sendable, Equatable {
     public let originalURL: URL
     public let playbackURL: URL
     public let ownedTemporaryDirectory: URL?
+    public let exportURLs:[URL]
+    public let additionalTemporaryDirectories:[URL]
+    public init(originalURL:URL,playbackURL:URL,ownedTemporaryDirectory:URL?,exportURLs:[URL]?=nil,additionalTemporaryDirectories:[URL]=[]) {
+        self.originalURL=originalURL;self.playbackURL=playbackURL;self.ownedTemporaryDirectory=ownedTemporaryDirectory
+        self.exportURLs=exportURLs ?? [playbackURL];self.additionalTemporaryDirectories=additionalTemporaryDirectories
+    }
     public var isProxy: Bool { playbackURL != originalURL }
 
     public func removeTemporaryFiles() {
         if let ownedTemporaryDirectory { try? FileManager.default.removeItem(at: ownedTemporaryDirectory) }
+        for directory in additionalTemporaryDirectories {try? FileManager.default.removeItem(at:directory)}
     }
 }
 
@@ -78,7 +85,7 @@ public enum MediaPreviewEngine {
     }
 
     public static func processedPreview(_ kind: ToolKind, input: URL, options: OperationOptions = .init(), token: CancellationToken = .init()) async throws -> MediaPreviewResult {
-        let supported: Set<ToolKind> = [.normalizeAudio, .muteVideo, .trimVideo, .cropVideo, .changeVideoSpeed, .splitVideo, .audioToVideo, .trimAudio, .audioChannels, .redactVideo, .redactAudio]
+        let supported: Set<ToolKind> = [.compress, .normalizeAudio, .muteVideo, .trimVideo, .cropVideo, .changeVideoSpeed, .splitVideo, .audioToVideo, .trimAudio, .audioChannels, .redactVideo, .redactAudio]
         guard supported.contains(kind) else { throw LokumError.unsupported("This operation does not produce a single media preview.") }
         if kind == .splitVideo, !options.joinSplitClips { throw LokumError.invalidInput("Choose Export One Video to preview the retained clips together.") }
         try checkCancellation(token)
@@ -86,14 +93,14 @@ public enum MediaPreviewEngine {
         do {
             var settings = options
             settings.outputDirectory = directory; settings.revealInFinder = false
-            let outputs = try MediaEngine.tool(kind, inputs: [input], options: settings, token: token)
+            let request=ConversionRequest(inputs:[input],operation:.tool(kind),options:settings)
+            let outputs=try await Task.detached {try ConversionEngine.run(request,token:token)}.value
             guard outputs.count == 1, let output = outputs.first else { throw LokumError.failed("The preview did not produce a single media file.") }
             let prepared = try await prepare(output, token: token)
             if let proxyDirectory = prepared.ownedTemporaryDirectory {
-                try? FileManager.default.removeItem(at: directory)
-                return MediaPreviewResult(originalURL: input, playbackURL: prepared.playbackURL, ownedTemporaryDirectory: proxyDirectory)
+                return MediaPreviewResult(originalURL:input,playbackURL:prepared.playbackURL,ownedTemporaryDirectory:directory,exportURLs:outputs,additionalTemporaryDirectories:[proxyDirectory])
             }
-            return MediaPreviewResult(originalURL: input, playbackURL: output, ownedTemporaryDirectory: directory)
+            return MediaPreviewResult(originalURL:input,playbackURL:output,ownedTemporaryDirectory:directory,exportURLs:outputs)
         } catch {
             try? FileManager.default.removeItem(at: directory)
             throw error

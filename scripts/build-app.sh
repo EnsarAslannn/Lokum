@@ -67,6 +67,8 @@ cp Resources/PDFLib.js Resources/PDFInterop.js "$application/Contents/Resources/
 if [[ -f Resources/LokumIcon.icns ]]; then cp Resources/LokumIcon.icns "$application/Contents/Resources/LokumIcon.icns"; fi
 cp Resources/THIRD-PARTY-NOTICES.txt "$application/Contents/Resources/THIRD-PARTY-NOTICES.txt"
 ditto Resources/licenses "$application/Contents/Resources/licenses"
+mkdir -p "$application/Contents/Resources/Models"
+cp Resources/Models/README.md "$application/Contents/Resources/Models/README.md"
 cp "$sparkle_root/LICENSE" "$application/Contents/Resources/licenses/Sparkle-LICENSE.txt"
 sparkle_embedded="$application/Contents/Frameworks/Sparkle.framework/Versions/B"
 codesign "${lokum_signing_flags[@]}" "$sparkle_embedded/XPCServices/Installer.xpc"

@@ -2,7 +2,7 @@
 
 Feature availability depends on the current source, installed tools and platform. The native adaptations and verification boundaries below apply.
 
-`Resources/FeatureCatalog.json` is the shared availability contract: 45 input formats, 27 tools, single/multiple-selection rules and conversion intersections. `scripts/check-feature-parity.py` compares it with the Swift catalog on every source check. The catalog check establishes matching choices; engine and native desktop checks establish behavior.
+`Resources/FeatureCatalog.json` is the shared availability contract: 45 input formats, 28 tools, single/multiple-selection rules and conversion intersections. `scripts/check-feature-parity.py` compares it with the Swift catalog on every source check. The catalog check establishes matching choices; engine and native desktop checks establish behavior.
 
 Windows adds a **Convert** entry to the tools wheel when a common output format is
 available, without duplicating it in the Fine-tune menu. Conversion previews generate
@@ -13,16 +13,25 @@ navigation and target changes are covered. Preview files remain temporary and do
 not write to Library or the user's output folder. Video compression reports actual
 result/original KB after preview, including automatic targets.
 
-Windows additionally offers **Remove Background** for raster images and SVG,
-including mixed image batches. This is an explicit Windows-only addition in
-`FeatureCatalog.cs`; it does not change the shared Swift catalog. U2NETP weights
-are embedded and run offline with ONNX Runtime CPU. The editor previews the
-first image against a checkerboard and exports separate RGBA PNGs at original
-oriented dimensions. Existing alpha is multiplied by the predicted foreground
-mask; originals are preserved and failed/cancelled batches publish nothing.
+Both platforms offer one **Edit Background** entry. Choose foreground areas with
+freehand or rectangle selections, add or subtract areas, and optionally use local
+automatic selection. Each image in a batch keeps its own selection. Preview a
+transparent, palette-color or image background, then save fresh PNG copies.
+The same U2NETP weights are bundled on both platforms and run offline with ONNX
+Runtime CPU. Existing alpha is preserved; failed/cancelled batches publish nothing.
 `dotnet run --project windows/Lokum.Verify -c Release -- --background-removal-only`
 exercises a real public-domain NASA photograph, alpha preservation, batch naming
 and cancellation. `--ui-audit` includes the new preview in both themes/locales.
+
+macOS integrates image cropping into **Edit Image**, with a draft selection and
+explicit crop preview. **Cut Video** accepts independent ranges, including gaps,
+overlaps and a different source-time order, with separate or joined exports.
+Whole-video and selected-range mute remain available. Video compression, crop,
+speed and redaction provide processed previews and actual result/original KB.
+Conversion previews own temporary outputs; Save publishes the approved bytes
+without another encoding pass. Archive previews list entries without extraction.
+File moves stage and publish all copies before removing originals and report any
+original that could not be deleted.
 
 | Area | Windows implementation | Verification |
 | --- | --- | --- |

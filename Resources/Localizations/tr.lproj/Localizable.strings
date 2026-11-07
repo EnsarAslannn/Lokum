@@ -45,6 +45,7 @@
 "32-BIT INTEGER" = "32 BİT TAM SAYI";
 "32-bit float" = "32 bit kayan nokta";
 "32-bit integer" = "32 bit tam sayı";
+"A COMPLETED EXPORT COULD NOT BE LOCATED." = "TAMAMLANAN ÇIKTI BULUNAMADI.";
 "A DISCARDED CLIP IS OUTSIDE THE RANGE." = "ÇIKARILAN BİR KLİP ARALIĞIN DIŞINDA.";
 "A FEW SMALL PREFERENCES. A SMOOTHER EVERYDAY." = "BİRKAÇ KÜÇÜK TERCİH. DAHA AKICI BİR GÜN.";
 "A FEW TOOLS. MORE POSSIBILITIES." = "BİRKAÇ ARAÇ. DAHA FAZLA OLANAK.";
@@ -68,8 +69,10 @@
 "A SELECTED ITEM IS MISSING." = "SEÇİLEN ÖĞELERDEN BİRİ BULUNAMIYOR.";
 "A SPLIT POINT LIES OUTSIDE THE SELECTED RANGE." = "BİR KESİM NOKTASI SEÇİLİ ZAMAN ARALIĞININ DIŞINDA.";
 "A SPLIT POINT LIES OUTSIDE THE VIDEO." = "BİR BÖLME NOKTASI VİDEONUN DIŞINDA KALIYOR.";
+"A STAGED FILE COULD NOT BE VALIDATED." = "HAZIRLANAN DOSYA DOĞRULANAMADI.";
 "A SUBTITLE CUE ENDS BEFORE IT STARTS." = "BİR ALTYAZI SATIRI BAŞLAMADAN BİTİYOR.";
 "A TABLE CELL SPAN IS INVALID OR EXCEEDS 1,024 COLUMNS." = "BİR TABLO HÜCRESİNİN GENİŞLİĞİ GEÇERSİZ VEYA 1.024 SÜTUNU AŞIYOR.";
+"A completed export could not be located." = "Tamamlanan çıktı bulunamadı.";
 "A discarded clip is outside the range." = "Çıkarılan bir klip aralığın dışında.";
 "A few small preferences. A smoother everyday." = "Birkaç küçük tercih. Daha akıcı bir gün.";
 "A few tools. More possibilities." = "Birkaç araç. Daha fazla olanak.";
@@ -92,6 +95,7 @@
 "A selected item is missing." = "Seçilen öğelerden biri bulunamıyor.";
 "A split point lies outside the selected range." = "Bir kesim noktası seçili zaman aralığının dışında.";
 "A split point lies outside the video." = "Bir bölme noktası videonun dışında kalıyor.";
+"A staged file could not be validated." = "Hazırlanan dosya doğrulanamadı.";
 "A subtitle cue ends before it starts." = "Bir altyazı satırı başlamadan bitiyor.";
 "A table cell span is invalid or exceeds 1,024 columns." = "Bir tablo hücresinin genişliği geçersiz veya 1.024 sütunu aşıyor.";
 "ABOUT" = "HAKKINDA";
@@ -99,6 +103,7 @@
 "ACTIONS" = "İŞLEMLER";
 "ADD" = "EKLE";
 "ADD A BLEEP OR SILENCE RANGE." = "BİR BİP VEYA SESSİZLİK ARALIĞI EKLE.";
+"ADD AREAS TO KEEP, OR SUBTRACT HOLES. EACH IMAGE KEEPS ITS OWN SELECTION." = "KORUNACAK ALANLAR EKLE VEYA İÇ BOŞLUKLARI SEÇİMDEN ÇIKAR. HER GÖRSELİN SEÇİMİ AYRI TUTULUR.";
 "ADD BG" = "ARKA PLAN EKLE";
 "ADD FIELD" = "ALAN EKLE";
 "ADD FILES" = "DOSYA EKLE";
@@ -117,12 +122,14 @@
 "ALL" = "TÜMÜ";
 "ALL METADATA" = "TÜM META VERİLER";
 "ALL SET. YOU’RE READY TO GO." = "HER ŞEY HAZIR.";
+"ALLOW ACCESSIBILITY TO READ THE SELECTED MEDIA ADDRESS." = "SEÇİLİ MEDYA ADRESİNİ OKUMAK İÇİN ERİŞİLEBİLİRLİK İZNİ VER.";
 "ALLOW FOLDER…" = "KLASÖRE İZİN VER…";
 "ALLOW HOME FOLDER ACCESS…" = "ANA KLASÖRE ERİŞİM İZNİ VER…";
 "ALLOW LOKUM IN MACOS LOGIN ITEMS." = "MACOS GİRİŞ ÖĞELERİ BÖLÜMÜNDEN LOKUM'YE İZİN VER.";
 "ALREADY AVAILABLE ON YOUR COMPUTER" = "BİLGİSAYARINDA ZATEN HAZIR";
 "AN EMBEDDED IMAGE IS MISSING OR TOO LARGE." = "GÖMÜLÜ BİR GÖRSEL EKSİK VEYA ÇOK BÜYÜK.";
 "AN EMPTY OUTPUT WAS PRODUCED." = "BOŞ BİR ÇIKTI OLUŞTU.";
+"AN EXPORT COULD NOT BE STAGED SAFELY. YOUR ORIGINALS WERE NOT CHANGED." = "ÇIKTI GÜVENLİ ŞEKİLDE HAZIRLANAMADI. ÖZGÜN DOSYALARIN DEĞİŞTİRİLMEDİ.";
 "AN HTTPS DOWNLOAD IS REQUIRED." = "İNDİRME HTTPS ÜZERİNDEN YAPILMALI.";
 "AN OUTPUT CANNOT BE A SYMBOLIC LINK." = "ÇIKTI SEMBOLİK BAĞLANTI OLAMAZ.";
 "AN OUTPUT IS OUTSIDE ITS STAGING DIRECTORY." = "BİR ÇIKTI GEÇİCİ KLASÖRÜNÜN DIŞINDA KALDI.";
@@ -155,6 +162,7 @@
 "AUDIO BITRATE" = "SES BİT HIZI";
 "AUDIO BITRATE (KBPS)" = "SES BİT HIZI (KBPS)";
 "AUDIO CHANNELS" = "SES KANALLARI";
+"AUDIO OUTSIDE THIS INTERVAL STAYS UNCHANGED." = "BU ARALIĞIN DIŞINDAKİ SES KORUNUR.";
 "AUDIO PITCH IS PRESERVED." = "SES PERDESİ KORUNUR.";
 "AUDIO SAMPLE DEPTH" = "SES ÖRNEK DERİNLİĞİ";
 "AUDIO TO VIDEO" = "SESTEN VİDEO OLUŞTUR";
@@ -162,6 +170,7 @@
 "AUDIO · MP3" = "SES · MP3";
 "AUTHOR" = "YAZAR";
 "AUTHORIZE SAVED TOKEN…" = "KAYITLI TOKENA İZİN VER…";
+"AUTO SELECT" = "OTOMATİK SEÇ";
 "AUTOMATIC SELECTION STAYS ON YOUR PC. DRAW TO ADD OR SUBTRACT AREAS AFTERWARD." = "OTOMATİK SEÇİM BİLGİSAYARINDA YAPILIR. ARDINDAN ÇİZEREK ALAN EKLEYEBİLİR VEYA ÇIKARABİLİRSİN.";
 "AVAILABLE FILES SELECTED. SOME FILES HAVE MOVED OR WERE DELETED." = "MEVCUT DOSYALAR SEÇİLDİ. BAZI DOSYALAR TAŞINMIŞ VEYA SİLİNMİŞ.";
 "About" = "Hakkında";
@@ -177,6 +186,7 @@
 "Add Redaction" = "Sansür Alanı Ekle";
 "Add Split" = "Bölme Noktası Ekle";
 "Add a bleep or silence range." = "Bir bip veya sessizlik aralığı ekle.";
+"Add areas to keep, or subtract holes. Each image keeps its own selection." = "Korunacak alanlar ekle veya iç boşlukları seçimden çıkar. Her görselin seçimi ayrı tutulur.";
 "Add files" = "Dosya ekle";
 "Add metadata fields" = "Meta veri alanı ekle";
 "Add selected area" = "Seçili alanı ekle";
@@ -189,6 +199,7 @@
 "All set. You’re ready to go." = "Her şey hazır.";
 "Allow %@ once to move and resize other apps’ windows." = "Diğer uygulamaların pencerelerini taşımak ve boyutlandırmak için bir kez %@ izni ver.";
 "Allow %lld once to move and resize other apps’ windows." = "Diğer uygulamaların pencerelerini taşımak ve boyutlandırmak için bir kez %lld izni ver.";
+"Allow Accessibility to read the selected media address." = "Seçili medya adresini okumak için Erişilebilirlik izni ver.";
 "Allow Folder…" = "Klasöre İzin Ver…";
 "Allow Home Folder Access…" = "Ana Klasöre Erişim İzni Ver…";
 "Allow Lokum in macOS Login Items." = "macOS Giriş Öğeleri bölümünden Lokum'ye izin ver.";
@@ -198,6 +209,7 @@
 "An RTFD attachment is missing or too large: %lld" = "Bir RTFD eki eksik veya çok büyük: %lld";
 "An embedded image is missing or too large." = "Gömülü bir görsel eksik veya çok büyük.";
 "An empty output was produced." = "Boş bir çıktı oluştu.";
+"An export could not be staged safely. Your originals were not changed." = "Çıktı güvenli şekilde hazırlanamadı. Özgün dosyaların değiştirilmedi.";
 "An output cannot be a symbolic link." = "Çıktı sembolik bağlantı olamaz.";
 "An output is outside its staging directory." = "Bir çıktı geçici klasörünün dışında kaldı.";
 "Annotate" = "İşaretle";
@@ -232,12 +244,14 @@
 "Audio Visualizer" = "Sesi Görselleştir";
 "Audio bitrate" = "Ses bit hızı";
 "Audio bitrate (kbps)" = "Ses bit hızı (kbps)";
+"Audio outside this interval stays unchanged." = "Bu aralığın dışındaki ses korunur.";
 "Audio pitch is preserved." = "Ses perdesi korunur.";
 "Audio sample depth" = "Ses örnek derinliği";
 "Audio to Video" = "Sesten Video Oluştur";
 "Audio · MP3" = "Ses · MP3";
 "Author" = "Yazar";
 "Authorize Saved Token…" = "Kayıtlı Tokena İzin Ver…";
+"Auto select" = "Otomatik seç";
 "Automatic selection stays on your PC. Draw to add or subtract areas afterward." = "Otomatik seçim bilgisayarında yapılır. Ardından çizerek alan ekleyebilir veya çıkarabilirsin.";
 "Available files selected. Some files have moved or were deleted." = "Mevcut dosyalar seçildi. Bazı dosyalar taşınmış veya silinmiş.";
 "BACK" = "GERİ";
@@ -247,6 +261,7 @@
 "BACKGROUND EDITOR · LOKUM" = "ARKA PLAN DÜZENLEYİCİ · LOKUM";
 "BACKGROUND IMAGE" = "ARKA PLAN GÖRSELİ";
 "BACKGROUND IMAGE…" = "ARKA PLAN GÖRSELİ…";
+"BACKGROUND SETTINGS APPLY TO EVERY IMAGE." = "ARKA PLAN AYARLARI TÜM GÖRSELLERE UYGULANIR.";
 "BACKGROUND TYPE" = "ARKA PLAN TÜRÜ";
 "BALANCED" = "DENGELİ";
 "BARS" = "ÇUBUKLAR";
@@ -262,6 +277,7 @@
 "BOTTOM" = "ALT";
 "BRIGHTNESS" = "PARLAKLIK";
 "BUILT FOR YOUR FILES. MADE FOR YOUR MAC." = "DOSYALARIN İÇİN GELİŞTİRİLDİ. MAC'İN İÇİN TASARLANDI.";
+"BUNDLED BACKGROUND REMOVAL MODEL" = "UYGULAMAYA DAHİL ARKA PLAN KALDIRMA MODELİ";
 "Back" = "Geri";
 "Background" = "Arka plan";
 "Background Image…" = "Arka Plan Görseli…";
@@ -269,6 +285,7 @@
 "Background color" = "Arka plan rengi";
 "Background editor · Lokum" = "Arka plan düzenleyici · Lokum";
 "Background image" = "Arka plan görseli";
+"Background settings apply to every image." = "Arka plan ayarları tüm görsellere uygulanır.";
 "Background type" = "Arka plan türü";
 "Balanced" = "Dengeli";
 "Bars" = "Çubuklar";
@@ -284,10 +301,12 @@
 "Bottom" = "Alt";
 "Brightness" = "Parlaklık";
 "Built for your files. Made for your Mac." = "Dosyaların için geliştirildi. Mac'in için tasarlandı.";
+"Bundled background removal model" = "Uygulamaya dahil arka plan kaldırma modeli";
 "CALLOUT" = "AÇIKLAMA";
 "CAMERA MANUFACTURER" = "KAMERA ÜRETİCİSİ";
 "CAMERA MODEL" = "KAMERA MODELİ";
 "CANCEL" = "İPTAL";
+"CANCEL CROP" = "KIRPMAYI İPTAL ET";
 "CANCEL DOWNLOAD" = "İNDİRMEYİ İPTAL ET";
 "CANCEL SETUP" = "KURULUMU İPTAL ET";
 "CANCELLED. ORIGINALS KEPT." = "İPTAL EDİLDİ. ORİJİNALLER KORUNDU.";
@@ -318,6 +337,8 @@
 "CHOOSE A CLIP AND ADJUST ITS OWN START AND END. OTHER CLIPS STAY UNCHANGED; GAPS, OVERLAPS AND ANY SOURCE-TIME ORDER ARE ALLOWED. APPLYING A NEW COUNT RESETS ALL CLIP RANGES." = "BİR KLİP SEÇ VE KENDİ BAŞLANGIÇ/BİTİŞİNİ AYARLA. DİĞER KLİPLER DEĞİŞMEZ; ARADA BOŞLUK BIRAKABİLİR, ÖRTÜŞEN VEYA VİDEONUN FARKLI YERLERİNDEN ARALIKLAR SEÇEBİLİRSİN. YENİ KLİP SAYISINI UYGULAMAK TÜM ARALIKLARI SIFIRLAR.";
 "CHOOSE A COLOR IN #RRGGBB FORMAT." = "#RRGGBB BİÇİMİNDE BİR RENK GİR.";
 "CHOOSE A COMPLETE RTFD FOLDER CONTAINING TXT.RTF." = "TXT.RTF İÇEREN EKSİKSİZ BİR RTFD KLASÖRÜ SEÇ.";
+"CHOOSE A CROP RECTANGLE INSIDE THE IMAGE." = "GÖRSELİN İÇİNDE BİR KIRPMA ALANI SEÇ.";
+"CHOOSE A DESTINATION FOLDER." = "BİR HEDEF KLASÖR SEÇ.";
 "CHOOSE A DESTINATION OUTSIDE THE FOLDER BEING MOVED." = "TAŞINAN KLASÖRÜN DIŞINDA BİR HEDEF SEÇ.";
 "CHOOSE A FILE TO PREVIEW." = "ÖNİZLEMEK İÇİN BİR DOSYA SEÇ.";
 "CHOOSE A FINISHED VIDEO INSTEAD OF A LIVE OR UPCOMING STREAM." = "CANLI VEYA HENÜZ BAŞLAMAMIŞ BİR YAYIN YERİNE TAMAMLANMIŞ BİR VİDEO SEÇ.";
@@ -330,6 +351,7 @@
 "CHOOSE A POSITIVE SIZE OR A REDUCTION BELOW 100%. ZERO USES AUTOMATIC COMPRESSION." = "POZİTİF BİR BOYUT VEYA %100'ÜN ALTINDA BİR KÜÇÜLTME SEÇ. SIFIR, OTOMATİK SIKIŞTIRMA KULLANIR.";
 "CHOOSE A POSITIVE TARGET SIZE OR A REDUCTION BETWEEN 0 AND 100%." = "POZİTİF BİR HEDEF BOYUT VEYA %0 İLE %100 ARASINDA BİR KÜÇÜLTME SEÇ.";
 "CHOOSE A RECTANGLE INSIDE THE VIDEO." = "VİDEONUN İÇİNDE KALAN BİR DİKDÖRTGEN SEÇ.";
+"CHOOSE A SUPPORTED BACKGROUND TYPE." = "DESTEKLENEN BİR ARKA PLAN TÜRÜ SEÇ.";
 "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT." = "DESTEKLENEN BİR MAKSİMUM VİDEO YÜKSEKLİĞİ SEÇ.";
 "CHOOSE A SUPPORTED OUTPUT FORMAT." = "DESTEKLENEN BİR ÇIKTI BİÇİMİ SEÇ.";
 "CHOOSE A TARGET OF AT LEAST 2 KB." = "EN AZ 2 KB'LIK BİR HEDEF SEÇ.";
@@ -354,6 +376,7 @@
 "CHOOSE DOWNLOADS FOLDER…" = "İNDİRME KLASÖRÜNÜ SEÇ…";
 "CHOOSE FEWER FILES TO OPEN." = "AÇMAK İÇİN DAHA AZ DOSYA SEÇ.";
 "CHOOSE FILES" = "DOSYA SEÇ";
+"CHOOSE FILES AND A LOCAL DESTINATION FOLDER." = "DOSYALARI VE BU BİLGİSAYARDA BİR HEDEF KLASÖR SEÇ.";
 "CHOOSE FILES AND A SUPPORTED MEDIA FORMAT." = "DOSYALARI VE DESTEKLENEN BİR MEDYA BİÇİMİNİ SEÇ.";
 "CHOOSE FILES TO ZIP." = "SIKIŞTIRMAK İÇİN DOSYA SEÇ.";
 "CHOOSE FILES…" = "DOSYA SEÇ…";
@@ -418,6 +441,7 @@
 "COMPRESSION STRENGTH" = "SIKIŞTIRMA GÜCÜ";
 "CONTINUE TO LOKUM" = "LOKUM’YE DEVAM ET";
 "CONTRAST" = "KONTRAST";
+"CONTROL-CLICK FILES IN FINDER TO OPEN THEIR TOOLS, OR MEDIA IN A BROWSER TO DOWNLOAD IT. READING ANOTHER APP'S CONTEXT MENU ALSO NEEDS ACCESSIBILITY PERMISSION." = "FINDER DOSYALARINA CONTROL İLE TIKLAYARAK ARAÇLARINI AÇABİLİR, TARAYICIDAKİ MEDYAYI BU ŞEKİLDE İNDİREBİLİRSİN. BAŞKA UYGULAMANIN MENÜSÜNÜ OKUMAK İÇİN ERİŞİLEBİLİRLİK İZNİ DE GEREKİR.";
 "CONVERSION SETTINGS" = "DÖNÜŞTÜRME AYARLARI";
 "CONVERSION WHEEL" = "DÖNÜŞTÜRME ÇARKI";
 "CONVERSIONS" = "DÖNÜŞTÜRMELER";
@@ -437,6 +461,8 @@
 "COPYRIGHT" = "TELİF HAKKI";
 "CORNER RADIUS" = "KÖŞE YUVARLAKLIĞI";
 "CORNERS" = "KÖŞELER";
+"COULD NOT CREATE THE BACKGROUND RESULT." = "ARKA PLAN SONUCU OLUŞTURULAMADI.";
+"COULD NOT READ IMAGE PIXELS." = "GÖRSEL PİKSELLERİ OKUNAMADI.";
 "COULDN’T CHECK FOR UPDATES" = "GÜNCELLEMELER DENETLENEMEDİ";
 "COULDN’T FINISH" = "İŞLEM TAMAMLANAMADI";
 "COULDN’T OPEN THIS TOOL" = "BU ARAÇ AÇILAMADI";
@@ -466,6 +492,7 @@
 "Camera manufacturer" = "Kamera üreticisi";
 "Camera model" = "Kamera modeli";
 "Cancel" = "İptal";
+"Cancel Crop" = "Kırpmayı iptal et";
 "Cancel download" = "İndirmeyi iptal et";
 "Cancel setup" = "Kurulumu iptal et";
 "Cancelled. Originals kept." = "İptal edildi. Orijinaller korundu.";
@@ -509,6 +536,8 @@
 "Choose a clip and adjust its own Start and End. Other clips stay unchanged; gaps, overlaps and any source-time order are allowed. Applying a new count resets all clip ranges." = "Bir klip seç ve kendi başlangıç/bitişini ayarla. Diğer klipler değişmez; arada boşluk bırakabilir, örtüşen veya videonun farklı yerlerinden aralıklar seçebilirsin. Yeni klip sayısını uygulamak tüm aralıkları sıfırlar.";
 "Choose a color in #RRGGBB format." = "#RRGGBB biçiminde bir renk gir.";
 "Choose a complete RTFD folder containing TXT.rtf." = "TXT.rtf içeren eksiksiz bir RTFD klasörü seç.";
+"Choose a crop rectangle inside the image." = "Görselin içinde bir kırpma alanı seç.";
+"Choose a destination folder." = "Bir hedef klasör seç.";
 "Choose a destination outside the folder being moved." = "Taşınan klasörün dışında bir hedef seç.";
 "Choose a file to preview." = "Önizlemek için bir dosya seç.";
 "Choose a finished video instead of a live or upcoming stream." = "Canlı veya henüz başlamamış bir yayın yerine tamamlanmış bir video seç.";
@@ -519,6 +548,7 @@
 "Choose a positive size or a reduction below 100%. Zero uses automatic compression." = "Pozitif bir boyut veya %100'ün altında bir küçültme seç. Sıfır, otomatik sıkıştırma kullanır.";
 "Choose a positive target size or a reduction between 0 and 100%." = "Pozitif bir hedef boyut veya %0 ile %100 arasında bir küçültme seç.";
 "Choose a rectangle inside the video." = "Videonun içinde kalan bir dikdörtgen seç.";
+"Choose a supported background type." = "Desteklenen bir arka plan türü seç.";
 "Choose a supported maximum video height." = "Desteklenen bir maksimum video yüksekliği seç.";
 "Choose a supported output format." = "Desteklenen bir çıktı biçimi seç.";
 "Choose a target of at least 2 KB." = "En az 2 KB'lık bir hedef seç.";
@@ -543,6 +573,7 @@
 "Choose downloads folder…" = "İndirme klasörünü seç…";
 "Choose fewer files to open." = "Açmak için daha az dosya seç.";
 "Choose files" = "Dosya seç";
+"Choose files and a local destination folder." = "Dosyaları ve bu bilgisayarda bir hedef klasör seç.";
 "Choose files and a supported media format." = "Dosyaları ve desteklenen bir medya biçimini seç.";
 "Choose files to zip." = "Sıkıştırmak için dosya seç.";
 "Choose files…" = "Dosya seç…";
@@ -601,6 +632,7 @@
 "Compression strength" = "Sıkıştırma gücü";
 "Continue to Lokum" = "Lokum’ye devam et";
 "Contrast" = "Kontrast";
+"Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission." = "Finder dosyalarına Control ile tıklayarak araçlarını açabilir, tarayıcıdaki medyayı bu şekilde indirebilirsin. Başka uygulamanın menüsünü okumak için Erişilebilirlik izni de gerekir.";
 "Conversion Settings" = "Dönüştürme Ayarları";
 "Conversion wheel" = "Dönüştürme çarkı";
 "Conversions" = "Dönüştürmeler";
@@ -633,6 +665,8 @@
 "Copyright" = "Telif hakkı";
 "Corner radius" = "Köşe yuvarlaklığı";
 "Corners" = "Köşeler";
+"Could not create the background result." = "Arka plan sonucu oluşturulamadı.";
+"Could not read image pixels." = "Görsel pikselleri okunamadı.";
 "Couldn’t check for updates" = "Güncellemeler denetlenemedi";
 "Couldn’t finish" = "İşlem tamamlanamadı";
 "Couldn’t open this tool" = "Bu araç açılamadı";
@@ -703,6 +737,8 @@
 "DOWNLOAD VIDEO" = "VİDEOYU İNDİR";
 "DOWNLOAD ↗" = "İNDİR ↗";
 "DOWNLOADING…" = "İNDİRİLİYOR…";
+"DPI: %@" = "DPI: %@";
+"DPI: %lld" = "DPI: %lld";
 "DRAG A CROP INSIDE THE IMAGE." = "KIRPMA ALANINI GÖRSELİN İÇİNDE SÜRÜKLE.";
 "DRAG A RANGE TO MOVE IT; DRAG ITS EDGES TO RESIZE. DRAG EMPTY SPACE TO ADD." = "ARALIĞI TAŞIMAK İÇİN İÇİNİ, BOYUTLANDIRMAK İÇİN KENARLARINI SÜRÜKLE. YENİ ARALIK İÇİN BOŞ BİR ALANI SÜRÜKLE.";
 "DRAG A WINDOW BY ITS TITLE BAR OR RESIZE BORDER, THEN TAP SHIFT OR COMMAND. HOVER OVER A LAYOUT AND RELEASE THE MOUSE TO PLACE IT. ESCAPE CANCELS." = "PENCEREYİ BAŞLIK ÇUBUĞUNDAN VEYA KENARINDAN SÜRÜKLERKEN SHIFT YA DA COMMAND'A BAS. BİR DÜZENİN ÜZERİNE GELİP FAREYİ BIRAK. ESCAPE İPTAL EDER.";
@@ -796,6 +832,7 @@
 "Drop it like it’s… a file." = "Dosyanı buraya bırak.";
 "Drop something good." = "Bir dosya bırak.";
 "Duplicate" = "Çoğalt";
+"EACH CLIP HAS ITS OWN RANGE. GAPS, OVERLAPS AND A DIFFERENT SOURCE ORDER ARE ALLOWED." = "HER KLİBİN ARALIĞI BAĞIMSIZDIR. ARALARDA BOŞLUK BIRAKABİLİR, ARALIKLARI ÖRTÜŞTÜREBİLİR VE KAYNAK SIRASINI DEĞİŞTİREBİLİRSİN.";
 "EACH CLIP MUST BE AT LEAST 0.05 SECONDS LONG." = "HER KLİP EN AZ 0,05 SANİYE UZUNLUĞUNDA OLMALI.";
 "EDIT" = "DÜZENLE";
 "EDIT BACKGROUND" = "ARKA PLAN DÜZENLE";
@@ -803,6 +840,7 @@
 "EDIT IMAGE · LOKUM" = "GÖRSEL DÜZENLE · LOKUM";
 "EDIT PHOTO" = "GÖRSEL DÜZENLE";
 "EDIT PHOTO · LOKUM" = "GÖRSEL DÜZENLE · LOKUM";
+"EDITABLE CONTENT" = "DÜZENLENEBİLİR İÇERİK";
 "EDITABLE PARAGRAPHS" = "DÜZENLENEBİLİR PARAGRAFLAR";
 "EDITABLE PARAGRAPHS AND TABLES" = "DÜZENLENEBİLİR PARAGRAF VE TABLOLAR";
 "ELLIPSE" = "ELİPS";
@@ -826,6 +864,7 @@
 "EXPOSURE" = "POZLAMA";
 "EXTRACT ARCHIVE" = "ARŞİVİ AÇ";
 "EXTRACT LOKUM INTO ITS OWN WRITABLE FOLDER FIRST." = "ÖNCE LOKUM'Yİ YAZILABİLİR, KENDİNE AİT BİR KLASÖRE ÇIKAR.";
+"Each clip has its own range. Gaps, overlaps and a different source order are allowed." = "Her klibin aralığı bağımsızdır. Aralarda boşluk bırakabilir, aralıkları örtüştürebilir ve kaynak sırasını değiştirebilirsin.";
 "Each clip must be at least 0.05 seconds long." = "Her klip en az 0,05 saniye uzunluğunda olmalı.";
 "Edit" = "Düzenle";
 "Edit Background" = "Arka Plan Düzenle";
@@ -833,6 +872,7 @@
 "Edit Image · Lokum" = "Görsel Düzenle · Lokum";
 "Edit Photo" = "Görsel Düzenle";
 "Edit Photo · Lokum" = "Görsel Düzenle · Lokum";
+"Editable content" = "Düzenlenebilir içerik";
 "Editable paragraphs" = "Düzenlenebilir paragraflar";
 "Editable paragraphs and tables" = "Düzenlenebilir paragraf ve tablolar";
 "Ellipse" = "Elips";
@@ -912,6 +952,7 @@
 "FOLDERS" = "KLASÖRLER";
 "FONT" = "YAZI TİPİ";
 "FONT SIZE" = "YAZI BOYUTU";
+"FOREGROUND SELECTION" = "KORUNACAK ALAN";
 "FORMAT COMPATIBILITY" = "BİÇİM UYUMLULUĞU";
 "FORMAT PREFERENCES" = "BİÇİM TERCİHLERİ";
 "FORMATS" = "BİÇİMLER";
@@ -981,11 +1022,14 @@
 "Folders" = "Klasörler";
 "Font" = "Yazı tipi";
 "Font size" = "Yazı boyutu";
+"Foreground selection" = "Korunacak alan";
 "Format Compatibility" = "Biçim Uyumluluğu";
 "Format preferences" = "Biçim tercihleri";
 "Formats" = "Biçimler";
 "Frame Image" = "Çerçeve Ekle";
 "Frame rate" = "Kare hızı";
+"Frame rate: %@" = "Kare hızı: %@";
+"Frame rate: %lld" = "Kare hızı: %lld";
 "Frame timing and repeat count are preserved." = "Kare süreleri ve tekrar sayısı korunur.";
 "Free" = "Serbest";
 "Freehand selection" = "Serbest seçim";
@@ -1101,9 +1145,11 @@
 "Invalid update manifest." = "Güncelleme bilgisi geçersiz.";
 "Invalid update signature length." = "Güncelleme imzasının uzunluğu geçersiz.";
 "Invalid update signature." = "Güncelleme imzası geçersiz.";
+"JOIN CLIPS INTO ONE VIDEO" = "KLİPLERİ TEK VİDEODA BİRLEŞTİR";
 "JOIN RETAINED CLIPS INTO ONE VIDEO" = "KALAN KLİPLERİ TEK VİDEODA BİRLEŞTİR";
 "JOIN VIDEOS" = "VİDEOLARI BİRLEŞTİR";
 "Join Videos" = "Videoları Birleştir";
+"Join clips into one video" = "Klipleri tek videoda birleştir";
 "Join retained clips into one video" = "Kalan klipleri tek videoda birleştir";
 "KEEP AT LEAST ONE CLIP." = "EN AZ BİR KLİP BIRAK.";
 "KEEP AT LEAST ONE PAGE." = "EN AZ BİR SAYFA BIRAK.";
@@ -1112,6 +1158,7 @@
 "KEEP ORIGINAL DIMENSIONS" = "ORİJİNAL BOYUTLARI KORU";
 "KEEP REDACTION AREAS INSIDE THE IMAGE." = "SANSÜR ALANLARINI GÖRSELİN İÇİNDE TUT.";
 "KEEP RUNNING IN THE SYSTEM TRAY" = "SİSTEM TEPSİSİNDE ÇALIŞMAYA DEVAM ET";
+"KEEP SELECTION POINTS INSIDE THE IMAGE." = "SEÇİM NOKTALARINI GÖRSELİN İÇİNDE TUT.";
 "KEEP SPLIT POINTS AT LEAST 0.05 SECONDS APART." = "BÖLME NOKTALARI ARASINDA EN AZ 0,05 SANİYE BIRAK.";
 "KEEP THE GOOD PART." = "İSTEDİĞİN BÖLÜM KALSIN.";
 "KEEP THE ORIGINAL PAGES" = "ORİJİNAL SAYFALARI KORU";
@@ -1125,6 +1172,7 @@
 "Keep original dimensions" = "Orijinal boyutları koru";
 "Keep redaction areas inside the image." = "Sansür alanlarını görselin içinde tut.";
 "Keep running in the system tray" = "Sistem tepsisinde çalışmaya devam et";
+"Keep selection points inside the image." = "Seçim noktalarını görselin içinde tut.";
 "Keep split points at least 0.05 seconds apart." = "Bölme noktaları arasında en az 0,05 saniye bırak.";
 "Keep the good part." = "İstediğin bölüm kalsın.";
 "Keep the original pages" = "Orijinal sayfaları koru";
@@ -1158,6 +1206,7 @@
 "LITTLE TWEAKS.\nBIG DIFFERENCE." = "KÜÇÜK DOKUNUŞLAR.\nBÜYÜK FARK.";
 "LITTLE TWEAKS. A WHOLE NEW LOOK." = "KÜÇÜK DOKUNUŞLAR. YEPYENİ BİR GÖRÜNÜM.";
 "LOADING BACKGROUND IMAGE…" = "ARKA PLAN GÖRSELİ YÜKLENİYOR…";
+"LOADING…" = "YÜKLENİYOR…";
 "LOCAL BY DESIGN" = "VERİLERİN CİHAZINDA KALIR";
 "LOCAL FILES: USE YOUR USUAL CTRL SHORTCUT. CHROME WEB MEDIA: CTRL + LEFT-CLICK WITH THE LOKUM EXTENSION." = "YEREL DOSYALARDA NORMAL CTRL KISAYOLUNU KULLAN. CHROME’DAKİ WEB MEDYASINDA LOKUM UZANTISIYLA CTRL + SOL TIK YAP.";
 "LOKUM CHECKS ONCE AN HOUR WHILE IT’S RUNNING. YOU CHOOSE WHEN TO DOWNLOAD AND INSTALL." = "LOKUM ÇALIŞIRKEN SAATTE BİR DENETLER. İNDİRME VE KURULUM ZAMANINI SEN SEÇERSİN.";
@@ -1198,6 +1247,7 @@
 "Little tweaks.\nBig difference." = "Küçük dokunuşlar.\nBüyük fark.";
 "Little tweaks. A whole new look." = "Küçük dokunuşlar. Yepyeni bir görünüm.";
 "Loading background image…" = "Arka plan görseli yükleniyor…";
+"Loading…" = "Yükleniyor…";
 "Local by design" = "Verilerin cihazında kalır";
 "Local by design · MIT source\nVersion %@" = "Verilerin cihazında kalır · MIT lisanslı kaynak kodu\nSürüm %@";
 "Local by design · MIT source\nVersion %lld" = "Verilerin cihazında kalır · MIT lisanslı kaynak kodu\nSürüm %lld";
@@ -1254,6 +1304,7 @@
 "MOVED OR REMOVED" = "TAŞINMIŞ VEYA SİLİNMİŞ";
 "MUTE" = "SESSİZE AL";
 "MUTE ONLY THE SELECTED RANGE" = "YALNIZCA SEÇİLİ ARALIĞIN SESİNİ KALDIR";
+"MUTE SELECTED RANGE ONLY" = "YALNIZCA SEÇİLİ ARALIĞIN SESİNİ KALDIR";
 "MUTE VIDEO" = "VİDEOYU SESSİZE AL";
 "MUTE VIDEO · LOKUM" = "VİDEOYU SESSİZE AL · LOKUM";
 "Made for your Mac" = "Mac'in için tasarlandı";
@@ -1301,6 +1352,7 @@
 "Mute Video" = "Videoyu Sessize Al";
 "Mute Video · Lokum" = "Videoyu Sessize Al · Lokum";
 "Mute only the selected range" = "Yalnızca seçili aralığın sesini kaldır";
+"Mute selected range only" = "Yalnızca seçili aralığın sesini kaldır";
 "NEXT" = "İLERİ";
 "NEXT FRAME" = "SONRAKİ KARE";
 "NEXT PAGE" = "SONRAKİ SAYFA";
@@ -1359,6 +1411,8 @@
 "Nothing here yet. Paste something or make your first fresh copy." = "Burada henüz bir şey yok. Bir dosya yapıştır veya ilk kopyanı oluştur.";
 "Number" = "Numara";
 "Number of clips" = "Klip sayısı";
+"Number of clips: %@" = "Klip sayısı: %@";
+"Number of clips: %lld" = "Klip sayısı: %lld";
 "OFFICE CABINET IS MISSING A FILE." = "OFFICE PAKETİNDE BİR DOSYA EKSİK.";
 "OFFICE CHECKSUM MISMATCH. NOTHING WAS INSTALLED." = "OFFICE SAĞLAMA TOPLAMI EŞLEŞMİYOR. HİÇBİR ŞEY KURULMADI.";
 "OFFICE SETUP COULD NOT FINISH" = "OFİS KURULUMU TAMAMLANAMADI";
@@ -1377,6 +1431,7 @@
 "OPEN LOGIN ITEMS" = "GİRİŞ ÖĞELERİNİ AÇ";
 "OPEN LOKUM" = "LOKUM'Yİ AÇ";
 "OPEN PERMISSION SETTINGS…" = "İZİN AYARLARINI AÇ…";
+"OPEN PREVIEW" = "ÖNİZLEMEYİ AÇ";
 "OPEN WHEEL" = "ÇARKI AÇ";
 "OPTIONAL. YOU CAN CHANGE THIS IN SETTINGS." = "İSTEĞE BAĞLI. AYARLARDAN DEĞİŞTİREBİLİRSİN.";
 "ORGANIZE PDF" = "PDF'Yİ DÜZENLE";
@@ -1411,6 +1466,7 @@
 "Open Chrome extensions" = "Chrome uzantılarını aç";
 "Open Login Items" = "Giriş Öğelerini Aç";
 "Open Lokum" = "Lokum'yi Aç";
+"Open Preview" = "Önizlemeyi aç";
 "Open a specific YouTube video or Short, then try again." = "Belirli bir YouTube videosunu veya Shorts’u açıp tekrar dene.";
 "Open in Terminal" = "Terminal'de Aç";
 "Open link" = "Bağlantıyı aç";
@@ -1475,6 +1531,7 @@
 "PORTRAIT · 9:16" = "DİKEY · 9:16";
 "POSITION X" = "X KONUMU";
 "POSITION Y" = "Y KONUMU";
+"PREPARE A RESULT BEFORE SAVING." = "KAYDETMEDEN ÖNCE SONUCU HAZIRLA.";
 "PREPARE CHROME CONNECTION" = "CHROME BAĞLANTISINI HAZIRLA";
 "PREPARING A LOCAL PREVIEW…" = "YEREL ÖNİZLEME HAZIRLANIYOR…";
 "PREPARING CONVERTED RESULT…" = "DÖNÜŞTÜRÜLMÜŞ SONUÇ HAZIRLANIYOR…";
@@ -1485,6 +1542,7 @@
 "PREPARING…" = "HAZIRLANIYOR…";
 "PRESERVE METADATA" = "META VERİLERİ KORU";
 "PRESERVE ORIGINAL PAGES" = "ORİJİNAL SAYFALARI KORU";
+"PRESERVE PAGE LAYOUT" = "SAYFA DÜZENİNİ KORU";
 "PRESET" = "ÖN AYAR";
 "PREVIEW" = "ÖNİZLEME";
 "PREVIEW CROP" = "KIRPMAYI ÖNİZLE";
@@ -1494,6 +1552,7 @@
 "PREVIEW READY. SAVE A NEW COPY WHEN YOU LIKE THE RESULT." = "ÖNİZLEME HAZIR. SONUCU BEĞENDİĞİNDE YENİ BİR KOPYA KAYDET.";
 "PREVIEW RIGHT" = "SAĞI ÖNİZLE";
 "PREVIEW SHOWS THE FIRST IMAGE. SAVING PROCESSES ALL SELECTED IMAGES." = "ÖNİZLEME İLK GÖRSELİ GÖSTERİR. KAYDEDİLDİĞİNDE SEÇİLEN TÜM GÖRSELLER İŞLENİR.";
+"PREVIEW THE RESULT BEFORE SAVING A FRESH COPY." = "YENİ KOPYAYI KAYDETMEDEN ÖNCE SONUCU ÖNİZLE.";
 "PREVIEW USES THE FIRST 12 SECONDS. EXPORT INCLUDES THE FULL RECORDING." = "ÖNİZLEME İLK 12 SANİYEYİ KULLANIR. DIŞA AKTARMA KAYDIN TAMAMINI İÇERİR.";
 "PREVIOUS FRAME" = "ÖNCEKİ KARE";
 "PREVIOUS PAGE" = "ÖNCEKİ SAYFA";
@@ -1537,6 +1596,7 @@
 "Position X" = "X konumu";
 "Position Y" = "Y konumu";
 "Prepare Chrome connection" = "Chrome bağlantısını hazırla";
+"Prepare a result before saving." = "Kaydetmeden önce sonucu hazırla.";
 "Preparing a local preview…" = "Yerel önizleme hazırlanıyor…";
 "Preparing converted result…" = "Dönüştürülmüş sonuç hazırlanıyor…";
 "Preparing preview…" = "Önizleme hazırlanıyor…";
@@ -1546,6 +1606,7 @@
 "Preparing…" = "Hazırlanıyor…";
 "Preserve metadata" = "Meta verileri koru";
 "Preserve original pages" = "Orijinal sayfaları koru";
+"Preserve page layout" = "Sayfa düzenini koru";
 "Preset" = "Ön ayar";
 "Preview" = "Önizleme";
 "Preview Left" = "Solu Önizle";
@@ -1555,6 +1616,7 @@
 "Preview ready · export uses your original file." = "Önizleme hazır · dışa aktarırken orijinal dosyan kullanılır.";
 "Preview ready. Save a new copy when you like the result." = "Önizleme hazır. Sonucu beğendiğinde yeni bir kopya kaydet.";
 "Preview shows the first image. Saving processes all selected images." = "Önizleme ilk görseli gösterir. Kaydedildiğinde seçilen tüm görseller işlenir.";
+"Preview the result before saving a fresh copy." = "Yeni kopyayı kaydetmeden önce sonucu önizle.";
 "Preview unavailable: %@" = "Önizleme kullanılamıyor: %@";
 "Preview unavailable: %lld" = "Önizleme kullanılamıyor: %lld";
 "Preview uses the first 12 seconds. Export includes the full recording." = "Önizleme ilk 12 saniyeyi kullanır. Dışa aktarma kaydın tamamını içerir.";
@@ -1681,6 +1743,7 @@
 "Remove All" = "Tümünü Kaldır";
 "Remove Audio" = "Sesi Kaldır";
 "Remove Background" = "Arka Planı Kaldır";
+"Remove Crop" = "Kırpmayı kaldır";
 "Remove Image" = "Görseli Kaldır";
 "Remove Metadata" = "Meta Verileri Kaldır";
 "Remove all metadata" = "Tüm meta verileri kaldır";
@@ -1729,6 +1792,7 @@
 "SAVE" = "KAYDET";
 "SAVE 1 FRAME" = "1 KARE KAYDET";
 "SAVE A COPY" = "KOPYA KAYDET";
+"SAVE A FRESH COPY" = "YENİ KOPYA KAYDET";
 "SAVE ANNOTATED COPY" = "İŞARETLENMİŞ KOPYAYI KAYDET";
 "SAVE AS" = "FARKLI KAYDET";
 "SAVE AUDIO COPY" = "SES KOPYASINI KAYDET";
@@ -1739,12 +1803,14 @@
 "SAVE DEFAULTS" = "VARSAYILANLARI KAYDET";
 "SAVE DOWNLOADED MEDIA HERE" = "İNDİRİLEN MEDYAYI BURAYA KAYDET";
 "SAVE EDITED COPY" = "DÜZENLENMİŞ KOPYAYI KAYDET";
+"SAVE HERE" = "BURAYA KAYDET";
 "SAVE METADATA COPY" = "META VERİ KOPYASINI KAYDET";
 "SAVE MUTED COPY" = "SESSİZ KOPYAYI KAYDET";
 "SAVE NEW COPIES" = "YENİ KOPYALARI KAYDET";
 "SAVE NEW COPIES HERE" = "YENİ KOPYALARI BURAYA KAYDET";
 "SAVE NEW COPY  ↗" = "YENİ KOPYA KAYDET  ↗";
 "SAVE NEW COPY ↗" = "YENİ KOPYA KAYDET ↗";
+"SAVE NEW PNG" = "YENİ PNG KAYDET";
 "SAVE NEW PNG  ↗" = "YENİ PNG KAYDET  ↗";
 "SAVE ORGANIZED COPY ↗" = "DÜZENLENMİŞ KOPYAYI KAYDET ↗";
 "SAVE ORGANIZED PDF" = "DÜZENLENMİŞ PDF'Yİ KAYDET";
@@ -1772,7 +1838,8 @@
 "SELECT A TIME RANGE AND DRAW AN AREA ON ORIGINAL. THE PROCESSED PREVIEW USES YOUR CHOSEN COVER STYLE. RETURN TO ORIGINAL TO ADD ANOTHER AREA." = "BİR ZAMAN ARALIĞI SEÇ VE ORİJİNAL ÜZERİNDE ALAN ÇİZ. SONUÇ ÖNİZLEMESİ SEÇTİĞİN KAPLAMA STİLİNİ UYGULAR. YENİ ALAN EKLEMEK İÇİN ORİJİNAL'E DÖN.";
 "SELECT ALL" = "TÜMÜNÜ SEÇ";
 "SELECT AN AREA ON THE LEFT TO CREATE YOUR CUTOUT." = "KESİMİ OLUŞTURMAK İÇİN SOLDAKİ GÖRSELDE KORUNACAK ALANI SEÇ.";
-"SELECT AN AREA TO KEEP OR USE AUTOMATIC REMOVAL." = "KORUNACAK ALANI SEÇ VEYA OTOMATİK SEÇİMİ KULLAN.";
+"SELECT AN AREA TO KEEP" = "KORUNACAK ALANI SEÇ";
+"SELECT AN AREA TO KEEP OR USE AUTOMATIC REMOVAL." = "KORUNACAK ALANI SEÇ VEYA OTOMATİK KALDIRMAYI KULLAN.";
 "SELECT AN AREA, THEN PREVIEW THE CROP BEFORE SAVING." = "ALANI SEÇ; KAYDETMEDEN ÖNCE KIRPILMIŞ HALİNİ ÖNİZLE.";
 "SELECT AT LEAST ONE AVAILABLE PHOTO." = "KULLANILABİLİR EN AZ BİR FOTOĞRAF SEÇ.";
 "SELECT AUTOMATICALLY" = "OTOMATİK SEÇ";
@@ -1782,7 +1849,10 @@
 "SELECT PHOTOS" = "FOTOĞRAFLARI SEÇ";
 "SELECT THE FOREGROUND TO KEEP" = "KORUNACAK ÖN PLANI SEÇ";
 "SELECT THE REMAINING IMAGES BEFORE SAVING THE BATCH." = "TOPLU KAYDETMEDEN ÖNCE DİĞER GÖRSELLERDE DE KORUNACAK ALANI SEÇ.";
+"SELECT WHAT STAYS. PREVIEW A FRESH BACKGROUND." = "KORUNACAK ALANI SEÇ. YENİ ARKA PLANI ÖNİZLE.";
+"SELECTED FILES" = "SEÇİLİ DOSYALAR";
 "SELECTED FOLDER" = "SEÇİLİ KLASÖRE";
+"SELECTION" = "SEÇİM";
 "SELECTION TOOLS" = "SEÇİM ARAÇLARI";
 "SERIF" = "SERİF";
 "SET" = "AYARLA";
@@ -1819,6 +1889,7 @@
 "SHOW LOKUM IN FINDER" = "LOKUM'Yİ FINDER'DA GÖSTER";
 "SHOW ORIGINAL" = "ORİJİNALİ GÖSTER";
 "SHOW RESULT" = "SONUCU GÖSTER";
+"SHOW RESULT CREATES A TEMPORARY PREVIEW. NOTHING IS SAVED TO LIBRARY UNTIL YOU CHOOSE SAVE." = "SONUCU GÖSTER GEÇİCİ BİR ÖNİZLEME OLUŞTURUR. KAYDET DÜĞMESİNE BASANA KADAR KÜTÜPHANEYE DOSYA EKLENMEZ.";
 "SIGNED UPDATES USE YOUR CONFIGURED LOKUM RELEASE CHANNEL. THIS BUILD HAS NO CHANNEL CONNECTED YET." = "İMZALI GÜNCELLEMELER LOKUM YAYIN KANALINI KULLANIR. BU DERLEMEYE HENÜZ BİR KANAL BAĞLANMADI.";
 "SILENCE THRESHOLD" = "SESSİZLİK EŞİĞİ";
 "SKIP TOUR" = "TURU GEÇ";
@@ -1874,7 +1945,9 @@
 "Save %lld frames" = "%lld kare kaydet";
 "Save 1 frame" = "1 kare kaydet";
 "Save Connection" = "Bağlantıyı Kaydet";
+"Save Here" = "Buraya kaydet";
 "Save a copy" = "Kopya kaydet";
+"Save a fresh copy" = "Yeni kopya kaydet";
 "Save annotated copy" = "İşaretlenmiş kopyayı kaydet";
 "Save as" = "Farklı kaydet";
 "Save audio copy" = "Ses kopyasını kaydet";
@@ -1886,6 +1959,7 @@
 "Save edited copy" = "Düzenlenmiş kopyayı kaydet";
 "Save metadata copy" = "Meta veri kopyasını kaydet";
 "Save muted copy" = "Sessiz kopyayı kaydet";
+"Save new PNG" = "Yeni PNG kaydet";
 "Save new PNG  ↗" = "Yeni PNG kaydet  ↗";
 "Save new copies" = "Yeni kopyaları kaydet";
 "Save new copies here" = "Yeni kopyaları buraya kaydet";
@@ -1920,7 +1994,8 @@
 "Select a time range and draw an area on Original. The processed preview uses your chosen cover style. Return to Original to add another area." = "Bir zaman aralığı seç ve Orijinal üzerinde alan çiz. Sonuç önizlemesi seçtiğin kaplama stilini uygular. Yeni alan eklemek için Orijinal'e dön.";
 "Select all" = "Tümünü seç";
 "Select an area on the left to create your cutout." = "Kesimi oluşturmak için soldaki görselde korunacak alanı seç.";
-"Select an area to keep or use automatic removal." = "Korunacak alanı seç veya otomatik seçimi kullan.";
+"Select an area to keep" = "Korunacak alanı seç";
+"Select an area to keep or use automatic removal." = "Korunacak alanı seç veya otomatik kaldırmayı kullan.";
 "Select an area, then preview the crop before saving." = "Alanı seç; kaydetmeden önce kırpılmış halini önizle.";
 "Select at least one available photo." = "Kullanılabilir en az bir fotoğraf seç.";
 "Select automatically" = "Otomatik seç";
@@ -1930,9 +2005,12 @@
 "Select photos" = "Fotoğrafları seç";
 "Select the foreground to keep" = "Korunacak ön planı seç";
 "Select the remaining images before saving the batch." = "Toplu kaydetmeden önce diğer görsellerde de korunacak alanı seç.";
+"Select what stays. Preview a fresh background." = "Korunacak alanı seç. Yeni arka planı önizle.";
 "Selected duration: %@" = "Seçili süre: %@";
 "Selected duration: %lld" = "Seçili süre: %lld";
+"Selected files" = "Seçili dosyalar";
 "Selected folder" = "Seçili klasöre";
+"Selection" = "Seçim";
 "Selection tools" = "Seçim araçları";
 "Serif" = "Serif";
 "Set" = "Ayarla";
@@ -1967,6 +2045,7 @@
 "Show Lokum in Finder" = "Lokum'yi Finder'da Göster";
 "Show Original" = "Orijinali Göster";
 "Show Result" = "Sonucu göster";
+"Show Result creates a temporary preview. Nothing is saved to Library until you choose Save." = "Sonucu göster geçici bir önizleme oluşturur. Kaydet düğmesine basana kadar kütüphaneye dosya eklenmez.";
 "Show in Explorer" = "Dosya Gezgini'nde Göster";
 "Show in Finder" = "Finder'da Göster";
 "Show original" = "Orijinali göster";
@@ -2028,9 +2107,14 @@
 "THAT PDF SIZE CANNOT BE REACHED WHILE KEEPING SELECTABLE TEXT, LINKS AND ANNOTATIONS. CHOOSE A LARGER TARGET." = "SEÇİLEBİLİR METİN, BAĞLANTILAR VE NOTLAR KORUNARAK BU PDF BOYUTUNA İNİLEMİYOR. DAHA BÜYÜK BİR HEDEF SEÇ.";
 "THE ARCHIVE CONTAINS AN UNSAFE PATH." = "ARŞİVDE GÜVENLİ OLMAYAN BİR YOL VAR.";
 "THE ARCHIVE ENTRY LEAVES ITS DESTINATION." = "ARŞİVDEKİ BİR ÖĞE HEDEF KLASÖRÜN DIŞINA ÇIKIYOR.";
+"THE ARCHIVE IS EMPTY." = "ARŞİV BOŞ.";
+"THE BACKGROUND IMAGE COULD NOT BE FITTED." = "ARKA PLAN GÖRSELİ BOYUTA SIĞDIRILAMADI.";
 "THE BACKGROUND IMAGE FILLS THE ORIGINAL CANVAS AND IS CENTERED." = "ARKA PLAN GÖRSELİ TUVALİ DOLDURACAK ŞEKİLDE ORTALANIR.";
+"THE BACKGROUND REMOVAL MODEL HAS NO IMAGE INPUT OR OUTPUT." = "ARKA PLAN KALDIRMA MODELİNİN GÖRSEL GİRDİSİ VEYA ÇIKTISI BULUNMUYOR.";
+"THE BUNDLED BACKGROUND REMOVAL MODEL FAILED ITS INTEGRITY CHECK." = "ARKA PLAN KALDIRMA MODELİNİN BÜTÜNLÜK DENETİMİ BAŞARISIZ OLDU.";
 "THE CLIPPING EXCEEDS 200 MB." = "METİN KIRPINTISI 200 MB'I AŞIYOR.";
 "THE CLIPPING HAS NO READABLE TEXT. INCLUDE ITS ORIGINAL RESOURCE FORK/APPLEDOUBLE SIDECAR, OR PASTE ITS TEXT INTO LOKUM." = "METİN KIRPINTISINDA OKUNABİLİR METİN YOK. ORİJİNAL RESOURCE FORK/APPLEDOUBLE DOSYASINI DA EKLE VEYA METNİNİ LOKUM'YE YAPIŞTIR.";
+"THE CROP REFERENCE DIMENSIONS MUST BE POSITIVE." = "KIRPMA REFERANS ÖLÇÜLERİ SIFIRDAN BÜYÜK OLMALI.";
 "THE DOCUMENT HAS NO EDITABLE BODY." = "BELGEDE DÜZENLENEBİLİR BİR İÇERİK YOK.";
 "THE DOCUMENT PACKAGE IS TOO LARGE OR CONTAINS DUPLICATE ENTRIES." = "BELGE PAKETİ ÇOK BÜYÜK VEYA YİNELENEN ÖĞELER İÇERİYOR.";
 "THE DOWNLOAD CONNECTION WAS INTERRUPTED." = "İNDİRME BAĞLANTISI KESİLDİ.";
@@ -2039,9 +2123,13 @@
 "THE DOWNLOADED FILE IS NOT A SUPPORTED IMAGE, VIDEO OR AUDIO FILE." = "İNDİRİLEN DOSYA DESTEKLENEN BİR GÖRSEL, VİDEO VEYA SES DOSYASI DEĞİL.";
 "THE DOWNLOADED TOOLS ARE INCOMPLETE. PLEASE TRY SETUP AGAIN." = "İNDİRİLEN ARAÇLAR EKSİK. KURULUMU TEKRAR DENE.";
 "THE EXTENSION ONLY SENDS THE MEDIA YOU CTRL-CLICK TO LOKUM ON THIS COMPUTER. IT DOES NOT USE YOUR CLIPBOARD." = "UZANTI YALNIZCA CTRL İLE TIKLADIĞIN MEDYANIN BAĞLANTISINI BU BİLGİSAYARDAKİ LOKUM’A İLETİR. PANONU KULLANMAZ.";
+"THE FILES WERE COPIED, BUT THESE ORIGINALS COULD NOT BE REMOVED:" = "DOSYALAR KOPYALANDI ANCAK ŞU ÖZGÜN DOSYALAR KALDIRILAMADI:";
 "THE IMAGE DOWNLOAD ENDED EARLY." = "GÖRSEL İNDİRMESİ ERKEN SONA ERDİ.";
 "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE." = "GÖRSEL SIRASINDA HER GÖRSEL BİR KEZ YER ALMALI.";
 "THE MEDIA SERVER REDIRECTED TO AN INSECURE URL." = "MEDYA SUNUCUSU GÜVENLİ OLMAYAN BİR ADRESE YÖNLENDİRDİ.";
+"THE MODEL RETURNED AN INVALID FOREGROUND MASK." = "MODEL GEÇERSİZ BİR KORUNACAK ALAN MASKESİ DÖNDÜRDÜ.";
+"THE MODEL RETURNED NO FOREGROUND MASK." = "MODEL KORUNACAK ALAN MASKESİ DÖNDÜRMEDİ.";
+"THE MODEL RETURNED NON-FINITE MASK PIXELS." = "MODEL GEÇERSİZ MASKE PİKSEL DEĞERLERİ DÖNDÜRDÜ.";
 "THE PROCESSING TOOL COULD NOT START." = "İŞLEME ARACI BAŞLATILAMADI.";
 "THE REQUESTED IMAGE SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET." = "İSTENEN GÖRSEL BOYUTUNA İNİLEMEDİ. DAHA BÜYÜK BİR HEDEF SEÇ.";
 "THE REQUESTED PDF SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET." = "İSTENEN PDF BOYUTUNA İNİLEMEDİ. DAHA BÜYÜK BİR HEDEF SEÇ.";
@@ -2057,6 +2145,7 @@
 "THIS FILE HAS NO VIDEO STREAM." = "BU DOSYADA GÖRÜNTÜ YOK.";
 "THIS FORMAT CAN BE IMPORTED. CHOOSE AN OUTPUT FORMAT IN THE SIDEBAR TO CONFIGURE ITS DEFAULTS." = "BU BİÇİM İÇE AKTARILABİLİR. VARSAYILANLARI AYARLAMAK İÇİN KENAR ÇUBUĞUNDAN BİR ÇIKTI BİÇİMİ SEÇ.";
 "THIS FORMAT USES ITS ORIGINAL DOCUMENT STRUCTURE. NO EXPORT DEFAULTS ARE NEEDED." = "BU BİÇİM ORİJİNAL BELGE YAPISINI KULLANIR. DIŞA AKTARMA TERCİHİ GEREKMEZ.";
+"THIS IMAGE EXCEEDS 100 MP OR 30,000 PIXELS." = "BU GÖRSEL 100 MP VEYA 30.000 PİKSEL SINIRINI AŞIYOR.";
 "THIS IMAGE EXCEEDS 100 MP." = "BU GÖRSEL 100 MP'Yİ AŞIYOR.";
 "THIS IMAGE EXCEEDS 200 MB." = "BU GÖRSEL 200 MB'I AŞIYOR.";
 "THIS IMAGE IS TOO LARGE (100 MP LIMIT)." = "BU GÖRSEL ÇOK BÜYÜK (SINIR 100 MP).";
@@ -2118,9 +2207,14 @@
 "That PDF size cannot be reached while keeping selectable text, links and annotations. Choose a larger target." = "Seçilebilir metin, bağlantılar ve notlar korunarak bu PDF boyutuna inilemiyor. Daha büyük bir hedef seç.";
 "The archive contains an unsafe path." = "Arşivde güvenli olmayan bir yol var.";
 "The archive entry leaves its destination." = "Arşivdeki bir öğe hedef klasörün dışına çıkıyor.";
+"The archive is empty." = "Arşiv boş.";
+"The background image could not be fitted." = "Arka plan görseli boyuta sığdırılamadı.";
 "The background image fills the original canvas and is centered." = "Arka plan görseli tuvali dolduracak şekilde ortalanır.";
+"The background removal model has no image input or output." = "Arka plan kaldırma modelinin görsel girdisi veya çıktısı bulunmuyor.";
+"The bundled background removal model failed its integrity check." = "Arka plan kaldırma modelinin bütünlük denetimi başarısız oldu.";
 "The clipping exceeds 200 MB." = "Metin kırpıntısı 200 MB'ı aşıyor.";
 "The clipping has no readable text. Include its original resource fork/AppleDouble sidecar, or paste its text into Lokum." = "Metin kırpıntısında okunabilir metin yok. Orijinal resource fork/AppleDouble dosyasını da ekle veya metnini Lokum'ye yapıştır.";
+"The crop reference dimensions must be positive." = "Kırpma referans ölçüleri sıfırdan büyük olmalı.";
 "The document has no editable body." = "Belgede düzenlenebilir bir içerik yok.";
 "The document is missing %@" = "Belgede şu öğe eksik: %@";
 "The document is missing %lld" = "Belgede şu öğe eksik: %lld";
@@ -2131,9 +2225,13 @@
 "The downloaded file is not a supported image, video or audio file." = "İndirilen dosya desteklenen bir görsel, video veya ses dosyası değil.";
 "The downloaded tools are incomplete. Please try setup again." = "İndirilen araçlar eksik. Kurulumu tekrar dene.";
 "The extension only sends the media you Ctrl-click to Lokum on this computer. It does not use your clipboard." = "Uzantı yalnızca Ctrl ile tıkladığın medyanın bağlantısını bu bilgisayardaki Lokum’a iletir. Panonu kullanmaz.";
+"The files were copied, but these originals could not be removed:" = "Dosyalar kopyalandı ancak şu özgün dosyalar kaldırılamadı:";
 "The image download ended early." = "Görsel indirmesi erken sona erdi.";
 "The image order must include every image once." = "Görsel sırasında her görsel bir kez yer almalı.";
 "The media server redirected to an insecure URL." = "Medya sunucusu güvenli olmayan bir adrese yönlendirdi.";
+"The model returned an invalid foreground mask." = "Model geçersiz bir korunacak alan maskesi döndürdü.";
+"The model returned no foreground mask." = "Model korunacak alan maskesi döndürmedi.";
+"The model returned non-finite mask pixels." = "Model geçersiz maske piksel değerleri döndürdü.";
 "The processing tool could not start." = "İşleme aracı başlatılamadı.";
 "The requested PDF size could not be reached. Choose a larger target." = "İstenen PDF boyutuna inilemedi. Daha büyük bir hedef seç.";
 "The requested image size could not be reached. Choose a larger target." = "İstenen görsel boyutuna inilemedi. Daha büyük bir hedef seç.";
@@ -2155,6 +2253,7 @@
 "This file has no video stream." = "Bu dosyada görüntü yok.";
 "This format can be imported. Choose an output format in the sidebar to configure its defaults." = "Bu biçim içe aktarılabilir. Varsayılanları ayarlamak için kenar çubuğundan bir çıktı biçimi seç.";
 "This format uses its original document structure. No export defaults are needed." = "Bu biçim orijinal belge yapısını kullanır. Dışa aktarma tercihi gerekmez.";
+"This image exceeds 100 MP or 30,000 pixels." = "Bu görsel 100 MP veya 30.000 piksel sınırını aşıyor.";
 "This image exceeds 100 MP." = "Bu görsel 100 MP'yi aşıyor.";
 "This image exceeds 200 MB." = "Bu görsel 200 MB'ı aşıyor.";
 "This image is too large (100 MP limit)." = "Bu görsel çok büyük (sınır 100 MP).";
@@ -2224,6 +2323,7 @@
 "UPSTREAM VERSIONS, LICENSES AND SOURCE LINKS" = "ARAÇ SÜRÜMLERİ, LİSANSLAR VE KAYNAK BAĞLANTILARI";
 "USE A REGULAR WRITABLE FOLDER FOR PORTABLE UPDATES." = "TAŞINABİLİR GÜNCELLEMELER İÇİN YAZILABİLİR, NORMAL BİR KLASÖR KULLAN.";
 "USE A STATIC SVG WITHOUT EMBEDDED SCRIPTS OR HTML." = "GÖMÜLÜ BETİK VEYA HTML İÇERMEYEN STATİK BİR SVG KULLAN.";
+"USE AT MOST 256 SELECTION AREAS." = "EN FAZLA 256 SEÇİM ALANI KULLAN.";
 "USE IN LOKUM" = "LOKUM'DE KULLAN";
 "USE ONCE IF MACOS NEEDS PERMISSION FOR YOUR SAVED UPDATE CONNECTION." = "MACOS KAYITLI GÜNCELLEME BAĞLANTISI İÇİN İZİN İSTERSE BİR KEZ KULLAN.";
 "USE OPEN TO PREVIEW THIS DOCUMENT IN ITS DEFAULT APP." = "BU BELGEYİ VARSAYILAN UYGULAMASINDA ÖNİZLEMEK İÇİN AÇ'I KULLAN.";
@@ -2262,6 +2362,7 @@
 "Use Open to preview this document in its default app." = "Bu belgeyi varsayılan uygulamasında önizlemek için Aç'ı kullan.";
 "Use a regular writable folder for portable updates." = "Taşınabilir güncellemeler için yazılabilir, normal bir klasör kullan.";
 "Use a static SVG without embedded scripts or HTML." = "Gömülü betik veya HTML içermeyen statik bir SVG kullan.";
+"Use at most 256 selection areas." = "En fazla 256 seçim alanı kullan.";
 "Use in Lokum" = "Lokum'de kullan";
 "Use once if macOS needs permission for your saved update connection." = "macOS kayıtlı güncelleme bağlantısı için izin isterse bir kez kullan.";
 "VALUE" = "DEĞER";
@@ -2310,6 +2411,8 @@
 "Wheel size" = "Çark boyutu";
 "Whites" = "Beyazlar";
 "Width" = "Genişlik";
+"Width: %@" = "Genişlik: %@";
+"Width: %lld" = "Genişlik: %lld";
 "Window" = "Pencere";
 "Window arrangement" = "Pencere düzeni";
 "Window management" = "Pencere düzeni";

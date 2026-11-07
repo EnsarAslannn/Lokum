@@ -1,6 +1,20 @@
 import Foundation
 
 public enum ConversionEngine {
+    public static func publishPrepared(_ inputs:[URL],to destination:URL,token:CancellationToken = .init())throws->[URL] {
+        guard !inputs.isEmpty else {throw LokumError.invalidInput("Prepare a result before saving.")}
+        try token.check();try OutputFiles.validate(inputs)
+        let transaction=ExportTransaction();defer{transaction.cleanUp()}
+        let area=try transaction.makeArea(destination:destination)
+        var copies:[URL]=[]
+        for input in inputs {
+            try token.check()
+            let copy=OutputFiles.unique(for:input,extension:input.pathExtension,directory:area.directory)
+            try FileManager.default.copyItem(at:input,to:copy);copies.append(copy)
+        }
+        try transaction.record(copies,in:area)
+        return try transaction.publish(token:token)
+    }
     public static func run(_ request: ConversionRequest, token: CancellationToken = .init(), progress: @escaping ProgressHandler = {_,_ in}) throws -> [URL] {
         guard !request.inputs.isEmpty else { throw LokumError.invalidInput("Choose at least one file.") }
         for url in request.inputs { guard url.isFileURL,FileManager.default.fileExists(atPath:url.path) else { throw LokumError.invalidInput("File not found: \(url.lastPathComponent)") } }
@@ -46,6 +60,7 @@ public enum ConversionEngine {
         case .tool(let tool):
             progress(OperationProgress.indeterminate,tool.title)
             switch tool {
+            case .removeBackground: outputs=try BackgroundEditingEngine.export(request.inputs,options:request.options,token:token)
             case .readQRCode: outputs=try QRCodeEngine.export(request.inputs,options:request.options,token:token,progress:progress)
             case .createPDF: outputs=try PDFEngine.create(inputs:request.inputs,options:request.options,token:token,progress:progress)
             case .mergePDF,.splitPDF,.organizePDF: outputs=try PDFEngine.tool(tool,inputs:request.inputs,options:request.options,token:token,progress:progress)

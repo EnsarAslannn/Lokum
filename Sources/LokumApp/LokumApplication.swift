@@ -13,6 +13,11 @@ enum LokumApplication {
     @MainActor static func main() {
         if CommandLine.arguments.count>1,["convert","tool","inspect","catalog","dependencies"].contains(CommandLine.arguments[1]) { exit(LokumCommandLine.run()) }
         let app=NSApplication.shared
+        if let index=CommandLine.arguments.firstIndex(of:"--desktop-feature-smoke"),CommandLine.arguments.count>index+1 {
+            let runner=DesktopFeatureSmoke(output:URL(fileURLWithPath:CommandLine.arguments[index+1],isDirectory:true))
+            app.delegate=runner;app.setActivationPolicy(.accessory)
+            withExtendedLifetime(runner){app.run()};return
+        }
         if CommandLine.arguments.contains("--ui-audit") {
             do {
                 let runner=UIAudit(options:try UIAuditOptions(arguments:CommandLine.arguments))
@@ -118,6 +123,7 @@ enum LokumApplication {
     var monitor:DragMonitor!
     var wheel:WheelController!
     var windowManagement:WindowManagementController!
+    var mediaContext:NativeMediaContextController!
 
     func applicationDidFinishLaunching(_ notification:Notification) {
         LokumAppearance.apply()
@@ -174,6 +180,9 @@ enum LokumApplication {
         NotificationCenter.default.publisher(for:.showUpdateConnection).sink { [weak self] _ in self?.showUpdateConnection() }.store(in:&updateObservations)
         NotificationCenter.default.publisher(for:.showToolSetup).sink { [weak self] _ in self?.showToolSetup() }.store(in:&updateObservations)
         wheel=WheelController(state:state)
+        mediaContext=NativeMediaContextController()
+        mediaContext.onFiles={ [weak self] urls,point in self?.wheel.show(inputs:urls,mode:.tools,at:point,keyboard:true) }
+        mediaContext.onDownload={ [weak self] url,mode in self?.showWebDownload(url,mode:mode) }
         monitor=DragMonitor(onEnd:{ [weak self] in self?.wheel.endDrag() }) { [weak self] urls,mode,point in self?.wheel.show(inputs:urls,mode:mode,at:point) }
         windowManagement=WindowManagementController(fileWheelIsVisible:{ [weak self] in self?.wheel.panel?.isVisible == true })
         windowManagement.onNotice = { message in
@@ -191,6 +200,7 @@ enum LokumApplication {
         state.onChooseFiles = { [weak self] in self?.chooseFiles() }
         state.onSettings = { [weak self] in self?.showSettings() }
         state.onShowTool = { [weak self] tool in self?.showTool(tool) }
+        state.onShowConversion = { [weak self] format in self?.showConversion(format) }
         state.onEPUBOptions = { [weak self] in guard let self else { return };let window=self.makeWindow(title:"Convert to EPUB",size:NSSize(width:530,height:390),view:EPUBOptionsView(state:self.state,inputs:self.state.inputs));self.state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true) }
         state.onJobStarted = { [weak self] in self?.successToast.dismiss();self?.showProgress() }
         state.onSuccess = { [weak self] notice in self?.progressToast.dismiss();self?.successToast.show(notice) }
@@ -253,6 +263,7 @@ enum LokumApplication {
         downloadModel.shortcutAvailable=state.webShortcutAvailable
     }
     func applicationWillTerminate(_ notification:Notification) {
+        mediaContext?.stop()
         windowManagement?.stop()
         if let downloadHotKey { UnregisterEventHotKey(downloadHotKey) }
         if let downloadHotKeyHandler { RemoveEventHandler(downloadHotKeyHandler) }
@@ -306,6 +317,10 @@ enum LokumApplication {
     }
     func showTool(_ kind:ToolKind) {
         progressToast.dismiss()
+        if kind == .removeBackground {
+            let window=makeToolWindow(title:"Edit Background",size:NSSize(width:1100,height:720),view:BackgroundEditorView(state:state,inputs:state.inputs))
+            state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);return
+        }
         if kind == .readQRCode {
             let window=makeToolWindow(title:kind.title,size:NSSize(width:590,height:620),view:QRCodeReaderView(inputs:state.inputs,onSuccess:{ [weak self] in self?.state.reportSuccess($0) }))
             state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);return
@@ -313,6 +328,11 @@ enum LokumApplication {
         let view=ToolEditor(state:state,tool:kind)
         let preview=[ToolKind.editImage,.annotateImage,.cropImage,.frameImage,.redactImage,.createCollage,.cropVideo,.trimVideo,.changeVideoSpeed,.splitVideo,.videoSnapshots,.redactVideo,.trimAudio,.normalizeAudio,.audioChannels,.redactAudio,.audioToVideo].contains(kind)
         let window=makeToolWindow(title:FeatureCatalog.toolNames[kind] ?? kind.title,size:NSSize(width:preview ? 1000:kind == .organizePDF ? 780:600,height:kind == .compress ? 630:760),view:view)
+        state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
+    }
+    func showConversion(_ format:String) {
+        progressToast.dismiss()
+        let window=makeToolWindow(title:"Convert",size:NSSize(width:960,height:650),view:ConversionWorkspace(state:state,format:format))
         state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
     }
     func application(_ application:NSApplication,open urls:[URL]) {

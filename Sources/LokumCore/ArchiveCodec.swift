@@ -9,6 +9,31 @@ enum ArchiveCodec {
         var maximumEntries=100_000
         var maximumBytes:Int64=20*1024*1024*1024
     }
+    static func listNames(_ input:URL,token:CancellationToken)throws->[String] {
+        try token.check()
+        let a=try api.get()
+        guard let reader=a.readNew() else {throw LokumError.failed("Could not initialize the archive reader.")}
+        defer{_ = a.readFree(reader)}
+        try a.check(a.readSupportFilters(reader),handle:reader);try a.check(a.readSupportFormats(reader),handle:reader)
+        let gzip=["gz","gzip"].contains(input.pathExtension.lowercased())
+        if gzip {try a.check(a.readSupportRaw(reader),handle:reader)}
+        try a.check(input.path.withCString{a.readOpen(reader,$0,128*1024)},handle:reader)
+        var names:[String]=[]
+        while true {
+            try token.check()
+            var entry:OpaquePointer?
+            let status=a.readNext(reader,&entry)
+            if status==1 {break}
+            try a.check(status,handle:reader)
+            guard let entry,let name=a.entryPath(entry) else {throw LokumError.failed("The archive contains an unnamed entry.")}
+            let value=String(cString:name)
+            guard names.count<100000,value.utf8.count<=4096 else {throw LokumError.invalidInput("The archive has too many or excessively long entry names.")}
+            if a.format(reader)==0x90000 {names.append(input.deletingPathExtension().lastPathComponent);break}
+            names.append(value)
+            try a.check(a.readSkip(reader),handle:reader)
+        }
+        return names
+    }
     static func extract(_ input: URL, into root: URL, password: String = "", token: CancellationToken, limits:ExtractionLimits=ExtractionLimits()) throws {
         let a = try api.get()
         guard let reader = a.readNew() else { throw LokumError.failed("Could not initialize the archive reader.") }

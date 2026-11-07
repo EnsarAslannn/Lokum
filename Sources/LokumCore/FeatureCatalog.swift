@@ -76,6 +76,7 @@ public enum FeatureCatalog {
         .redactVideo: "eye.slash",
         .redactAudio: "waveform.badge.minus",
         .readQRCode: "qrcode.viewfinder",
+        .removeBackground: "person.crop.rectangle",
     ]
     public static let toolNames: [ToolKind: String] = [
         .compress: "Compress",
@@ -86,7 +87,7 @@ public enum FeatureCatalog {
         .cropImage: "Crop Image",
         .normalizeAudio: "Normalize Volume",
         .muteVideo: "Remove Audio",
-        .trimVideo: "Trim Video",
+        .trimVideo: "Cut Video",
         .splitPDF: "Split PDF",
         .organizePDF: "Organize PDF",
         .extractArchive: "Extract Archive",
@@ -104,7 +105,8 @@ public enum FeatureCatalog {
         .redactImage: "Redact Photo",
         .redactVideo: "Redact Video",
         .redactAudio: "Bleep Audio",
-        .readQRCode: "Read QR Codes",
+        .readQRCode: "Read QR Code",
+        .removeBackground: "Edit Background",
     ]
     public static let singleTools: [String: [ToolKind]] = [
         "jpg": [.compress, .removeMetadata, .editImage, .annotateImage, .frameImage, .cropImage, .redactImage],
@@ -215,6 +217,12 @@ public enum FeatureCatalog {
         let dictionary = inputs.count>1 ? multipleTools : singleTools
         var tools=(dictionary[normalizedExtension(first)] ?? []).filter { tool in inputs.allSatisfy { (dictionary[normalizedExtension($0)] ?? []).contains(tool) } }
         if inputs.allSatisfy(QRCodeEngine.supports) { tools.append(.readQRCode) }
+        if inputs.allSatisfy({FileCategory.detect($0) == .video}) {tools.removeAll{[.splitVideo,.videoSnapshots].contains($0)}}
+        if inputs.allSatisfy({FileCategory.detect($0) == .image}) {
+            tools=tools.filter{$0 != .frameImage}.map{$0 == .cropImage ? .editImage:$0}
+            var seen=Set<ToolKind>();tools=tools.filter{seen.insert($0).inserted}
+            tools.append(.removeBackground)
+        }
         return tools
     }
     private static func isOrdinaryFolder(_ url:URL)->Bool { ((try? url.resourceValues(forKeys:[.isDirectoryKey]).isDirectory) ?? false) && !["rtfd","pages"].contains(normalizedExtension(url)) }

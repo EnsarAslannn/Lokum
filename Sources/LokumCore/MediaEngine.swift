@@ -158,8 +158,18 @@ public enum MediaEngine {
                 case .muteVideo:
                     try requireVideo(info)
                     let out = try outputURL(input, ext: videoExtension(input), suffix: " Muted", options: options)
-                    try render(["-i", input.path, "-map", "0:v:0", "-c:v", "copy", "-an"], to: out, token: token, duration: info.duration, progress: itemProgress)
+                    var arguments=["-i",input.path,"-map","0:v:0","-c:v","copy"]
+                    if options.muteSelectedRange == true {
+                        let interval=try timeRange(options.start,options.end,duration:info.duration)
+                        if info.hasAudio {
+                            let expressions=(0..<(info.audio?.channels ?? 1)).map{"if(between(t,\(decimal(interval.0)),\(decimal(interval.1))),0,val(\($0)))"}.joined(separator:"|")
+                            let format=out.pathExtension=="webm" ? "opus":out.pathExtension=="wmv" ? "wma":"m4a"
+                            arguments += ["-map","0:a:0","-af","aeval=exprs='\(expressions)':c=same"]+audioEncoding(format,quality:options.quality,source:info.audio)
+                        } else {arguments += ["-an"]}
+                    } else {arguments += ["-an"]}
+                    try render(arguments, to: out, token: token, duration: info.duration, progress: itemProgress)
                     results.append(out)
+                case .trimVideo where !(options.clipRanges ?? []).isEmpty: results += try cutRanges(input,info:info,options:options,token:token,progress:itemProgress)
                 case .trimVideo, .trimAudio: results += try trim(input, info: info, audio: kind == .trimAudio, options: options, token: token, progress: itemProgress)
                 case .cropVideo: results += try crop(input, info: info, options: options, token: token, progress: itemProgress)
                 case .changeVideoSpeed: results += try changeSpeed(input, info: info, options: options, token: token, progress: itemProgress)
@@ -216,6 +226,26 @@ public enum MediaEngine {
         return [out]
     }
 
+    private static func cutRanges(_ input:URL,info:MediaInfo,options:OperationOptions,token:CancellationToken,progress:@escaping ProgressHandler)throws->[URL] {
+        try requireVideo(info)
+        let selected=options.clipRanges ?? []
+        guard !selected.isEmpty,selected.count<=10000 else {throw LokumError.invalidInput("Choose between 1 and 10,000 clips.")}
+        let ranges=try selected.map{try timeRange($0.start,$0.end,duration:info.duration)}
+        let joined=options.joinSplitClips && ranges.count>1
+        let temporary=joined ? try OutputFiles.temporaryDirectory():nil
+        defer{if let temporary {try? FileManager.default.removeItem(at:temporary)}}
+        var outputs:[URL]=[]
+        for (index,range) in ranges.enumerated() {
+            try token.check()
+            var settings=options;settings.clipRanges=[];settings.start=range.0;settings.end=range.1
+            if let temporary {settings.outputDirectory=temporary}
+            outputs += try trim(input,info:info,audio:false,options:settings,token:token,suffix:" Clip \(index+1)") {value,label in
+                progress(OperationProgress.map(value,from:Double(index)/Double(ranges.count)*(joined ? 0.7:1),to:Double(index+1)/Double(ranges.count)*(joined ? 0.7:1)),label)
+            }
+        }
+        if joined {return try join(outputs,options:options,token:token) {value,label in progress(OperationProgress.map(value,from:0.7,to:1),label)}}
+        return outputs
+    }
     private static func trim(_ input: URL, info: MediaInfo, audio: Bool, options: OperationOptions, token: CancellationToken, suffix: String = " Trimmed", progress: @escaping ProgressHandler = {_,_ in}) throws -> [URL] {
         if audio { try requireAudio(info) } else { try requireVideo(info) }
         let interval = try timeRange(options.start, options.end, duration: info.duration)
@@ -508,14 +538,14 @@ public enum MediaEngine {
     private static func render(_ arguments: [String], to output: URL, token: CancellationToken, duration: Double? = nil, progress: @escaping ProgressHandler = {_,_ in}) throws {
         guard !FileManager.default.fileExists(atPath: output.path) else { throw LokumError.failed("An output with this name already exists.") }
         let temporary = output.deletingLastPathComponent().appendingPathComponent(".lokum-\(UUID().uuidString)").appendingPathExtension(output.pathExtension)
-        defer { try? FileManager.default.removeItem(at: temporary) }
+        defer { if FileManager.default.fileExists(atPath:temporary.path) {try? FileManager.default.removeItem(at:temporary)} }
         do {
             do {
                 try ffmpeg(arguments + [temporary.path], token: token, duration: duration, progress: progress)
             } catch LokumError.failed(let diagnostic) {
                 guard diagnostic.contains("libvorbis"), diagnostic.contains("encoder setup failed"), let fallback = vorbisQualityFallback(arguments) else { throw LokumError.failed(diagnostic) }
                 try token.check()
-                try? FileManager.default.removeItem(at: temporary)
+                if FileManager.default.fileExists(atPath:temporary.path) {try? FileManager.default.removeItem(at:temporary)}
                 try ffmpeg(fallback + [temporary.path], token: token, duration: duration, progress: progress)
             }
             try token.check()

@@ -120,6 +120,7 @@ struct SettingsView:View {
                     Toggle("Arrange windows while dragging",isOn:$windowManagementEnabled)
                     Text("Drag a window by its title bar or resize border, then tap Shift or Command. Hover over a layout and release the mouse to place it. Escape cancels.")
                         .font(.caption).foregroundStyle(.secondary)
+                    LText("Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission.").font(.caption).foregroundStyle(.secondary)
                     Text("1/3 left · middle · right   /   1/2 left · right   /   2/3 left · right")
                         .font(.caption).foregroundStyle(.secondary)
                     if !windowAccessibility {

@@ -10,6 +10,17 @@ final class ExportTransaction {
 
     private let manager=FileManager.default
     private var areas:[Area]=[]
+    private let allowEmptyFiles:Bool
+    init(allowEmptyFiles:Bool=false) {self.allowEmptyFiles=allowEmptyFiles}
+
+    private func validate(_ urls:[URL])throws {
+        if !allowEmptyFiles {try OutputFiles.validate(urls);return}
+        guard !urls.isEmpty else {throw LokumError.failed("No output was produced.")}
+        for url in urls {
+            let values=try url.resourceValues(forKeys:[.isDirectoryKey,.isRegularFileKey,.isSymbolicLinkKey])
+            guard values.isSymbolicLink != true,values.isDirectory == true || values.isRegularFile == true else {throw LokumError.failed("A staged file could not be validated.")}
+        }
+    }
 
     func makeArea(destination:URL) throws -> Area {
         try manager.createDirectory(at:destination,withIntermediateDirectories:true)
@@ -21,7 +32,7 @@ final class ExportTransaction {
     }
 
     func record(_ outputs:[URL],in area:Area) throws {
-        try OutputFiles.validate(outputs)
+        try validate(outputs)
         let prefix=area.directory.standardizedFileURL.resolvingSymlinksInPath().path+"/"
         guard outputs.allSatisfy({$0.standardizedFileURL.resolvingSymlinksInPath().path.hasPrefix(prefix)}) else {
             throw LokumError.failed("An export could not be staged safely. Your originals were not changed.")
@@ -59,7 +70,7 @@ final class ExportTransaction {
             }
         }
         try token.check()
-        try OutputFiles.validate(outputs)
+        try validate(outputs)
         complete=true
         return outputs
     }
