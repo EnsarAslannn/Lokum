@@ -10,10 +10,11 @@ let package = Package(
         .executable(name: "lokum-cli", targets: ["LokumCLI"])
     ],
     dependencies: [
-        .package(url: "https://github.com/sparkle-project/Sparkle", exact: "2.10.0")
+        .package(url: "https://github.com/sparkle-project/Sparkle", exact: "2.10.0"),
+        .package(url: "https://github.com/microsoft/onnxruntime-swift-package-manager", exact: "1.20.0")
     ],
     targets: [
-        .target(name: "LokumCore", resources: [.copy("Resources")]),
+        .target(name: "LokumCore", dependencies: [.product(name:"onnxruntime",package:"onnxruntime-swift-package-manager")], resources: [.copy("Resources")]),
         .target(name: "LokumUpdates", dependencies: [.product(name: "Sparkle", package: "Sparkle")], path: "Sources", exclude: ["LokumApp", "LokumCore", "LokumCLI", "UpdateCredentialBroker"], sources: ["LokumUpdates", "TangerineUpdates/UpdateCredentialBrokerProtocol.swift"]),
         .executableTarget(name: "LokumApp", dependencies: ["LokumCore", "LokumUpdates"], linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]),
         .executableTarget(name: "LokumCLI", dependencies: ["LokumCore"]),

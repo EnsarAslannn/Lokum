@@ -1,5 +1,12 @@
 Lokum for macOS. Component licenses and copyright notices follow. See LICENSE for the application license.
 
+ONNX Runtime 1.20.0, Copyright Microsoft Corporation and contributors, MIT.
+https://github.com/microsoft/onnxruntime-swift-package-manager/tree/1.20.0
+The static Swift package supports the application's macOS 13 deployment target.
+License: licenses/ONNX-Runtime-LICENSE.txt.
+U2NETP foreground segmentation model, Apache-2.0; runs locally without uploads.
+Source and integrity information: Models/README.md; license: licenses/U-2-Net-LICENSE.txt.
+
 FFmpeg 9.0 and ffprobe 9.0, Copyright FFmpeg contributors, GPL v2 or later.
 Public packages download the Apple Silicon tools directly from OSXExperts during setup: https://www.osxexperts.net/
 Build configuration is available with ffmpeg -version. Source repository:

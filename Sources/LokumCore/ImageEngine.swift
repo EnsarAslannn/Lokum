@@ -151,7 +151,16 @@ public enum ImageEngine {
         return try resized(image, width: width, height: height)
     }
 
-    private static func edit(_ image: CGImage, options: OperationOptions) throws -> CGImage {
+    private static func edit(_ source: CGImage, options: OperationOptions) throws -> CGImage {
+        var image=source
+        if var crop=options.crop {
+            if let width=options.cropReferenceWidth,let height=options.cropReferenceHeight {
+                guard width>0,height>0 else {throw LokumError.invalidInput("The crop reference dimensions must be positive.")}
+                crop=EditRect(x:crop.x*Double(source.width)/Double(width),y:crop.y*Double(source.height)/Double(height),width:crop.width*Double(source.width)/Double(width),height:crop.height*Double(source.height)/Double(height))
+            }
+            var selection=options;selection.crop=crop;selection.width=nil;selection.height=nil
+            image=try preview(source,tool:.cropImage,options:selection)
+        }
         let a = options.imageAdjustments
         let values = [a.exposure,a.brightness,a.contrast,a.highlights,a.shadows,a.whites,a.blacks,a.gamma,a.temperature,a.tint,a.saturation,a.vibrance,a.hue,a.clarity,a.texture,a.fade,a.blur,a.sharpen,a.dehaze,a.grain,a.noiseReduction,a.vignette,options.brightness,options.contrast,options.saturation]
         guard values.allSatisfy(\.isFinite), a.gamma > 0 else { throw LokumError.invalidInput("Image adjustments must be finite and gamma must be positive.") }

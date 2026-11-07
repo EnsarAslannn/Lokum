@@ -38,7 +38,7 @@ public enum ToolKind: String, Codable, CaseIterable, Sendable {
     case normalizeAudio, muteVideo, trimVideo, splitPDF, organizePDF, extractArchive
     case createPDF, mergePDF, cropVideo, changeVideoSpeed, joinVideos, videoSnapshots
     case splitVideo, audioToVideo, trimAudio, audioChannels, createCollage
-    case redactImage, redactVideo, redactAudio, readQRCode
+    case redactImage, redactVideo, redactAudio, readQRCode, removeBackground
     public var title: String {
         switch self {
         case .compress: return "Compress"
@@ -49,7 +49,7 @@ public enum ToolKind: String, Codable, CaseIterable, Sendable {
         case .cropImage: return "Crop Image"
         case .normalizeAudio: return "Normalize Audio"
         case .muteVideo: return "Mute Video"
-        case .trimVideo: return "Trim Video"
+        case .trimVideo: return "Cut Video"
         case .splitPDF: return "Split PDF"
         case .organizePDF: return "Organize PDF"
         case .extractArchive: return "Extract Archive"
@@ -67,7 +67,8 @@ public enum ToolKind: String, Codable, CaseIterable, Sendable {
         case .redactImage: return "Redact Image"
         case .redactVideo: return "Redact Video"
         case .redactAudio: return "Redact Audio"
-        case .readQRCode: return "Read QR Codes"
+        case .readQRCode: return "Read QR Code"
+        case .removeBackground: return "Edit Background"
         }
     }
 }
@@ -127,6 +128,11 @@ public struct OperationOptions: Codable, Sendable {
     public var equalClips: Int? = nil
     public var discardedClips: [Int] = []
     public var joinSplitClips: Bool = false
+    public var clipRanges: [TimeRange]? = nil
+    public var muteSelectedRange: Bool? = nil
+    public var cropReferenceWidth: Int? = nil
+    public var cropReferenceHeight: Int? = nil
+    public var backgroundEditing: BackgroundEditingOptions? = nil
     public var audioRedactions: [TimeRange] = []
     public var trimSilence: Bool = false
     public var silenceThresholdDb: Double = -50

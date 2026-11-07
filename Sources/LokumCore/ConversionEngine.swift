@@ -46,6 +46,7 @@ public enum ConversionEngine {
         case .tool(let tool):
             progress(OperationProgress.indeterminate,tool.title)
             switch tool {
+            case .removeBackground: outputs=try BackgroundEditingEngine.export(request.inputs,options:request.options,token:token)
             case .readQRCode: outputs=try QRCodeEngine.export(request.inputs,options:request.options,token:token,progress:progress)
             case .createPDF: outputs=try PDFEngine.create(inputs:request.inputs,options:request.options,token:token,progress:progress)
             case .mergePDF,.splitPDF,.organizePDF: outputs=try PDFEngine.tool(tool,inputs:request.inputs,options:request.options,token:token,progress:progress)
