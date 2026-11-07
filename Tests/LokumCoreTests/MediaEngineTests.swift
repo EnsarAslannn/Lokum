@@ -316,6 +316,7 @@ final class MediaEngineTests: XCTestCase {
         XCTAssertTrue(try FileManager.default.contentsOfDirectory(at: options.outputDirectory!, includingPropertiesForKeys: nil).allSatisfy { !$0.lastPathComponent.hasPrefix(".lokum-") })
         let inFlight = CancellationToken()
         options.outputDirectory = f.directory.appendingPathComponent("Cancelled", isDirectory: true); options.width = 2048; options.height = 1536
+        try FileManager.default.createDirectory(at:options.outputDirectory!,withIntermediateDirectories:true)
         DispatchQueue.global().asyncAfter(deadline: .now() + 0.3) { inFlight.cancel() }
         XCTAssertThrowsError(try MediaEngine.convert(f.video, to: "webm", options: options, token: inFlight)) { error in
             guard case LokumError.cancelled = error else { return XCTFail("Expected cancellation, received \(error)") }
