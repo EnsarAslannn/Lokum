@@ -52,7 +52,7 @@ import LokumCore
         let originalBytes=try Data(contentsOf:source)
         let conversion=ConversionWorkspaceModel(inputs:[source],format:"jpg")
         await conversion.prepare()
-        check(conversion.error==nil && conversion.outputs.count==1 && conversion.totalBytes>0,"Show Result generates a real target file and reports its size")
+        check(conversion.error==nil && conversion.outputs.count==1 && conversion.totalBytes>0,"Show Result generates a real target file and reports its size; "+(conversion.error ?? "ready"))
         check(state.history.isEmpty && state.outputs.isEmpty,"Preparing a conversion leaves Library and saved outputs unchanged")
         if let file=conversion.outputs.first {
             let stale=file
