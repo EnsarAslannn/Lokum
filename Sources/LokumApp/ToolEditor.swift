@@ -153,7 +153,7 @@ struct ToolEditor:View {
                 Button { reset() } label:{Label("Reset",systemImage:"arrow.counterclockwise")}.buttonStyle(LokumButtonStyle(.quiet)).uiAuditProbe("editor.reset").accessibilityIdentifier("editor.reset")
                 Spacer()
                 Label("Original stays safe",systemImage:"lock").font(.system(size:10)).foregroundStyle(.secondary)
-                if supportsResultPreview {Button(previewBusy ? "Preparing…":"Show Result") {processedPreview()}.disabled(previewBusy || !canApply)}
+                if supportsResultPreview {Button {processedPreview()} label:{LText(previewBusy ? "Preparing…":"Show Result")}.disabled(previewBusy || !canApply).accessibilityIdentifier("media.result.generate")}
                 Button { apply() } label:{Label { LText(primaryTitle) } icon:{ Image(systemName:"arrow.up.right") }.uiAuditProbe("editor.primary.label")}.buttonStyle(LokumButtonStyle(.primary)).uiAuditProbe("editor.primary").accessibilityIdentifier("editor.primary").disabled(!canApply).help(isCropTool ? "Save a cropped copy (Return or ⌘S)":"Save a fresh copy (⌘S)")
             }.padding(.horizontal,20).padding(.vertical,15).uiAuditProbe("editor.footer")
         }.frame(minWidth:sideBySide ? 900:480,minHeight:420).background(LokumPalette.canvas).tint(.lokum).buttonStyle(LokumButtonStyle(.secondary,compact:true)).textFieldStyle(.roundedBorder)
@@ -337,7 +337,7 @@ struct ToolEditor:View {
     var imageControls:some View {
         VStack(alignment:.leading,spacing:12) {
             HStack {
-                Button(cropSelecting ? "Preview Crop":"Crop Image") {if cropSelecting {confirmImageCrop()}else{pendingCrop=options.crop;cropSelecting=true}}
+                Button {if cropSelecting {confirmImageCrop()}else{pendingCrop=options.crop;cropSelecting=true}} label:{LText(cropSelecting ? "Preview Crop":"Crop Image")}.accessibilityIdentifier("image.crop")
                 if cropSelecting {Button("Cancel Crop") {cropSelecting=false;pendingCrop=nil}}
                 if options.crop != nil {Button("Remove Crop") {cropSelecting=false;pendingCrop=nil;options.crop=nil;options.cropReferenceWidth=nil;options.cropReferenceHeight=nil;options.width=nil;options.height=nil;imageSizeEdited=false}}
             }

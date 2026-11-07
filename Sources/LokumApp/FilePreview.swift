@@ -7,6 +7,8 @@ import LokumCore
     private var window:NSWindow?;private var urls:[URL]=[];private var index=0
     private var displayNames:[String]=[]
     private var monitor:Any?;private var player:AVPlayer?;private var preview:QLPreviewView?
+    private var archiveTask:Task<Void,Never>?
+    private var archiveToken:CancellationToken?
     private let caption=NSTextField(labelWithString:"")
     deinit { if let monitor {NSEvent.removeMonitor(monitor)} }
     func show(_ urls:[URL],displayNames:[String]?=nil) {
@@ -33,7 +35,7 @@ import LokumCore
     @objc private func previous(){navigate(-1)}
     @objc private func next(){navigate(1)}
     @objc private func openFile(){NSWorkspace.shared.open(urls[index])}
-    @objc private func didClose(){player?.pause();player?.replaceCurrentItem(with:nil);player=nil;preview?.previewItem=nil;preview=nil}
+    @objc private func didClose(){archiveTask?.cancel();archiveTask=nil;archiveToken?.cancel();archiveToken=nil;player?.pause();player?.replaceCurrentItem(with:nil);player=nil;preview?.previewItem=nil;preview=nil}
     func close(){window?.close();didClose()}
     private func load() {
         guard let window else{return};didClose();let url=urls[index],name=displayNames[index];window.title=name+" · "+L10n.text("Preview")+" · Lokum"
@@ -44,6 +46,17 @@ import LokumCore
         let content:NSView
         if [.audio,.video].contains(FileCategory.detect(url)) {
             let view=AVPlayerView();let p=AVPlayer(url:url);view.player=p;view.controlsStyle = .floating;player=p;content=view
+        } else if FileCategory.detect(url) == .archive {
+            let scroll=NSScrollView();scroll.hasVerticalScroller=true;scroll.hasHorizontalScroller=true;scroll.autohidesScrollers=true
+            let text=NSTextView(frame:NSRect(x:0,y:0,width:700,height:500));text.isEditable=false;text.isRichText=false;text.isHorizontallyResizable=true;text.autoresizingMask=[.width];text.font = .monospacedSystemFont(ofSize:13,weight:.regular);text.textContainerInset=NSSize(width:12,height:12);text.string=L10n.text("Loading…");scroll.documentView=text;content=scroll
+            let cancel=CancellationToken();archiveToken=cancel
+            archiveTask=Task {
+                do {
+                    let names=try await Task.detached {try DocumentEngine.archiveContents(url,token:cancel)}.value
+                    guard !Task.isCancelled,!cancel.isCancelled else{return}
+                    text.string=names.isEmpty ? L10n.text("The archive is empty."):names.joined(separator:"\n")
+                }catch{if !Task.isCancelled,!cancel.isCancelled {text.string=error.localizedDescription}}
+            }
         } else {let view=QLPreviewView(frame:.zero,style:.normal)!;view.autostarts=false;view.previewItem=url as NSURL;preview=view;content=view}
         for view in [header,content,hint] {view.translatesAutoresizingMaskIntoConstraints=false;root.addSubview(view)}
         NSLayoutConstraint.activate([header.topAnchor.constraint(equalTo:root.topAnchor,constant:16),header.leadingAnchor.constraint(equalTo:root.leadingAnchor,constant:20),header.trailingAnchor.constraint(equalTo:root.trailingAnchor,constant:-20),content.topAnchor.constraint(equalTo:header.bottomAnchor,constant:14),content.leadingAnchor.constraint(equalTo:root.leadingAnchor,constant:20),content.trailingAnchor.constraint(equalTo:root.trailingAnchor,constant:-20),content.bottomAnchor.constraint(equalTo:hint.topAnchor,constant:-14),hint.leadingAnchor.constraint(equalTo:root.leadingAnchor,constant:20),hint.bottomAnchor.constraint(equalTo:root.bottomAnchor,constant:-16)])

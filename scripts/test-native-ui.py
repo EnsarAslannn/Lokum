@@ -33,6 +33,11 @@ def bundle_for_audit(binary, output):
         plistlib.dump(info, stream)
     for localization in (repository / "Resources/Localizations").glob("*.lproj"):
         shutil.copytree(localization, resources / localization.name)
+    shutil.copy2(repository / "LICENSE", resources / "LICENSE.txt")
+    shutil.copy2(repository / "Resources/THIRD-PARTY-NOTICES.txt", resources / "THIRD-PARTY-NOTICES.txt")
+    shutil.copytree(repository / "Resources/licenses", resources / "licenses")
+    (resources / "Models").mkdir()
+    shutil.copy2(repository / "Resources/Models/README.md", resources / "Models/README.md")
     core_resources = binary.parent / "Lokum_LokumCore.bundle"
     if core_resources.is_dir():
         shutil.copytree(core_resources, resources / core_resources.name)
@@ -79,11 +84,13 @@ def main():
 
     invoke(["--ui-audit", output / "gallery"])
     gallery = json.loads((output / "gallery/manifest.json").read_text())
-    assert gallery["passed"] and len(gallery["captures"]) == 40
+    assert gallery["passed"] and len(gallery["captures"]) == 64
     assert len(gallery["validatorChecks"]) >= 18
     expected = {(s, a, l) for s in ["home.empty", "home.selected", "library",
         "settings.general", "settings.formats", "settings.updates", "wheel.pdf-multiple",
-        "editor.crop-image", "editor.annotate-image", "editor.frame-image"]
+        "editor.crop-image", "editor.annotate-image", "editor.frame-image",
+        "editor.edit-image", "editor.edit-image-crop", "editor.background", "editor.convert",
+        "wheel.image", "wheel.video"]
         for a in ["light", "dark"] for l in ["en", "tr"]}
     assert {(c["scene"], c["appearance"], c["language"]) for c in gallery["captures"]} == expected
     for capture in gallery["captures"]:
@@ -96,7 +103,7 @@ def main():
     invoke(["--file-artwork-smoke", output / "artwork"])
     artwork = json.loads((output / "artwork/file-artwork.json").read_text())
     assert artwork["passed"] >= 11 and artwork["asyncProviderCalls"] == 1
-    print(f"PASS: 40 native UI captures; {len(gallery['validatorChecks'])} audit guardrails; "
+    print(f"PASS: {len(gallery['captures'])} native UI captures; {len(gallery['validatorChecks'])} audit guardrails; "
           f"{len(ranges['checks'])} range checks; {artwork['passed']} artwork checks; parser/output safety")
 
 

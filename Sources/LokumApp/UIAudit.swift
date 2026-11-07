@@ -5,7 +5,7 @@ import LokumCore
 import LokumUpdates
 
 struct UIAuditOptions {
-    static let scenes=["home.empty","home.selected","library","settings.general","settings.formats","settings.updates","wheel.pdf-multiple","editor.crop-image","editor.annotate-image","editor.frame-image"]
+    static let scenes=["home.empty","home.selected","library","settings.general","settings.formats","settings.updates","wheel.pdf-multiple","wheel.image","wheel.video","editor.crop-image","editor.annotate-image","editor.frame-image","editor.edit-image","editor.edit-image-crop","editor.background","editor.convert"]
     var output:URL
     var scenes=Self.scenes
     var appearances=["light","dark"]
@@ -130,13 +130,19 @@ struct UIAuditError:LocalizedError { let message:String;init(_ message:String){s
         case "settings.general","settings.formats","settings.updates":
             let section:SettingsSection=scene=="settings.formats" ? .formats:scene=="settings.updates" ? .updates:.general
             view=AnyView(SettingsView(updater:updater,initialSection:section));size=NSSize(width:790,height:590)
-        case "editor.crop-image","editor.annotate-image","editor.frame-image":
-            let tool:ToolKind=scene=="editor.crop-image" ? .cropImage:scene=="editor.annotate-image" ? .annotateImage:.frameImage
+        case "editor.crop-image","editor.annotate-image","editor.frame-image","editor.edit-image","editor.edit-image-crop":
+            let tool:ToolKind=scene.hasPrefix("editor.edit-image") ? .editImage:scene=="editor.crop-image" ? .cropImage:scene=="editor.annotate-image" ? .annotateImage:.frameImage
             view=AnyView(ToolEditor(state:state,tool:tool));size=NSSize(width:900,height:420)
-        case "wheel.pdf-multiple":
-            let wheel=WheelView(frame:NSRect(x:0,y:0,width:320,height:320));let inputs=[fixtures["pdf1"]!,fixtures["pdf2"]!]
+        case "editor.background":view=AnyView(BackgroundEditorView(state:state,inputs:state.inputs));size=NSSize(width:900,height:420)
+        case "editor.convert":view=AnyView(ConversionWorkspace(state:state,format:"jpg"));size=NSSize(width:900,height:420)
+        case "wheel.pdf-multiple","wheel.image","wheel.video":
+            let wheel=WheelView(frame:NSRect(x:0,y:0,width:320,height:320))
+            let inputs:[URL]
+            if scene=="wheel.image" {inputs=[image]}
+            else if scene=="wheel.video" {let url=options.output.appendingPathComponent("Wheel fixture.mp4");try Data([0,1]).write(to:url);inputs=[url]}
+            else {inputs=[fixtures["pdf1"]!,fixtures["pdf2"]!]}
             wheel.mode = .tools;wheel.inputs=inputs
-            wheel.items=FeatureCatalog.tools(for:inputs).map{WheelItem(title:FeatureCatalog.toolNames[$0] ?? $0.title,symbol:FeatureCatalog.toolSymbols[$0],operation:.tool($0))};wheel.centerTitle="Tools"
+            wheel.items=WheelController.localItems(for:inputs,mode:.tools);wheel.centerTitle="Tools"
             let host=NSWindow(contentRect:NSRect(x:0,y:0,width:320,height:320),styleMask:[.titled,.closable],backing:.buffered,defer:false);host.isReleasedWhenClosed=false;host.title="Lokum UI Audit · "+scene;host.contentView=wheel;host.center();host.makeKeyAndOrderFront(nil);window=host;NSApp.activate(ignoringOtherApps:true)
             wheel.updateAccessibility()
             try await settle(recorder:nil)
@@ -152,6 +158,11 @@ struct UIAuditError:LocalizedError { let message:String;init(_ message:String){s
         host.isReleasedWhenClosed=false;host.title="Lokum UI Audit · "+scene;host.contentView=NSHostingView(rootView:root);host.center();window=host;host.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
         try await settle(recorder:isEditor ? recorder:nil)
         guard let content=host.contentView else{throw UIAuditError("Scene has no content view")}
+        if scene=="editor.edit-image-crop" {
+            guard let button=ownAccessibilityElements(content).first(where:{$0.accessibilityIdentifier()=="image.crop"}),button.accessibilityPerformPress() else {throw UIAuditError("The integrated crop action is not accessible")}
+            try await Task.sleep(nanoseconds:150_000_000);content.layoutSubtreeIfNeeded()
+            guard let save=ownAccessibilityElements(content).first(where:{$0.accessibilityIdentifier()=="editor.primary"}),!save.isAccessibilityEnabled() else {throw UIAuditError("Saving must wait until the crop is previewed")}
+        }
         observedPreferences=try await verifyPreferences(scene:scene,appearance:appearance,language:language,defaults:defaults,view:content)
         let issues=recorder.issues(in:content.bounds,editor:isEditor)
         try save(scene:scene,appearance:appearance,language:language,view:content,recorder:recorder,issues:issues)

@@ -108,7 +108,7 @@ struct ConversionWorkspace:View {
                 Spacer()
                 Button("Show Result") {Task {if model.outputs.isEmpty {await model.prepare()};model.showResult()}}.disabled(model.busy || state.working || model.formats.isEmpty)
                 Button {
-                    let panel=NSOpenPanel();panel.canChooseFiles=false;panel.canChooseDirectories=true;panel.canCreateDirectories=true;panel.directoryURL=model.inputs.first?.deletingLastPathComponent()
+                    let panel=NSOpenPanel();panel.canChooseFiles=false;panel.canChooseDirectories=true;panel.canCreateDirectories=true;panel.directoryURL=model.inputs.first?.deletingLastPathComponent();panel.prompt=L10n.text("Save Here")
                     if panel.runModal() == .OK,let directory=panel.url {model.save(to:directory,state:state)}
                 } label:{LText("Save a fresh copy").uiAuditProbe("editor.primary.label")}.buttonStyle(LokumButtonStyle(.primary)).disabled(model.outputs.isEmpty || model.busy || state.working).uiAuditProbe("editor.primary")
             }.padding(20).uiAuditProbe("editor.footer")
