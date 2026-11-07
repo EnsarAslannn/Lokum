@@ -16,7 +16,7 @@ import LokumCore
         try FileManager.default.createDirectory(at:output,withIntermediateDirectories:true)
         let source=output.appendingPathComponent("Source.png")
         let image=NSBitmapImageRep(bitmapDataPlanes:nil,pixelsWide:16,pixelsHigh:16,bitsPerSample:8,samplesPerPixel:4,hasAlpha:true,isPlanar:false,colorSpaceName:.deviceRGB,bytesPerRow:64,bitsPerPixel:32)!
-        for y in 0..<16 {for x in 0..<16 {image.setColor(x<8 ? .red:.blue,atX:x,y:y)}}
+        for y in 0..<16 {for x in 0..<16 {image.setColor(NSColor(srgbRed:x<8 ? 1:0,green:0,blue:x<8 ? 0:1,alpha:1).usingColorSpace(.deviceRGB)!,atX:x,y:y)}}
         try image.representation(using:.png,properties:[:])!.write(to:source)
         let suite="Lokum.DesktopFeatureSmoke."+UUID().uuidString
         let defaults=UserDefaults(suiteName:suite)!
@@ -27,8 +27,9 @@ import LokumCore
         var checks:[String]=[],failures:[String]=[]
         func check(_ success:Bool,_ label:String) {if success {checks.append(label)}else{failures.append(label)}}
         let state=AppState(defaults:defaults);state.inputs=[source]
+        var formats:[String]=[];state.onShowConversion={formats.append($0)}
         state.select(.convert("png"))
-        check(!state.working && state.history.isEmpty && state.outputs.isEmpty,"Choosing a conversion opens a preview workspace without immediately exporting or changing Library")
+        check(formats==["png"] && !state.working && state.history.isEmpty && state.outputs.isEmpty,"Choosing a conversion opens a preview workspace without immediately exporting or changing Library")
         state.token.cancel()
         let mute=AppState(defaults:defaults);mute.inputs=[source.deletingPathExtension().appendingPathExtension("mp4")]
         var opened:[ToolKind]=[];mute.onShowTool={opened.append($0)}

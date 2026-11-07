@@ -76,9 +76,21 @@ final class DesktopParityEngineTests:XCTestCase {
         XCTAssertEqual(try MediaEngine.inspect(preview.playbackURL).duration,1.75,accuracy:0.15)
         XCTAssertEqual(try FileManager.default.contentsOfDirectory(atPath:folder.path),[input.lastPathComponent])
     }
+    func testAutomaticCompressionCanBePreviewedWithoutPublishingFiles()async throws {
+        let folder=try directory();defer{try? FileManager.default.removeItem(at:folder)}
+        let input=try video(in:folder),original=try Data(contentsOf:input)
+        do {
+            let preview=try await MediaPreviewEngine.processedPreview(.compress,input:input)
+            defer{preview.removeTemporaryFiles()}
+            XCTAssertTrue(try MediaEngine.inspect(preview.playbackURL).hasVideo)
+            XCTAssertNotNil(preview.ownedTemporaryDirectory)
+            XCTAssertEqual(try Data(contentsOf:input),original)
+            XCTAssertEqual(try FileManager.default.contentsOfDirectory(atPath:folder.path),[input.lastPathComponent])
+        }catch{XCTFail("Automatic compression needs a real, owned preview before saving: \(error.localizedDescription)")}
+    }
     func testEditingAnImageAppliesItsCropBeforeOtherAdjustments()throws {
         let image=NSBitmapImageRep(bitmapDataPlanes:nil,pixelsWide:8,pixelsHigh:4,bitsPerSample:8,samplesPerPixel:4,hasAlpha:true,isPlanar:false,colorSpaceName:.deviceRGB,bytesPerRow:32,bitsPerPixel:32)!
-        for y in 0..<4 {for x in 0..<8 {image.setColor(x<4 ? .red:.blue,atX:x,y:y)}}
+        for y in 0..<4 {for x in 0..<8 {image.setColor(NSColor(srgbRed:x<4 ? 1:0,green:0,blue:x<4 ? 0:1,alpha:1).usingColorSpace(.deviceRGB)!,atX:x,y:y)}}
         var settings=OperationOptions();settings.crop=EditRect(x:4,y:0,width:4,height:4)
         let result=try ImageEngine.preview(image.cgImage!,tool:.editImage,options:settings)
         XCTAssertEqual(result.width,4)
@@ -92,7 +104,7 @@ final class DesktopParityEngineTests:XCTestCase {
         let folder=try directory();defer{try? FileManager.default.removeItem(at:folder)}
         let source=folder.appendingPathComponent("Source.png")
         let image=NSBitmapImageRep(bitmapDataPlanes:nil,pixelsWide:8,pixelsHigh:4,bitsPerSample:8,samplesPerPixel:4,hasAlpha:true,isPlanar:false,colorSpaceName:.deviceRGB,bytesPerRow:32,bitsPerPixel:32)!
-        for y in 0..<4 {for x in 0..<8 {image.setColor(.red,atX:x,y:y)}}
+        for y in 0..<4 {for x in 0..<8 {image.setColor(NSColor(srgbRed:1,green:0,blue:0,alpha:1).usingColorSpace(.deviceRGB)!,atX:x,y:y)}}
         try image.representation(using:.png,properties:[:])!.write(to:source)
         let region:[String:Any]=["points":[["x":0.0,"y":0.0],["x":0.5,"y":0.0],["x":0.5,"y":1.0],["x":0.0,"y":1.0]],"subtract":false]
         for fill in ["transparent","color"] {

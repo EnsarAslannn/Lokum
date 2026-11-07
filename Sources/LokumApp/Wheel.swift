@@ -42,7 +42,9 @@ struct WheelItem {
             items += [WheelItem(title:"Copy link",symbol:"link",webAction:.copy),WheelItem(title:"Open link",symbol:"safari",webAction:.open)]
         } else { switch mode {
         case .convert: items=FeatureCatalog.formats(for:inputs).map{WheelItem(title:$0 == "gz" ? "GZIP":$0.uppercased(),operation:.convert($0))}
-        case .tools: items=FeatureCatalog.tools(for:inputs).map{WheelItem(title:FeatureCatalog.toolNames[$0] ?? $0.title,symbol:FeatureCatalog.toolSymbols[$0],operation:.tool($0))}
+        case .tools:
+            if !FeatureCatalog.formats(for:inputs).isEmpty {items.append(WheelItem(title:"Convert",symbol:"arrow.triangle.2.circlepath",operation:.convert("")))}
+            items += FeatureCatalog.tools(for:inputs).map{WheelItem(title:FeatureCatalog.toolNames[$0] ?? $0.title,symbol:FeatureCatalog.toolSymbols[$0],operation:.tool($0))}
         case .actions: items=FileAction.allCases.map{WheelItem(title:$0.title,symbol:$0.symbol,action:$0)}
         } }
         let exists=panel?.isVisible ?? false

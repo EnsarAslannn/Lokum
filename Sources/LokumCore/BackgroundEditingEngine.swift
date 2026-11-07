@@ -11,6 +11,7 @@ public struct ForegroundRegion:Codable,Sendable {
 public struct BackgroundEditingOptions:Codable,Sendable {
     public var regions:[ForegroundRegion]=[]
     public var automatic=false
+    public var automaticInputs:[String]?=nil
     public var fill="transparent"
     public var color="#FFFFFF"
     public var image:URL?
@@ -23,14 +24,15 @@ public enum BackgroundEditingEngine {
         let source=try ImageEngine.load(input),width=source.width,height=source.height
         guard width<=30000,height<=30000,width*height<=100_000_000 else {throw LokumError.invalidInput("This image exceeds 100 MP or 30,000 pixels.")}
         let regions=settings.selections[input.path] ?? settings.regions
-        guard settings.automatic || regions.contains(where:{!$0.subtract}) else {throw LokumError.invalidInput("Select an area to keep or use automatic removal.")}
+        let automatic=settings.automatic || (settings.automaticInputs?.contains(input.path) ?? false)
+        guard automatic || regions.contains(where:{!$0.subtract}) else {throw LokumError.invalidInput("Select an area to keep or use automatic removal.")}
         guard regions.count<=256 else {throw LokumError.invalidInput("Use at most 256 selection areas.")}
         for region in regions {
             guard (3...4096).contains(region.points.count),region.points.allSatisfy({$0.x.isFinite && $0.y.isFinite && $0.x>=0 && $0.x<=1 && $0.y>=0 && $0.y<=1}) else {throw LokumError.invalidInput("Keep selection points inside the image.")}
         }
         var pixels=try rgba(source)
         let originalAlpha=stride(from:3,to:pixels.count,by:4).map{pixels[$0]}
-        let mask=settings.automatic ? try automaticMask(source,token:token):nil
+        let mask=automatic ? try automaticMask(source,token:token):nil
         for y in 0..<height {
             try token.check()
             for x in 0..<width {

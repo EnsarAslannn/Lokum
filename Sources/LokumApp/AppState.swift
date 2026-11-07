@@ -47,6 +47,7 @@ struct JobRecord:Codable,Identifiable {
     var onWebDrop:(([URL])->Void)?
     @Published var webShortcutAvailable=false
     var onShowTool:((ToolKind)->Void)?
+    var onShowConversion:((String)->Void)?
     var onEPUBOptions:(()->Void)?
     var onJobStarted:(()->Void)?
     var onSuccess:((SuccessNotice)->Void)?
@@ -67,9 +68,9 @@ struct JobRecord:Codable,Identifiable {
     func select(_ operation:LokumCore.Operation,options:LokumCore.OperationOptions? = nil,immediate:Bool=false) {
         var settings=options ?? OperationOptions()
         if options == nil,case .convert(let format)=operation { settings=FormatPreferences.shared.options(for:format) }
-        if case .convert("epub")=operation,inputs.allSatisfy({FileCategory.detect($0) == .pdf}),!immediate { onEPUBOptions?();return }
+        if case .convert(let format)=operation,!immediate {onShowConversion?(format);return}
         if case .tool(.removeMetadata)=operation,inputs.count>1 { execute(operation,options:settings);return }
-        if case .tool(let kind)=operation,!immediate,!([.muteVideo,.extractArchive,.createPDF,.splitPDF].contains(kind)) {
+        if case .tool(let kind)=operation,!immediate,!([.extractArchive,.createPDF,.splitPDF].contains(kind)) {
             onShowTool?(kind);return
         }
         execute(operation,options:settings)
