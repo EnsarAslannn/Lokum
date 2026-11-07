@@ -15,9 +15,10 @@ import LokumCore
     private func run()async throws {
         try FileManager.default.createDirectory(at:output,withIntermediateDirectories:true)
         let source=output.appendingPathComponent("Source.png")
-        let image=NSBitmapImageRep(bitmapDataPlanes:nil,pixelsWide:16,pixelsHigh:16,bitsPerSample:8,samplesPerPixel:4,hasAlpha:true,isPlanar:false,colorSpaceName:.deviceRGB,bytesPerRow:64,bitsPerPixel:32)!
-        for y in 0..<16 {for x in 0..<16 {image.setColor(NSColor(srgbRed:x<8 ? 1:0,green:0,blue:x<8 ? 0:1,alpha:1).usingColorSpace(.deviceRGB)!,atX:x,y:y)}}
-        try image.representation(using:.png,properties:[:])!.write(to:source)
+        var pixels:[UInt8]=[]
+        for _ in 0..<16 {for x in 0..<16 {pixels += x<8 ? [255,0,0,255]:[0,0,255,255]}}
+        let image=CGImage(width:16,height:16,bitsPerComponent:8,bitsPerPixel:32,bytesPerRow:64,space:CGColorSpace(name:CGColorSpace.sRGB)!,bitmapInfo:CGBitmapInfo(rawValue:CGImageAlphaInfo.premultipliedLast.rawValue),provider:CGDataProvider(data:Data(pixels) as CFData)!,decode:nil,shouldInterpolate:false,intent:.defaultIntent)!
+        try ImageEngine.write(image,to:source)
         let suite="Lokum.DesktopFeatureSmoke."+UUID().uuidString
         let defaults=UserDefaults(suiteName:suite)!
         let original=UserDefaults.standard.volatileDomain(forName:UserDefaults.argumentDomain)
@@ -48,6 +49,28 @@ import LokumCore
             check(true,"The tools wheel offers conversion before the editing tools")
         }else{check(false,"The tools wheel offers conversion before the editing tools")}
         controller.hide()
+        let original=try Data(contentsOf:source)
+        let conversion=ConversionWorkspaceModel(inputs:[source],format:"jpg")
+        await conversion.prepare()
+        check(conversion.error==nil && conversion.outputs.count==1 && conversion.totalBytes>0,"Show Result generates a real target file and reports its size")
+        check(state.history.isEmpty && state.outputs.isEmpty,"Preparing a conversion leaves Library and saved outputs unchanged")
+        if let file=conversion.outputs.first {
+            let stale=file
+            conversion.options.quality=0.45
+            check(conversion.outputs.isEmpty && !FileManager.default.fileExists(atPath:stale.path),"Changing conversion settings invalidates and removes the previous preview")
+            await conversion.prepare()
+            if let prepared=conversion.outputs.first {
+                let expected=try Data(contentsOf:prepared)
+                conversion.save(to:output.appendingPathComponent("Exports"),state:state)
+                let deadline=Date().addingTimeInterval(15)
+                while state.working && Date()<deadline {try await Task.sleep(nanoseconds:20_000_000)}
+                check(!state.working && state.error==nil && state.outputs.count==1 && state.history.count==1,"Saving the approved conversion publishes one Library entry")
+                if let saved=state.outputs.first {check(try Data(contentsOf:saved)==expected,"The saved file is byte-for-byte identical to the approved preview")}
+                check(!FileManager.default.fileExists(atPath:prepared.path),"Saving releases the owned preview files after publishing")
+            }
+        }
+        conversion.invalidate()
+        check(try Data(contentsOf:source)==original,"Conversion preview and save preserve the original input")
         let report:[String:Any]=["passed":failures.isEmpty,"checks":checks,"failures":failures]
         try JSONSerialization.data(withJSONObject:report,options:[.prettyPrinted,.sortedKeys]).write(to:output.appendingPathComponent("verification.json"))
         if !failures.isEmpty {throw NSError(domain:"Lokum desktop feature parity",code:1,userInfo:[NSLocalizedDescriptionKey:failures.joined(separator:"\n")])}

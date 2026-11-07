@@ -5,11 +5,13 @@ import LokumCore
 
 @MainActor final class FilePreview:NSObject {
     private var window:NSWindow?;private var urls:[URL]=[];private var index=0
+    private var displayNames:[String]=[]
     private var monitor:Any?;private var player:AVPlayer?;private var preview:QLPreviewView?
     private let caption=NSTextField(labelWithString:"")
     deinit { if let monitor {NSEvent.removeMonitor(monitor)} }
-    func show(_ urls:[URL]) {
+    func show(_ urls:[URL],displayNames:[String]?=nil) {
         guard !urls.isEmpty else{return};self.urls=urls;index=0
+        self.displayNames=displayNames?.count==urls.count ? displayNames!:urls.map(\.lastPathComponent)
         if window == nil {
             let w=NSWindow(contentRect:NSRect(x:0,y:0,width:800,height:620),styleMask:[.titled,.closable,.resizable,.miniaturizable],backing:.buffered,defer:false);w.backgroundColor=NSColor(LokumPalette.canvas);w.isReleasedWhenClosed=false;w.minSize=NSSize(width:560,height:400);w.center();window=w
             monitor=NSEvent.addLocalMonitorForEvents(matching:.keyDown) { [weak self] event in
@@ -34,9 +36,9 @@ import LokumCore
     @objc private func didClose(){player?.pause();player?.replaceCurrentItem(with:nil);player=nil;preview?.previewItem=nil;preview=nil}
     func close(){window?.close();didClose()}
     private func load() {
-        guard let window else{return};didClose();let url=urls[index];window.title=url.lastPathComponent+" · "+L10n.text("Preview")+" · Lokum"
+        guard let window else{return};didClose();let url=urls[index],name=displayNames[index];window.title=name+" · "+L10n.text("Preview")+" · Lokum"
         let root=NSView();window.contentView=root
-        let header=NSStackView();header.orientation = .horizontal;header.spacing=8;caption.stringValue="\(url.lastPathComponent) · \(index+1) / \(urls.count)";caption.lineBreakMode = .byTruncatingMiddle;header.addArrangedSubview(caption)
+        let header=NSStackView();header.orientation = .horizontal;header.spacing=8;caption.stringValue="\(name) · \(index+1) / \(urls.count)";caption.lineBreakMode = .byTruncatingMiddle;header.addArrangedSubview(caption)
         for (label,selector) in [("←",#selector(previous)),("→",#selector(next)),("Open",#selector(openFile))] {header.addArrangedSubview(NSButton(title:L10n.text(label),target:self,action:selector))}
         let hint=NSTextField(labelWithString:L10n.text("←/→ files · Media: Space play/pause, ←/→ 1s, ⌥←/→ files · Esc closes"));hint.font = .systemFont(ofSize:11);hint.textColor = .secondaryLabelColor
         let content:NSView

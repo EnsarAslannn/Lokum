@@ -3,6 +3,16 @@ import AppKit
 @testable import LokumCore
 
 final class DesktopParityEngineTests:XCTestCase {
+    private func image(width:Int=8,height:Int=4,split:Bool=false)throws->CGImage {
+        var bytes:[UInt8]=[]
+        for _ in 0..<height {for x in 0..<width {bytes += split && x>=width/2 ? [0,0,255,255]:[255,0,0,255]}}
+        return try XCTUnwrap(CGImage(width:width,height:height,bitsPerComponent:8,bitsPerPixel:32,bytesPerRow:width*4,space:CGColorSpace(name:CGColorSpace.sRGB)!,bitmapInfo:CGBitmapInfo(rawValue:CGImageAlphaInfo.premultipliedLast.rawValue),provider:CGDataProvider(data:Data(bytes) as CFData)!,decode:nil,shouldInterpolate:false,intent:.defaultIntent))
+    }
+    private func pixels(_ image:CGImage)throws->[UInt8] {
+        let context=try XCTUnwrap(CGContext(data:nil,width:image.width,height:image.height,bitsPerComponent:8,bytesPerRow:image.width*4,space:CGColorSpace(name:CGColorSpace.sRGB)!,bitmapInfo:CGImageAlphaInfo.premultipliedLast.rawValue))
+        context.draw(image,in:CGRect(x:0,y:0,width:image.width,height:image.height))
+        return Array(Data(bytes:try XCTUnwrap(context.data),count:image.width*image.height*4))
+    }
     private func options(_ changes:[String:Any])throws->OperationOptions {
         var values=try JSONSerialization.jsonObject(with:JSONEncoder().encode(OperationOptions())) as! [String:Any]
         for (key,value) in changes {values[key]=value}
@@ -89,34 +99,33 @@ final class DesktopParityEngineTests:XCTestCase {
         }catch{XCTFail("Automatic compression needs a real, owned preview before saving: \(error.localizedDescription)")}
     }
     func testEditingAnImageAppliesItsCropBeforeOtherAdjustments()throws {
-        let image=NSBitmapImageRep(bitmapDataPlanes:nil,pixelsWide:8,pixelsHigh:4,bitsPerSample:8,samplesPerPixel:4,hasAlpha:true,isPlanar:false,colorSpaceName:.deviceRGB,bytesPerRow:32,bitsPerPixel:32)!
-        for y in 0..<4 {for x in 0..<8 {image.setColor(NSColor(srgbRed:x<4 ? 1:0,green:0,blue:x<4 ? 0:1,alpha:1).usingColorSpace(.deviceRGB)!,atX:x,y:y)}}
+        let image=try image(split:true)
+        XCTAssertEqual(Array(try pixels(image).prefix(4)),[255,0,0,255])
         var settings=OperationOptions();settings.crop=EditRect(x:4,y:0,width:4,height:4)
-        let result=try ImageEngine.preview(image.cgImage!,tool:.editImage,options:settings)
+        let result=try ImageEngine.preview(image,tool:.editImage,options:settings)
         XCTAssertEqual(result.width,4)
         XCTAssertEqual(result.height,4)
-        let pixel=NSBitmapImageRep(cgImage:result).colorAt(x:0,y:0)!.usingColorSpace(.deviceRGB)!
-        XCTAssertGreaterThan(pixel.blueComponent,0.9)
-        XCTAssertLessThan(pixel.redComponent,0.1)
+        let pixel=try pixels(result)
+        XCTAssertGreaterThan(pixel[2],230)
+        XCTAssertLessThan(pixel[0],25)
     }
     func testBackgroundSelectionExportsTransparentOrReplacementPixels()throws {
         guard let tool=ToolKind(rawValue:"removeBackground") else {XCTFail("The image background editor is missing on macOS");return}
         let folder=try directory();defer{try? FileManager.default.removeItem(at:folder)}
         let source=folder.appendingPathComponent("Source.png")
-        let image=NSBitmapImageRep(bitmapDataPlanes:nil,pixelsWide:8,pixelsHigh:4,bitsPerSample:8,samplesPerPixel:4,hasAlpha:true,isPlanar:false,colorSpaceName:.deviceRGB,bytesPerRow:32,bitsPerPixel:32)!
-        for y in 0..<4 {for x in 0..<8 {image.setColor(NSColor(srgbRed:1,green:0,blue:0,alpha:1).usingColorSpace(.deviceRGB)!,atX:x,y:y)}}
-        try image.representation(using:.png,properties:[:])!.write(to:source)
+        try ImageEngine.write(image(),to:source)
+        let original=try Data(contentsOf:source)
         let region:[String:Any]=["points":[["x":0.0,"y":0.0],["x":0.5,"y":0.0],["x":0.5,"y":1.0],["x":0.0,"y":1.0]],"subtract":false]
         for fill in ["transparent","color"] {
             var settings=try options(["backgroundEditing":["regions":[region],"automatic":false,"fill":fill,"color":"#00FF00","selections":[:]]])
             settings.outputDirectory=folder.appendingPathComponent(fill)
             let result=try ConversionEngine.run(.init(inputs:[source],operation:.tool(tool),options:settings))[0]
-            let actual=NSBitmapImageRep(cgImage:try ImageEngine.load(result))
-            XCTAssertGreaterThan(actual.colorAt(x:1,y:1)!.redComponent,0.9)
-            if fill=="transparent" {XCTAssertLessThan(actual.colorAt(x:6,y:1)!.alphaComponent,0.01)}
-            else {XCTAssertGreaterThan(actual.colorAt(x:6,y:1)!.greenComponent,0.9)}
+            let actual=try pixels(ImageEngine.load(result))
+            XCTAssertGreaterThan(actual[(1*8+1)*4],230)
+            if fill=="transparent" {XCTAssertLessThan(actual[(1*8+6)*4+3],2)}
+            else {XCTAssertGreaterThan(actual[(1*8+6)*4+1],230)}
         }
-        XCTAssertEqual(try Data(contentsOf:source),image.representation(using:.png,properties:[:])!)
+        XCTAssertEqual(try Data(contentsOf:source),original)
     }
     func testAutomaticBackgroundRemovalUsesTheBundledModelWithoutUploading()throws {
         guard let tool=ToolKind(rawValue:"removeBackground") else {XCTFail("Automatic background removal is missing on macOS");return}

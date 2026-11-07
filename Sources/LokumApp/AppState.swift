@@ -93,14 +93,30 @@ struct JobRecord:Codable,Identifiable {
                         }
                     }
                 }.value
-                stopProgressUpdates();outputs=result;progress=1
-                let record=JobRecord(title:operation.title,inputs:selected.map(\.path),outputs:result.map(\.path))
-                history.insert(record,at:0);history=Array(history.prefix(50))
-                if let data=try? JSONEncoder().encode(history) { historyDefaults.set(data,forKey:"history") }
-                onSuccess?(.filesReady(result))
-                if options.revealInFinder { NSWorkspace.shared.activateFileViewerSelecting(result) }
+                completeExport(result,inputs:selected,operation:operation,reveal:options.revealInFinder)
             } catch { stopProgressUpdates();if !cancel.isCancelled { self.error=error.localizedDescription } }
         }
+    }
+    func publishPrepared(_ files:[URL],inputs:[URL],operation:LokumCore.Operation,to destination:URL,cleanup:URL?) {
+        guard !working else{return}
+        beginJob(operation.title);let cancel=token;activeInputs=inputs
+        if case .tool(let tool)=operation {activeTool=tool}
+        Task { [self] in
+            defer{finishJob();if let cleanup {try? FileManager.default.removeItem(at:cleanup)}}
+            do {
+                let results=try await Task.detached {
+                    try withGrantedFolderAccess([destination]) {try ConversionEngine.publishPrepared(files,to:destination,token:cancel)}
+                }.value
+                completeExport(results,inputs:inputs,operation:operation,reveal:UserDefaults.standard.bool(forKey:"reveal"))
+            }catch{if !cancel.isCancelled {self.error=error.localizedDescription}}
+        }
+    }
+    private func completeExport(_ results:[URL],inputs:[URL],operation:LokumCore.Operation,reveal:Bool) {
+        stopProgressUpdates();outputs=results;progress=1
+        history.insert(JobRecord(title:operation.title,inputs:inputs.map(\.path),outputs:results.map(\.path)),at:0);history=Array(history.prefix(50))
+        if let data=try? JSONEncoder().encode(history) {historyDefaults.set(data,forKey:"history")}
+        onSuccess?(.filesReady(results))
+        if reveal {NSWorkspace.shared.activateFileViewerSelecting(results)}
     }
     func beginJob(_ label:String) {
         token=CancellationToken();acceptsProgress=true
@@ -176,7 +192,7 @@ struct JobRecord:Codable,Identifiable {
     }
 }
 
-private func withGrantedFolderAccess<T>(_ urls:[URL],_ action:() throws -> T) throws -> T {
+func withGrantedFolderAccess<T>(_ urls:[URL],_ action:() throws -> T) throws -> T {
     func acquire(_ index:Int) throws -> T {
         guard index<urls.count else { return try action() }
         return try FolderAccessPreferences.withAccess(to:urls[index]) { try acquire(index+1) }

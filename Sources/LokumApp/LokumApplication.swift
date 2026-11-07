@@ -196,6 +196,7 @@ enum LokumApplication {
         state.onChooseFiles = { [weak self] in self?.chooseFiles() }
         state.onSettings = { [weak self] in self?.showSettings() }
         state.onShowTool = { [weak self] tool in self?.showTool(tool) }
+        state.onShowConversion = { [weak self] format in self?.showConversion(format) }
         state.onEPUBOptions = { [weak self] in guard let self else { return };let window=self.makeWindow(title:"Convert to EPUB",size:NSSize(width:530,height:390),view:EPUBOptionsView(state:self.state,inputs:self.state.inputs));self.state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true) }
         state.onJobStarted = { [weak self] in self?.successToast.dismiss();self?.showProgress() }
         state.onSuccess = { [weak self] notice in self?.progressToast.dismiss();self?.successToast.show(notice) }
@@ -311,6 +312,10 @@ enum LokumApplication {
     }
     func showTool(_ kind:ToolKind) {
         progressToast.dismiss()
+        if kind == .removeBackground {
+            let window=makeToolWindow(title:"Edit Background",size:NSSize(width:1100,height:720),view:BackgroundEditorView(state:state,inputs:state.inputs))
+            state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);return
+        }
         if kind == .readQRCode {
             let window=makeToolWindow(title:kind.title,size:NSSize(width:590,height:620),view:QRCodeReaderView(inputs:state.inputs,onSuccess:{ [weak self] in self?.state.reportSuccess($0) }))
             state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);return
@@ -318,6 +323,11 @@ enum LokumApplication {
         let view=ToolEditor(state:state,tool:kind)
         let preview=[ToolKind.editImage,.annotateImage,.cropImage,.frameImage,.redactImage,.createCollage,.cropVideo,.trimVideo,.changeVideoSpeed,.splitVideo,.videoSnapshots,.redactVideo,.trimAudio,.normalizeAudio,.audioChannels,.redactAudio,.audioToVideo].contains(kind)
         let window=makeToolWindow(title:FeatureCatalog.toolNames[kind] ?? kind.title,size:NSSize(width:preview ? 1000:kind == .organizePDF ? 780:600,height:kind == .compress ? 630:760),view:view)
+        state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
+    }
+    func showConversion(_ format:String) {
+        progressToast.dismiss()
+        let window=makeToolWindow(title:"Convert",size:NSSize(width:960,height:650),view:ConversionWorkspace(state:state,format:format))
         state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true)
     }
     func application(_ application:NSApplication,open urls:[URL]) {
