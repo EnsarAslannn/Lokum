@@ -14,6 +14,12 @@ ve Lokum’da seçilir; ardından bilgisayarındaki dosyalarla aynı araçları 
 Tarayıcı bağlantıyı paylaşmıyorsa bağlantı yapıştırabileceğin indirme ekranı açılır.
 Korumalı veya giriş gerektiren bazı medyalar indirilemeyebilir.
 
+macOS'ta Finder dosyalarında veya tarayıcı medyasında Control ile tıklayabilirsin.
+Başka uygulamanın menüsünden medya adresi okumak için **Ayarlar → Pencere yönetimi →
+İzin ayarlarını aç** üzerinden Lokum'a Erişilebilirlik izni ver. Bağlantı alınamıyorsa
+**Bağlantı indir** ekranına kendin yapıştırabilirsin. macOS'ta uygulama kısayolları
+genellikle Ctrl yerine Command kullanır; platform eşlemesi [buradadır](docs/DESKTOP-PARITY.md#shortcut-mapping).
+
 Explorer/masaüstündeki dosyalar için mevcut Ctrl kısayolları çalışmaya devam eder.
 Doğrudan web araç çarkı isteyenler için Chrome uzantısı isteğe bağlıdır:
 **Ayarlar → Chrome uzantısı (isteğe bağlı)**. [Ayrıntılar](browser/README.md).

@@ -118,6 +118,7 @@
 "ALL" = "ALL";
 "ALL METADATA" = "ALL METADATA";
 "ALL SET. YOU’RE READY TO GO." = "ALL SET. YOU’RE READY TO GO.";
+"ALLOW ACCESSIBILITY TO READ THE SELECTED MEDIA ADDRESS." = "ALLOW ACCESSIBILITY TO READ THE SELECTED MEDIA ADDRESS.";
 "ALLOW FOLDER…" = "ALLOW FOLDER…";
 "ALLOW HOME FOLDER ACCESS…" = "ALLOW HOME FOLDER ACCESS…";
 "ALLOW LOKUM IN MACOS LOGIN ITEMS." = "ALLOW LOKUM IN MACOS LOGIN ITEMS.";
@@ -193,6 +194,7 @@
 "All set. You’re ready to go." = "All set. You’re ready to go.";
 "Allow %@ once to move and resize other apps’ windows." = "Allow %@ once to move and resize other apps’ windows.";
 "Allow %lld once to move and resize other apps’ windows." = "Allow %lld once to move and resize other apps’ windows.";
+"Allow Accessibility to read the selected media address." = "Allow Accessibility to read the selected media address.";
 "Allow Folder…" = "Allow Folder…";
 "Allow Home Folder Access…" = "Allow Home Folder Access…";
 "Allow Lokum in macOS Login Items." = "Allow Lokum in macOS Login Items.";
@@ -428,6 +430,7 @@
 "COMPRESSION STRENGTH" = "COMPRESSION STRENGTH";
 "CONTINUE TO LOKUM" = "CONTINUE TO LOKUM";
 "CONTRAST" = "CONTRAST";
+"CONTROL-CLICK FILES IN FINDER TO OPEN THEIR TOOLS, OR MEDIA IN A BROWSER TO DOWNLOAD IT. READING ANOTHER APP'S CONTEXT MENU ALSO NEEDS ACCESSIBILITY PERMISSION." = "CONTROL-CLICK FILES IN FINDER TO OPEN THEIR TOOLS, OR MEDIA IN A BROWSER TO DOWNLOAD IT. READING ANOTHER APP'S CONTEXT MENU ALSO NEEDS ACCESSIBILITY PERMISSION.";
 "CONVERSION SETTINGS" = "CONVERSION SETTINGS";
 "CONVERSION WHEEL" = "CONVERSION WHEEL";
 "CONVERSIONS" = "CONVERSIONS";
@@ -613,6 +616,7 @@
 "Compression strength" = "Compression strength";
 "Continue to Lokum" = "Continue to Lokum";
 "Contrast" = "Contrast";
+"Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission." = "Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission.";
 "Conversion Settings" = "Conversion Settings";
 "Conversion wheel" = "Conversion wheel";
 "Conversions" = "Conversions";

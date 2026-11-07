@@ -145,4 +145,36 @@ final class DesktopParityEngineTests:XCTestCase {
         XCTAssertGreaterThan(visible,100)
         XCTAssertEqual(try Data(contentsOf:source),original)
     }
+    func testBackgroundHolesAndPerImageSelectionsAreIndependent()throws {
+        let folder=try directory();defer{try? FileManager.default.removeItem(at:folder)}
+        let a=folder.appendingPathComponent("A.png"),b=folder.appendingPathComponent("B.png")
+        try ImageEngine.write(image(),to:a);try ImageEngine.write(image(),to:b)
+        func region(_ left:Double,_ right:Double,subtract:Bool=false)->ForegroundRegion {
+            ForegroundRegion(points:[ImagePoint(x:left,y:0),ImagePoint(x:right,y:0),ImagePoint(x:right,y:1),ImagePoint(x:left,y:1)],subtract:subtract)
+        }
+        var background=BackgroundEditingOptions()
+        background.selections=[a.path:[region(0,1),region(0.25,0.75,subtract:true)],b.path:[region(0,0.5)]]
+        var settings=OperationOptions();settings.backgroundEditing=background;settings.outputDirectory=folder.appendingPathComponent("Exports")
+        let results=try ConversionEngine.run(.init(inputs:[a,b],operation:.tool(.removeBackground),options:settings))
+        XCTAssertEqual(results.count,2)
+        let first=try pixels(ImageEngine.load(results[0])),second=try pixels(ImageEngine.load(results[1]))
+        XCTAssertEqual(first[3],255);XCTAssertEqual(first[3*4+3],0);XCTAssertEqual(first[7*4+3],255)
+        XCTAssertEqual(second[3],255);XCTAssertEqual(second[7*4+3],0)
+    }
+    func testBackgroundImageFillsRemovedPixelsAndFailedBatchPublishesNothing()throws {
+        let folder=try directory();defer{try? FileManager.default.removeItem(at:folder)}
+        let source=folder.appendingPathComponent("Source.png"),background=folder.appendingPathComponent("Background.png"),target=folder.appendingPathComponent("Exports")
+        try ImageEngine.write(image(),to:source);try ImageEngine.write(image(split:true),to:background)
+        let original=try Data(contentsOf:source)
+        var value=BackgroundEditingOptions();value.fill="image";value.image=background
+        value.regions=[ForegroundRegion(points:[ImagePoint(x:0,y:0),ImagePoint(x:0.5,y:0),ImagePoint(x:0.5,y:1),ImagePoint(x:0,y:1)])]
+        var settings=OperationOptions();settings.backgroundEditing=value;settings.outputDirectory=target
+        let result=try BackgroundEditingEngine.render(source,settings:value)
+        let actual=try pixels(result);XCTAssertEqual(Array(actual[(1*8+6)*4..<(1*8+6)*4+4]),[0,0,255,255])
+        XCTAssertThrowsError(try ConversionEngine.run(.init(inputs:[source,folder.appendingPathComponent("Missing.png")],operation:.tool(.removeBackground),options:settings)))
+        XCTAssertTrue((try? FileManager.default.contentsOfDirectory(atPath:target.path).isEmpty) ?? true)
+        let token=CancellationToken();token.cancel()
+        XCTAssertThrowsError(try BackgroundEditingEngine.render(source,settings:value,token:token))
+        XCTAssertEqual(try Data(contentsOf:source),original)
+    }
 }

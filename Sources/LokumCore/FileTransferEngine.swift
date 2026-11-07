@@ -21,13 +21,13 @@ public enum FileTransferEngine {
                 guard relationship == .other else {throw LokumError.invalidInput("Choose a destination outside the folder being moved.")}
             }
         }
-        let transaction=ExportTransaction();defer{transaction.cleanUp()}
+        let transaction=ExportTransaction(allowEmptyFiles:true);defer{transaction.cleanUp()}
         let area=try transaction.makeArea(destination:destination)
         var copies:[URL]=[]
         for input in inputs {
             try token.check()
             let copy=OutputFiles.unique(for:input,extension:input.pathExtension,directory:area.directory)
-            try manager.copyItem(at:input,to:copy);copies.append(copy)
+            try manager.copyItem(at:input,to:copy);try validate(copy,depth:0,token:token);copies.append(copy)
         }
         try token.check();try transaction.record(copies,in:area)
         let outputs=try transaction.publish(token:token)

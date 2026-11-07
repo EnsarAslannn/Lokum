@@ -118,6 +118,7 @@
 "ALL" = "TÜMÜ";
 "ALL METADATA" = "TÜM META VERİLER";
 "ALL SET. YOU’RE READY TO GO." = "HER ŞEY HAZIR.";
+"ALLOW ACCESSIBILITY TO READ THE SELECTED MEDIA ADDRESS." = "SE?İLİ MEDYA ADRESİNİ OKUMAK İ?İN ERİ?İLEBİLİRLİK İZNİ VER.";
 "ALLOW FOLDER…" = "KLASÖRE İZİN VER…";
 "ALLOW HOME FOLDER ACCESS…" = "ANA KLASÖRE ERİŞİM İZNİ VER…";
 "ALLOW LOKUM IN MACOS LOGIN ITEMS." = "MACOS GİRİŞ ÖĞELERİ BÖLÜMÜNDEN LOKUM'YE İZİN VER.";
@@ -193,6 +194,7 @@
 "All set. You’re ready to go." = "Her şey hazır.";
 "Allow %@ once to move and resize other apps’ windows." = "Diğer uygulamaların pencerelerini taşımak ve boyutlandırmak için bir kez %@ izni ver.";
 "Allow %lld once to move and resize other apps’ windows." = "Diğer uygulamaların pencerelerini taşımak ve boyutlandırmak için bir kez %lld izni ver.";
+"Allow Accessibility to read the selected media address." = "Se?ili medya adresini okumak i?in Eri?ilebilirlik izni ver.";
 "Allow Folder…" = "Klasöre İzin Ver…";
 "Allow Home Folder Access…" = "Ana Klasöre Erişim İzni Ver…";
 "Allow Lokum in macOS Login Items." = "macOS Giriş Öğeleri bölümünden Lokum'ye izin ver.";
@@ -428,6 +430,7 @@
 "COMPRESSION STRENGTH" = "SIKIŞTIRMA GÜCÜ";
 "CONTINUE TO LOKUM" = "LOKUM’YE DEVAM ET";
 "CONTRAST" = "KONTRAST";
+"CONTROL-CLICK FILES IN FINDER TO OPEN THEIR TOOLS, OR MEDIA IN A BROWSER TO DOWNLOAD IT. READING ANOTHER APP'S CONTEXT MENU ALSO NEEDS ACCESSIBILITY PERMISSION." = "FINDER DOSYALAR?NA CONTROL İLE T?KLAYARAK ARA?LAR?N? A?ABİLİR, TARAY?C?DAKİ MEDYAY? BU ?EKİLDE İNDİREBİLİRSİN. BA?KA UYGULAMAN?N MEN?S?N? OKUMAK İ?İN ERİ?İLEBİLİRLİK İZNİ DE GEREKİR.";
 "CONVERSION SETTINGS" = "DÖNÜŞTÜRME AYARLARI";
 "CONVERSION WHEEL" = "DÖNÜŞTÜRME ÇARKI";
 "CONVERSIONS" = "DÖNÜŞTÜRMELER";
@@ -613,6 +616,7 @@
 "Compression strength" = "Sıkıştırma gücü";
 "Continue to Lokum" = "Lokum’ye devam et";
 "Contrast" = "Kontrast";
+"Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission." = "Finder dosyalar?na Control ile t?klayarak ara?lar?n? a?abilir, taray?c?daki medyay? bu ?ekilde indirebilirsin. Ba?ka uygulaman?n men?s?n? okumak i?in Eri?ilebilirlik izni de gerekir.";
 "Conversion Settings" = "Dönüştürme Ayarları";
 "Conversion wheel" = "Dönüştürme çarkı";
 "Conversions" = "Dönüştürmeler";
@@ -705,7 +709,7 @@
 "DOWNLOAD IS LARGER THAN THE SUPPORTED LIMIT." = "İNDİRİLECEK DOSYA DESTEKLENEN SINIRDAN BÜYÜK.";
 "DOWNLOAD LIBREOFFICE 26.8.1 (~360 MB) FROM THE DOCUMENT FOUNDATION? ITS SHA-256 IS CHECKED, THEN THE PACKAGE IS EXTRACTED INTO LOKUM’S USER TOOLS FOLDER. NO ADMINISTRATOR PASSWORD OR OFFICE SUBSCRIPTION IS NEEDED. LIBREOFFICE RETAINS ITS UPSTREAM LICENSES." = "LIBREOFFICE 26.8.1 (~360 MB) THE DOCUMENT FOUNDATİON'DAN İNDİRİLSİN Mİ? SHA-256 ÖZETİ KONTROL EDİLİR, ARDINDAN PAKET LOKUM'NİN ARAÇ KLASÖRÜNE AÇILIR. YÖNETİCİ PAROLASI VEYA OFFICE ABONELİĞİ GEREKMEZ. LIBREOFFICE KENDİ LİSANSLARINI KORUR.";
 "DOWNLOAD LINK…" = "BAĞLANTIDAN İNDİR…";
-"DOWNLOAD MEDIA" = "MEDYAYI İNDİR";
+"DOWNLOAD MEDIA" = "MEDYAY? İNDİR";
 "DOWNLOAD MEDIA TOOLS" = "MEDYA ARAÇLARINI İNDİR";
 "DOWNLOAD MISSING TOOLS" = "EKSİK ARAÇLARI İNDİR";
 "DOWNLOAD OFFICE TOOLS" = "OFFICE ARAÇLARINI İNDİR";
@@ -767,7 +771,7 @@
 "Download FFmpeg (~180 MB), yt-dlp and Deno directly from their official GitHub releases? SHA-256 hashes are verified before use. FFmpeg is GPL; the other upstream licenses and source links are listed on our Features page. No administrator password is needed." = "FFmpeg (~180 MB), yt-dlp ve Deno resmi GitHub sürümlerinden indirilsin mi? SHA-256 özetleri kullanılmadan önce doğrulanır. FFmpeg GPL lisanslıdır; diğer lisanslar ve kaynak bağlantıları Özellikler sayfamızda yer alır. Yönetici parolası gerekmez.";
 "Download LibreOffice 26.8.1 (~360 MB) from The Document Foundation? Its SHA-256 is checked, then the package is extracted into Lokum’s user tools folder. No administrator password or Office subscription is needed. LibreOffice retains its upstream licenses." = "LibreOffice 26.8.1 (~360 MB) The Document Foundation'dan indirilsin mi? SHA-256 özeti kontrol edilir, ardından paket Lokum'nin araç klasörüne açılır. Yönetici parolası veya Office aboneliği gerekmez. LibreOffice kendi lisanslarını korur.";
 "Download Link…" = "Bağlantıdan İndir…";
-"Download Media" = "Medyayı indir";
+"Download Media" = "Medyay? indir";
 "Download a link" = "Bağlantıdan indir";
 "Download audio" = "Sesi indir";
 "Download cancelled. No partial files were kept." = "İndirme iptal edildi. Yarım kalan dosyalar silindi.";

@@ -11,6 +11,30 @@ concurrency:
   group: source-${{ github.ref }}
   cancel-in-progress: true
 jobs:
+  mac-engines:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
+        with:
+          persist-credentials: false
+      - name: Install media and Office test runtimes
+        run: |
+          brew install ffmpeg
+          if [ ! -d /Applications/LibreOffice.app ]; then brew install --cask libreoffice; fi
+          scripts/setup-exiftool.sh
+      - name: All macOS engine and update regressions
+        run: |
+          mkdir -p build/mac-engines
+          set -o pipefail
+          swift test 2>&1 | tee build/mac-engines/tests.log
+      - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
+        if: always()
+        with:
+          name: mac-engine-results
+          path: build/mac-engines
+          retention-days: 7
+          if-no-files-found: warn
   security:
     runs-on: ubuntu-24.04
     timeout-minutes: 5

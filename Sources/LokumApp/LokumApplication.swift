@@ -123,6 +123,7 @@ enum LokumApplication {
     var monitor:DragMonitor!
     var wheel:WheelController!
     var windowManagement:WindowManagementController!
+    var mediaContext:NativeMediaContextController!
 
     func applicationDidFinishLaunching(_ notification:Notification) {
         LokumAppearance.apply()
@@ -179,6 +180,9 @@ enum LokumApplication {
         NotificationCenter.default.publisher(for:.showUpdateConnection).sink { [weak self] _ in self?.showUpdateConnection() }.store(in:&updateObservations)
         NotificationCenter.default.publisher(for:.showToolSetup).sink { [weak self] _ in self?.showToolSetup() }.store(in:&updateObservations)
         wheel=WheelController(state:state)
+        mediaContext=NativeMediaContextController()
+        mediaContext.onFiles={ [weak self] urls,point in self?.wheel.show(inputs:urls,mode:.tools,at:point,keyboard:true) }
+        mediaContext.onDownload={ [weak self] url,mode in self?.showWebDownload(url,mode:mode) }
         monitor=DragMonitor(onEnd:{ [weak self] in self?.wheel.endDrag() }) { [weak self] urls,mode,point in self?.wheel.show(inputs:urls,mode:mode,at:point) }
         windowManagement=WindowManagementController(fileWheelIsVisible:{ [weak self] in self?.wheel.panel?.isVisible == true })
         windowManagement.onNotice = { message in
@@ -259,6 +263,7 @@ enum LokumApplication {
         downloadModel.shortcutAvailable=state.webShortcutAvailable
     }
     func applicationWillTerminate(_ notification:Notification) {
+        mediaContext?.stop()
         windowManagement?.stop()
         if let downloadHotKey { UnregisterEventHotKey(downloadHotKey) }
         if let downloadHotKeyHandler { RemoveEventHandler(downloadHotKeyHandler) }

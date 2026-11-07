@@ -1,5 +1,5 @@
 {
-  "Download Media": "Medyayı indir",
+  "Download Media": "Medyay? indir",
   "Web media": "Web medyası",
   "Saves to your configured Downloads folder.": "Ayarlardaki İndirilenler klasörüne kaydeder.",
   "Paste a media link to download.": "İndirmek için bir medya bağlantısı yapıştır.",
@@ -1224,5 +1224,7 @@
   "Prepare a result before saving.": "Kaydetmeden önce sonucu hazırla.",
   "The files were copied, but these originals could not be removed:": "Dosyalar kopyalandı ancak şu özgün dosyalar kaldırılamadı:",
   "The archive is empty.": "Arşiv boş.",
-  "Loading…": "Yükleniyor…"
+  "Loading…": "Yükleniyor…",
+  "Allow Accessibility to read the selected media address.": "Se?ili medya adresini okumak i?in Eri?ilebilirlik izni ver.",
+  "Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission.": "Finder dosyalar?na Control ile t?klayarak ara?lar?n? a?abilir, taray?c?daki medyay? bu ?ekilde indirebilirsin. Ba?ka uygulaman?n men?s?n? okumak i?in Eri?ilebilirlik izni de gerekir."
 }

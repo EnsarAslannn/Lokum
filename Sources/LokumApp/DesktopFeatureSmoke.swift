@@ -97,6 +97,7 @@ import LokumCore
         try await Task.detached {try ProcessRunner.run(Dependencies.executable("ffmpeg"),["-y","-f","lavfi","-i","testsrc2=size=160x120:rate=10","-f","lavfi","-i","sine=frequency=440:sample_rate=48000","-t","4","-c:v","libx264","-pix_fmt","yuv420p","-c:a","aac",video.path])}.value
         for tool:ToolKind in [.compress,.changeVideoSpeed,.muteVideo,.trimVideo,.cropVideo,.redactVideo] {
             let editorState=AppState(defaults:defaults);editorState.inputs=[video]
+            let historyCount=editorState.history.count
             let recorder=UIAuditLayout()
             let window=ToolPanel(contentRect:NSRect(x:0,y:0,width:1080,height:760),styleMask:[.borderless,.closable],backing:.buffered,defer:false)
             window.isReleasedWhenClosed=false
@@ -120,7 +121,7 @@ import LokumCore
                 return item !== old && asset.url != video
             }
             if let asset=views(content).compactMap({$0 as? AVPlayerView}).first?.player?.currentItem?.asset as? AVURLAsset {
-                check(FileManager.default.fileExists(atPath:asset.url.path) && editorState.history.isEmpty && editorState.outputs.isEmpty,tool.title+" plays an actual processed result before publishing any files")
+                check(FileManager.default.fileExists(atPath:asset.url.path) && editorState.history.count==historyCount && editorState.outputs.isEmpty,tool.title+" plays an actual processed result before publishing any files")
                 let size=try MediaEngine.inspect(asset.url)
                 if tool == .cropVideo {check((size.video?.width ?? 160)<160 && (size.video?.height ?? 120)<120,"The native crop selection is reflected in the processed video's actual dimensions")}
                 if tool == .muteVideo {check(size.audio==nil,"The native whole-video mute preview contains no audio track")}
