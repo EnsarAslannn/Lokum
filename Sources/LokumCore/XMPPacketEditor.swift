@@ -1,7 +1,5 @@
 import Foundation
 
-/// Namespace-aware editing for existing custom XMP fields. XML entities never
-/// load external resources; arbitrary new schemas require a declared namespace.
 enum XMPPacketEditor {
     private static let rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
     private static let schemas=["dc":"http://purl.org/dc/elements/1.1/","xmp":"http://ns.adobe.com/xap/1.0/","photoshop":"http://ns.adobe.com/photoshop/1.0/","tiff":"http://ns.adobe.com/tiff/1.0/","exif":"http://ns.adobe.com/exif/1.0/","xmpRights":"http://ns.adobe.com/xap/1.0/rights/"]
@@ -19,8 +17,6 @@ enum XMPPacketEditor {
         return try XMLDocument(data:data.isEmpty ? base:data,options:[.nodePreserveAll,.nodeLoadExternalEntitiesNever])
     }
     private static func descriptions(_ doc:XMLDocument) throws -> [XMLElement] {
-        // Apple's XPath namespace-uri() predicate does not reliably match parsed
-        // namespace declarations. Match the local name, then inspect native URIs.
         try doc.nodes(forXPath:"//*[local-name()='Description']").compactMap{$0 as? XMLElement}.filter{$0.uri==rdf}
     }
     static func fields(_ data:Data) throws -> [String:String] {
@@ -83,8 +79,6 @@ enum XMPPacketEditor {
                 for text in values ?? [value] { let li=XMLElement(name:"rdf:li",uri:rdf);li.stringValue=text;if kind=="Alt" { li.addAttribute(XMLNode.attribute(withName:"xml:lang",stringValue:"x-default") as! XMLNode) };container.addChild(li) }
             } else { node.stringValue=value }
         }
-        // ExifTool accepts packets beginning at xpacket or the xmpmeta root.
-        // Remove Foundation's XML declaration from this standalone UTF-8 packet.
         let serialized=String(decoding:doc.xmlData(options:[.nodeCompactEmptyElement]),as:UTF8.self)
         let packet=serialized.replacingOccurrences(of:"^<\\?xml[^?]*\\?>",with:"",options:.regularExpression)
         return Data(packet.trimmingCharacters(in:.whitespacesAndNewlines).utf8)

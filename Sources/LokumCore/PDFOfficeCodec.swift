@@ -3,9 +3,6 @@ import AppKit
 import PDFKit
 import Vision
 
-/// Converts the fixed PDF page model into local office intermediates. Text
-/// documents and sheets contain editable extracted/OCR text; slides preserve
-/// the page appearance as full-resolution page images.
 enum PDFOfficeCodec {
     struct TextCell { var text: String; var rect: CGRect }
 
@@ -108,8 +105,6 @@ enum PDFOfficeCodec {
             guard let cg = image.cgImage(forProposedRect: &rect, context: nil, hints: nil), let png = NSBitmapImageRep(cgImage: cg).representation(using: .png, properties: [:]) else {
                 throw LokumError.failed("PDF page \(index + 1) could not be rendered.")
             }
-            // A presentation has one shared canvas. Match the first displayed
-            // PDF page, then fit and center later pages without distorting them.
             let scale = min(canvas.width / bounds.width, canvas.height / bounds.height)
             let w = bounds.width * scale / 72 * 2.54, h = bounds.height * scale / 72 * 2.54
             let x = (width - w) / 2, y = (height - h) / 2

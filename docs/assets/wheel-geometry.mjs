@@ -1,5 +1,3 @@
-// Browser port of Sources/LokumApp/WheelGeometry.swift. Coordinates are flipped
-// into SVG's downward Y axis; keep the native proportions and rounded petals.
 export const SIZE = 320, RADIUS = SIZE * .44, INNER = RADIUS * .407;
 const rad = degrees => degrees * Math.PI / 180;
 export const point = (radius, degrees) => ({x:160 + radius*Math.cos(rad(degrees)), y:160 - radius*Math.sin(rad(degrees))});
@@ -33,8 +31,6 @@ export function containsRect(rect,contains,padding=3.5) {
   for(let i=0;i<=8;i++) { const t=i/8;if(!contains(x+w*t,y)||!contains(x+w*t,y+h)||!contains(x,y+h*t)||!contains(x+w,y+h*t))return false; }
   return true;
 }
-// Fit the icon and each line separately inside the rounded path. This matters
-// for wide, five-item PDF petals as well as long, eight-item Turkish labels.
 export function fitLabel(count,index,title,hasIcon,measure,contains) {
   const centers=labelCenters(count,index),baseFont=hasIcon?9.5:13;
   for(let reduction=0;reduction<=3;reduction+=.25) {
@@ -57,7 +53,6 @@ export function fitLabel(count,index,title,hasIcon,measure,contains) {
     }
     if(best)return best.result;
   }
-  // Never silently truncate a new catalog title; browser checks flag this.
   const lines=wrap(title,80,6,measure)||[title];
   return {...centers[0],font:6,lineHeight:7.08,height:lines.length*7.08+(hasIcon?24:0),width:80,lines,rects:[],fits:false};
 }

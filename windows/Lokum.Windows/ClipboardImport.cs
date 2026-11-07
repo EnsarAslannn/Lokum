@@ -11,7 +11,6 @@ namespace Lokum.Windows;
 internal sealed record ClipboardResult(string[] Paths,string? Link,string Label);
 internal static class ClipboardImport
 {
-    // Walk ancestors: TextBox's OriginalSource can be its internal text view.
     internal static bool IsEditing(DependencyObject? element)
     {
         while(element is not null)

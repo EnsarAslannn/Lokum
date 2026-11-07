@@ -21,7 +21,6 @@ enum L10n {
     }
 }
 
-/// Locale updates translate SwiftUI control labels without recreating editors or their drafts.
 private struct LocalizedRoot<Content:View>:View {
     let content:Content
     @AppStorage("appLanguage") private var language="en"
@@ -29,7 +28,6 @@ private struct LocalizedRoot<Content:View>:View {
 }
 extension View { func lokumLanguage()->some View { LocalizedRoot(content:self) } }
 
-/// Dynamic UI copy only; file names and document/user content remain verbatim.
 struct LText:View {
     let source:String
     @AppStorage("appLanguage") private var language="en"

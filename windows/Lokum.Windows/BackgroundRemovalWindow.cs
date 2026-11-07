@@ -9,7 +9,6 @@ using Microsoft.Win32;
 
 namespace Lokum.Windows;
 
-// One workspace owns per-image foreground selections and a shared replacement background.
 internal sealed class BackgroundRemovalWindow:Window
 {
     private sealed class Document(string path)
@@ -151,8 +150,6 @@ internal sealed class BackgroundRemovalWindow:Window
                 return png;
             },request.Token);
             if(closed||ticket!=revision)return;
-            // Foreground preparation also unlocks the controls needed to correct an
-            // incomplete replacement (for example, Image mode before choosing its file).
             document.Cutout=prepared;UpdateOptions();
             var composed=await Task.Run(()=>BackgroundEditingEngine.Compose(prepared,options,request.Token),request.Token);
             if(closed||ticket!=revision)return;

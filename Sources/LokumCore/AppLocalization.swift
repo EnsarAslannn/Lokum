@@ -1,6 +1,5 @@
 import Foundation
 
-/// UI copy only. File names, document contents, identifiers and export parameters stay verbatim.
 public enum AppLocalization {
     public static let supportedLanguages = ["en", "tr"]
     public static func normalizedLanguage(_ value: String?) -> String { value == "tr" ? "tr" : "en" }
@@ -14,14 +13,12 @@ public enum AppLocalization {
               let values = try? JSONDecoder().decode([String:String].self, from: data) else { return [:] }
         return values
     }()
-    /// Product and key names that keep Latin capitals in Turkish upper case (SHIFT, not SHİFT).
     public static let latinWords: Set<String> = {
         guard let url = Bundle.module.url(forResource: "LatinWords", withExtension: "json", subdirectory: "Resources"),
               let data = try? Data(contentsOf: url),
               let words = try? JSONDecoder().decode([String].self, from: data) else { return [] }
         return Set(words)
     }()
-    /// Upper case for UI copy. Turkish words follow Turkish rules; names in `latinWords` do not.
     public static func uppercased(_ value:String, language:String) -> String {
         let latin = Locale(identifier:"en_US_POSIX")
         guard normalizedLanguage(language) == "tr" else { return value.uppercased(with:latin) }

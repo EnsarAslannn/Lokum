@@ -3,8 +3,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 namespace Lokum.Windows;
 
-// CPU-only PDF rasterization. Keep native PDF objects and their pinned source
-// bytes together, and serialize PDFium (its public API is not thread-safe).
 internal sealed class PdfRasterDocument:IDisposable
 {
     private static readonly object gate=new();private static bool initialized;private static int documents;

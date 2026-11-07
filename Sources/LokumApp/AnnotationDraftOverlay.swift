@@ -1,7 +1,6 @@
 import SwiftUI
 import LokumCore
 
-/// Only the active mark is painted here. Selection handles belong to Select / Move.
 struct AnnotationDraftOverlay:View {
     let draft:ImageAnnotation
     let source:CGImage

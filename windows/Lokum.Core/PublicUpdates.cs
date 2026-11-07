@@ -7,7 +7,6 @@ using Org.BouncyCastle.Crypto.Signers;
 namespace Lokum.Core;
 
 public sealed record WindowsUpdate(string Version,string Url,long Length,string EdSignature);
-/// Publisher-selected trust lives beside the portable app, never in a remote manifest.
 public sealed record PublicUpdateChannel(string Repository,string PublicKey)
 {
     public string Feed=>"https://github.com/"+Repository+"/releases/latest/download/windows-update.json";
@@ -63,8 +62,6 @@ public static class PublicUpdates
     }
     public static void ExtractVerified(string archive,string destination,CancellationToken token=default)
     {
-        // Caller must verify the archive signature before calling. This extractor
-        // still rejects traversal, links, aliases and excessive expansion.
         using var zip=ZipFile.OpenRead(archive);long total=0;var names=new HashSet<string>(StringComparer.OrdinalIgnoreCase);
         if(zip.Entries.Count>10000)throw new InvalidDataException("Too many update files.");
         foreach(var entry in zip.Entries)

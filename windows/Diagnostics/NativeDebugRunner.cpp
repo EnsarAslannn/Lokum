@@ -1,5 +1,3 @@
-// Diagnostic runner for Lokum's isolated Windows CI fixture. Prints call stacks,
-// never process memory or local variables; preserves the debuggee's exit code.
 #include <windows.h>
 #include <cstdio>
 #include <cstring>
@@ -52,12 +50,10 @@ static LONG CALLBACK traceException(EXCEPTION_POINTERS* exception) {
     if(exception->ExceptionRecord->ExceptionCode!=0xC000000D||InterlockedCompareExchange(&tracing,1,0)!=0)return EXCEPTION_CONTINUE_SEARCH;
     FILE* output=nullptr;
     if(_wfopen_s(&output,tracePath,L"a")==0&&output){
-        // Do not import DbgHelp into the fixture: loading it early can change
-        // native module shutdown order. Resolve these addresses afterward.
         __try{rawStack(output,*exception->ContextRecord);}__except(EXCEPTION_EXECUTE_HANDLER){std::fprintf(output,"Stack walk stopped at an unavailable frame.\n");}
         std::fclose(output);
     }
-    return EXCEPTION_CONTINUE_SEARCH; // Observe only: preserve the original exception and process status.
+    return EXCEPTION_CONTINUE_SEARCH;
 }
 extern "C" __declspec(dllexport) void __cdecl InstallTrace() {
     auto length=GetEnvironmentVariableW(L"LOKUM_SMOKE_DIRECTORY",tracePath,32768);

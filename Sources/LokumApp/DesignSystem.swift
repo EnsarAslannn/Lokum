@@ -1,7 +1,6 @@
 import AppKit
 import SwiftUI
 
-// One shared visual language, with native light/dark appearance and motion preferences.
 enum LokumPalette {
     static func adaptive(_ light:(Double,Double,Double),_ dark:(Double,Double,Double))->NSColor {
         NSColor(name:nil) { appearance in
@@ -19,7 +18,6 @@ enum LokumPalette {
     static let sage=Color(nsColor:adaptive((0.8824,0.9216,0.8667),(0.2039,0.2784,0.2078)))
     static let border=Color(nsColor:adaptive((0.9098,0.8275,0.8549),(0.2941,0.2353,0.3137)))
     static let gold=LokumArtwork.gold
-    // Selected wheel petals share the button's raspberry background.
     static let ink=NSColor.white
     static let goldInk=Color(nsColor:adaptive((0.5255,0.1686,0.3020),(0.9569,0.6863,0.8039)))
     static let buttonInk=Color.white

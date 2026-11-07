@@ -1,4 +1,3 @@
-// Adapted from the Tendedero personal fork credential client; see Resources/licenses/Tendedero-MIT.txt.
 import Foundation
 import CryptoKit
 import Security
@@ -37,8 +36,6 @@ struct UpdateCredentialBrokerConfiguration: Equatable, Sendable {
     }
 }
 
-/// Narrow transport surface lets unit tests prove ordering and failure handling
-/// without starting an XPC service or reading any real credential.
 protocol UpdateCredentialBrokerTransport: AnyObject, Sendable {
     var onFailure: (@Sendable () -> Void)? { get set }
     func setRequirement(_ requirement: String)
@@ -106,9 +103,6 @@ private final class UpdateCredentialBrokerReply<Value: Sendable>: @unchecked Sen
     }
 }
 
-/// Only the frozen broker touches Keychain. The main app checks the complete
-/// bundled helper and its code signature, then pins the running peer and waits
-/// for a nonsecret handshake before sending any credential-bearing message.
 final class UpdateCredentialBrokerClient: @unchecked Sendable {
     static let live = UpdateCredentialBrokerClient()
     private let configuration: @Sendable () throws -> UpdateCredentialBrokerConfiguration
@@ -203,8 +197,6 @@ final class UpdateCredentialBrokerClient: @unchecked Sendable {
     }
 }
 
-/// The frozen, authenticated helper is the only production Keychain reader.
-/// No fallback reads the token in the changing main application's identity.
 public final class BrokerUpdateCredentialStore: UpdateCredentialStore, @unchecked Sendable {
     private let client: UpdateCredentialBrokerClient
     public init() { client = .live }

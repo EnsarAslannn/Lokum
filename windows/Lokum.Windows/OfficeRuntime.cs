@@ -4,8 +4,6 @@ using System.Text;
 using Lokum.Core;
 namespace Lokum.Windows;
 
-/// Extracts the official MSI as data. Does not install a product, run its custom
-/// actions, register COM servers or change Windows Installer/system settings.
 public sealed class OfficeRuntime(string root)
 {
     public string? Executable=>new[]{Path.Combine(root,"office-26.8.1","program","soffice.com"),Path.Combine(root,"office-26.8.1","program","soffice.exe"),Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"LibreOffice","program","soffice.com"),Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles),"LibreOffice","program","soffice.exe")}.FirstOrDefault(ToolInstallation.UsableFile);
@@ -59,9 +57,6 @@ public sealed class OfficeRuntime(string root)
                 foreach(var row in files)
                 {
                     token.ThrowIfCancellationRequested();var source=SafePaths.ArchiveEntry(unpack,row[0]);if(!File.Exists(source))throw new InvalidDataException("Office cabinet is missing a file.");var relative=Path.Combine(Relative(components[row[1]]),LongName(row[2]));
-                    // The MSI contains both x86 and x64 VC runtime components in
-                    // system directories. Keep only verified package x64 DLLs
-                    // app-local; never write or install anything in Windows.
                     var external=relative.Split(Path.DirectorySeparatorChar)[0];if(external is "System64" or "System32" or "System")
                     {
                         if(Path.GetExtension(source).Equals(".dll",StringComparison.OrdinalIgnoreCase)||LongName(row[2]).EndsWith(".dll",StringComparison.OrdinalIgnoreCase))

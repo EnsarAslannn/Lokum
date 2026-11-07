@@ -1,6 +1,5 @@
 * text=auto
 
-# Keep executable scripts portable across Windows, Linux and macOS.
 *.sh text eol=lf
 *.py text eol=lf
 *.yml text eol=lf

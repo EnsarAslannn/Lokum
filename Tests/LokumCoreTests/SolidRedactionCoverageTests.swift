@@ -105,8 +105,6 @@ final class SolidRedactionCoverageTests: XCTestCase {
         defer { try? FileManager.default.removeItem(at: directory) }
         let input = try video(directory)
         var options = OperationOptions(); options.redactionMode = "solid"; options.backgroundColor = "#000000"
-        // Both the origin and size have fractional parts; the selected right
-        // and bottom edges cross into the final pixel row and column.
         options.redactions = [.init(x: 16.75, y: 12.75, width: 30.5, height: 22.5)]
         let output = try XCTUnwrap(ConversionEngine.run(.init(inputs: [input], operation: .tool(.redactVideo), options: options)).first)
         let pixels = try grayFrame(output, time: "0.5")

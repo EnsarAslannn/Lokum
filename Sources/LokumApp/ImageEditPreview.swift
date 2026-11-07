@@ -117,8 +117,6 @@ struct ImageEditPreview:View {
     }
     func pixel(_ p:CGPoint,origin:CGPoint,ratio:CGFloat)->CGPoint { CGPoint(x:max(0,min(imageSize.width,(p.x-origin.x)/ratio)),y:max(0,min(imageSize.height,(p.y-origin.y)/ratio))) }
     func chooseTarget(_ point:CGPoint,tolerance:CGFloat) {
-        // Drawing over an existing mark creates a new mark. Only Select / Move
-        // can capture an existing annotation and show its editing handles.
         if annotationStyle != nil,!selectAnnotations { target = .new;selectedAnnotation=nil;return }
         func hit(_ r:EditRect)->(Bool,Handle?) {
             let b=CGRect(x:r.x,y:r.y,width:r.width,height:r.height)

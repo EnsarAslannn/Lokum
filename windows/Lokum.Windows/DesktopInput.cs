@@ -4,8 +4,6 @@ using System.Windows.Input;
 using System.Windows.Threading;
 namespace Lokum.Windows;
 
-// Used only by the explicit --smoke-test path on an isolated Windows desktop.
-// SendInput exercises WPF's real keyboard routing, including focused text boxes.
 internal static class DesktopInput
 {
     [StructLayout(LayoutKind.Sequential)]private struct Input{public uint Type;public Union Data;}

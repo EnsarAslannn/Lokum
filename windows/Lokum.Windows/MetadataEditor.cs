@@ -16,7 +16,6 @@ public sealed class MetadataEditor:Window
         var source=metadata.GetValueOrDefault("SourceFile","")??"";var prefix=FeatureCatalog.Extension(source)=="pdf"?"PDF:":FeatureCatalog.Extension(source)=="mp3"?"ID3:":FeatureCatalog.IsVideo(source)||FeatureCatalog.IsAudio(source)?"QuickTime:":"";
         IEnumerable<string> editable=MetadataService.EditableTags.Where(k=>prefix.Length>0?k.StartsWith(prefix,StringComparison.Ordinal):k.StartsWith("EXIF:",StringComparison.Ordinal)||k.StartsWith("XMP:",StringComparison.Ordinal));
         if(media)editable=MediaMetadata.Editable.Concat(metadata.Keys.Where(k=>k.StartsWith("stream:",StringComparison.Ordinal)||k.StartsWith("chapter:",StringComparison.Ordinal)).Where(k=>k.EndsWith(":title",StringComparison.Ordinal)||k.EndsWith(":language",StringComparison.Ordinal)||k.EndsWith(":handler_name",StringComparison.Ordinal)||k.EndsWith(":comment",StringComparison.Ordinal))).Distinct();
-        // Screenshots often have no optional EXIF/XMP tags. Show the facts we actually read first.
         var summary=new StackPanel{Margin=new(14,10,14,10)};
         summary.Children.Add(Heading("File information"));
         summary.Children.Add(new TextBlock{Text=Path.GetFileName(source),TextWrapping=TextWrapping.Wrap,FontWeight=FontWeights.SemiBold,Margin=new(4)});

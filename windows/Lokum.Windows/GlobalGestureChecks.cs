@@ -20,13 +20,8 @@ internal static class GlobalGestureChecks
     internal static void Run(Window owner,string root,string original,Action<bool,string> check)
     {
         check(PrimaryMouseButton.VirtualKey(false)==0x01&&PrimaryMouseButton.VirtualKey(true)==0x02,"Swapped mouse buttons did not map the primary drag button");
-        // Explorer is a separate source process. A same-thread WPF drag source
-        // blocks the target's dispatcher inside DoDragDrop and is not a valid
-        // test of the global Explorer gesture.
         var identity=Guid.NewGuid().ToString("N")[..8];var folder=Directory.CreateDirectory(Path.Combine(root,"Lokum drag "+identity));var file=Path.Combine(folder.FullName,"Source "+identity+".png");File.Copy(original,file,true);void OpenFixture()=>Process.Start(new ProcessStartInfo(folder.FullName){UseShellExecute=true});OpenFixture();
         var phase="discovering Explorer";using var watchdog=new System.Threading.Timer(_=>{File.WriteAllText(Path.Combine(root,"global-gesture-timeout.txt"),phase);DesktopInput.HoldMouse(false);Environment.Exit(1);},null,TimeSpan.FromSeconds(75),System.Threading.Timeout.InfiniteTimeSpan);
-        // UI Automation must run away from Lokum's UI thread: enumerating the
-        // desktop can query this process's own WPF providers.
         var discovery=Task.Run(()=>
         {
             var lastTitles=new List<string>();for(var n=0;n<50;n++)
@@ -70,10 +65,6 @@ internal static class GlobalGestureChecks
                     SetForegroundWindow(handle);Thread.Sleep(250);if(GetForegroundWindow()!=handle)throw new Exception("Explorer fixture lost focus; no context input will be sent.");DesktopInput.MovePointer(new(bounds.Left+bounds.Width/2,bounds.Top+bounds.Height/2));DesktopInput.Hold(Key.LeftCtrl,true);DesktopInput.HoldMouse(true,secondary:true);Thread.Sleep(200);DesktopInput.HoldMouse(false,secondary:true);DesktopInput.Hold(Key.LeftCtrl,false);
                     nint menu=0;for(var n=0;n<100&&menu==0;n++){Thread.Sleep(100);menu=FindWindow(null,"Lokum tools");}
                     if(menu==0){owner.Dispatcher.Invoke(()=>DesktopCapture.Save(Path.Combine(root,"explorer-context-timeout.png")));throw new Exception("Ctrl + right-click did not open the image tools wheel; "+contextNotice);}
-                    // HWND creation precedes Show/Loaded and PlaceWheel. Querying
-                    // the real button through UIA waits for that dispatcher work
-                    // and uses its final screen bounds, rather than a transient
-                    // window rectangle observed midway through showing the wheel.
                     var firstTool=AutomationElement.FromHandle(menu).FindFirst(TreeScope.Descendants,new PropertyCondition(AutomationElement.ControlTypeProperty,ControlType.Button));
                     if(firstTool is null||firstTool.Current.IsOffscreen||firstTool.Current.BoundingRectangle.IsEmpty)throw new Exception("The image wheel did not expose a visible tool button.");
                     var target=firstTool.Current.BoundingRectangle;

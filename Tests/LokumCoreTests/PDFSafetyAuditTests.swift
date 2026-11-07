@@ -104,8 +104,6 @@ final class PDFSafetyAuditTests:XCTestCase {
         XCTAssertEqual(try Data(contentsOf:input),before)
     }
 
-    /// A hand-written PDF exercises the catalog and page XMP independently of
-    /// PDFKit's writer, which does not expose those packets for fixture creation.
     private func fixture(rotation:Int,padding:Int=0,includeForm:Bool=false,catalogFeature:String="") throws -> URL {
         func stream(_ body:String,_ attributes:String="")->String { "<< /Length \(body.utf8.count) \(attributes) >>\nstream\n\(body)\nendstream" }
         func xmp(_ name:String)->String { "<?xpacket begin=''?><x:xmpmeta xmlns:x='adobe:ns:meta/'><rdf:RDF xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'><rdf:Description xmlns:dc='http://purl.org/dc/elements/1.1/'><dc:creator><rdf:Seq><rdf:li>\(name)</rdf:li></rdf:Seq></dc:creator></rdf:Description></rdf:RDF></x:xmpmeta><?xpacket end='w'?>" }

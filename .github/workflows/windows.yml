@@ -115,8 +115,6 @@ jobs:
           if ($process.ExitCode -ne 0) { Get-Content (Join-Path $proof 'error.txt'); throw 'Context media checks failed' }
           Get-Content (Join-Path $proof 'verification.json')
       - name: Native browser Download Media popup and local file workflow
-        # Native right-click downloads use an isolated local fixture in CI;
-        # real public PNG/YouTube downloads are verified separately on demand.
         shell: pwsh
         run: |
           $app = (Resolve-Path 'build/windows/Lokum/Lokum.exe').Path

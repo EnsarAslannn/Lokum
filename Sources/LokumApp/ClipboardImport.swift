@@ -1,7 +1,6 @@
 import AppKit
 import LokumCore
 
-/// Persist pasted content outside the application bundle, so updates keep it intact.
 @MainActor enum ClipboardImport {
     struct Result { var urls:[URL]=[];var link:URL?;var label:String }
     static func read(_ pasteboard:NSPasteboard = .general,directory:URL?=nil)throws->Result {

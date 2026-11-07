@@ -39,8 +39,6 @@ public static class FileActions
             var target=SafePaths.Unique(tx.StagingDirectory,Path.GetFileName(full));await CopyTree(full,target,token);staged.Add(target);progress?.Report(new(staged.Count/(double)inputs.Count*.95,"Preparing move…"));
         }
         token.ThrowIfCancellationRequested();var published=tx.Publish(staged,token);
-        // Only after every copy was published may originals be removed. If a
-        // locked original remains, the destination is retained and reported.
         var retained=new List<string>();foreach(var input in inputs){try{if(Directory.Exists(input))Directory.Delete(input,true);else File.Delete(input);}catch(IOException){retained.Add(input);}catch(UnauthorizedAccessException){retained.Add(input);}}
         if(retained.Count>0)throw new IOException("Files were copied safely, but some originals could not be removed. New copies are in "+destination+". Check the originals before retrying.");return published;
     }

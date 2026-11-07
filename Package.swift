@@ -14,8 +14,6 @@ let package = Package(
     ],
     targets: [
         .target(name: "LokumCore", resources: [.copy("Resources")]),
-        // The frozen XPC wire protocol stays at its sealed source path. It is compiled
-        // into the renamed module without changing its Objective-C identity.
         .target(name: "LokumUpdates", dependencies: [.product(name: "Sparkle", package: "Sparkle")], path: "Sources", exclude: ["LokumApp", "LokumCore", "LokumCLI", "UpdateCredentialBroker"], sources: ["LokumUpdates", "TangerineUpdates/UpdateCredentialBrokerProtocol.swift"]),
         .executableTarget(name: "LokumApp", dependencies: ["LokumCore", "LokumUpdates"], linkerSettings: [.unsafeFlags(["-Xlinker", "-rpath", "-Xlinker", "@executable_path/../Frameworks"])]),
         .executableTarget(name: "LokumCLI", dependencies: ["LokumCore"]),

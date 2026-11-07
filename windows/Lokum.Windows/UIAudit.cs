@@ -13,8 +13,6 @@ using Lokum.Core;
 
 namespace Lokum.Windows;
 
-/// Explicit, isolated visual audit. This never registers global hooks, starts the updater,
-/// installs tools, touches the system clipboard, or loads the user's Library/preferences.
 internal static class UIAudit
 {
     internal static readonly string[] SceneIds =
@@ -35,8 +33,6 @@ internal static class UIAudit
         Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
     };
 
-    /// App dispatches --ui-audit OUTPUT here before SingleInstance, tray, hooks or updater startup.
-    /// Filters select matrix dimensions; invalid/empty filters fail instead of producing a false pass.
     internal static int Run(string output, string[]? scenes = null, string[]? appearances = null, string[]? languages = null)
     {
         output = Path.GetFullPath(output);
@@ -69,7 +65,6 @@ internal static class UIAudit
             ValidateFilter(requestedLanguages, Languages, "language");
             Application.Current.ShutdownMode = ShutdownMode.OnExplicitShutdown;
             Feedback.Enabled = false;
-            // A fresh data directory on every run prevents stale settings or history influencing a capture.
             stateDirectory = Path.Combine(output, "isolated-data", Guid.NewGuid().ToString("N"));
             Directory.CreateDirectory(stateDirectory);
             var fixtures = CreateFixtures(Path.Combine(stateDirectory, "fixtures"));
@@ -78,7 +73,7 @@ internal static class UIAudit
             foreach (var scene in requestedScenes)
             {
                 var capture = new Capture(scene, appearance, language);
-                captures.Add(capture); // Even construction/readiness failures remain in the manifest.
+                captures.Add(capture);
                 try { CaptureScene(output, stateDirectory, fixtures, capture); }
                 catch (Exception error)
                 {
@@ -91,7 +86,6 @@ internal static class UIAudit
         {
             var issue = error.GetType().Name + ": " + error.Message;
             globalIssues.Add(issue);
-            // A fixture/setup failure must not silently omit any requested scene from the report.
             foreach (var appearance in requestedAppearances)
             foreach (var language in requestedLanguages)
             foreach (var scene in requestedScenes)
@@ -243,13 +237,10 @@ internal static class UIAudit
         {
             if (subject is { IsVisible: true } && !ReferenceEquals(subject, owner)) subject.Close();
             if (owner.IsVisible) owner.Close();
-            // Process unload/Closed callbacks (including editor timers), without sending OS input.
             DrainDispatcher();
         }
     }
 
-    // A collapsed page's still-visible ScrollViewer must not intercept the active page.
-    // Test the real hit-test tree, including after navigating away and back.
     private static void ValidatePageHitTargets(MainWindow owner, Capture capture)
     {
         var libraryVisible = owner.LibraryVisible;
@@ -293,7 +284,6 @@ internal static class UIAudit
     {
         var settings = new SettingsWindow(owner, preferences, () => { }, () => Task.CompletedTask, library);
         var list = Descendants<ListBox>(settings).FirstOrDefault();
-        // The visual tree is not yet materialized, so fall back to the logical tree for the page selector.
         list ??= LogicalDescendants<ListBox>(settings).FirstOrDefault();
         if (list is null) throw new InvalidOperationException("Settings navigation is missing.");
         list.SelectedItem = scene switch { "settings.formats" => "Formats", "settings.updates" => "Updates", _ => "General" };
@@ -333,7 +323,6 @@ internal static class UIAudit
         {
             DrainDispatcher();
             if (condition()) return true;
-            // Only a dispatcher wake-up interval; readiness is always checked from actual scene state.
             var frame = new DispatcherFrame();
             var timer = new DispatcherTimer(DispatcherPriority.Background) { Interval = TimeSpan.FromMilliseconds(16) };
             timer.Tick += (_, _) => { timer.Stop(); frame.Continue = false; };
@@ -401,8 +390,6 @@ internal static class UIAudit
         {
             if (control.ActualWidth <= 0 || control.ActualHeight <= 0) continue;
             if (HasAncestor<ScrollBar>(control, root)) continue;
-            // Vertical offscreen content is reachable by scrolling. Still check horizontal
-            // containment when horizontal scrolling is disabled, so clipped forms cannot pass.
             var scroll = Ancestor<ScrollViewer>(control, root);
             if (scroll is not null)
             {
@@ -513,7 +500,6 @@ internal static class UIAudit
     {
         Directory.CreateDirectory(directory);
         var outputs = Path.Combine(directory, "outputs"); Directory.CreateDirectory(outputs);
-        // Fixed pixels, no external images/fonts/codecs or network requests.
         const int width = 640, height = 400;
         var pixels = new byte[width * height * 4];
         for (var y = 0; y < height; y++)
@@ -532,7 +518,6 @@ internal static class UIAudit
         var text = Path.Combine(directory, "Türkçe notlar — ışık, çığ, ölçü ve güvenli kopyalar.txt");
         var pdf1 = Path.Combine(directory, "Birinci çalışma — çoklu PDF örneği.pdf");
         var pdf2 = Path.Combine(directory, "İkinci çalışma — çoklu PDF örneği.pdf");
-        // Exercise the injectable clipboard reader with a private data object, never Clipboard.*.
         var privateText = new DataObject(); privateText.SetData(DataFormats.UnicodeText, "Lokum denetimi: I ı İ i, çığ, ölçü, güvenli kopya.\nThe original stays safe.");
         var privateImage = new DataObject(); privateImage.SetData(DataFormats.Bitmap, bitmap);
         if (privateText.GetData(DataFormats.UnicodeText) is not string fixtureText || privateImage.GetData(DataFormats.Bitmap) is not BitmapSource)
@@ -542,7 +527,6 @@ internal static class UIAudit
         var imageImport = ClipboardImport.Read(privateImage, clipboardLibrary);
         if (textImport.Link is not null || textImport.Label != "Pasted text" || imageImport.Link is not null || imageImport.Label != "Pasted image")
             throw new InvalidOperationException("Private clipboard imports did not preserve their text/image kind.");
-        // Rename the private reader's generated import names to deterministic UTF-8 scene fixtures.
         File.Move(textImport.Paths.Single(), text); File.Move(imageImport.Paths.Single(), image);
         if (File.ReadAllText(text) != fixtureText || ImageEngine.Load(image) is not { PixelWidth: width, PixelHeight: height })
             throw new InvalidOperationException("Private clipboard text/image import roundtrip failed.");

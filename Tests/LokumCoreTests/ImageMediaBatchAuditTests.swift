@@ -93,7 +93,6 @@ final class ImageMediaBatchAuditTests: XCTestCase {
         var options = OperationOptions(); options.outputDirectory = folder; options.preserveMetadata = false
         XCTAssertThrowsError(try ConversionEngine.run(.init(inputs: [first, second], operation: .convert("jpg"), options: options),
                                                     token: token, progress: { amount, _ in
-            // The second-item callback occurs after the first conversion succeeds.
             if amount > 0 && amount < 1 { token.cancel() }
         })) { error in
             guard case LokumError.cancelled = error else { return XCTFail("Expected cancellation, received \(error)") }

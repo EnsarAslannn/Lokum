@@ -1,8 +1,6 @@
 import Foundation
 import ImageIO
 
-/// Browser drags contain a small feed preview, not necessarily the full cover.
-/// Compare actual image dimensions; missing variants can return a tiny placeholder.
 enum YouTubeThumbnail {
     struct Image:Sendable {
         let url:URL
@@ -38,13 +36,11 @@ enum YouTubeThumbnail {
                       let width=properties[kCGImagePropertyPixelWidth] as? Int,
                       let height=properties[kCGImagePropertyPixelHeight] as? Int,
                       (1...16_384).contains(width),(1...16_384).contains(height) else { continue }
-                // YouTube may respond 200 with its 120×90 missing-image graphic.
                 guard url==source || width>120 || height>90 else { continue }
                 let found=Image(url:url,width:width,height:height,byteCount:data.count)
                 if best==nil || found.area>best!.area { best=found }
             } catch {
                 try token.check();try Task.checkCancellation()
-                // One unavailable quality must not prevent a lower-quality cover.
             }
         }
         try token.check();try Task.checkCancellation()

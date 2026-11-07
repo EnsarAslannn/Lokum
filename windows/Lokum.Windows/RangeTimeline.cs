@@ -29,8 +29,6 @@ public sealed class RangeTimeline:FrameworkElement
     }
     internal bool HasValidRange=>double.IsFinite(Duration)&&double.IsFinite(Start)&&double.IsFinite(End)&&Duration>=MinimumSpan&&Start>=0&&End<=Duration&&End>Start;
     internal (double Minimum,double Maximum) EndpointBounds(bool start)=>!HasValidRange?(0,0):start?(0,Math.Max(0,End-MinimumSpan)):(Math.Min(Duration,Start+MinimumSpan),Duration);
-    /// Semantic edits enter the same Changed callback used by pointer drags.
-    /// The UIA provider validates its published bounds before reaching this path.
     internal bool SetEndpoint(bool start,double value)
     {
         VerifyAccess();if(!IsEnabled||!HasValidRange||!double.IsFinite(value))return false;
@@ -74,8 +72,6 @@ public sealed class RangeTimeline:FrameworkElement
     protected override void OnLostMouseCapture(MouseEventArgs e){dragging=false;base.OnLostMouseCapture(e);}
 }
 
-/// The painted lane keeps its existing hit targets; stable virtual child peers
-/// expose each edge as a real UIA RangeValue slider in seconds.
 internal sealed class RangeTimelineAutomationPeer:FrameworkElementAutomationPeer
 {
     private readonly RangeEndpointAutomationPeer start,end;
@@ -107,7 +103,6 @@ internal sealed class RangeEndpointAutomationPeer(RangeTimeline lane,bool start)
         lane.VerifyAccess();
         if(!lane.IsEnabled)throw new ElementNotEnabledException();
         if(!lane.HasValidRange)throw new InvalidOperationException("The source range is unavailable.");
-        // RangeValue's contract rejects values outside the bounds it publishes.
         if(!double.IsFinite(value)||value<Minimum||value>Maximum)throw new ArgumentOutOfRangeException(nameof(value));
         lane.SetEndpoint(start,value);
     }

@@ -9,9 +9,6 @@ using System.Windows.Shapes;
 using Lokum.Core;
 namespace Lokum.Windows;
 
-/// Reads only the three configured modifiers and primary mouse button. It never
-/// records keystrokes or polls the clipboard. Actual files/links arrive through
-/// OLE drag/drop after the user chooses a wheel segment.
 public sealed class GlobalDragController:IDisposable
 {
     [StructLayout(LayoutKind.Sequential)]internal struct NativePoint{public int X,Y;}
@@ -76,9 +73,6 @@ internal sealed class GlobalDropWheel:Window
     private void Track(DragEventArgs e)
     {
         var files=e.Data.GetData(DataFormats.FileDrop) as string[]??[];var updated=mode=="tools"&&MediaToolSource.FromDrop(e.Data,hint()) is {} media?media.Choices:Choices(files,Payload(e.Data));
-        // Replacing the hit-test target during DragEnter causes OLE to enter
-        // again instead of advancing to DragOver. Keep the visual tree stable
-        // until the payload actually changes, and select on entry as well.
         if(!updated.SequenceEqual(choices)){choices=updated;Build(choices);}
         var p=e.GetPosition(canvas);var distance=(p-new Point(270,270)).Length;
         if(distance<108||distance>250||choices.Count==0){selection="";Highlight(-1);}

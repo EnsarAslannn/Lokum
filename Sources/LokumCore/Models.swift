@@ -105,7 +105,6 @@ public struct OperationOptions: Codable, Sendable {
     public var preserveMetadata: Bool = true
     public var compressionPreset: String = "balanced"
     public var targetBytes: Int64? = nil
-    /// Percentage reduction: 20 means at most 80% of the original bytes.
     public var percentage: Double? = nil
     public var width: Int? = nil
     public var height: Int? = nil
@@ -126,7 +125,6 @@ public struct OperationOptions: Codable, Sendable {
     public var rightVolume: Double = 1
     public var splitPoints: [Double] = []
     public var equalClips: Int? = nil
-    /// Zero-based segment indices after sorting the split points, before any removals.
     public var discardedClips: [Int] = []
     public var joinSplitClips: Bool = false
     public var audioRedactions: [TimeRange] = []
@@ -191,8 +189,6 @@ public enum LokumError: LocalizedError {
     }
 }
 
-/// A fraction in 0...1, or OperationProgress.indeterminate when the current
-/// stage has no measurable total. Labels describe real work, not a timer estimate.
 public typealias ProgressHandler = @Sendable (Double, String) -> Void
 
 public final class CancellationToken: @unchecked Sendable {

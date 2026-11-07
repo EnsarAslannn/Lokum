@@ -9,7 +9,6 @@ final class MediaEngineTests: XCTestCase {
         let silent: URL
         init() throws {
             directory = try OutputFiles.temporaryDirectory()
-            // Metacharacters in real filenames exercise argument handling without a shell.
             video = directory.appendingPathComponent("Clip 'quoted' $dollar.mp4")
             audio = directory.appendingPathComponent("Quiet tone.wav")
             silent = directory.appendingPathComponent("Silent portrait.mov")
@@ -192,7 +191,7 @@ final class MediaEngineTests: XCTestCase {
         let pixels = try frame(still, time: 1)
         let center = (48 * 128 + 64) * 3
         XCTAssertLessThan(pixels[center], 20); XCTAssertGreaterThan(pixels[center + 2], 220)
-        XCTAssertGreaterThan(pixels[0], 230) // White padding retains the image's aspect ratio.
+        XCTAssertGreaterThan(pixels[0], 230)
     }
 
     func testAudioRedactionsMuteOrBleepOnlySelectedIntervals() throws {

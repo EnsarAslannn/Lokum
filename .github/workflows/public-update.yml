@@ -10,7 +10,6 @@ permissions:
   contents: read
 jobs:
   update:
-    # Opt in only after this repository publishes its own signed Lokum releases.
     if: vars.LOKUM_UPDATE_TESTS_ENABLED == 'true' && vars.LOKUM_UPDATE_PUBLIC_KEY != ''
     env:
       LOKUM_INITIAL_RELEASE_TAG: ${{ inputs.initial_release_tag }}
@@ -56,8 +55,6 @@ jobs:
           Copy-Item Resources/Brand/LokumIcon.png $image
           $state = Join-Path $data 'library.json'
           @{ Appearance = 'dark'; Entries = @(@{ Id = [guid]::NewGuid().ToString(); Created = [DateTimeOffset]::Now.ToString('o'); Action = 'Update persistence fixture'; Paths = @($text,$image) }) } | ConvertTo-Json -Depth 5 | Set-Content -Encoding utf8 $state
-          # This disposable profile closes on X so the test can read saved state.
-          # The normal product default deliberately keeps running in the tray.
           $preferences = Join-Path $data 'preferences.json'
           @{ KeepInTray = $false; AutomaticUpdateChecks = $true } | ConvertTo-Json | Set-Content -Encoding utf8 $preferences
           $preferencesHash = (Get-FileHash $preferences).Hash

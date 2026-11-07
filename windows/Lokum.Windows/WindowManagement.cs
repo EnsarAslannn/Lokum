@@ -8,7 +8,6 @@ using Lokum.Core;
 
 namespace Lokum.Windows;
 
-// WinEvent reports native window moves/resizes; file, text and browser-tab drags do not trigger it.
 internal sealed class WindowManagement:IDisposable
 {
     private readonly Native.EventCallback callback;
@@ -36,11 +35,9 @@ internal sealed class WindowManagement:IDisposable
         callback=(handle,type,window,objectId,childId,thread,time)=>
         {
             if(disposed||dispatcher.HasShutdownStarted)return;Native.GetCursorPos(out var point);var mouseDown=PrimaryMouseButton.IsPressed;var escapeDown=(Native.GetAsyncKeyState(0x1B)&0x8000)!=0;
-            // Native WinEvent callbacks can reenter window teardown. Return to
-            // Windows before creating/closing WPF HWNDs; snapshot Escape now.
             dispatcher.BeginInvoke(DispatcherPriority.Input,()=>OnWindowEvent(handle,type,window,objectId,childId,thread,time,point,mouseDown,escapeDown));
         };
-        hook=Native.SetWinEventHook(0x000A,0x000B,0,callback,0,0,0); // MOVESIZESTART / MOVESIZEEND
+        hook=Native.SetWinEventHook(0x000A,0x000B,0,callback,0,0,0);
         timer.Tick+=(_,_)=>Tick();
     }
     private void OnWindowEvent(nint handle,uint type,nint window,int objectId,int childId,uint thread,uint time,Native.Point capturedPoint,bool mouseDown,bool escapeDown)
@@ -49,12 +46,11 @@ internal sealed class WindowManagement:IDisposable
         if(type==0x000A)
         {
             pendingPlacement?.Cancel();Clear();if(!enabled()||!Native.IsWindowVisible(window)||Native.IsIconic(window))return;
-            if(!mouseDown)return; // Never intercept keyboard-initiated system moves.
+            if(!mouseDown)return;
             target=window;origin=capturedPoint;cancelled=false;timer.Start();Trace?.Invoke($"start pointer={origin.X},{origin.Y}");
         }
         else if(type==0x000B&&window==target)
         {
-            // Escape can end the native move loop before the next timer tick sees it.
             if(escapeDown)cancelled=true;
             var point=capturedPoint;wheel?.HoverScreen(new(point.X,point.Y));
             var selected=wheel?.SelectedIndex??-1;var captured=target;
@@ -71,8 +67,6 @@ internal sealed class WindowManagement:IDisposable
         pendingPlacement?.Cancel();var cancellation=new CancellationTokenSource();pendingPlacement=cancellation;PlacementPending=true;
         try
         {
-            // The native move loop and DWM frame bounds settle after MOVESIZEEND.
-            // Yield the UI thread rather than treating stale bounds as a refusal.
             await Task.Delay(100,cancellation.Token);var frame=placement.Frame(work);
             for(var attempt=0;attempt<4;attempt++)
             {

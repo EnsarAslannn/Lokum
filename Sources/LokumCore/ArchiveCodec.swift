@@ -1,8 +1,6 @@
 import Foundation
 import Darwin
 
-/// Streaming local archive I/O. Entries are materialized only inside a newly
-/// created staging directory; links are deferred until regular files are done.
 enum ArchiveCodec {
     private static let api = ArchiveAPI()
     private struct DeferredLink { let destination: URL; let target: String; let hard: Bool }
@@ -39,7 +37,6 @@ enum ArchiveCodec {
             guard let entry, let rawName = a.entryPath(entry) else { throw LokumError.failed("The archive contains an unnamed entry.") }
             var name = String(cString: rawName)
             if a.format(reader) == 0x90000 {
-                // A gzip stream can hold one ordinary file instead of a tar.
                 name = input.deletingPathExtension().lastPathComponent
                 if ["tgz", "gzip"].contains(input.pathExtension.lowercased()) && name.isEmpty { name = "data" }
             }
@@ -96,7 +93,6 @@ enum ArchiveCodec {
             if mtime > 0 { try? fm.setAttributes([.modificationDate: Date(timeIntervalSince1970: TimeInterval(mtime))], ofItemAtPath: destination.path) }
         }
         guard entries > 0 else {
-            // Empty ZIP/TAR archives are valid and extract to an empty folder.
             if a.format(reader) == 0 { throw LokumError.invalidInput("This file is not a readable archive.") }
             return
         }
@@ -114,14 +110,11 @@ enum ArchiveCodec {
         }
         for link in links.filter({ !$0.hard }) {
             try token.check()
-            // Deferred entries must be checked against the filesystem as it
-            // exists now, before creating directories or the link itself.
             try validateDestination(link.destination, root: root)
             try validateSymbolicTarget(link.target, at: link.destination, root: root)
             try fm.createDirectory(at: link.destination.deletingLastPathComponent(), withIntermediateDirectories: true)
             try fm.createSymbolicLink(atPath: link.destination.path, withDestinationPath: link.target)
         }
-        // A chain of individually relative links must also stay inside the root.
         for link in links where !link.hard {
             guard contains(link.destination.resolvingSymlinksInPath(), root: root) else {
                 throw LokumError.invalidInput("An archive link points outside the extraction folder.")
@@ -148,9 +141,6 @@ enum ArchiveCodec {
         }
         try a.check(output.path.withCString { a.writeOpen(writer, $0) }, handle: writer)
         let fm = FileManager.default
-        // URL enumeration can return /private/var paths while URL canonicalizing
-        // deliberately presents /var. Ask for relative names instead of slicing
-        // absolute paths with potentially different macOS aliases.
         guard let enumerator = fm.enumerator(atPath: root.path) else {
             throw LokumError.failed("Could not read the extracted archive.")
         }
@@ -225,9 +215,6 @@ enum ArchiveCodec {
         let prefix=base.path+"/",path=destination.standardizedFileURL.path
         guard path.hasPrefix(prefix) else { throw LokumError.invalidInput("An archive path leaves its extraction folder.") }
         var item=base
-        // lstat does not follow a link, including a dangling one. Only inspect
-        // components below the trusted staging root, preserving macOS aliases
-        // such as /var without permitting archive-created directory aliases.
         for component in path.dropFirst(prefix.count).split(separator:"/") {
             item.appendPathComponent(String(component))
             var attributes=stat()
@@ -248,8 +235,6 @@ enum ArchiveCodec {
         }
     }
 
-    /// libarchive ships with macOS and supports ZIP, TAR, gzip and RAR without
-    /// running a shell or trusting a textual archive listing.
     private final class ArchiveAPI: @unchecked Sendable {
         typealias New = @convention(c) () -> OpaquePointer?
         typealias Call = @convention(c) (OpaquePointer?) -> Int32
@@ -271,7 +256,6 @@ enum ArchiveCodec {
         init() { library = dlopen("/usr/lib/libarchive.2.dylib", RTLD_NOW | RTLD_LOCAL) }
         func get() throws -> ArchiveAPI { guard library != nil else { throw LokumError.missingDependency("macOS libarchive") }; return self }
         private func symbol<T>(_ name: String, _ type: T.Type) -> T {
-            // All symbols below are part of libarchive's stable public ABI.
             guard let pointer = dlsym(library, name) else { preconditionFailure("Missing libarchive symbol: \(name)") }
             return unsafeBitCast(pointer, to: type)
         }

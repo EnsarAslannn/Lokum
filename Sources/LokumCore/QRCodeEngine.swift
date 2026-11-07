@@ -7,7 +7,6 @@ public struct QRCodeMatch:Codable,Sendable,Identifiable {
     public var id=UUID()
     public let sourceName:String
     public let sourcePath:String
-    /// One-based PDF page, absent for an ordinary image.
     public let page:Int?
     public let text:String
 }

@@ -1,5 +1,3 @@
-/* Independent Lokum PDF object-graph adapter over the MIT pdf-lib 1.17.1.
-   No PDF JavaScript, remote references, subprocesses or original-app code run here. */
 (function (global) {
 "use strict";
 const {PDFDocument,PDFName,PDFDict,PDFArray,PDFRef,PDFStream,PDFPage,PDFObjectCopier,PDFString,PDFHexString,PDFBool,degrees}=PDFLib;
@@ -34,7 +32,6 @@ function preflight(doc,selection,willNamespace) {
   if(willNamespace&&dr)for(const key of dr.keys())if(!["/Font","/Encoding","/ProcSet"].includes(key.toString()))unsupported("non-font form appearance resources");
   const tree=fieldTree(doc);if(willNamespace)for(const field of tree.all)if(field.has(name('A')))unsupported('form submission or button actions while copying fields');
  }
- // Signature dictionaries may be present outside the form registry.
  for(const [,obj]of doc.context.enumerateIndirectObjects())if(obj instanceof PDFDict) {
   if(obj.has(name("ByteRange"))||obj.get(name("FT"))===name("Sig")||obj.get(name("Type"))===name("Sig"))unsupported("digital signatures");
   if(obj.get(name("Type"))===name("OCG")||obj.get(name("Type"))===name("OCMD"))unsupported("optional content layers");
@@ -46,7 +43,6 @@ function preflight(doc,selection,willNamespace) {
   if(doc.catalog.has(name("Outlines"))||doc.catalog.has(name("Dests"))||names?.has(name("Dests")))unsupported("bookmarks or named destinations while removing pages");
   if(doc.catalog.has(name("OpenAction"))||doc.catalog.has(name("AA")))unsupported("document actions while removing pages");
  }
- // Cross-document catalog structures need deliberate remapping rather than page copying.
  if(willNamespace) {
   const names=doc.catalog.lookupMaybe(name("Names"),PDFDict);
   if(doc.catalog.has(name("Outlines"))||doc.catalog.has(name("Dests")))unsupported("bookmarks or destinations while copying pages between documents");
@@ -107,7 +103,6 @@ function freshPrefix(doc,base) {
 }
 function pageRefs(doc){return new Set(doc.getPages().map(p=>p.ref.toString()));}
 function pruneForms(doc){
- // removePage in 1.17.1 does not invalidate pageCache; rebuild it before reading retained pages.
  doc.pageCache.invalidate();
  if(!doc.catalog.has(name('AcroForm')))return [];
  const refSet=pageRefs(doc),form=doc.getForm(),record=[],widgetPages=new Map();
@@ -203,7 +198,6 @@ async function selectDocument(bytes,selection) {
  for(const index of selection){if(!seen.has(index)){seen.add(index);chosen.push(sourcePages[index]);}else duplicates.push(index);}
  preflight(doc,selection,false);
  setPageOrder(doc,chosen);pruneForms(doc);if(chosen.length<sourcePages.length)prunePageLinks(doc);
- // Duplicate a field subtree from a separate context, so values/widgets do not alias.
  const copies=[];
  for(const index of duplicates) {
   check();const one=await load(bytes);preflight(one,[index],true);

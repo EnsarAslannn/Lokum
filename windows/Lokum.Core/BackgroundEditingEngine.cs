@@ -38,8 +38,6 @@ public sealed class BackgroundEditingEngine:IDisposable
         output.ColorSpace=ColorSpace.sRGB;output.Strip();return output.ToByteArray(MagickFormat.Png32);
     }
 
-    // Scan-convert the polygon with four vertical samples and fractional horizontal coverage.
-    // Coordinates are normalized, so fitting/zooming the editor cannot move the saved selection.
     private static void ApplyRegion(byte[] rgba,byte[] originalAlpha,int width,int height,ForegroundRegion region,CancellationToken token)
     {
         var points=region.Points;var first=Math.Max(0,(int)Math.Floor(points.Min(p=>p.Y)*height));

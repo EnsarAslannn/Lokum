@@ -48,8 +48,6 @@ internal static class BrowserContextMedia
         token.ThrowIfCancellationRequested();if(sourceWindow!=0&&!IsSourceForeground(sourceWindow))return null;
         if(command.Value.Kind=="video"&&await KnownVideoPageAsync(sourceWindow,token) is {} known)return known;
         if(!command.Value.Item.Current.IsEnabled)return null;
-        // Snapshot every original format before invoking Copy Address. If a
-        // clipboard provider cannot be snapshotted, leave its contents untouched.
         var sequence=GetClipboardSequenceNumber();var before=await ClipboardSnapshot.CaptureAsync(token);if(GetClipboardSequenceNumber()!=sequence)return null;uint copied=0;
         try
         {
@@ -78,8 +76,6 @@ internal static class BrowserContextMedia
         EnumWindows((window,_)=>{GetWindowThreadProcessId(window,out var owner);if(owner==process&&IsWindowVisible(window)&&((long)GetWindowLongPtr(window,-16)&0x80000000L)!=0)windows.Add(window);return true;},0);
         foreach(var window in windows)
         {
-            // Native context menus are popup HWNDs. Never invoke a webpage's
-            // arbitrary menu item merely because it imitates Copy Image Address.
             var root=AutomationElement.FromHandle(window);
             var items=root.FindAll(TreeScope.Descendants,new PropertyCondition(AutomationElement.ControlTypeProperty,ControlType.MenuItem));
             foreach(AutomationElement item in items)

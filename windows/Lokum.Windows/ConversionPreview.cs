@@ -27,8 +27,6 @@ public sealed partial class ToolEditor
     {
         if(tool!="convert")return;
         conversionPreviewButton=MainWindow.Button("Show Result",async()=>await PreviewConversion());AutomationProperties.SetAutomationId(conversionPreviewButton,"conversion.preview");DockPanel.SetDock(conversionPreviewButton,Dock.Left);footer.Children.Add(conversionPreviewButton);
-        // Profiles add fields after the constructor. Attach once the complete editor
-        // is loaded, so every setting (including passwords) invalidates the result.
         Loaded+=(_,_)=>
         {
             foreach(var box in fields.Values)box.TextChanged+=(_,_)=>InvalidateConversion();

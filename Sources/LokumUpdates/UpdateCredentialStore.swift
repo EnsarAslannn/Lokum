@@ -15,7 +15,6 @@ public enum UpdateCredentialError: LocalizedError, Equatable {
     }
 }
 
-/// Only the token lives here. Repository selection and UI preferences are not secrets.
 public protocol UpdateCredentialStore: Sendable {
     func token(for repository: GitHubRepository) throws -> String
     func authorizeToken(for repository: GitHubRepository) throws -> String
@@ -26,7 +25,6 @@ public protocol UpdateCredentialStore: Sendable {
 public extension UpdateCredentialStore {
     func authorizeToken(for repository: GitHubRepository) throws -> String { try token(for: repository) }
 
-    /// Security.framework can wait on the login Keychain. Never block the UI executor.
     func loadToken(for repository: GitHubRepository, authorizingAccess: Bool = false) async throws -> String {
         let token = try await Task.detached {
             try authorizingAccess ? self.authorizeToken(for: repository) : self.token(for: repository)
@@ -45,8 +43,6 @@ public extension UpdateCredentialStore {
 }
 
 public final class KeychainUpdateCredentialStore: UpdateCredentialStore, @unchecked Sendable {
-    // Legacy Keychain's interaction flag is process-wide. Serialize every operation
-    // in this store so an explicit save cannot overlap a silent background read.
     private static let interactionLock = NSLock()
     private let service: String
 
@@ -74,7 +70,6 @@ public final class KeychainUpdateCredentialStore: UpdateCredentialStore, @unchec
         try readToken(for: repository, allowingInteraction: false)
     }
 
-    /// Used only by the explicit Save Connection action, never scheduled checks.
     public func authorizeToken(for repository: GitHubRepository) throws -> String {
         try readToken(for: repository, allowingInteraction: true)
     }
@@ -85,10 +80,6 @@ public final class KeychainUpdateCredentialStore: UpdateCredentialStore, @unchec
         var query = query(for: repository)
         query[kSecReturnData as String] = true
         query[kSecMatchLimit as String] = kSecMatchLimitOne
-        // LAContext only suppresses authentication UI for the Data Protection
-        // Keychain. File-based login Keychains also need this legacy scoped flag.
-        // The deprecated API remains necessary on macOS; the modern replacement
-        // does not cover these items (see Security.framework's SecItem.h).
         var interactionWasAllowed: DarwinBoolean = false
         try check(SecKeychainGetUserInteractionAllowed(&interactionWasAllowed))
         try check(SecKeychainSetUserInteractionAllowed(allowingInteraction))
@@ -116,8 +107,6 @@ public final class KeychainUpdateCredentialStore: UpdateCredentialStore, @unchec
         if status == errSecItemNotFound {
             var item = query
             attributes.forEach { item[$0.key] = $0.value }
-            // Default login-Keychain access is restricted to the saving app.
-            // Do not grant all applications access to hide signing/ACL prompts.
             status = SecItemAdd(item as CFDictionary, nil)
         }
         try check(status)

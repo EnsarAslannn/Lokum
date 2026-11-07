@@ -2,8 +2,6 @@ import Foundation
 import ImageIO
 import CryptoKit
 
-/// Metadata-only writes on an owned copy. The public ExifTool dependency is
-/// acquired independently; no original Lokum bridge or assets are used.
 public enum ImageMetadataEngine {
     private static let formats:Set<String>=["jpg","jpeg","png","heic","heif","tif","tiff","webp","gif","avif"]
     private static let appearanceTags:Set<String>=["Orientation","ImageWidth","ImageHeight","ExifImageWidth","ExifImageHeight","ColorSpace","Gamma","WhitePoint","PrimaryChromaticities","YCbCrCoefficients","YCbCrPositioning","BitsPerSample","SamplesPerPixel","Compression","PhotometricInterpretation","PlanarConfiguration","StripOffsets","StripByteCounts","RowsPerStrip","TileOffsets","TileByteCounts","YCbCrSubSampling","AnimationIterations","LoopCount","FrameCount","Duration"]
@@ -34,14 +32,7 @@ public enum ImageMetadataEngine {
         guard formats.contains(source.pathExtension.lowercased()),formats.contains(output.pathExtension.lowercased()) else { return }
         let hash=try encodedImageHash(output,token:token)
         let sourceMetadata=try read(source,token:token)
-        // Pixels are already transformed into display orientation by ImageEngine.
-        // Disable ExifTool's inverse print conversion: bare "1" can match the
-        // human-readable "Rotate 180" description and write numeric value 3.
         _ = try run(["-overwrite_original","-TagsFromFile",source.path,"-EXIF:all","-XMP","-IPTC:all","--Orientation","-Orientation#=1",output.path],token:token)
-        // XMP is copied as a packet, so excluding its individual orientation
-        // tag above cannot remove the old value. Some readers prefer XMP over
-        // EXIF. Packet transfer takes precedence over individual XMP writes in
-        // the same command, so normalize existing XMP in a subsequent write.
         if sourceMetadata["XMP-tiff:Orientation"] != nil {
             _ = try run(["-overwrite_original","-XMP-tiff:Orientation#=1",output.path],token:token)
         }
@@ -65,8 +56,6 @@ public enum ImageMetadataEngine {
         var containerChanges=changes.removeAll
         var xmpUpdates:[String:String]=[:],xmpRemovals:[String]=[]
         if changes.removeAll {
-            // Color interpretation and display orientation are part of appearance.
-            // ExifTool edits container metadata without decoding encoded samples.
             arguments += ["-all=","--ICC_Profile:all","-TagsFromFile","@","-ColorSpaceTags","-Orientation#"]
             if ["tif","tiff"].contains(input.pathExtension.lowercased()) {
                 arguments.append("-CommonIFD0=")
@@ -120,8 +109,6 @@ public enum ImageMetadataEngine {
         return output
     }
 
-    /// Public for independent verification. ImageDataHash covers encoded samples;
-    /// frame timing, orientation, ICC bytes and dimensions are checked separately.
     public static func encodedImageHash(_ input:URL,token:CancellationToken = .init()) throws -> String {
         if input.pathExtension.lowercased()=="gif" { return try gifImageHash(Data(contentsOf:input)) }
         let result=try run(["-j","-s","-api","RequestAll=3","-api","ImageHashType=SHA256","-ImageDataHash",input.path],token:token)
@@ -199,8 +186,6 @@ public enum ImageMetadataEngine {
         paths.append(root.appendingPathComponent("Tools/ExifTool/exiftool"))
         #endif
         guard let script=paths.first(where:{FileManager.default.fileExists(atPath:$0.path)}) else { throw LokumError.missingDependency("ExifTool; run scripts/setup-exiftool.sh") }
-        // Empty config disables executable user configuration. Values remain argv,
-        // never shell code, and the source is only read or copied.
         return try ProcessRunner.run(URL(fileURLWithPath:"/usr/bin/perl"),[script.path,"-config",""]+args,token:token)
     }
     private static func displayKey(_ tag:String)->String {

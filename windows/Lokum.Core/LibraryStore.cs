@@ -7,8 +7,6 @@ public sealed record LibraryEntry(Guid Id,DateTimeOffset Created,string Action,s
     public string[] AvailablePaths=>Paths.Where(p=>File.Exists(p)||Directory.Exists(p)).ToArray();
 }
 
-// Lives outside the portable installation, so replacing the app never replaces
-// a user's imported clipboard files, history or appearance preference.
 public sealed class LibraryStore
 {
     public const int Limit=50;

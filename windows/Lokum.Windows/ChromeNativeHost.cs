@@ -4,8 +4,6 @@ namespace Lokum.Windows;
 
 internal static class ChromeNativeHost
 {
-    // Chrome launches this same portable executable with redirected binary stdio.
-    // This branch runs before singleton, tray, clipboard or window setup.
     internal static async Task<int> RunAsync(string origin)
     {
         using var timeout=new CancellationTokenSource(TimeSpan.FromSeconds(12));var output=Console.OpenStandardOutput();

@@ -92,8 +92,6 @@ public partial class App:Application
         }
         if(e.Args.Length==3&&e.Args[0]=="--background-editor-fixture")
         {
-            // Explicit interactive QA workspace: bypass singleton/global hooks and keep all
-            // preferences, Library and exports in the caller's disposable directory.
             IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;
             try
             {
@@ -120,7 +118,7 @@ public partial class App:Application
     {
         L10n.Language="en";
         try{L10n.Language=readLanguage is null?new Lokum.Core.PreferencesStore(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Lokum")).Value.Language:readLanguage();}
-        catch(Exception error)when(error is IOException or UnauthorizedAccessException or System.Security.SecurityException){/* Preserve the original error dialog in English. */}
+        catch(Exception error)when(error is IOException or UnauthorizedAccessException or System.Security.SecurityException){ }
     }
     private async Task ForwardAndExit(string[] paths)
     {

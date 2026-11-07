@@ -1,7 +1,5 @@
 import Foundation
 
-/// One browser card can carry two different resources. Keep its media page and
-/// image together instead of silently replacing a video with its poster.
 public struct WebMediaDragPayload:Equatable,Sendable {
     public let primaryURL:URL
     public let videoURL:URL?
@@ -31,12 +29,10 @@ public struct WebMediaDragPayload:Equatable,Sendable {
         }
         let candidates=unique(explicit+anchors)
         let pages=unique(candidates.compactMap(videoPage))
-        // A multi-card selection must not silently download an arbitrary video.
         guard pages.count<=1 else { return nil }
         let image=unique(images+explicit.filter(isImage)).first
         if let page=pages.first {
             if isInstagramPhotoPost(page) { return .init(primaryURL:page,videoURL:nil,imageURL:image) }
-            // Instagram reel posters are not separate photo downloads.
             if page.host=="www.instagram.com" { return .init(primaryURL:page,videoURL:page,imageURL:nil) }
             return .init(primaryURL:page,videoURL:page,imageURL:image ?? youtubeThumbnail(page))
         }
@@ -86,15 +82,12 @@ public struct WebMediaDragPayload:Equatable,Sendable {
         if let id=youtubeID(url) { return youtubePage(id) }
         let host=url.host?.lowercased() ?? "",parts=url.path.split(separator:"/").map(String.init)
         guard ["instagram.com","www.instagram.com","m.instagram.com"].contains(host) else { return nil }
-        // Profile grids include the username before /reel/; share URLs omit it.
         let index=parts.firstIndex(where:{["reel","reels","p","tv"].contains($0)})
         guard let index,index<=1,parts.count==index+2,let id=validID(parts[index+1],length:5...64) else { return nil }
         let kind=parts[index]=="reels" ? "reel":parts[index]
         return URL(string:"https://www.instagram.com/\(kind)/\(id)/")
     }
     private static func attributes(_ html:String,tag:String,attribute:String)->[String] {
-        // Only extract text attributes; never instantiate an HTML view or fetch
-        // subresources from the untrusted drag fragment.
         let pattern="<"+tag+"\\b[^>]*?\\s"+attribute+"\\s*=\\s*(?:\"([^\"]*)\"|'([^']*)'|([^\\s>]+))"
         guard let regex=try? NSRegularExpression(pattern:pattern,options:[.caseInsensitive,.dotMatchesLineSeparators]) else { return [] }
         return regex.matches(in:html,range:NSRange(html.startIndex...,in:html)).prefix(32).compactMap { match in

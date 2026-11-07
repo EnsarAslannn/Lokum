@@ -3,8 +3,6 @@ import ApplicationServices
 import LokumCore
 import Darwin
 
-/// Explicit, opt-in native input verification. Only a separately launched Lokum fixture is moved.
-/// The normal app never enters this path or synthesizes input.
 @MainActor final class WindowManagementSmokeDelegate:NSObject,NSApplicationDelegate {
     private let managerPID:pid_t
     private let output:URL
@@ -99,11 +97,9 @@ import Darwin
         mouse(.leftMouseDragged,selected,flags:flags);try await pause(180)
         if log.isEmpty {
             try captureWheel(pid:managerPID)
-            // Explicit live visual QA only; normal test runs and the app never pause here.
             if CommandLine.arguments.contains("--hold-for-capture") { try await pause(6000) }
         }
         if cancel { keyboard(53,down:true,flags:flags);try await pause(80);keyboard(53,down:false,flags:flags);try await pause(100) }
-        // Releasing the modifier must keep the choice available until mouse-up.
         keyboard(key,down:false);heldKey=nil;try await pause(100)
         if !cancel { try require(windowBounds(pid:managerPID,title:"Lokum Window Management") != nil,"Releasing the modifier dismissed the wheel.") }
         mouse(.leftMouseUp,selected);mouseDown=false
@@ -136,8 +132,6 @@ import Darwin
         }
     }
     private func windowBounds(pid:pid_t,title:String)->CGRect? {
-        // Accessibility is already required for this test. Do not require Screen Recording
-        // merely to find a separately running Lokum panel; its CG title may be redacted.
         let app=AXUIElementCreateApplication(pid);AXUIElementSetMessagingTimeout(app,0.1)
         let matches=(WindowManagementController.attribute(app,kAXWindowsAttribute) as? [AXUIElement] ?? []).filter {
             WindowManagementController.attribute($0,kAXTitleAttribute) as? String==title

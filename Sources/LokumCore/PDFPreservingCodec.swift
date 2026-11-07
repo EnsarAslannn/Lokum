@@ -2,11 +2,7 @@ import Foundation
 import JavaScriptCore
 import PDFKit
 
-/// Object-graph page editing for ordinary AcroForms and embedded files.
-/// A fresh JavaScriptCore context is used per output; no Node process or network runs.
 enum PDFPreservingCodec {
-    /// One selection for each source. Repeated indices create independently editable
-    /// field copies. Rotations are absolute degrees indexed by the final output page.
     static func transform(_ inputs: [URL], selections: [[Int]], rotations: [Int: Int] = [:],
                           token: CancellationToken = .init()) throws -> Data {
         try token.check()
@@ -86,9 +82,6 @@ enum PDFPreservingCodec {
                 throw LokumError.failed("The native PDF writer is unavailable.")
             }
             _ = run.call(withArguments: [json])
-            // Promise continuations normally finish at the JS call boundary. This
-            // bounded loop also permits a delayed microtask checkpoint. It is not
-            // a hard watchdog around a synchronous JavaScript parser invocation.
             let deadline = Date().addingTimeInterval(120)
             while result == nil, diagnostic == nil, Date() < deadline {
                 try token.check()

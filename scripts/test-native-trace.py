@@ -12,7 +12,7 @@ if len(sys.argv) != 2:
     raise SystemExit('Usage: test-native-trace.py PATH_TO_DLL')
 
 library = ctypes.WinDLL(str(Path(sys.argv[1]).resolve(strict=True)))
-install = library.InstallTrace  # Fails if the build accidentally compiled the EXE branch.
+install = library.InstallTrace
 install.argtypes = []
 install.restype = None
 with tempfile.TemporaryDirectory(prefix='Lokum-Trace-') as directory:

@@ -1,7 +1,5 @@
 namespace Lokum.Windows;
 
-/// Explorer can broadcast TaskbarCreated before it accepts tray icons again.
-/// Keep retries bounded and invalidate queued work on restart or disposal.
 internal sealed class TrayIconRecovery(Func<bool> publish,Action<Action> schedule,Action failed):IDisposable
 {
     private int generation;

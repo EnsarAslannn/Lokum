@@ -82,7 +82,6 @@ public final class GitHubUpdateClient: @unchecked Sendable {
         self.init(repository: repository, token: token, configuration: .ephemeral)
     }
 
-    // A private session configuration also permits credential-free fixture tests.
     init(repository: GitHubRepository, token: String?, configuration: URLSessionConfiguration) {
         self.repository = repository
         self.token = token?.trimmingCharacters(in: .whitespacesAndNewlines)
@@ -244,7 +243,6 @@ public final class GitHubUpdateClient: @unchecked Sendable {
         guard isHTTPS(url), let host = url.host?.lowercased(), hosts.contains(host), url.fragment == nil else {
             throw GitHubUpdateTransportError.invalidAssetURL
         }
-        // Build a new request, rather than copying any authorization/cookies across origins.
         var request = URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData, timeoutInterval: 30)
         request.setValue("application/octet-stream", forHTTPHeaderField: "Accept")
         request.setValue("Lokum-Private-Updater", forHTTPHeaderField: "User-Agent")
@@ -269,8 +267,6 @@ fileprivate protocol GitHubArchiveSink: AnyObject {
     func writeArchive(_ data: Data, completion: @escaping (Result<Void, Error>) -> Void)
 }
 
-/// Each request has an isolated delegate/session. Only the bounded collector or
-/// a bounded streaming queue owns response bytes; archives never become a Data blob.
 private final class GitHubHTTPTransfer: NSObject, URLSessionDataDelegate, @unchecked Sendable {
     private let request: URLRequest
     private let configuration: URLSessionConfiguration

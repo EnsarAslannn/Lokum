@@ -82,7 +82,6 @@ enum FloatShelfViewMode:Int { case icons,list }
             case .bottom:frame.origin.y=visible.minY
             }
             frame.origin.x=max(visible.minX,min(visible.maxX-frame.width,frame.minX));frame.origin.y=max(visible.minY,min(visible.maxY-frame.height,frame.minY))
-            // Leave a small count tab visible while the stack is tucked at the top edge.
             if !isExpanded,edge == .top { frame.origin.y=visible.maxY-frame.height+96 }
             setFrame(frame,animate:true)
         }
@@ -113,7 +112,6 @@ enum FloatShelfViewMode:Int { case icons,list }
         collapseButton.font = .systemFont(ofSize:11,weight:.medium);collapseButton.alignment = .center
         collapseButton.bezelStyle = .inline;collapseButton.isBordered=false;collapseButton.target=self;collapseButton.action=#selector(toggleExpanded)
         collapseButton.setAccessibilityIdentifier("float.collapse");collapseButton.translatesAutoresizingMaskIntoConstraints=false;header.addSubview(collapseButton)
-        // The count and chevron form one centered, generous click target.
         NSLayoutConstraint.activate([
             close.leadingAnchor.constraint(equalTo:header.leadingAnchor,constant:9),close.topAnchor.constraint(equalTo:header.topAnchor,constant:9),
             pinButton.trailingAnchor.constraint(equalTo:header.trailingAnchor,constant:-9),pinButton.topAnchor.constraint(equalTo:header.topAnchor,constant:9),
@@ -417,8 +415,6 @@ private final class ShelfPanel:NSPanel {
     override func prepareForDragOperation(_ sender:NSDraggingInfo)->Bool { !Self.fileURLs(sender.draggingPasteboard).isEmpty }
     override func performDragOperation(_ sender:NSDraggingInfo)->Bool { let urls=Self.fileURLs(sender.draggingPasteboard);guard !urls.isEmpty else { return false };onFilesDropped?(urls);return true }
 }
-/// A vertical shelf never wraps into a second column. Unlike a flow layout,
-/// it can resize through compact intermediate widths without stale item metrics.
 @MainActor private final class ShelfColumnLayout:NSCollectionViewLayout {
     var itemHeight:CGFloat=108
     var minimumInteritemSpacing:CGFloat=0
@@ -511,7 +507,6 @@ private final class ShelfPanel:NSPanel {
         view.setAccessibilitySelected(isSelected)
     }
 }
-/// The files are the drag target; the visible paperclip is a separate window grip.
 @MainActor private final class ShelfCarryGrip:NSView,NSDraggingSource {
     var urls:(()->[URL])?
     var onDragEnded:(()->Void)?
@@ -560,7 +555,6 @@ private final class ShelfPanel:NSPanel {
             icon.draw(in:rect,from:.zero,operation:.sourceOver,fraction:1,respectFlipped:true,hints:[.interpolation:NSImageInterpolation.high])
             NSGraphicsContext.restoreGraphicsState()
         }
-        // A silver wire clip keeps the stack recognizable without a surrounding window.
         let clip=NSBezierPath();clip.move(to:NSPoint(x:76,y:29));clip.line(to:NSPoint(x:57,y:72))
         clip.curve(to:NSPoint(x:78,y:81),controlPoint1:NSPoint(x:47,y:94),controlPoint2:NSPoint(x:70,y:101))
         clip.line(to:NSPoint(x:94,y:43));clip.curve(to:NSPoint(x:81,y:37),controlPoint1:NSPoint(x:102,y:26),controlPoint2:NSPoint(x:87,y:22))

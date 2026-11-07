@@ -1,6 +1,5 @@
 import AppKit
 
-/// Own-window UI replay with disposable files. No global input or permission prompt.
 @MainActor final class FloatShelfSmoke:NSObject,NSApplicationDelegate {
     private let output:URL
     private var shelf:FloatShelfController?
@@ -91,7 +90,6 @@ import AppKit
     }
 }
 
-/// A native file source and copy-only destination, restricted to generated fixtures.
 @MainActor private final class FloatDragFixture:NSView,NSDraggingSource {
     private let file:URL,output:URL
     private let label=NSTextField(wrappingLabelWithString:"Drag the document above into Float.\n\nDrop Float files here to check their drag payload.")

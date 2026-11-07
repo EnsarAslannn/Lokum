@@ -1,7 +1,6 @@
 import AppKit
 import CoreText
 
-/// Center visible glyphs and fit every complete line inside the sloping petal edges.
 enum WheelLabelLayout {
     struct Line {
         let text: String
@@ -42,7 +41,6 @@ enum WheelLabelLayout {
                 NSAttributedString.Key(kCTForegroundColorFromContextAttributeName as String): true
             ]))
         }
-        // Wrap whole words; never truncate a label or split a word to force it to fit.
         var strings: [String] = []
         for paragraph in title.components(separatedBy: "\n") {
             var current = ""
@@ -73,7 +71,6 @@ enum WheelLabelLayout {
     static func fits(_ content: Content, inside path: NSBezierPath, padding: CGFloat) -> Bool {
         content.occupiedRects.allSatisfy { rect in
             let box = rect.insetBy(dx: -padding, dy: -padding)
-            // A curved inner edge can cut a rectangle even if its corners are inside.
             return (0...8).allSatisfy { step in
                 let t = CGFloat(step) / 8
                 return [NSPoint(x: box.minX + box.width*t, y: box.minY),
@@ -89,7 +86,6 @@ enum WheelLabelLayout {
                        maximumWidth: CGFloat, iconSize: CGFloat? = nil,
                        scale: CGFloat = 1) -> Content {
         var best: Content?
-        // Try alternative word wraps/positions before reducing the readable font size.
         for reduction in stride(from: CGFloat(0), through: 3 * scale, by: 0.25 * scale) {
             let size = max(6 * scale, font.pointSize - reduction)
             let fittedFont = NSFont(descriptor: font.fontDescriptor, size: size) ?? font
@@ -100,8 +96,6 @@ enum WheelLabelLayout {
                 for (index, center) in centers.enumerated() {
                     let placed = block.moved(to: center)
                     guard fits(placed, inside: path, padding: 3.5 * scale) else { continue }
-                    // Full width gives the fewest word-wrapped lines. If it fits
-                    // at the preferred center, no later candidate can score better.
                     if width == maximumWidth,index == 0 { return placed }
                     let score = CGFloat(block.lines.count) * 10 + CGFloat(index) + (maximumWidth-width)/maximumWidth
                     if score < bestScore { best = placed; bestScore = score }
@@ -109,7 +103,6 @@ enum WheelLabelLayout {
             }
             if let best { return best }
         }
-        // The shipped catalog is covered by containment checks at every supported scale.
         return content(title, font: font, color: color, width: maximumWidth,
                        center: centers[0], iconSize: iconSize, spacing: 4 * scale)
     }

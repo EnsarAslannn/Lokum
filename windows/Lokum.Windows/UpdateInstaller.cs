@@ -37,8 +37,6 @@ internal static class UpdateInstaller
         Directory.Move(target,backup);
         try{Directory.Move(payload,target);}catch{Directory.Move(backup,target);throw;}
         Process.Start(new ProcessStartInfo(Path.Combine(target,"Lokum.exe")){UseShellExecute=true,WorkingDirectory=target});
-        // Backups remain recoverable; the app never recursively deletes a user's
-        // portable directory merely because an update succeeded.
         return 0;
     }
     private sealed record InstallRequest(int ProcessId,string Target,string Payload,string Stage);

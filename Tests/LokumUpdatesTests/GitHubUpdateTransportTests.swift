@@ -268,7 +268,7 @@ final class GitHubUpdateTransportTests: XCTestCase {
         let url = try bridge.archiveURL(for: URL(string: "https://api.github.com/repos/example/lokum/releases/assets/42")!)
         let session = session(); defer { session.invalidateAndCancel() }
         do { _ = try await session.data(from: url); XCTFail("The advertised archive length was not received.") }
-        catch { /* A closed response before Content-Length is complete must fail the consumer. */ }
+        catch {   }
     }
 }
 

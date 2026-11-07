@@ -3,7 +3,6 @@ import SwiftUI
 import AVFoundation
 import LokumCore
 
-/// Range clips share source time coordinates with the waveform and frame strip.
 struct MediaTimeRangeLane:View {
     let duration:Double
     let current:Double

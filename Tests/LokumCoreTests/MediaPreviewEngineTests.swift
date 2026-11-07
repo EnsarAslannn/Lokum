@@ -131,7 +131,7 @@ final class MediaPreviewEngineTests: XCTestCase {
         let siblingNames = try FileManager.default.contentsOfDirectory(atPath: f.directory.path).sorted()
         var options = OperationOptions()
         options.audioRedactions = [TimeRange(start: 0.6, end: 0.8)]
-        options.outputDirectory = f.directory // A preview must override an export destination.
+        options.outputDirectory = f.directory
         let preview = try await MediaPreviewEngine.bleepPreview(f.audio, options: options)
         defer { preview.removeTemporaryFiles() }
         XCTAssertTrue(preview.isProxy)

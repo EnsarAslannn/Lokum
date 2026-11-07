@@ -2,7 +2,6 @@ import AppKit
 import AVFAudio
 import Foundation
 
-/// Retains prepared audio players so a wheel selection never creates a sound object.
 @MainActor final class WheelFeedback {
     static let shared = WheelFeedback()
 
@@ -33,7 +32,6 @@ import Foundation
     private var audioError: String?
     private let minimumInterval: TimeInterval = 0.05
 
-    // Injectable effects allow preference/throttle checks without producing physical feedback.
     init(defaults: UserDefaults = .standard,
          clock: @escaping () -> TimeInterval = { ProcessInfo.processInfo.systemUptime },
          playSound: (() -> Bool)? = nil,
@@ -70,7 +68,6 @@ import Foundation
         self.audioError = failure ?? (!pool.isEmpty && !preparation.contains(true) ? "Audio output could not be prepared." : nil)
     }
 
-    /// Call when presenting the wheel to warm the pool before the first hover.
     @discardableResult func prepare() -> Probe {
         for index in players.indices where !prepared[index] {
             prepared[index] = players[index].prepareToPlay()
@@ -109,10 +106,8 @@ import Foundation
         return Attempt(outcome: .requested, soundStarted: started, hapticRequested: true)
     }
 
-    /// A Settings test uses the same preference and rate limit as the wheel.
     @discardableResult func testPreview() -> Attempt { selectionChanged() }
 
-    /// Reports API/preparation state, never whether a speaker or trackpad was perceived.
     func probe() -> Probe {
         Probe(enabled: enabled, poolSize: players.count,
               preparedPlayers: prepared.filter { $0 }.count,
@@ -126,7 +121,6 @@ import Foundation
         return true
     }
 
-    /// The supplied WAV is bundled verbatim, including its short natural decay.
     private static var soundURL: URL? {
         if let url = Bundle.main.url(forResource: "WheelSelection", withExtension: "wav", subdirectory: "Sounds") {
             return url

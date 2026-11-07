@@ -132,7 +132,6 @@ enum FolderAccessPreferences {
         let remaining=grants(defaults:defaults).filter{$0.id != grant.id}
         if let data=try? JSONEncoder().encode(remaining) { defaults.set(data,forKey:key) }
     }
-    /// The parent folder's bookmark covers all of its descendants.
     static func withAccess<T>(to output:URL,defaults:UserDefaults = .standard,_ action:() throws -> T) rethrows -> T {
         let path=output.standardizedFileURL.path
         let folders=grants(defaults:defaults).compactMap(resolved).filter { url in

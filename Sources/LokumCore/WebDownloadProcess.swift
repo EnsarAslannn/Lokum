@@ -1,8 +1,6 @@
 import Foundation
 import Darwin
 
-/// Web extraction runs in its own process group so Cancel also stops ffmpeg.
-/// All arguments are argv entries; no shell or user configuration is involved.
 enum WebDownloadProcess {
     static func run(_ executable:URL,_ arguments:[String],token:CancellationToken,
                     timeout:TimeInterval,progress:ProgressHandler?=nil) throws -> Data {
@@ -52,7 +50,6 @@ enum WebDownloadProcess {
             }
             Thread.sleep(forTimeInterval:0.03)
         }
-        // A child must not keep the pipes or a partial export alive after its parent exits.
         kill(-pid,SIGTERM)
         if group.wait(timeout:.now()+2) == .timedOut { kill(-pid,SIGKILL);group.wait() }
         try token.check()

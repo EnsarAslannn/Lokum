@@ -54,7 +54,6 @@ def apply_configuration(info_path, configuration_path, environ=None):
             match = re.fullmatch(r"/([A-Za-z0-9][A-Za-z0-9-]{0,38})/([A-Za-z0-9_.-]{1,100})/releases/latest/download/appcast\.xml", address.path)
             if address.hostname != "github.com" or address.scheme != "https" or address.query or not match:
                 raise ValueError("GitHubOnly requires the repository's HTTPS latest appcast asset URL")
-            # No unauthenticated checks before the user saves a connection.
             info.pop("SUFeedURL", None)
             info["LokumSuggestedGitHubRepository"] = "/".join(match.groups())
         else:
@@ -75,8 +74,6 @@ def apply_configuration(info_path, configuration_path, environ=None):
             info["NSAppTransportSecurity"] = {"NSAllowsLocalNetworking": True}
         else:
             info.pop("LokumLocalUpdateFeed", None)
-            # The private GitHub adapter binds only 127.0.0.1. Remote requests
-            # still require HTTPS; arbitrary insecure loads remain disallowed.
             info["NSAppTransportSecurity"] = {"NSAllowsLocalNetworking": True}
         print(f"Update feed: {feed}")
     else:

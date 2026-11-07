@@ -1,4 +1,3 @@
-// Same audited Pages bundle as macOS. Deno receives only exact input/output paths.
 const [bundle, mode, input, output] = Deno.args;
 if (!['read', 'write'].includes(mode)) throw new Error('Invalid Pages operation');
 const runtime = new Function((await Deno.readTextFile(bundle)) + ';return LokumPages;')();

@@ -18,7 +18,6 @@ internal static class MetadataEditorChecks
         return values;
     }
 
-    // Catches the original failure: blank optional inputs hide all the file's actual information.
     internal static void Verify(MetadataEditor editor, bool populated)
     {
         void Check(bool condition, string message) { if (!condition) throw new InvalidOperationException(message); }

@@ -173,7 +173,6 @@ final class WheelView:NSView {
                                            maximumWidth:inner*2-16*geometry.scale,scale:geometry.scale)
         WheelLabelLayout.draw(layout)
     }
-    /// Uses the same rendered label geometry; never substitutes a test-only layout.
     func labelAuditIssues(_ index:Int,title:String)->[String] {
         guard let layout=labelLayouts[index] else { return ["Wheel label did not render: "+title] }
         var issues:[String]=[]

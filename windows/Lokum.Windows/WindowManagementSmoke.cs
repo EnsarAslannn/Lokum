@@ -32,8 +32,6 @@ internal static class WindowManagementSmoke
             foreach(var placement in Enum.GetValues<WindowPlacement>())
             {
                 var expected=placement.Frame(area);
-                // Exercise the production retry path: DWM's invisible borders may
-                // still be settling when a newly created HWND first appears.
                 var arrange=manager.ArrangeAsync(handle,placement,area);var until=DateTime.UtcNow.AddSeconds(5);
                 while(!arrange.IsCompleted&&DateTime.UtcNow<until)DesktopInput.Pump(30);
                 check(arrange.IsCompletedSuccessfully,"Native layout did not complete: "+placement);
@@ -65,8 +63,6 @@ internal static class WindowManagementSmoke
             try
             {
                 check(limited!=0,"Constrained window fixture did not appear");
-                // Force the real native minimum, then let the child WPF layout
-                // and DWM invisible resize borders settle before measuring it.
                 _=WindowManagement.RequestFrame(limited,new(80,90,160,420));DesktopInput.Pump(300);
                 var minimum=WindowManagement.Bounds(limited).Width;
                 foreach(var placement in new[]{WindowPlacement.LeftThird,WindowPlacement.MiddleThird,WindowPlacement.RightThird,WindowPlacement.Maximize})
@@ -100,7 +96,6 @@ internal static class WindowManagementSmoke
                     Thread.Sleep(50);if(!manager.WheelReady)continue;var candidate=FindWindow(null,"Lokum Window Management");
                     if(candidate==0||!WindowManagement.Native.IsWindowVisible(candidate))continue;
                     var bounds=WindowManagement.Bounds(candidate);
-                    // HWND creation precedes Show/Position; do not aim at the unpositioned default rectangle.
                     if(Math.Abs(bounds.Width-expectedSize)>2||Math.Abs(bounds.Height-expectedSize)>2)continue;
                     wheel=candidate;frame=bounds;break;
                 }

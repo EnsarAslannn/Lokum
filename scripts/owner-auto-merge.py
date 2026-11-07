@@ -43,7 +43,6 @@ class GitHub:
             headers["Content-Type"] = "application/json"
         request = urllib.request.Request("https://api.github.com" + path, headers=headers,
                                          method=method, data=json.dumps(data).encode() if data is not None else None)
-        # These fixed REST endpoints do not redirect. Never forward the job token.
         class NoRedirect(urllib.request.HTTPRedirectHandler):
             def redirect_request(self, *args, **kwargs):
                 return None
@@ -63,7 +62,6 @@ def merge_ready(api, head):
         if not eligible(candidate, head):
             continue
         number = int(candidate["number"])
-        # Re-read after checks, then use GitHub's SHA guard and branch protection.
         current = api.request(prefix + "/pulls/" + str(number))
         if not eligible(current, head):
             continue
@@ -78,8 +76,6 @@ def merge_ready(api, head):
         if not result.get("merged"):
             raise RuntimeError("GitHub did not confirm a merge")
         print("Automatically merged owner PR #" + str(number) + " as " + result["sha"])
-        # GITHUB_TOKEN merges do not emit normal push workflows. Explicit dispatch
-        # preserves the existing post-merge CI; Pages' legacy build has its own API.
         api.request(prefix + "/dispatches", "POST", {"event_type": "owner-pr-merged",
                     "client_payload": {"pull_request": number, "merge_sha": result["sha"]}})
         api.request(prefix + "/pages/builds", "POST")

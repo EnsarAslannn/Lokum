@@ -14,8 +14,6 @@ for name, value in expected.items():
     if actual.get(name) != value:
         raise SystemExit(f'{name}: Windows and macOS catalogs diverged. Update the shared contract and corresponding engines/tests together.')
 print(f'PASS matching catalogs: {len(actual["conversionMatrix"])} input formats, {len(actual["toolNames"])} tools')
-# Runtime preview/metadata routing must agree too; matching menu catalogs alone
-# would miss aliases such as M4V and AAC.
 models = (root/'Sources/LokumCore/Models.swift').read_text()
 windows = (root/'windows/Lokum.Core/FeatureCatalog.cs').read_text()
 alias_line = source.split('public static func normalizedExtension',1)[1].split('public static func formats',1)[0]

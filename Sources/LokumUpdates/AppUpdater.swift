@@ -2,8 +2,6 @@ import AppKit
 import Combine
 import Sparkle
 
-/// Sparkle owns downloading, signature checks, bundle replacement, and relaunch.
-/// Our delegate adds a quiet in-app reminder and protects work already in progress.
 @MainActor public final class AppUpdater: NSObject, ObservableObject, SPUUpdaterDelegate, @preconcurrency SPUStandardUserDriverDelegate {
     @Published public private(set) var availableVersion: String?
     @Published public private(set) var configurationError: String?
@@ -132,8 +130,6 @@ import Sparkle
         if repository != nil, !controller.updater.sessionInProgress {
             Task { await performGitHubCheck(userInitiated: true) }
         } else {
-            // An existing gentle reminder already owns a verified feed/bridge.
-            // Focus it even offline, so it can be installed or dismissed.
             controller.checkForUpdates(nil)
         }
     }
@@ -149,8 +145,6 @@ import Sparkle
     }
 
     public func feedURLString(for updater: SPUUpdater) -> String? {
-        // Private feeds arrive byte-for-byte through an app-owned loopback adapter.
-        // The GitHub token is never handed to Sparkle or put in a URL.
         if repository != nil { return bridgeFeedURL?.absoluteString }
         return configuration?.feedURL.absoluteString
     }
@@ -170,7 +164,6 @@ import Sparkle
         } else {
             token = nil
         }
-        // Validate before replacing working credentials or persisting the selection.
         try await validateGitHubAccess(selected, token)
         if let token { try await credentials.storeToken(token, for: selected) }
         else { try await credentials.removeToken(for: selected) }
@@ -204,7 +197,6 @@ import Sparkle
         availableVersion = nil
         lastError = nil
         do {
-            // Never retain a URL derived from the disconnected private repository.
             configuration = try UpdateConfiguration(info: bundleInfo)
             if let controller {
                 controller.updater.automaticallyChecksForUpdates = defaults.object(forKey: Preference.previousAutomaticChecks) as? Bool ?? true
@@ -275,7 +267,6 @@ import Sparkle
             stopBridge()
             self.bridge = bridge
             bridgeFeedURL = url
-            // Sparkle alone verifies the signed feed, archive and replacement bundle.
             controller.updater.httpHeaders = nil
             if userInitiated { controller.checkForUpdates(nil) }
             else { controller.updater.checkForUpdatesInBackground() }
@@ -310,7 +301,6 @@ import Sparkle
             request.url = try bridge.archiveURL(for: url)
             request.allHTTPHeaderFields = ["User-Agent": "Lokum updater"]
         } catch {
-            // Fail closed even for Sparkle's resumed/delta download paths.
             request.url = URL(string: "http://127.0.0.1:1/unavailable")!
             request.allHTTPHeaderFields = [:]
             lastError = error.localizedDescription
@@ -318,7 +308,6 @@ import Sparkle
     }
 
     public func updater(_ updater: SPUUpdater, shouldDownloadReleaseNotesForUpdate item: SUAppcastItem) -> Bool {
-        // Private releases use their signed inline description. Remote HTML never receives credentials.
         repository == nil
     }
 
@@ -344,7 +333,6 @@ import Sparkle
     public var supportsGentleScheduledUpdateReminders: Bool { true }
 
     public func standardUserDriverShouldHandleShowingScheduledUpdate(_ update: SUAppcastItem, andInImmediateFocus immediateFocus: Bool) -> Bool {
-        // This menu bar app always surfaces scheduled releases without stealing focus.
         false
     }
 

@@ -11,8 +11,6 @@ using System.Windows.Threading;
 
 namespace Lokum.Windows;
 
-// Exercises the production editor and exporter using private, deterministic WPF fixtures.
-// Mouse completion is called in-process; this does not claim physical mouse/keyboard coverage.
 internal static class ImageRedactionChecks
 {
     internal static void Verify(ToolEditor editor, BitmapSource original, string input, string output)
@@ -38,7 +36,6 @@ internal static class ImageRedactionChecks
         }
         Check(changed > 100 && nonBlack && outside, "Blur must change selected pixels without drawing a black band or changing pixels outside the region.");
         Check(EdgeEnergy(blurred, original.PixelWidth, region) < EdgeEnergy(source, original.PixelWidth, region) * .6, "Redaction must smooth visible detail inside the selection.");
-        // A 24-pixel blur must spread across a broad edge, not merely soften its first pixel.
         var sample = (150 * original.PixelWidth + 315) * 4;
         var spread = Enumerable.Range(0, 3).Sum(c => Math.Abs(source[sample + c] - blurred[sample + c]));
         if (spread < 20) ImageEngine.Save(expected, Path.Combine(output, "blur-strength-failure.png"), "png");

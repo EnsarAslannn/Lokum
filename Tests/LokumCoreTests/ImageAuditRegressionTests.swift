@@ -3,7 +3,6 @@ import CoreGraphics
 @testable import LokumCore
 
 final class ImageAuditRegressionTests: XCTestCase {
-    /// Four distinct quadrants catch a reversed rotation that size checks cannot.
     private func quadrants() throws -> CGImage {
         let width = 80, height = 40
         var pixels = [UInt8](repeating: 255, count: width * height * 4)
@@ -62,7 +61,6 @@ final class ImageAuditRegressionTests: XCTestCase {
         let output = try ImageEngine.editedImage(quadrants(), options: options)
         let center = (Double(output.width) / 2, Double(output.height) / 2)
         let c = sqrt(0.5)
-        // Centers of the four source quadrants after a clockwise screen rotation.
         for (x, y, expected) in [(20.0, 10.0, [255, 0, 0]), (60, 10, [0, 255, 0]),
                                  (20, 30, [0, 0, 255]), (60, 30, [255, 255, 0])] {
             let dx = x - 40, dy = y - 20

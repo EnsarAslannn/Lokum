@@ -126,7 +126,6 @@ public sealed partial class MainWindow:Window
         var changed=LibraryVisible!=visible;
         if(!busy)L10n.SetText(status,"Files stay on your computer.");
         selectedLibraryId=selectedLibraryId??library.Entries.FirstOrDefault()?.Id;home.Visibility=visible?Visibility.Collapsed:Visibility.Visible;libraryPage.Visibility=visible?Visibility.Visible:Visibility.Collapsed;
-        // Collapse the page host too: an empty ScrollViewer still receives mouse input.
         homeScroll.Visibility=home.Visibility;libraryScroll.Visibility=libraryPage.Visibility;
         homeButton.SetResourceReference(Control.BackgroundProperty,visible?"Surface":"Sage");libraryButton.SetResourceReference(Control.BackgroundProperty,visible?"Sage":"Surface");if(visible)RenderLibrary();if(changed&&IsLoaded)Theme.Entrance(visible?libraryPage:home);
     }
@@ -157,7 +156,6 @@ public sealed partial class MainWindow:Window
         if(modifiers==ModifierKeys.Control&&key==Key.F)
         {
             ShowLibrary(true);
-            // A collapsed page must be arranged before its search box can take keyboard focus.
             Dispatcher.BeginInvoke(System.Windows.Threading.DispatcherPriority.Input,new Action(()=>{if(!LibraryVisible||!IsVisible)return;search.Focus();search.SelectAll();}));
             return true;
         }

@@ -8,9 +8,6 @@
     const direct = path.find(node => node.matches("img,video"));
     if (direct) return direct;
     if (path.some(node => node.matches("button,input,textarea,select,[contenteditable=true]"))) return null;
-    // A custom player often puts a transparent overlay over its video. Require
-    // a shared player-sized container so a dialog over an unrelated video is
-    // not mistaken for a click on that video.
     const hits = document.elementsFromPoint(event.clientX, event.clientY);
     for (const video of hits.filter(node => node.matches("video"))) {
       const rect = video.getBoundingClientRect();

@@ -20,8 +20,6 @@ final class MediaMetadataPrivacyAuditTests: XCTestCase {
         return output
     }
 
-    /// Hash demuxed encoded packets, so a copied codec payload is compared
-    /// independently of tags, stream ordering and container timestamps.
     private func payloadHash(_ input: URL, stream: String) throws -> String {
         try ProcessRunner.run(Dependencies.executable("ffmpeg"), [
             "-hide_banner", "-nostdin", "-v", "error", "-i", input.path,

@@ -22,8 +22,6 @@ public sealed class MetadataService(string root)
     }
     public async Task CopyImageTagsAsync(string source,string output,CancellationToken token)
     {
-        // Pixels are already oriented and converted to sRGB. Do not reattach a
-        // stale orientation, source ICC profile, preview or image dimensions.
         await RunToolAsync(["-overwrite_original","-tagsFromFile",ToolPath(source),"-all:all","--ICC_Profile","--Orientation","--ThumbnailImage","--PreviewImage","--JpgFromRaw","--ImageWidth","--ImageHeight","--ExifImageWidth","--ExifImageHeight","-Orientation=1","-ColorSpace=sRGB","--",ToolPath(output)],token);
     }
     public async Task<IReadOnlyList<string>> WriteAsync(IReadOnlyList<string> inputs,string destination,bool removeAll,IReadOnlyDictionary<string,string>? updates=null,IReadOnlyList<string>? removals=null,IProgress<OperationProgress>? progress=null,CancellationToken token=default)
@@ -35,8 +33,6 @@ public sealed class MetadataService(string root)
             token.ThrowIfCancellationRequested();var output=SafePaths.Unique(tx.StagingDirectory,Path.GetFileNameWithoutExtension(input)+" Metadata"+Path.GetExtension(input));
             if(FeatureCatalog.Extension(input)=="pdf"&&removeAll){var fresh=DocumentEngine.Pdf("removeMetadata",[input],tx.StagingDirectory,token:token)[0];File.Move(fresh,output);}else File.Copy(input,output);
             var args=new List<string>{"-overwrite_original","-P"};if(removeAll){args.Add("-all=");if(FeatureCatalog.IsImage(input)||FeatureCatalog.Extension(input)=="gif")args.AddRange(["-tagsfromfile","@","-Orientation","-ICC_Profile"]);}if(removals is not null)args.AddRange(removals.Select(k=>"-"+k+"="));
-            // Import values from owned staging files: newlines and strings such as
-            // '-FileName=...' remain data, never options in the argument protocol.
             if(updates is not null)foreach(var pair in updates)
             {
                 var valueFile=Path.Combine(tx.StagingDirectory,".metadata-value-"+Guid.NewGuid().ToString("N")+".txt");
@@ -51,9 +47,6 @@ public sealed class MetadataService(string root)
 
     private Task<ProcessResult> RunToolAsync(IEnumerable<string> arguments,CancellationToken token)
     {
-        // Windows command-line code pages can corrupt Turkish/Unicode filenames.
-        // UTF-8 argfile input bypasses that conversion. Values travel separately
-        // via -TAG<=file; the transaction removes those private staging files.
         var lines=arguments.Select(argument=>
         {
             if(argument.Any(c=>c is '\0' or '\r' or '\n'))throw new ArgumentException("Metadata arguments must fit on one line.");

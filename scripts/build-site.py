@@ -10,8 +10,6 @@ demo_catalog=dict(catalog)
 for key in ['singleTools','multipleTools']:
  section=source.split('let '+key+':')[1].split('\n    ]')[0]
  demo_catalog[key]={k:re.findall(r'\.(\w+)',v) for k,v in re.findall(r'"(\w+)": \[([^\]]*)\]',section)}
-# UI copy and palette come from the shipping apps, just like the tool matrix.
-# Keep marketing copy independent; the interactive preview follows native UI.
 wheel_titles=dict(re.findall(r'\.(\w+): "([^"]+)"',source.split('let toolNames:')[1].split('\n    ]')[0]))
 models=(R/'Sources/LokumCore/Models.swift').read_text(encoding="utf-8").split('public enum ToolKind:')[1].split('public struct EditRect:')[0]
 editor_titles=dict(re.findall(r'case \.(\w+): return "([^"]+)"',models))

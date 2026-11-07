@@ -1,14 +1,12 @@
 using System.Text.Json;
 namespace Lokum.Core;
 
-/// The checked-in contract is compared with Swift's catalog by the parity check.
 public static class FeatureCatalog
 {
     private sealed record Contract(Dictionary<string,string[]> ConversionMatrix,Dictionary<string,string[]> SingleTools,Dictionary<string,string[]> MultipleTools,Dictionary<string,string> ToolNames);
     private static readonly Contract Data=Load();
     private static Contract Load(){using var stream=typeof(FeatureCatalog).Assembly.GetManifestResourceStream("Lokum.FeatureCatalog.json")!;return JsonSerializer.Deserialize<Contract>(stream,new JsonSerializerOptions{PropertyNameCaseInsensitive=true})!;}
     public static IReadOnlyDictionary<string,string[]> Conversions=>Data.ConversionMatrix;
-    // Windows-only additions stay separate from the shared Swift catalog.
     private static readonly Dictionary<string,string> WindowsToolNames=new(Data.ToolNames){["removeBackground"]="Edit Background",["editImage"]="Edit Image",["redactImage"]="Redact Image",["readQRCode"]="Read QR Code",["trimVideo"]="Cut Video",["convert"]="Convert"};
     public static IReadOnlyDictionary<string,string> ToolNames=>WindowsToolNames;
     public static string Extension(string path)=>Path.GetExtension(path).TrimStart('.').ToLowerInvariant() switch{"jpeg"=>"jpg","tif"=>"tiff","heif"=>"heic","aif"=>"aiff","markdown"=>"md","gzip" or "tgz"=>"gz",var ext=>ext};
@@ -25,8 +23,6 @@ public static class FeatureCatalog
         if(inputs.Count>0&&inputs.All(p=>IsImage(p)||Extension(p)=="pdf"))result.Add("readQRCode");
         if(inputs.Count>0&&inputs.All(p=>IsImage(p)&&!Directory.Exists(p)))
         {
-            // Keep stored legacy action IDs usable, while presenting one workspace
-            // per image task in every catalog consumer (wheel, menu and shortcuts).
             result=result.Where(id=>id!="frameImage").Select(id=>id=="cropImage"?"editImage":id).Distinct().ToList();
             result.Add("removeBackground");
         }

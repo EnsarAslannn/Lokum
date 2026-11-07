@@ -1,6 +1,5 @@
 import AppKit
 @MainActor extension AppState {
-    /// Only the Home window calls this router; editors retain their own native shortcuts.
     func handleHomeKey(_ event:NSEvent,window:NSWindow,pasteboard:NSPasteboard = .general)->Bool {
         let flags=event.modifierFlags.intersection([.command,.control,.option,.shift])
         let editing=(window.firstResponder as? NSTextView)?.isEditable == true
@@ -17,7 +16,6 @@ import AppKit
         }
         if !libraryVisible,flags.isEmpty,[36,76].contains(event.keyCode),!editing,!(window.firstResponder is NSButton),!working,!inputs.isEmpty {onOpenWheel?();return true}
         guard libraryVisible,flags.isEmpty else{return false}
-        // Down from the Library search transfers focus to the matching results.
         if editing,event.keyCode==125 {window.makeFirstResponder(nil);selectedHistoryID=filteredHistory.first?.id;return true}
         guard !editing,!(window.firstResponder is NSButton) else{return false}
         if [125,126].contains(event.keyCode) {navigateLibrary(event.keyCode==125 ? 1:-1);return true}

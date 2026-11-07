@@ -83,8 +83,6 @@ struct JobRecord:Codable,Identifiable {
         var options=options;options.revealInFinder=UserDefaults.standard.bool(forKey:"reveal")
         let request=ConversionRequest(inputs:selected,operation:operation,options:options)
         Task { [self] in
-            // A deferred update may restart the app as soon as working becomes false.
-            // Keep the job active until its outputs and recent history are committed.
             defer { finishJob() }
             do {
                 let result=try await Task.detached(priority:.userInitiated) {
@@ -148,7 +146,6 @@ struct JobRecord:Codable,Identifiable {
             }
         case .terminal:
             let directory=((try? urls[0].resourceValues(forKeys:[.isDirectoryKey]).isDirectory) ?? false) ? urls[0] : urls[0].deletingLastPathComponent()
-            // Terminal's Services integration opens the chosen folder without shell interpolation.
             let preferred=UserDefaults.standard.string(forKey:"terminalApp") ?? "Terminal"
             let app=preferred=="iTerm2" ? NSWorkspace.shared.urlForApplication(withBundleIdentifier:"com.googlecode.iterm2"):URL(fileURLWithPath:"/System/Applications/Utilities/Terminal.app")
             if let app {

@@ -45,8 +45,6 @@ final class MediaAudioCompatibilityTests: XCTestCase {
                     }
                     if format == "wma" { XCTAssertEqual(info.audio?.bitRate, bitrate * 1000) }
                     if format == "opus", sampleRate == 16000 || sampleRate == 8000 {
-                        // Ogg Opus always advertises a 48kHz decoder clock; OpusHead retains
-                        // the original encoder input rate when libopus supports that rate.
                         let data = try Data(contentsOf: output)
                         let header = try XCTUnwrap(data.range(of: Data("OpusHead".utf8)))
                         let offset = header.lowerBound + 12

@@ -1,5 +1,4 @@
 # yaml-language-server: $schema=https://coderabbit.ai/integrations/schema.v2.json
-# Proposal only until the App installation and this draft are explicitly approved.
 language: tr
 early_access: false
 enable_free_tier: true

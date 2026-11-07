@@ -93,8 +93,6 @@ final class ImageOrientationRegressionTests: XCTestCase {
         XCTAssertTrue(orientations.values.allSatisfy { $0 == 1 }, "\(output.pathExtension): \(orientations)", file: file, line: line)
         let imageSource = try XCTUnwrap(CGImageSourceCreateWithURL(output as CFURL, nil))
         let raw = try XCTUnwrap(CGImageSourceCreateImageAtIndex(imageSource, 0, nil))
-        // Raw samples and a display-aware reader must agree. Raw-only reads
-        // miss a correct raster paired with a wrong EXIF orientation.
         try assertAppearance(raw, equals: expected, file: file, line: line)
         try assertAppearance(ImageEngine.load(output), equals: expected, file: file, line: line)
         let fields = try ImageMetadataEngine.fields(output)

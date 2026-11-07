@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-// Check the browser port against the actual native geometry, without running
-// either UI or changing user preferences. swiftc is optional off macOS.
 import assert from 'node:assert/strict';
 import {readFileSync,mkdtempSync,writeFileSync,rmSync} from 'node:fs';
 import {tmpdir} from 'node:os';
@@ -15,7 +13,6 @@ assert.equal(SIZE,320);assert.equal(angle(3,0),180);
 assert.equal(Object.keys(catalog.presentation.wheelTitles).length,27);
 assert.equal(Object.keys(catalog.presentation.editorTitles).length,27);
 for(const title of Object.values(catalog.presentation.wheelTitles))assert.ok(catalog.presentation.translations[title],`Missing native Turkish title: ${title}`);
-// Test usable contrast in the generated demo, not a particular design's hex spelling.
 const luminance=hex=>{
  const rgb=hex.slice(1).match(/../g).map(value=>parseInt(value,16)/255).map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4);
  return .2126*rgb[0]+.7152*rgb[1]+.0722*rgb[2];

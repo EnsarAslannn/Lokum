@@ -3,11 +3,7 @@ import AppKit
 import SwiftUI
 import LokumCore
 
-/// Adversarial geometry cases keep an audit failure meaningful. These checks
-/// exercise the report validator without launching a window or changing state.
 @MainActor enum UIAuditChecks {
-    /// Render the actual shared canvas, including the video overlay path, so
-    /// engine-only export tests cannot hide a translucent selection preview.
     static func redactionPreviews(at output:URL)throws->[String] {
         try FileManager.default.createDirectory(at:output,withIntermediateDirectories:true)
         var checks:[String]=[]
@@ -25,8 +21,6 @@ import LokumCore
                     guard let center=bitmap.colorAt(x:32,y:32)?.usingColorSpace(.deviceRGB),
                           let outside=bitmap.colorAt(x:4,y:4)?.usingColorSpace(.deviceRGB) else{throw UIAuditError("Redaction canvas pixels could not be read")}
                     let actual=[center.redComponent,center.greenComponent,center.blueComponent]
-                    // Compare in the renderer's color space instead of assuming
-                    // a particular machine's color-management transform.
                     let reference=ImageRenderer(content:(active ? color:Color.white)
                         .frame(width:64,height:64).background(Color.white).environment(\.colorScheme,scheme))
                     reference.scale=1

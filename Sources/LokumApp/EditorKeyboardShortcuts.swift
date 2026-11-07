@@ -7,7 +7,6 @@ enum EditorKeyboardCommand: Equatable {
 
     static func decode(_ event: NSEvent) -> Self? {
         let modifiers = event.modifierFlags.intersection([.command, .control, .option, .shift])
-        // Turkish I/ı/İ should invoke the same marked-in shortcut as Latin I/i.
         let key = event.charactersIgnoringModifiers?
             .folding(options: [.caseInsensitive, .diacriticInsensitive], locale: Locale(identifier: "en_US_POSIX"))
             .lowercased().replacingOccurrences(of: "ı", with: "i")
@@ -37,8 +36,6 @@ enum EditorKeyboardCommand: Equatable {
     }
 
     static func preservesControlInput(_ responder: NSResponder?) -> Bool {
-        // Field editors, secure fields, sliders, pop-up controls and focused native
-        // buttons keep their usual text/caret/arrow/Space behavior.
         if let text = responder as? NSTextView, text.isEditable { return true }
         var view = responder as? NSView
         while let current = view {
@@ -55,8 +52,6 @@ enum EditorKeyboardCommand: Equatable {
     }
 }
 
-/// A local monitor belongs to one editor window and is removed with its host view.
-/// It neither installs a global hotkey nor asks for input-monitoring permission.
 struct EditorKeyboardShortcuts: NSViewRepresentable {
     let enabled: Bool
     let onCommand: (EditorKeyboardCommand) -> Bool
@@ -82,7 +77,6 @@ struct EditorKeyboardShortcuts: NSViewRepresentable {
                   let command = EditorKeyboardCommand.decode(event) else { return event }
             if command == .save {
                 if event.isARepeat { return nil }
-                // Commit a numeric/text field before saving, just like clicking Save.
                 guard window.makeFirstResponder(nil) else { return event }
                 DispatchQueue.main.async { [weak self, weak window] in
                     guard let self, self.enabled, let window, self.window === window,

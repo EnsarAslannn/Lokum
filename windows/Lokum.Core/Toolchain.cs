@@ -3,8 +3,6 @@ using System.Security.Cryptography;
 
 namespace Lokum.Core;
 
-/// First-use setup downloads directly from upstream. Lokum does not redistribute
-/// the upstream executable archives or silently import browser credentials.
 public sealed class Toolchain(string directory)
 {
     public string DirectoryPath=>Path.GetFullPath(directory);

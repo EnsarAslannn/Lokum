@@ -13,7 +13,6 @@ public enum ImageEngine {
         if let source = CGImageSourceCreateWithURL(url as CFURL, nil),
            let image = CGImageSourceCreateThumbnailAtIndex(source, 0, [kCGImageSourceCreateThumbnailFromImageAlways:true, kCGImageSourceCreateThumbnailWithTransform:true, kCGImageSourceThumbnailMaxPixelSize:32000] as CFDictionary) { return image }
         if let image = NSImage(contentsOf: url), let cg = image.cgImage(forProposedRect:nil,context:nil,hints:nil) { return cg }
-        // FFmpeg handles additional decoders (including animated inputs' first frame).
         let temp = try OutputFiles.temporaryDirectory(); defer { try? FileManager.default.removeItem(at:temp) }
         let png = temp.appendingPathComponent("decoded.png")
         try ProcessRunner.run(Dependencies.executable("ffmpeg"), ["-v","error","-i",url.path,"-frames:v","1",png.path])
@@ -120,7 +119,6 @@ public enum ImageEngine {
         guard let result=ctx.makeImage() else { throw LokumError.failed("Could not resize image.") }; return result
     }
 
-    /// Renders editor changes without producing a file, for live window previews.
     public static func preview(_ image:CGImage,tool:ToolKind = .editImage,options:OperationOptions) throws -> CGImage {
         switch tool {
         case .editImage: return try edit(image,options:options)
@@ -132,11 +130,7 @@ public enum ImageEngine {
             guard [crop.x,crop.y,crop.width,crop.height].allSatisfy(\.isFinite) else { throw LokumError.invalidInput("Crop coordinates must be finite.") }
             guard crop.x>=0,crop.y>=0,crop.width>=1,crop.height>=1 else { throw LokumError.invalidInput("Crop origins must be nonnegative and dimensions at least 1 × 1 pixel.") }
             let width=Double(image.width),height=Double(image.height)
-            // Validate the requested rectangle before any resize. Subtraction avoids
-            // overflowing the far edge for very large, otherwise finite coordinates.
             guard crop.x<=width,crop.y<=height,crop.width<=width-crop.x,crop.height<=height-crop.y else { throw LokumError.invalidInput("The crop rectangle must fit completely inside the \(image.width) × \(image.height) pixel image.") }
-            // Match the numeric fields' whole-pixel values. Core Graphics otherwise
-            // expands fractional rectangles to integral bounds, adding rows/columns.
             let r=CGRect(x:crop.x.rounded(.down),y:crop.y.rounded(.down),width:crop.width.rounded(.down),height:crop.height.rounded(.down))
             guard let result=image.cropping(to:r) else { throw LokumError.invalidInput("The crop rectangle could not be read from the image.") }
             return try resizeUsingOptions(result,options:options)
@@ -170,7 +164,6 @@ public enum ImageEngine {
         }
         ci=ci.applyingFilter("CIColorControls",parameters:[kCIInputBrightnessKey:options.brightness+a.brightness,kCIInputContrastKey:max(0,options.contrast*a.contrast),kCIInputSaturationKey:max(0,options.saturation*a.saturation)])
         if a.highlights != 0 || a.shadows != 0 || a.whites != 0 || a.blacks != 0 {
-            // Five monotonic luminance anchors let the four tonal ranges vary independently.
             let xs: [Double] = [0,0.25,0.5,0.75,1]
             var ys = xs.map { x in
                 max(0,min(1,x + a.blacks * 0.25 * pow(1-x,4) + a.whites * 0.25 * pow(x,4)
@@ -206,7 +199,6 @@ public enum ImageEngine {
         let rotation=((options.rotation%360)+360)%360
         switch rotation {
         case 0: break
-        // Positive rotation follows the editor's Rotate Right action (clockwise).
         case 90: ci=ci.oriented(.right)
         case 180: ci=ci.oriented(.down)
         case 270: ci=ci.oriented(.left)
@@ -242,8 +234,6 @@ public enum ImageEngine {
         guard let result=ctx.makeImage() else { throw LokumError.failed("Could not annotate image.") };return result
     }
 
-    /// Shared renderer for exports and the in-progress annotation canvas.
-    /// The context uses bottom-left coordinates in source-image pixels.
     public static func drawAnnotations(_ annotations:[ImageAnnotation],in ctx:CGContext,source image:CGImage) throws {
         for item in annotations {
             let rect=item.rect
@@ -333,9 +323,6 @@ public enum ImageEngine {
         }
         guard !regions.isEmpty else { throw LokumError.invalidInput("Select an area to redact, or detect faces or text.") }
         guard settings.blurRadius.isFinite,settings.pixelSize.isFinite else { throw LokumError.invalidInput("Redaction strength must be finite.") }
-        // A batch reuses the first preview's absolute pixel selections. Validate
-        // every region against each image before rendering so a smaller image
-        // cannot be exported unchanged with a successful "Redacted" filename.
         let width=Double(image.width),height=Double(image.height)
         for rect in regions {
             guard [rect.x,rect.y,rect.width,rect.height].allSatisfy(\.isFinite) else { throw LokumError.invalidInput("Redaction coordinates must be finite for the \(image.width) × \(image.height) pixel image.") }
@@ -348,8 +335,6 @@ public enum ImageEngine {
         for rect in regions {
             let pixels=CGRect(x:rect.x,y:rect.y,width:rect.width,height:rect.height).integral
             let target=CGRect(x:pixels.minX,y:CGFloat(image.height)-pixels.maxY,width:pixels.width,height:pixels.height)
-            // Solid redaction replaces the selected pixels; an editor color's
-            // alpha must never blend the original content back into the result.
             if settings.style == .solid { ctx.setFillColor(color(settings.color).copy(alpha:1)!);ctx.fill(target) }
             else if let part=image.cropping(to:pixels) {
                 let original=CIImage(cgImage:part),bounds=original.extent
@@ -514,7 +499,6 @@ public enum ImageEngine {
         for iteration in 0..<24 {
             try token.check();try? FileManager.default.removeItem(at:output)
             try write(image,to:output,quality:quality)
-            // The same URL is replaced on each pass; resourceValues can retain its first size.
             let size=((try FileManager.default.attributesOfItem(atPath:output.path))[.size] as? NSNumber)?.int64Value ?? 0
             if target == nil || size <= target! {
                 if image.width==originalWidth,image.height==originalHeight { try OutputFiles.retainSmallerOriginal(input,output:output,target:target) }
@@ -531,7 +515,6 @@ public enum ImageEngine {
         (try? readMetadata(input)) ?? [:]
     }
 
-    /// Editors must distinguish a complete read from an empty metadata set.
     public static func readMetadata(_ input:URL,token:CancellationToken = .init()) throws -> [String:String] {
         try token.check()
         guard let source=CGImageSourceCreateWithURL(input as CFURL,nil),CGImageSourceCopyPropertiesAtIndex(source,0,nil) != nil else { throw LokumError.invalidInput("This image's metadata could not be read.") }
@@ -547,8 +530,6 @@ public enum ImageEngine {
 
     private static func imageProperties(_ source:CGImageSource,input:URL)->[String:Any] {
         var properties=(CGImageSourceCopyPropertiesAtIndex(source,0,nil) as? [String:Any]) ?? [:]
-        // ImageIO omits IFD0 text when some files lack an orientation tag.
-        // Recover it before displaying, converting, or editing unrelated fields.
         let format=input.pathExtension.lowercased()
         var exif:Data?
         if ["webp","jpg","jpeg","tiff","tif"].contains(format),let data=try? Data(contentsOf:input) {
@@ -563,7 +544,6 @@ public enum ImageEngine {
         return properties
     }
 
-    /// Writes a new file, leaving the source intact. Per-frame GIF timing is preserved.
     public static func editMetadata(_ input:URL,changes:ImageMetadataOptions,options:OperationOptions = .init(),token:CancellationToken = .init()) throws -> URL {
         try ImageMetadataEngine.edit(input,changes:changes,options:options,token:token)
     }

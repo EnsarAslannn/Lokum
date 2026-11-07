@@ -3,7 +3,6 @@ import Foundation
 import CoreGraphics
 #endif
 
-/// Coordinates belong to the usable screen frame, excluding the menu bar and Dock/taskbar.
 public enum WindowPlacement: String, CaseIterable, Sendable, Codable {
     case leftThird, middleThird, rightThird, leftHalf, rightHalf, leftTwoThirds, rightTwoThirds, maximize
 
@@ -45,11 +44,9 @@ public enum WindowPlacement: String, CaseIterable, Sendable, Codable {
     public func frame(in workArea: CGRect, scale: CGFloat = 1, minimumSize: CGSize = .zero) -> CGRect {
         guard workArea.width > 0, workArea.height > 0, workArea.width.isFinite, workArea.height.isFinite,
               workArea.origin.x.isFinite, workArea.origin.y.isFinite else { return .zero }
-        // Fill the exact usable frame without rounding a fractional display edge.
         if self == .maximize { return workArea }
         let pixels = scale.isFinite && scale > 0 ? scale : 1
         let range = horizontalRange
-        // Adjacent regions share the same rounded boundary even at odd display widths.
         let start = (workArea.width * range.lowerBound * pixels).rounded()/pixels
         let end = (workArea.width * range.upperBound * pixels).rounded()/pixels
         let requested=end-start
@@ -64,7 +61,6 @@ public enum WindowPlacement: String, CaseIterable, Sendable, Codable {
     }
 }
 
-/// A mouse drag must move/resize the captured window; pointer travel alone is a file/text drag.
 public struct WindowDragIntent: Sendable {
     public private(set) var cancelled = false
     public init() {}

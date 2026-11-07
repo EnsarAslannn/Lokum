@@ -7,7 +7,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Threading;
 namespace Lokum.Windows;
 
-/// Opt-in STA smoke helper: isolated fixture paths and injected slow shell calls, no user Library.
 internal static class FileArtworkSmoke
 {
     internal static void Run(string root,Action<bool,string> check)
@@ -45,7 +44,6 @@ internal static class FileArtworkSmoke
         check(imageControl.Source is BitmapSource{IsFrozen:true},"Artwork: a missing file still has a semantic extension icon");
         var failed=new Image();FileArtwork.BindForTest(failed,fixture,new FileArtworkCache((_,_)=>Task.FromResult<ImageSource?>(null)));WaitReady(failed,dispatcher);
         check(FileArtwork.GetIsReady(failed)&&!FileArtwork.GetIsLoading(failed)&&failed.Source is not null,"Artwork: a failed provider reaches a terminal ready state with a placeholder");
-        // Force the earlier path to complete last, rather than rely on shell timing or fixed sleeps.
         var oldImage=BitmapSource.Create(1,1,96,96,PixelFormats.Bgra32,null,new byte[]{0,0,255,255},4);oldImage.Freeze();
         var latestImage=BitmapSource.Create(1,1,96,96,PixelFormats.Bgra32,null,new byte[]{0,255,0,255},4);latestImage.Freeze();
         var previous=new TaskCompletionSource<ImageSource?>(TaskCreationOptions.RunContinuationsAsynchronously);

@@ -50,7 +50,7 @@ function Property-Equals($Property, $Value) {
 }
 try {
     $app = Start-Process -FilePath $AppPath -WorkingDirectory ([IO.Path]::GetDirectoryName($AppPath)) -PassThru
-    $appHandle = $app.Handle # Keep the OS handle so a fast exit still exposes its real status.
+    $appHandle = $app.Handle
     $processCondition = Property-Equals ([System.Windows.Automation.AutomationElement]::ProcessIdProperty) $app.Id
     $button = $null
     $deadline = [DateTime]::UtcNow.AddSeconds(60)
@@ -99,14 +99,10 @@ try {
     if ($null -ne $confirm) {
         $confirm.GetCurrentPattern([System.Windows.Automation.InvokePattern]::Pattern).Invoke()
     } elseif ([LokumIsolatedUpdateUi]::Confirm($app.Id)) {
-        # Some hosted desktop providers expose the dialog title but omit its native buttons.
         $confirmationMethod = 'Native visible IDOK button'
     } else { throw ('The update confirmation had no visible OK action. Buttons: '+($observed | ConvertTo-Json -Compress)) }
     if (!$app.WaitForExit(120000)) { throw 'The real update did not close the original app within two minutes.' }
     if ($app.ExitCode -ne 0) { throw 'The original app exited with an update error.' }
-    # An upgrade may legitimately offer the new first-run tools dialog. Close
-    # only this exact app's setup window before the caller tests normal quit.
-    # Never download tools, change preferences or kill the restarted process.
     $setupObserved = $false
     $setupClosed = $false
     $readySince = $null

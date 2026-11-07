@@ -151,7 +151,6 @@ try
 }
 finally { Directory.Delete(root, recursive: true); }
 
-// Optional real FFmpeg checks use explicitly supplied tools, never a global PATH.
 if(Environment.GetEnvironmentVariable("LOKUM_VERIFY_FFMPEG") is {} encoder && Environment.GetEnvironmentVariable("LOKUM_VERIFY_FFPROBE") is {} probe)
 {
     var directory=Path.Combine(Path.GetTempPath(),"Lokum-Media-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(directory);

@@ -17,7 +17,6 @@ public static class AppLocalization
         using var stream=typeof(AppLocalization).Assembly.GetManifestResourceStream("Lokum.Turkish.json")??throw new InvalidDataException("Missing Turkish UI catalog.");
         return JsonSerializer.Deserialize<Dictionary<string,string>>(stream)??throw new InvalidDataException("Invalid Turkish UI catalog.");
     }
-    // Product and key names that keep Latin capitals in Turkish upper case (SHIFT, not SHİFT). Declared before `uppercase`, which uses it.
     public static IReadOnlySet<string> LatinWords{get;}=LoadLatinWords();
     private static HashSet<string> LoadLatinWords()
     {

@@ -1,6 +1,3 @@
-// Clean native Pages adapter over the public MIT cupertino-files package.
-// The package and donor are fetched independently; original app resources are
-// neither build inputs nor runtime dependencies.
 import "./pages-runtime.js";
 import { PagesDocument } from "../Tools/PagesBuild/cupertino/package/dist/pages/document.js";
 import { StylesheetModel } from "../Tools/PagesBuild/cupertino/package/dist/tss/stylesheet.js";
@@ -40,8 +37,6 @@ export function write(json) {
     check();
     const runs = block.runs ?? [{text: block.text ?? ""}];
     const start = document.bodyText.length;
-    // IWA paragraph terminators are LF; soft line breaks inside a paragraph
-    // use Unicode LINE SEPARATOR so the writer keeps the paragraph editable.
     const text = runs.map(run => run.type === "image" ? "" : (run.text ?? "").replaceAll("\n", "\u2028")).join("");
     const style = document.stylesheet.createParagraphStyle({
       name: `Converted paragraph ${++ordinal}`, basedOn: baseId,
@@ -70,8 +65,6 @@ export function write(json) {
     const rows = block.rows ?? [];
     const rowCount = Math.max(1, rows.length), columnCount = Math.max(1,...rows.map(row => row.length));
     if (rowCount * columnCount > 100000) throw new Error("The table is too large.");
-    // A paragraph anchor is necessary for an independently editable inline
-    // table. The licensed seed's unused tables remain unanchored and empty.
     appendParagraph({runs: []});
     const pos = document.bodyText.length - 1;
     const table = document.insertInlineTable(Math.max(0,pos), {withContent: false, name: `Table ${ordinal}`});
@@ -94,7 +87,6 @@ export function write(json) {
   check();
   const data = document.save();
   check();
-  // Reopen as a structural integrity check before handing bytes to the host.
   const reread = PagesDocument.load(data);
   if (!reread.bodyOrUndefined) throw new Error("The generated document has no editable body.");
   return base64(data);
@@ -149,8 +141,6 @@ export function read(data) {
   };
   let blocks = document.bodyOrUndefined ? storageBlocks(document.body) : [];
   for (const box of document.textBoxes()) if (box.storage.text) blocks.push(...storageBlocks(box.storage));
-  // Floating media in real Pages files is retained even though its precise
-  // page wrap/stacking can only be approximated by the reflowed Office export.
   for (const image of images.values()) if (!used.has(String(image.id))) blocks.push({type:"paragraph",runs:[imageRun(image)]});
   if (document.isPageLayout) for (const table of tables.values()) if (!used.has(String(table.infoObject.identifier))) blocks.push(tableBlock(table));
   check();

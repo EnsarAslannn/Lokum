@@ -41,7 +41,6 @@ final class UpdateCredentialStoreTests: XCTestCase {
     }
 
     func testKeychainRoundTripReplacementAndRepositoryIsolation() throws {
-        // Fresh service/account names; never read or delete a user's real item.
         let store = KeychainUpdateCredentialStore(service: "local.lokum.tests.updates.\(UUID().uuidString)")
         let first = try GitHubRepository("example/updater-test")
         let same = try GitHubRepository("EXAMPLE/UPDATER-TEST")

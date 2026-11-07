@@ -2,8 +2,6 @@ import AppKit
 import SwiftUI
 import LokumCore
 
-/// One immutable mouse-down snapshot, measured in the stationary lane. Neither a
-/// resized handle nor SwiftUI's next range value can rebase an ongoing drag.
 struct MediaRangeDrag {
     enum Target:Equatable { case start(Int),end(Int),move(Int),seek,add }
     enum Change:Equatable { case range(Int,TimeRange),seek(Double),addition(TimeRange) }
@@ -17,8 +15,6 @@ struct MediaRangeDrag {
         guard duration.isFinite,duration>0,width.isFinite,width>0,x.isFinite else { return nil }
         let secondsPerPoint=duration/width
         var target:Target=allowsAdding ? .add:.seek,initial:TimeRange?
-        // Match the painted order when ranges overlap. Handles get a forgiving
-        // hit area, and overlapping handles choose the closest edge.
         for (index,range) in ranges.enumerated().reversed() where range.start.isFinite && range.end.isFinite {
             let left=range.start/secondsPerPoint,right=left+max(14,(range.end-range.start)/secondsPerPoint)
             let startCenter=left+6,endCenter=right-6
@@ -53,8 +49,6 @@ struct MediaRangeDrag {
     }
 }
 
-/// The transparent overlay owns the entire mouse sequence. Visual clips have no
-/// competing gestures; AppKit keeps dispatching drags/up even beyond the lane.
 struct MediaRangeInteraction: NSViewRepresentable {
     let duration:Double
     let ranges:[TimeRange]
@@ -92,7 +86,6 @@ struct MediaRangeInteraction: NSViewRepresentable {
         private var endpointElements:[RangeEndpointAccessibilityElement]=[]
         private var observedValues:[String:Double]=[:]
 
-        /// Retain semantic children while values change so VoiceOver keeps its focus.
         func refreshAccessibility() {
             let indices=ranges.indices.filter { isEditableRange($0) }
             let keys=indices.flatMap { index in ["media.range.\(index).start","media.range.\(index).end"] }
@@ -185,8 +178,6 @@ struct MediaRangeInteraction: NSViewRepresentable {
     }
 }
 
-/// Virtual sliders expose the existing range callbacks without creating new
-/// pointer hit targets or sending global input events.
 @MainActor final class RangeEndpointAccessibilityElement:NSAccessibilityElement {
     weak var lane:MediaRangeInteraction.LaneView?
     let index:Int

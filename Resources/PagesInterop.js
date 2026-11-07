@@ -32,14 +32,12 @@ var LokumPages = (() => {
     };
   })();
 
-  // scripts/pages-interop-entry.js
   var pages_interop_entry_exports = {};
   __export(pages_interop_entry_exports, {
     read: () => read,
     write: () => write
   });
 
-  // scripts/pages-runtime.js
   if (typeof globalThis.atob !== "function") globalThis.atob = (value) => _lokumBase64Decode(String(value));
   if (typeof globalThis.btoa !== "function") globalThis.btoa = (value) => _lokumBase64Encode(String(value));
   if (typeof globalThis.TextEncoder !== "function") {
@@ -81,7 +79,6 @@ var LokumPages = (() => {
     };
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/proto/vendored.js
   var ABSENT_ARCHIVES = [
     "TSK.FormatStructArchive.format_type",
     "TST.CellSpecArchive.interaction_type"
@@ -1786,7 +1783,6 @@ var LokumPages = (() => {
     }
   };
 
-  // Tools/PagesBuild/cupertino/package/dist/proto/fields.js
   var absent = new Set(ABSENT_ARCHIVES);
   function messageOf(archive, caller) {
     const message = MESSAGES[archive];
@@ -1838,7 +1834,6 @@ var LokumPages = (() => {
     return Object.freeze({ ...values });
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/bytes.js
   var APPLE_EPOCH_MS = Date.UTC(2001, 0, 1);
   var APPLE_EPOCH_SECONDS = APPLE_EPOCH_MS / 1e3;
   var textEncoder = new TextEncoder();
@@ -1920,7 +1915,6 @@ var LokumPages = (() => {
         x >>= 8n;
       }
     }
-    /** Copy of the written bytes. */
     toBytes() {
       return this.buf.slice(0, this.len);
     }
@@ -1938,7 +1932,6 @@ var LokumPages = (() => {
     return v;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/varint.js
   function readUvarint(buf, pos) {
     let b = buf[pos];
     if (b === void 0)
@@ -1990,7 +1983,6 @@ var LokumPages = (() => {
     w.byte(Number(x));
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/protobuf.js
   var WireType = {
     Varint: 0,
     Fixed64: 1,
@@ -2001,7 +1993,6 @@ var LokumPages = (() => {
   };
   var RawMessage = class _RawMessage {
     fields = [];
-    /** Original encoded bytes; reused verbatim while the message is clean. */
     source;
     dirty = false;
     parent;
@@ -2080,7 +2071,6 @@ var LokumPages = (() => {
       }
       return m;
     }
-    /** Create an empty message (dirty by construction). */
     static create() {
       const m = new _RawMessage();
       m.dirty = true;
@@ -2129,11 +2119,9 @@ var LokumPages = (() => {
       }
       return w.toBytes();
     }
-    /** Serialized length without materializing (cheap when clean). */
     byteLength() {
       return this.toBytes().length;
     }
-    // ---------------------------------------------------------------- getters
     lastField(no) {
       for (let i = this.fields.length - 1; i >= 0; i--) {
         if (this.fields[i].no === no)
@@ -2144,7 +2132,6 @@ var LokumPages = (() => {
     has(no) {
       return this.lastField(no) !== void 0;
     }
-    /** Wire type of the last occurrence of a field, if present. */
     fieldWire(no) {
       return this.lastField(no)?.wire;
     }
@@ -2191,7 +2178,6 @@ var LokumPages = (() => {
       }
       return out;
     }
-    /** Parse (and cache) a length-delimited field as a submessage. */
     getMessage(no) {
       const f = this.lastField(no);
       if (!f)
@@ -2243,10 +2229,6 @@ var LokumPages = (() => {
       const b = f.value;
       return new DataView(b.buffer, b.byteOffset, 8).getFloat64(0, true);
     }
-    /**
-     * Repeated float field, packed (length-delimited run of 4-byte words) or
-     * unpacked (repeated fixed32 keys), or a mix. Returns values in order.
-     */
     getFloats(no) {
       const out = [];
       for (const f of this.fields) {
@@ -2266,12 +2248,6 @@ var LokumPages = (() => {
       }
       return out;
     }
-    /**
-     * Replace all occurrences of a repeated float field, preserving position.
-     *
-     * Written unpacked (one fixed32 key per value), which is the proto2 default
-     * and what Apple emits for e.g. `StrokePatternArchive.pattern`.
-     */
     setFloats(no, values) {
       const idx = this.fields.findIndex((f) => f.no === no);
       this.fields = this.fields.filter((f) => f.no !== no);
@@ -2286,10 +2262,6 @@ var LokumPages = (() => {
         this.fields.push(...inserted);
       this.markDirty();
     }
-    /**
-     * Repeated varint field that may be encoded packed (length-delimited),
-     * unpacked (repeated varint keys), or a mix. Returns values in order.
-     */
     getPackedVarints(no) {
       const out = [];
       for (const f of this.fields) {
@@ -2311,8 +2283,6 @@ var LokumPages = (() => {
       }
       return out;
     }
-    // ---------------------------------------------------------------- setters
-    /** Remove every occurrence of a field. */
     remove(no) {
       const before = this.fields.length;
       this.fields = this.fields.filter((f) => f.no !== no);
@@ -2376,13 +2346,6 @@ var LokumPages = (() => {
       new DataView(b.buffer).setUint32(0, v >>> 0, true);
       this.setScalar(no, WireType.Fixed32, b);
     }
-    /**
-     * Replace all occurrences of a repeated varint field, unpacked.
-     *
-     * The proto2 default, and what Apple emits for the parallel arrays in
-     * e.g. `TST.FilterSetArchive` — `setPackedVarints` writes the other
-     * encoding, which readers accept but which no Apple file uses there.
-     */
     setVarints(no, values) {
       const idx = this.fields.findIndex((f) => f.no === no);
       this.fields = this.fields.filter((f) => f.no !== no);
@@ -2397,14 +2360,12 @@ var LokumPages = (() => {
         this.fields.push(...inserted);
       this.markDirty();
     }
-    /** Write a repeated varint field packed (replacing all occurrences). */
     setPackedVarints(no, values) {
       const w = new ByteWriter(values.length * 2);
       for (const v of values)
         writeUvarint(w, v);
       this.setBytes(no, w.toBytes());
     }
-    /** Replace all occurrences of a repeated message field, preserving position. */
     setMessages(no, msgs) {
       const idx = this.fields.findIndex((f) => f.no === no);
       this.fields = this.fields.filter((f) => f.no !== no);
@@ -2439,7 +2400,6 @@ var LokumPages = (() => {
     }
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsp/schema.js
   var RANGE_LOCATION = 1;
   var RANGE_LENGTH = 2;
   var Point = protoFields("TSP.Point", { X: "x", Y: "y" });
@@ -2500,12 +2460,10 @@ var LokumPages = (() => {
     }
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsd/schema.js
   var TSD_TYPE = {
     IMAGE: 3005,
     MASK: 3006,
     COMMENT_STORAGE: 3056,
-    /** Empty placeholder a drawable's title/caption references point at. */
     STANDIN_CAPTION: 3097
   };
   var Drawable = protoFields("TSD.DrawableArchive", {
@@ -2549,12 +2507,10 @@ var LokumPages = (() => {
     STYLE: "style",
     ORIGINAL_SIZE: "originalSize",
     MASK: "mask",
-    /** 0 in 75 of 83 corpus images; the other values are crop/adjust states. */
     FLAGS: "flags",
     NATURAL_SIZE: "naturalSize",
     DATA: "data",
     ORIGINAL_DATA: "originalData",
-    /** `interpretsUntaggedImageDataAsGeneric` — false in 82 of 83. */
     UNTAGGED_AS_GENERIC: "interpretsUntaggedImageDataAsGeneric"
   });
   var CommentStorage = protoFields("TSD.CommentStorageArchive", { TEXT: "text", CREATION_DATE: "creation_date", AUTHOR: "author", REPLIES: "replies" });
@@ -2573,17 +2529,11 @@ var LokumPages = (() => {
   ]);
   var DRAWABLE_SUPER_DEPTH = /* @__PURE__ */ new Map([
     [3004, 1],
-    // TSD.ShapeArchive
     [3005, 1],
-    // TSD.ImageArchive
     [3006, 1],
-    // TSD.MaskArchive
     [3007, 1],
-    // TSD.MovieArchive
     [3008, 1],
-    // TSD.GroupArchive
     [2011, 2]
-    // TSWP.ShapeInfoArchive → TSD.ShapeArchive → TSD.DrawableArchive
   ]);
   function drawableParent(type, message) {
     const depth = DRAWABLE_SUPER_DEPTH.get(type);
@@ -2600,13 +2550,11 @@ var LokumPages = (() => {
     return refId(node, Drawable.PARENT);
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/keynote/schema.js
   var KN_TYPE = {
     DOCUMENT: 1,
     SHOW: 2,
     UI_STATE: 3,
     SLIDE_NODE: 4,
-    /** Content slides AND masters use this class; id 6 is a legacy slot. */
     SLIDE: 5,
     SLIDE_LEGACY_MASTER: 6,
     PLACEHOLDER: 7,
@@ -2623,9 +2571,7 @@ var LokumPages = (() => {
     UI_STATE: "uiState",
     THEME: "theme",
     SLIDE_TREE: "slideTree",
-    // inline KN.SlideTreeArchive
     SIZE: "size",
-    // TSP.Size — the slide canvas size
     STYLESHEET: "stylesheet",
     SLIDE_NUMBERS_VISIBLE: "slideNumbersVisible",
     LOOP_PRESENTATION: "loop_presentation",
@@ -2651,13 +2597,11 @@ var LokumPages = (() => {
   var Slide = protoFields("KN.SlideArchive", {
     STYLE: "style",
     BUILDS: "builds",
-    /** Inline KN.TransitionArchive — always present, even for "no transition". */
     TRANSITION: "transition",
     TITLE_PLACEHOLDER: "titlePlaceholder",
     BODY_PLACEHOLDER: "bodyPlaceholder",
     OWNED_DRAWABLES: "owned_drawables",
     NAME: "name",
-    /** Reference to the master slide this one is based on (absent on masters). */
     TEMPLATE_SLIDE: "template_slide",
     IN_DOCUMENT: "inDocument",
     SLIDE_NUMBER_PLACEHOLDER: "slideNumberPlaceholder",
@@ -2665,7 +2609,6 @@ var LokumPages = (() => {
     OBJECT_PLACEHOLDER: "objectPlaceholder",
     DRAWABLES_Z_ORDER: "drawables_z_order",
     BUILD_CHUNKS: "buildChunks",
-    /** TSD.GuideStorageArchive — alignment guides; carried by 148 corpus slides. */
     GUIDE_STORAGE: "userDefinedGuideStorage"
   });
   var Note = protoFields("KN.NoteArchive", { CONTAINED_STORAGE: "containedStorage" });
@@ -2752,7 +2695,6 @@ var LokumPages = (() => {
     return refId(node, Drawable.PARENT);
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/crc32.js
   var TABLE = (() => {
     const t = new Uint32Array(256);
     for (let n = 0; n < 256; n++) {
@@ -2772,7 +2714,6 @@ var LokumPages = (() => {
     return (c ^ 4294967295) >>> 0;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/inflate.js
   var MAXBITS = 15;
   var LENGTH_BASE = [
     3,
@@ -3103,7 +3044,6 @@ var LokumPages = (() => {
     return new Inflator(input, expectedSize).run();
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/zip.js
   var SIG_LOCAL = 67324752;
   var SIG_CENTRAL = 33639248;
   var SIG_EOCD = 101010256;
@@ -3206,7 +3146,6 @@ var LokumPages = (() => {
     find(name) {
       return this.entries.find((e) => e.name === name);
     }
-    /** Extract and (if needed) inflate one entry's bytes. */
     read(entry) {
       const meta = typeof entry === "string" ? this.find(entry) : entry;
       if (!meta)
@@ -3309,7 +3248,6 @@ var LokumPages = (() => {
     throw new RangeError("zip: end-of-central-directory record not found (not a ZIP file?)");
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsp/package.js
   var EncryptedDocumentError = class extends Error {
     constructor() {
       super("document is password-protected (.iwph present); decryption is not supported");
@@ -3317,17 +3255,11 @@ var LokumPages = (() => {
     }
   };
   var IWorkContainer = class _IWorkContainer {
-    /** Outer zip entries in original order (directories included). */
     outer = [];
-    /** Common wrapper-directory prefix, e.g. "Project Proposal.pages/" or "". */
     prefix = "";
-    /** Outer entry name of the nested Index.zip, when layout 2 applies. */
     indexZipEntry;
-    /** Inner zip entries in original order (layout 2 only). */
     inner = [];
-    /** Canonical IWA path (e.g. "Index/Document.iwa") → file bytes. */
     iwaFiles = /* @__PURE__ */ new Map();
-    /** How this package was laid out on disk (preserved on save). */
     get layout() {
       if (this.indexZipEntry !== void 0)
         return "nested-index-zip";
@@ -3397,7 +3329,6 @@ var LokumPages = (() => {
       }
       return c;
     }
-    /** Non-IWA entries (canonical relative name → bytes), e.g. Metadata/, Data/. */
     otherFiles() {
       const out = /* @__PURE__ */ new Map();
       for (const e of this.outer) {
@@ -3409,13 +3340,6 @@ var LokumPages = (() => {
       }
       return out;
     }
-    /**
-     * Rebuild the package, substituting the given IWA files (canonical name →
-     * new bytes). Preserves layout, entry order, timestamps and all non-IWA
-     * bytes; appends entries for canonical names that did not previously
-     * exist. `additions` adds arbitrary non-IWA files (e.g. Data/ media) at
-     * the package level, next to the existing Metadata/Data entries.
-     */
     toBytes(replacements, additions = /* @__PURE__ */ new Map()) {
       const remaining = new Map(replacements);
       if (this.indexZipEntry !== void 0) {
@@ -3523,7 +3447,6 @@ var LokumPages = (() => {
     return n;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/snappy.js
   function snappyUncompressBlock(input) {
     const { value: outLen, next } = readUvarintNumber(input, 0);
     const out = new Uint8Array(outLen);
@@ -3795,9 +3718,9 @@ var LokumPages = (() => {
   }
   var IWA_CHUNK_SIZE = 65536;
   function isLzfseMagic(data) {
-    return data.length >= 4 && data[0] === 98 && // 'b'
-    data[1] === 118 && // 'v'
-    data[2] === 120 && // 'x'
+    return data.length >= 4 && data[0] === 98 &&
+    data[1] === 118 &&
+    data[2] === 120 &&
     (data[3] === 110 || data[3] === 49 || data[3] === 50 || data[3] === 45 || data[3] === 36);
   }
   function detectIwaFraming(data) {
@@ -3856,7 +3779,6 @@ var LokumPages = (() => {
     return w.toBytes();
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsp/iwa.js
   var ARCHIVE_IDENTIFIER = 1;
   var ARCHIVE_MESSAGE_INFOS = 2;
   var ARCHIVE_SHOULD_MERGE = 3;
@@ -3867,10 +3789,8 @@ var LokumPages = (() => {
   var MSG_DATA_REFERENCES = 6;
   var MSG_DIFF_MERGE_VERSION = 8;
   var IwaObject = class _IwaObject {
-    /** Lazily parsed root message of the first payload. */
     parsed;
     archiveInfo;
-    /** Raw payload bytes, one per MessageInfo (usually exactly one). */
     payloads;
     constructor(archiveInfo, payloads) {
       this.archiveInfo = archiveInfo;
@@ -3885,53 +3805,27 @@ var LokumPages = (() => {
     get messageInfos() {
       return this.archiveInfo.getMessages(ARCHIVE_MESSAGE_INFOS);
     }
-    /** Message type of the primary payload (0 if absent). */
     get type() {
       const info = this.messageInfos[0];
       return info ? info.getUint(MSG_TYPE) ?? 0 : 0;
     }
-    /** Parse the primary payload as a protobuf message (cached; edits track dirty). */
     get message() {
       if (!this.parsed) {
         this.parsed = RawMessage.parse(this.payloads[0] ?? new Uint8Array(0));
       }
       return this.parsed;
     }
-    /**
-     * Number of payloads in this archive. Almost always 1; archives with more
-     * are either multi-message (each payload a full message, with its own
-     * MessageInfo.type) or merge/patch archives (see {@link isPatchArchive}).
-     */
     get payloadCount() {
       return this.payloads.length;
     }
-    /**
-     * True for merge/patch archives: `ArchiveInfo.should_merge` is set, or a
-     * MessageInfo carries `type == 0`, meaning its payload is a diff against
-     * the message named by `base_message_index`.
-     *
-     * Multiple MessageInfos alone do NOT make a patch archive — modern Pages
-     * routinely writes archives holding several complete messages of the same
-     * type (observed on TST.TableStyleNetworkArchive in 14.5 documents).
-     */
     get isPatchArchive() {
       if (this.archiveInfo.getBool(ARCHIVE_SHOULD_MERGE) === true)
         return true;
       return this.messageInfos.some((info) => (info.getUint(MSG_TYPE) ?? 0) === 0);
     }
-    /** Message types of every payload, in order. */
     get payloadTypes() {
       return this.messageInfos.map((info) => info.getUint(MSG_TYPE) ?? 0);
     }
-    /**
-     * Reader versions targeted by this archive's compatibility diffs.
-     *
-     * Apple stores, alongside the current message, one type-0 patch per older
-     * reader version (`MessageInfo.diff_merge_version`), so an older app
-     * opening the document applies the diff matching its own version — the
-     * object-level counterpart of the `styles_for_*` stylesheet snapshots.
-     * Observed on TN.UIStateArchive targeting 11.0 / 10.1 / 10.0.
-     */
     compatibilityPatchVersions() {
       const out = [];
       for (const info of this.messageInfos) {
@@ -3941,18 +3835,9 @@ var LokumPages = (() => {
       }
       return out;
     }
-    /**
-     * True when editing this object's primary payload would leave its
-     * older-reader compatibility diffs stale. This library preserves those
-     * diffs verbatim; it does not recompute them.
-     */
     get hasCompatibilityPatches() {
       return this.compatibilityPatchVersions().length > 0;
     }
-    /**
-     * Parse a secondary payload (index ≥ 1). These are preserved verbatim on
-     * save unless replaced; only the primary payload is edit-tracked.
-     */
     payloadMessage(index) {
       const bytes2 = this.payloads[index];
       if (bytes2 === void 0)
@@ -3964,7 +3849,6 @@ var LokumPages = (() => {
     get isDirty() {
       return (this.parsed?.isDirty ?? false) || this.archiveInfo.isDirty;
     }
-    /** Object identifiers referenced by the primary payload, per MessageInfo. */
     getObjectReferences() {
       const info = this.messageInfos[0];
       return info ? info.getPackedVarints(MSG_OBJECT_REFERENCES) : [];
@@ -3991,13 +3875,11 @@ var LokumPages = (() => {
       else
         info.setPackedVarints(MSG_DATA_REFERENCES, ids);
     }
-    /** Replace the primary payload with a parsed copy of the given bytes. */
     setMessageBytes(bytes2) {
       const parsed = RawMessage.parse(bytes2.slice());
       parsed.markDirty();
       this.parsed = parsed;
     }
-    /** Serialize this object's archive (ArchiveInfo length + info + payloads). */
     serialize() {
       if (this.parsed?.isDirty) {
         const bytes2 = this.parsed.toBytes();
@@ -4013,11 +3895,6 @@ var LokumPages = (() => {
       w.bytes(infoBytes);
       return concatBytes([w.toBytes(), ...this.payloads]);
     }
-    /**
-     * Create a fresh object with a single MessageInfo of the given type.
-     * `versions` defaults to a conservative singleton [1] and should normally be
-     * copied from a sibling object of the same type in the same document.
-     */
     static create(identifier, type, versions = [1]) {
       const info = RawMessage.create();
       info.setVarint(MSG_TYPE, type);
@@ -4030,7 +3907,6 @@ var LokumPages = (() => {
       obj.parsed = RawMessage.create();
       return obj;
     }
-    /** Copy the packed version list from another MessageInfo (compatibility). */
     copyVersionsFrom(other) {
       const mine = this.messageInfos[0];
       const theirs = other.messageInfos[0];
@@ -4073,7 +3949,6 @@ var LokumPages = (() => {
     return encodeIwaData(serializeIwaStream(objects));
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/sha1.js
   function sha1(data) {
     const ml = data.length;
     const withOne = ml + 1;
@@ -4141,7 +4016,6 @@ var LokumPages = (() => {
     return out;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsp/registry.js
   var SHARED_TYPES = {
     14: "TSWP.TextualAttachmentArchive",
     200: "TSK.DocumentArchive",
@@ -4919,7 +4793,6 @@ var LokumPages = (() => {
     return EXTENSIONS.shared.get(type) ?? SHARED_TYPES[type];
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsp/store.js
   var PKG_LAST_OBJECT_IDENTIFIER = 1;
   var PKG_COMPONENTS = 3;
   var PKG_DATAS = 4;
@@ -4937,24 +4810,12 @@ var LokumPages = (() => {
   var PACKAGE_METADATA_ID = 2n;
   var PACKAGE_METADATA_TYPE = 11006;
   var Component = class {
-    /** Canonical zip path, e.g. "Index/Document.iwa". */
     name;
-    /** TSP locator form, e.g. "Document" or "Tables/DataList-5". */
     locator;
     objects;
     byId = /* @__PURE__ */ new Map();
     originalBytes;
-    /** Set when objects were added/removed (not just edited in place). */
     structurallyDirty = false;
-    /**
-     * Set when the component could not be decoded — its bytes are still
-     * preserved verbatim on save, but its objects are not available.
-     *
-     * Collaboration-mode documents are the real case: they write
-     * `Index/OperationStorage.iwa` with Apple LZFSE framing while every other
-     * component uses normal Snappy chunking. Failing the whole document over
-     * one such component would lose the many that parse fine.
-     */
     framing;
     loadError;
     constructor(name, bytes2) {
@@ -4974,7 +4835,6 @@ var LokumPages = (() => {
       for (const o of this.objects)
         this.byId.set(o.identifier, o);
     }
-    /** True when this component's objects could not be read. */
     get isOpaque() {
       return this.loadError !== void 0;
     }
@@ -4998,13 +4858,6 @@ var LokumPages = (() => {
     refExtractors;
     containerParentOf;
     nextId;
-    /**
-     * Objects this library created, as opposed to ones Apple wrote.
-     *
-     * Their reference declarations are ours to get right: nothing in the file
-     * vouches for them, and their archive types generally have no registered
-     * extractor. See {@link save}.
-     */
     created = /* @__PURE__ */ new Set();
     constructor(container, options = {}) {
       this.container = container;
@@ -5028,14 +4881,12 @@ var LokumPages = (() => {
     componentByLocator(locator) {
       return this.components.find((c) => c.locator === locator);
     }
-    /** Resolve a TSP.Reference message (field 1 = identifier) to its object. */
     resolve(ref) {
       if (ref === void 0)
         return void 0;
       const id = typeof ref === "bigint" ? ref : ref.getVarint(1);
       return id === void 0 ? void 0 : this.object(id);
     }
-    /** Registry name of an object's archive type, resolved for this app. */
     typeNameOf(object) {
       return typeName(object.type, this.app);
     }
@@ -5062,12 +4913,6 @@ var LokumPages = (() => {
         return byType;
       throw new RangeError("TSP.PackageMetadata (object 2) not found \u2014 Index/Metadata.iwa missing?");
     }
-    /**
-     * Allocate a fresh object identifier. First allocation rounds the current
-     * maximum up to the next multiple of 1,000,000 (numbers-parser convention,
-     * keeping new IDs clear of Apple's); every allocation is recorded in
-     * PackageMetadata.last_object_identifier.
-     */
     allocateId() {
       if (this.nextId === void 0) {
         let max = 0n;
@@ -5084,12 +4929,6 @@ var LokumPages = (() => {
       this.packageMetadata.message.setVarint(PKG_LAST_OBJECT_IDENTIFIER, id);
       return id;
     }
-    /**
-     * Create a new object of the given type inside a component. The MessageInfo
-     * version list is copied from an existing sibling of the same type when one
-     * exists (falling back to [1, 0, 5], which is what numbers-parser writes).
-     * `cloneFrom` seeds the payload with a copy of another object's message.
-     */
     createObject(type, component, options = {}) {
       const id = this.allocateId();
       const obj = IwaObject.create(id, type, [1, 0, 5]);
@@ -5105,32 +4944,6 @@ var LokumPages = (() => {
       this.created.add(id);
       return obj;
     }
-    /**
-     * Drop objects nothing can reach, and report how many went.
-     *
-     * Deleting a sheet or a slide unlinks its archives but does not remove
-     * them: they sit in their component, unreferenced, and go on being
-     * written out. A document blanked from a real one is mostly this — a
-     * template with eleven tables becomes one table and ten ghosts.
-     *
-     * ## Why the scan is deliberately crude
-     *
-     * Reachability is computed by walking **every submessage of every
-     * object** and treating anything shaped like a `TSP.Reference` — a
-     * message whose only field is varint 1 — as a pointer, if that value
-     * names an object. No schema is consulted.
-     *
-     * That over-approximates: a field that happens to hold an integer equal
-     * to some object's id keeps that object alive for no reason. This is the
-     * safe direction. The alternative, walking only the references this
-     * library knows how to extract, would silently drop whatever an
-     * unmodelled archive points at — and a document that loses an object it
-     * needed is unrecoverable, while one that keeps a few too many is merely
-     * larger than it could be.
-     *
-     * Objects in components that failed to decode are never touched, and
-     * neither are the roots.
-     */
     prune(roots) {
       const reachable = /* @__PURE__ */ new Set();
       const queue = [];
@@ -5170,15 +4983,7 @@ var LokumPages = (() => {
       }
       return removed;
     }
-    // ------------------------------------------------------------- Data/ files
-    /** Files to add to the package on save (e.g. "Data/photo.png"). */
     pendingFiles = /* @__PURE__ */ new Map();
-    /**
-     * Register media bytes as a Data/ file: dedupes by SHA-1 digest against
-     * existing DataInfos, allocates a data-space identifier, appends the
-     * DataInfo to PackageMetadata and schedules the file for writing.
-     * Returns the data identifier and stored file name.
-     */
     addDataFile(data, preferredFileName) {
       const digest = sha1(data);
       const pkg = this.packageMetadata.message;
@@ -5220,7 +5025,6 @@ var LokumPages = (() => {
       this.pendingFiles.set(`Data/${fileName}`, data);
       return { dataId, fileName };
     }
-    /** ComponentInfo message inside PackageMetadata for a component, if any. */
     componentInfo(component) {
       const pkg = this.packageMetadata.message;
       const infos = pkg.getMessages(PKG_COMPONENTS);
@@ -5235,10 +5039,6 @@ var LokumPages = (() => {
       }
       return void 0;
     }
-    /**
-     * Ensure `fromComponent`'s ComponentInfo lists an external reference to
-     * object `toId` living in `toComponent`. No-op when already recorded.
-     */
     ensureExternalReference(fromComponent, toComponent, toId) {
       const fromInfo = this.componentInfo(fromComponent);
       const toInfo = this.componentInfo(toComponent);
@@ -5257,7 +5057,6 @@ var LokumPages = (() => {
       entry.setVarint(EXTREF_OBJECT_IDENTIFIER, toId);
       fromInfo.addMessage(COMPONENT_EXTERNAL_REFERENCES, entry);
     }
-    /** File name registered for a Data/ identifier, from PackageMetadata.datas. */
     dataFileName(dataId) {
       for (const info of this.packageMetadata.message.getMessages(PKG_DATAS)) {
         if (info.getVarint(DATA_IDENTIFIER) === dataId) {
@@ -5266,13 +5065,6 @@ var LokumPages = (() => {
       }
       return void 0;
     }
-    /**
-     * Objects edited in this session that carry older-reader compatibility
-     * diffs (see IwaObject.compatibilityPatchVersions). The diffs are
-     * preserved verbatim but NOT recomputed, so an older app opening the
-     * saved document would apply a stale diff for those objects. Empty in
-     * practice unless you edit UI-state objects.
-     */
     staleCompatibilityPatches() {
       const out = [];
       for (const { obj } of this.allObjects()) {
@@ -5282,19 +5074,6 @@ var LokumPages = (() => {
       }
       return out;
     }
-    /**
-     * Objects declaring a reference to `id`, per `MessageInfo.object_references`.
-     *
-     * The cheap, accurate way to ask "is this archive shared?" — Apple keeps
-     * the declarations current, so a style used by ten charts is named by ten
-     * objects. Answering by scanning payloads instead would mean parsing every
-     * archive in the document.
-     *
-     * Only as good as the declarations: an object whose references this
-     * library has not recomputed reports what it reported when Apple wrote it.
-     * For deciding whether to copy-on-write, that errs toward copying, which
-     * is the safe direction.
-     */
     referrers(id) {
       const out = [];
       for (const { obj } of this.allObjects()) {
@@ -5303,23 +5082,6 @@ var LokumPages = (() => {
       }
       return out;
     }
-    /**
-     * Note that `referrer` now points at `newId` where it pointed at `oldId`.
-     *
-     * Used after copy-on-write: the payload has been repointed, and the
-     * bookkeeping has to follow. Doing it here rather than through a
-     * {@link ReferenceExtractor} is deliberate — an extractor replaces the
-     * *whole* declared list, so writing one for a type as broad as
-     * `TSCH.ChartDrawableArchive` would silently drop every reference it
-     * failed to enumerate. This changes exactly the one that moved.
-     *
-     * `oldId` is dropped only when the payload no longer mentions it: one
-     * archive can be pointed at from several slots, and a shared style being
-     * privatised for series 2 may still be in use by series 4. The membership
-     * test over-approximates, so the failure mode is keeping a declaration a
-     * little too long — harmless, since the object still exists — rather than
-     * dropping a live one.
-     */
     retargetReference(referrer, oldId, newId) {
       const declared = new Set(referrer.getObjectReferences());
       declared.add(newId);
@@ -5331,16 +5093,6 @@ var LokumPages = (() => {
       if (from && to && from !== to)
         this.ensureExternalReference(from, to, newId);
     }
-    /**
-     * Declare that `referrer` now points at `id`, adding the cross-component
-     * bookkeeping if the two live apart.
-     *
-     * {@link retargetReference} covers "this reference moved"; this covers
-     * "there is one more of them", which is what adding an entry to a list
-     * inside an existing archive needs. Both matter for the same reason: an
-     * undeclared reference into another component is how an app decides a
-     * document is damaged.
-     */
     declareReference(referrer, id) {
       const declared = new Set(referrer.getObjectReferences());
       if (!declared.has(id)) {
@@ -5352,17 +5104,6 @@ var LokumPages = (() => {
       if (from && to && from !== to)
         this.ensureExternalReference(from, to, id);
     }
-    /**
-     * The references an object holds *right now*, computed from its message
-     * rather than read from the declarations, which refresh only at save.
-     *
-     * The clone walk needs this: selecting from stale declarations made a
-     * copy of a just-inserted drawable share every owned child the original
-     * had — its title and caption stand-ins, and its mask had it been
-     * cropped — because none of them was declared yet. For an Apple-written
-     * object with no extractor the declarations *are* the truth, exactly as
-     * at save.
-     */
     currentReferencesOf(obj) {
       const extractor = this.refExtractors.get(obj.type);
       if (extractor)
@@ -5373,10 +5114,6 @@ var LokumPages = (() => {
       }
       return obj.getObjectReferences();
     }
-    /**
-     * Serialize the document. Recomputes reference bookkeeping for dirty
-     * objects, then rebuilds only the components that changed.
-     */
     save() {
       for (const component of this.components) {
         for (const obj of component.objects) {
@@ -5446,7 +5183,6 @@ var LokumPages = (() => {
     return out;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/plist.js
   function parseBinaryPlist(data) {
     if (data.length < 40 || utf8Decode(data.subarray(0, 7)) !== "bplist0") {
       throw new RangeError("not a binary plist");
@@ -5568,7 +5304,6 @@ var LokumPages = (() => {
     return v;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsp/version.js
   var IWorkVersion = class _IWorkVersion {
     parts;
     constructor(parts) {
@@ -5588,7 +5323,6 @@ var LokumPages = (() => {
     get major() {
       return this.parts[0] ?? 0;
     }
-    /** Negative when this < other, 0 when equal, positive when this > other. */
     compare(other) {
       const len = Math.max(this.parts.length, other.parts.length);
       for (let i = 0; i < len; i++) {
@@ -5611,8 +5345,6 @@ var LokumPages = (() => {
     iwork19: {
       era: "iwork19",
       label: "iWork '18\u2013'19",
-      // The pre-jump sequence ran 1.x → 2.x → 3.x → 4.x before the 2020
-      // renumbering; both 3.x and 4.x land in this era.
       apps: "Pages 7.x\u20138.x, format 3.x\u20134.x (2017\u20132019)"
     },
     modern: {
@@ -5623,9 +5355,6 @@ var LokumPages = (() => {
     current: {
       era: "current",
       label: "iWork 26.x",
-      // The marketing version jumped to 26 while internal builds continued
-      // from 15.x, so the build string does NOT match the format version:
-      // build M15.1 writes 26.0.0; builds M15.2/M15.2.1 write 26.1.0.
       apps: "the 2025/2026 year-versioned releases (internal builds M15.x)"
     },
     future: { era: "future", label: "newer than known", apps: "released after this library's last survey" }
@@ -5778,8 +5507,6 @@ var LokumPages = (() => {
       writeVersion: inputs.writeVersion,
       appBuilds: inputs.appBuilds,
       probe,
-      // Round-tripping depends only on faithful byte preservation, which the
-      // RawMessage/container layers guarantee regardless of era or unknowns.
       canRoundTrip: probe.unparseableObjectCount === 0,
       unsupportedFeatures,
       warnings
@@ -5791,7 +5518,6 @@ var LokumPages = (() => {
     return `${report.app} document, format ${version} (${report.eraLabel}${build ? `, saved by ${build}` : ""}), ${report.probe.containerLayout} layout; ` + (report.unsupportedFeatures.length === 0 ? "fully supported" : `${report.unsupportedFeatures.length} unsupported feature(s)`) + (report.warnings.length > 0 ? `, ${report.warnings.length} warning(s)` : "");
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tswp/schema.js
   var TSWP_TYPE = {
     STORAGE: 2001,
     DRAWABLE_ATTACHMENT: 2003,
@@ -5895,9 +5621,7 @@ var LokumPages = (() => {
     SUPER: "super",
     OVERRIDE_COUNT: "override_count",
     CHAR_PROPERTIES: "char_properties",
-    // ParagraphStyleArchive + CharacterStyleArchive
     PARA_PROPERTIES: "para_properties"
-    // ParagraphStyleArchive only
   });
   var CharProps = protoFields("TSWP.CharacterStylePropertiesArchive", {
     BOLD: "bold",
@@ -5906,15 +5630,6 @@ var LokumPages = (() => {
     FONT_NAME_NULL: "font_name_null",
     FONT_NAME: "font_name",
     FONT_COLOR_NULL: "font_color_null",
-    /**
-     * `tsd_fill` — where modern Pages actually reads text colour from.
-     *
-     * `font_color` (7) alone is not enough. A character style carrying only
-     * field 7 renders in the inherited colour: bold applies, red does not,
-     * and nothing about the file is malformed. Every colour-carrying style
-     * written by a recent Pages — including the newest writer in the corpus
-     * — carries both, the fill holding a plain `{ color }`.
-     */
     TSD_FILL: "tsd_fill",
     TSD_FILL_NULL: "tsd_fill_null",
     FONT_COLOR: "font_color",
@@ -6048,16 +5763,11 @@ var LokumPages = (() => {
   var LineSpacing = protoFields("TSWP.LineSpacingArchive", { MODE: "mode", AMOUNT: "amount" });
   var ListStyleFields = protoFields("TSWP.ListStyleArchive", {
     LABEL_TYPES: "label_types",
-    // repeated LabelType: 0 none, 1 image, 2 string, 3 number
     TEXT_INDENTS: "text_indents",
-    // repeated float
     INDENTS: "indents",
-    // repeated float
     GEOMETRIES: "geometries",
     NUMBER_TYPES: "number_types",
-    // repeated NumberType: 0 = "1." decimal…
     STRINGS: "strings"
-    // repeated string (bullet characters)
   });
   var ListLabelType = protoEnum("TSWP.ListStyleArchive.LabelType", { NONE: "kNone", IMAGE: "kImage", STRING: "kString", NUMBER: "kNumber" });
   var SmartField = protoFields("TSWP.SmartFieldArchive", { UUID_STRING: "text_attribute_uuid_string" });
@@ -6117,7 +5827,6 @@ var LokumPages = (() => {
     [TSWP_TYPE.HYPERLINK_FIELD, () => []]
   ]);
 
-  // Tools/PagesBuild/cupertino/package/dist/tss/schema.js
   var TSS_TYPE = {
     STYLESHEET: 401,
     THEME: 402
@@ -6136,7 +5845,6 @@ var LokumPages = (() => {
     IS_LOCKED: "is_locked",
     PARENT_TO_CHILDREN_STYLE_MAP: "parent_to_children_style_map",
     CAN_CULL_STYLES: "can_cull_styles",
-    // styles_for_10_0 .. styles_for_14_4 compatibility snapshots.
     VERSIONED_FIRST: "styles_for_10_0",
     VERSIONED_LAST: "styles_for_14_4"
   });
@@ -6173,14 +5881,12 @@ var LokumPages = (() => {
     [TSS_TYPE.STYLESHEET, stylesheetExtractor]
   ]);
 
-  // Tools/PagesBuild/cupertino/package/dist/tsa/extractors.js
   var SHARED_REFERENCE_EXTRACTORS = new Map([
     ...TSWP_REFERENCE_EXTRACTORS,
     ...TSS_REFERENCE_EXTRACTORS,
     ...TSD_REFERENCE_EXTRACTORS
   ]);
 
-  // Tools/PagesBuild/cupertino/package/dist/tsd/style.js
   function readColor(message) {
     if (!message)
       return void 0;
@@ -6384,10 +6090,6 @@ var LokumPages = (() => {
     OPACITY: "opacity",
     IS_ENABLED: "is_enabled",
     TYPE: "type",
-    // Per-type sub-archives the app writes when a type's own knobs are
-    // touched: the corpus's contact shadows carry one float at sub-field
-    // 2, and an inspector's curve adjustment writes one at sub-field 1
-    // (negative curves inward).
     DROP_SHADOW: "dropShadow",
     CONTACT_SHADOW: "contactShadow",
     CURVED_SHADOW: "curvedShadow"
@@ -6470,7 +6172,6 @@ var LokumPages = (() => {
     return message;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tss/stylesheet.js
   var StylesheetModel = class _StylesheetModel {
     store;
     object;
@@ -6490,11 +6191,9 @@ var LokumPages = (() => {
         throw new RangeError(`stylesheet ${this.id}: component not found`);
       return c;
     }
-    /** Parent stylesheet (theme stylesheet), if chained. */
     get parentId() {
       return refId(this.msg, StylesheetFields.PARENT);
     }
-    /** All styles registered in the `styles` list, resolved to StyleInfo. */
     styles() {
       const out = [];
       for (const ref of this.msg.getMessages(StylesheetFields.STYLES)) {
@@ -6506,7 +6205,6 @@ var LokumPages = (() => {
       }
       return out;
     }
-    /** identifier → style id entries of `identifier_to_style_map`. */
     identifierMap() {
       const out = /* @__PURE__ */ new Map();
       for (const e of this.msg.getMessages(StylesheetFields.IDENTIFIER_TO_STYLE_MAP)) {
@@ -6517,10 +6215,6 @@ var LokumPages = (() => {
       }
       return out;
     }
-    /**
-     * Find a style by UI name (exact match), optionally filtered by archive
-     * type. Searches this stylesheet, then its parent chain.
-     */
     findByName(name, type) {
       for (const s of this.styles()) {
         if (s.name === name && (type === void 0 || s.type === type))
@@ -6549,10 +6243,6 @@ var LokumPages = (() => {
     characterStyles() {
       return this.styles().filter((s) => s.type === TSWP_TYPE.CHARACTER_STYLE);
     }
-    /**
-     * Create a paragraph style. Returns the new style's object id.
-     * `basedOn` may be a style id or a UI name resolved in this sheet chain.
-     */
     createParagraphStyle(options) {
       const parentId = this.resolveBase(options.basedOn, TSWP_TYPE.PARAGRAPH_STYLE);
       const source = options.copyOf === void 0 ? void 0 : this.store.resolve(this.resolveBase(options.copyOf, TSWP_TYPE.PARAGRAPH_STYLE));
@@ -6573,27 +6263,6 @@ var LokumPages = (() => {
       this.register(obj.identifier, identifier, parentId);
       return obj.identifier;
     }
-    /**
-     * A stable identifier for a style the caller has named.
-     *
-     * Naming a style and having it appear in the app's style list are two
-     * different things, and only the second is what anyone means. Of the 146
-     * paragraph styles in the ladder's base document, 23 carry a
-     * `super.name` and 21 of those also sit in `identifier_to_style_map`,
-     * keyed by a `super.identifier` that matches the map entry exactly. A
-     * style with a name and no identifier renders correctly wherever it is
-     * applied and never appears in the panel — which is precisely what
-     * `createParagraphStyle({ name })` used to produce.
-     *
-     * Apple's identifiers are `<origin>-<n>-paragraphstyle-<Name>`, the
-     * origin naming where the style came from — `text` for the document's
-     * own, `captions`, `chart`. A style this library creates is a document
-     * style, so it takes `text` and the next free index.
-     *
-     * Returns undefined for an unnamed style: an anonymous override is not
-     * supposed to be listed, and giving it an identifier would put it in the
-     * panel as a stray entry.
-     */
     deriveIdentifier(name) {
       if (name === void 0)
         return void 0;
@@ -6606,7 +6275,6 @@ var LokumPages = (() => {
       }
       return `text-${next}-paragraphstyle-${name}`;
     }
-    /** Create a character style (anonymous unless a name/identifier is given). */
     createCharacterStyle(options) {
       const parentId = this.resolveBase(options.basedOn, TSWP_TYPE.CHARACTER_STYLE);
       const obj = this.store.createObject(TSWP_TYPE.CHARACTER_STYLE, this.component);
@@ -6618,13 +6286,6 @@ var LokumPages = (() => {
       this.register(obj.identifier, options.identifier, parentId);
       return obj.identifier;
     }
-    /**
-     * Handle for reading and editing an existing style, by id or UI name.
-     *
-     * Editing a style reaches every run that uses it — which is the point of a
-     * stylesheet, and the difference between "make this heading blue" and
-     * "make all headings blue".
-     */
     style(style, type) {
       const id = typeof style === "bigint" ? style : this.findByName(style, type)?.id;
       if (id === void 0)
@@ -6642,7 +6303,6 @@ var LokumPages = (() => {
         throw new RangeError(`base style not found: ${JSON.stringify(basedOn)}`);
       return found.id;
     }
-    /** Register a style object in this sheet's lists/maps. */
     register(styleId, identifier, parentId) {
       this.msg.addMessage(StylesheetFields.STYLES, makeRef(styleId));
       if (identifier !== void 0) {
@@ -6689,12 +6349,6 @@ var LokumPages = (() => {
     paragraph() {
       return readParagraphProperties(this.object.message.getMessage(StyleArchive.PARA_PROPERTIES));
     }
-    /**
-     * Formatting with inherited values folded in, nearest override winning.
-     *
-     * Cycles in the parent chain are broken defensively — a corrupt document
-     * should not hang a reader.
-     */
     resolved() {
       const chain = [this];
       const seen = /* @__PURE__ */ new Set([this.id]);
@@ -6710,7 +6364,6 @@ var LokumPages = (() => {
       }
       return { character: character2, paragraph };
     }
-    /** Merge character formatting into this style, preserving unmodelled properties. */
     setCharacter(formatting) {
       const m = this.object.message;
       const props = m.getMessage(StyleArchive.CHAR_PROPERTIES) ?? RawMessage.create();
@@ -6719,7 +6372,6 @@ var LokumPages = (() => {
       this.refreshOverrideCount();
       return this;
     }
-    /** Merge paragraph formatting into this style, preserving unmodelled properties. */
     setParagraph(formatting) {
       const m = this.object.message;
       if (this.object.type === TSWP_TYPE.CHARACTER_STYLE) {
@@ -6731,7 +6383,6 @@ var LokumPages = (() => {
       this.refreshOverrideCount();
       return this;
     }
-    /** `override_count` is the number of properties this style sets. */
     refreshOverrideCount() {
       const m = this.object.message;
       const chars = m.getMessage(StyleArchive.CHAR_PROPERTIES)?.fields.length ?? 0;
@@ -7100,12 +6751,10 @@ var LokumPages = (() => {
     return f;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tswp/range.js
   var TextRange = class _TextRange {
     storage;
     start;
     end;
-    /** The storage revision this range's offsets were captured against. */
     revision;
     constructor(storage, start, end) {
       const len = storage.text.length;
@@ -7117,13 +6766,6 @@ var LokumPages = (() => {
       this.end = end;
       this.revision = storage.revision;
     }
-    /**
-     * Captured offsets stay meaningful only while nothing before them moves.
-     * Edits at or after `end` are fine — including the descending-order
-     * idiom over one snapshot — but an edit before this range shifts the
-     * text under it, and using the range then would silently hit the wrong
-     * span. Loud is better.
-     */
     assertFresh() {
       if (!this.storage.offsetsStableSince(this.revision, this.end)) {
         throw new RangeError(`stale TextRange ${this.start}..${this.end}: the storage was edited before this range after it was obtained \u2014 re-obtain offsets (find()/range()/paragraph()), or make multi-span changes through applyEdits(), which needs no ordering discipline`);
@@ -7133,7 +6775,6 @@ var LokumPages = (() => {
       this.assertFresh();
       return this.storage.text.slice(this.start, this.end);
     }
-    /** Replace this range's text; returns the range covering the replacement. */
     replaceWith(text) {
       this.assertFresh();
       this.storage.replaceRange(this.start, this.end, text);
@@ -7143,12 +6784,6 @@ var LokumPages = (() => {
       this.assertFresh();
       this.storage.deleteRange(this.start, this.end);
     }
-    /**
-     * Apply direct character formatting (one anonymous character style over
-     * the range, parented on the style in effect at `start`). Prefer a single
-     * call with all properties over chaining sugar methods — each call
-     * creates one style object.
-     */
     format(formatting) {
       this.assertFresh();
       const sheet = this.storage.sheet();
@@ -7177,7 +6812,6 @@ var LokumPages = (() => {
     color(r, g, b, a = 1) {
       return this.format({ fontColor: { r, g, b, a } });
     }
-    /** Highlight colour drawn behind the glyphs. */
     highlight(color) {
       return this.format({ backgroundColor: color });
     }
@@ -7190,20 +6824,17 @@ var LokumPages = (() => {
     subscript() {
       return this.format({ superscript: ScriptPosition.SUBSCRIPT });
     }
-    /** Apply direct paragraph formatting to every paragraph in this range. */
     formatParagraphs(formatting) {
       for (const p of this.paragraphs())
         p.format(formatting);
       return this;
     }
-    /** Apply a character style by name or id (undefined restores paragraph style). */
     applyCharacterStyle(style) {
       this.assertFresh();
       const id = style === void 0 ? void 0 : this.storage.resolveStyle(style, TSWP_TYPE.CHARACTER_STYLE);
       this.storage.setCharacterStyleRange(this.start, this.end, id);
       return this;
     }
-    /** Apply a paragraph style to every paragraph intersecting this range. */
     applyParagraphStyle(style) {
       this.assertFresh();
       const id = this.storage.resolveStyle(style, TSWP_TYPE.PARAGRAPH_STYLE);
@@ -7211,7 +6842,6 @@ var LokumPages = (() => {
         this.storage.setParagraphStyle(p, id);
       return this;
     }
-    /** Apply a list style (e.g. "Bullet", "Numbered", "None") to intersecting paragraphs. */
     applyListStyle(style) {
       this.assertFresh();
       const id = this.storage.resolveStyle(style, TSWP_TYPE.LIST_STYLE);
@@ -7219,19 +6849,16 @@ var LokumPages = (() => {
         this.storage.setListStyle(p, id);
       return this;
     }
-    /** Make this range a hyperlink. */
     link(url) {
       this.assertFresh();
       this.storage.insertLink(this.start, this.end, url);
       return this;
     }
-    /** Mark this range as template placeholder text (tap to replace). */
     asPlaceholder() {
       this.assertFresh();
       this.storage.defineAsPlaceholder(this.start, this.end);
       return this;
     }
-    /** Remove hyperlinks overlapping this range. */
     unlink() {
       this.assertFresh();
       this.storage.removeLinks(this.start, this.end);
@@ -7273,7 +6900,6 @@ var LokumPages = (() => {
       const p = this.info();
       this.storage.replaceRange(p.start, p.end, value);
     }
-    /** Range covering the paragraph's text (excluding the terminator). */
     range() {
       const p = this.info();
       return new TextRange(this.storage, p.start, p.end);
@@ -7281,20 +6907,10 @@ var LokumPages = (() => {
     get styleId() {
       return this.info().styleId;
     }
-    /**
-     * The named style this paragraph reads as — resolved through the
-     * parent chain, so direct formatting does not hide it. This is the
-     * name a table of contents collects by.
-     */
     get styleName() {
       const id = this.styleId;
       return id !== void 0 ? this.storage.styleNameOf(id) : void 0;
     }
-    /**
-     * True when the paragraph carries direct formatting: its style object
-     * is the anonymous child {@link format} creates, rather than the named
-     * style itself. {@link styleName} still names the style it inherits.
-     */
     get hasDirectFormatting() {
       const id = this.styleId;
       return id !== void 0 && this.storage.ownStyleNameOf(id) === void 0;
@@ -7303,12 +6919,6 @@ var LokumPages = (() => {
       this.storage.setParagraphStyle(this.index, this.storage.resolveStyle(style, TSWP_TYPE.PARAGRAPH_STYLE));
       return this;
     }
-    /**
-     * Apply direct paragraph formatting: create an anonymous paragraph style
-     * parented on the one currently in effect, and assign it to this paragraph
-     * alone. Prefer editing a named style when the change should apply
-     * everywhere that style is used.
-     */
     format(formatting, character2) {
       const sheet = this.storage.sheet();
       if (!sheet)
@@ -7322,11 +6932,9 @@ var LokumPages = (() => {
       this.storage.setParagraphStyle(this.index, sheet.createParagraphStyle(options));
       return this;
     }
-    /** Base writing direction — where "natural" resolves from the text. */
     get direction() {
       return this.storage.paragraphDirection(this.index);
     }
-    /** Flip the paragraph's base direction, as the app's ⇄ control does. */
     setDirection(direction) {
       this.storage.setParagraphDirection(this.index, direction);
       return this;
@@ -7342,7 +6950,6 @@ var LokumPages = (() => {
       this.storage.setListStyle(this.index, this.storage.resolveStyle(style, TSWP_TYPE.LIST_STYLE));
       return this;
     }
-    /** Delete the paragraph including its terminator. */
     delete() {
       const p = this.info();
       const text = this.storage.text;
@@ -7350,7 +6957,6 @@ var LokumPages = (() => {
       const start = p.end >= text.length && p.start > 0 ? p.start - 1 : p.start;
       this.storage.deleteRange(start, end);
     }
-    /** Insert a new paragraph after this one; returns its handle. */
     insertAfter(text, style) {
       if (text.includes("\n"))
         throw new RangeError("paragraph text must not contain \\n");
@@ -7372,7 +6978,6 @@ var LokumPages = (() => {
     }
   };
 
-  // Tools/PagesBuild/cupertino/package/dist/base/uuid.js
   var counter = 0n;
   function randomUuid() {
     const bytes2 = new Uint8Array(16);
@@ -7410,7 +7015,6 @@ var LokumPages = (() => {
     ].join("-");
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tswp/fields.js
   var ATTACHMENT_TYPE = {
     NUMBER: 2043,
     TEXTUAL: 2004
@@ -7484,11 +7088,8 @@ var LokumPages = (() => {
     FULL: "kDateTimeFormatterStyleFull"
   });
   var DateTimeUpdatePlan = protoEnum("TSWP.DateTimeSmartFieldArchive.DateTimeUpdatePlan", {
-    /** Frozen: the text stays as written. */
     NEVER: "kDateTimeUpdatePlanNever",
-    /** Refreshed whenever the app opens or prints the document. */
     AUTO: "kDateTimeUpdatePlanAuto",
-    /** Refreshed once, then frozen. */
     ONCE: "kDateTimeUpdatePlanOnce"
   });
   var BookmarkFieldArchive = protoFields("TSWP.BookmarkFieldArchive", {
@@ -7568,7 +7169,6 @@ var LokumPages = (() => {
     };
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tswp/comments.js
   var COMMENT_TYPE = {
     HIGHLIGHT: 2013,
     COMMENT_STORAGE: 3056,
@@ -7675,7 +7275,6 @@ var LokumPages = (() => {
     };
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tswp/textstorage.js
   var OBJECT_REPLACEMENT_CHARACTER = "\uFFFC";
   var FOOTNOTE_MARK_CHARACTER = "";
   var STORAGE_KIND = protoEnum("TSWP.StorageArchive.KindType", {
@@ -7737,14 +7336,6 @@ var LokumPages = (() => {
     get msg() {
       return this.object.message;
     }
-    /**
-     * The start offset of every edit made to this storage, in order — keyed
-     * by the underlying object, since wrapper instances are created freely.
-     * A captured offset stays meaningful as long as every later edit began
-     * at or after it — nothing under it has moved — which is what lets
-     * {@link TextRange} tell a still-valid range from a stale one and refuse
-     * the stale one loudly instead of editing the wrong span.
-     */
     get editStarts() {
       let starts = EDIT_STARTS.get(this.object);
       if (!starts) {
@@ -7753,11 +7344,9 @@ var LokumPages = (() => {
       }
       return starts;
     }
-    /** Edit count; pair with {@link offsetsStableSince} for staleness checks. */
     get revision() {
       return this.editStarts.length;
     }
-    /** True when every edit made after `revision` began at or after `end`. */
     offsetsStableSince(revision, end) {
       for (let i = revision; i < this.editStarts.length; i++) {
         if (this.editStarts[i] < end)
@@ -7768,18 +7357,9 @@ var LokumPages = (() => {
     get kind() {
       return this.msg.getUint(Storage.KIND) ?? 3;
     }
-    /** Identifier of the TSS.StylesheetArchive governing this storage. */
     get stylesheetId() {
       return refId(this.msg, Storage.STYLE_SHEET);
     }
-    /**
-     * A style of `type` named `name`, from this storage's stylesheet chain.
-     *
-     * Not a general style lookup — `StylesheetModel` is that — but the small
-     * amount of it needed here, without `tswp` having to depend on `tss`. A
-     * new storage has to name a paragraph style and a list style, and the
-     * ones it wants ("Footnote", "None") are already in the document.
-     */
     styleNamed(name, type) {
       const seen = /* @__PURE__ */ new Set();
       for (let sheet = this.stylesheetId; sheet !== void 0 && !seen.has(sheet); ) {
@@ -7805,7 +7385,6 @@ var LokumPages = (() => {
       }
       return parts[0] ?? "";
     }
-    /** UTF-16 offsets where paragraphs begin. Always includes 0 for non-empty text. */
     paragraphStarts(text = this.text) {
       if (text.length === 0)
         return [0];
@@ -7827,18 +7406,9 @@ var LokumPages = (() => {
         return { index: i, start, end, text: text.slice(start, end), styleId: styles[i] };
       });
     }
-    /**
-     * Effective object id per paragraph for a paragraph-aligned object table
-     * (an entry without an object carries the previous value forward).
-     */
     paragraphValues(tableField, starts, _text) {
       return this.effectiveObjectsAt(tableField, starts);
     }
-    /**
-     * Decode an object table into runs. `objectId` undefined covers both "no
-     * attribute" and "continues previous" — for paragraph-aligned tables the
-     * effective value carries forward (see {@link paragraphValues}).
-     */
     objectRuns(tableField, textLength = this.text.length) {
       const table = this.msg.getMessage(tableField);
       if (!table)
@@ -7852,13 +7422,6 @@ var LokumPages = (() => {
       }
       return runs;
     }
-    /**
-     * Effective object ids at many positions in one pass.
-     *
-     * `positions` must be ascending. Doing this per position would rescan the
-     * whole table each time, which is quadratic on long documents (a 500-
-     * paragraph body has 500 entries per paragraph-aligned table).
-     */
     effectiveObjectsAt(tableField, positions) {
       const table = this.msg.getMessage(tableField);
       if (!table)
@@ -7884,21 +7447,9 @@ var LokumPages = (() => {
       }
       return out;
     }
-    /**
-     * The character style ruling `pos`, or `undefined` when no direct
-     * character styling applies there and the paragraph style alone rules —
-     * the normal state of most text. Resolve a name with
-     * {@link styleNameOf}.
-     */
     characterStyleIdAt(pos) {
       return this.effectiveObjectAt(Storage.TABLE_CHAR_STYLE, pos);
     }
-    /**
-     * The formatting in effect at `pos`, with inheritance folded in: the
-     * paragraph style's character bag as the base, the character-style
-     * chain's values on top — id in, effective {@link CharacterFormatting}
-     * out, no schema knowledge needed.
-     */
     characterFormattingAt(pos) {
       const sheet = this.sheet();
       if (!sheet)
@@ -7908,16 +7459,6 @@ var LokumPages = (() => {
       const overlay = resolve(this.characterStyleIdAt(pos));
       return { ...base, ...overlay };
     }
-    /**
-     * Effective object id at a position — the last value set at or before
-     * `pos` in the given attribute table.
-     *
-     * `tableField` is a `Storage.*` field number (e.g.
-     * `Storage.TABLE_CHAR_STYLE`), not a name. `undefined` means no run
-     * entry rules the position: for the character table that is "no direct
-     * character styling here — the paragraph style alone applies", which is
-     * the normal state of most text, not an error.
-     */
     effectiveObjectAt(tableField, pos) {
       if (typeof tableField !== "number" || !Number.isInteger(tableField)) {
         throw new TypeError(`effectiveObjectAt: tableField must be a Storage.* field number (e.g. Storage.TABLE_CHAR_STYLE), got ${typeof tableField}`);
@@ -7938,11 +7479,6 @@ var LokumPages = (() => {
       }
       return value;
     }
-    // ----------------------------------------------------------------- editing
-    /**
-     * Replace [start, end) with `replacement`, fixing up every attribute table.
-     * Offsets are UTF-16 code units (plain JS string indexes).
-     */
     replaceRange(start, end, replacement) {
       const oldText = this.text;
       if (start < 0 || end < start || end > oldText.length) {
@@ -8050,40 +7586,6 @@ var LokumPages = (() => {
       if (changed)
         table.setMessages(ATTR_TABLE_ENTRIES, kept);
     }
-    /**
-     * Rewrite a paragraph-aligned run table.
-     *
-     * **The density rule is per table, not per document.** Measured over the
-     * Pages fixtures, for 2060 paragraphs:
-     *
-     * | table | entries | every paragraph covered |
-     * | --- | ---: | --- |
-     * | `table_para_style` | 2067 | 19 of 19 documents |
-     * | `table_list_style` | 216 | 3 of 19 (all single-paragraph) |
-     * | `table_layout_style` | 20 | 3 of 19 (all single-paragraph) |
-     *
-     * So `table_para_style` is dense — one entry per paragraph, without
-     * exception — while the list and layout tables are sparse, carrying an
-     * entry only where the value changes. An entry whose object reference is
-     * omitted carries the previous value forward, which is why Apple's dense
-     * table still contains entries that look empty.
-     *
-     * A paragraph with no entry at all is what breaks. Appending a line and
-     * leaving it undeclared makes Pages drop the styling for the whole body;
-     * the same document with an explicit entry — what `setParagraphStyle`
-     * writes — renders correctly. That contrast is the evidence.
-     *
-     * One rule for all three tables fails both ways. Writing them all dense
-     * inflates a single-run list table to one entry per paragraph; writing
-     * them all sparse leaves an appended paragraph with no style entry at
-     * all. Each is wrong for two of the three.
-     *
-     * The final empty paragraph of terminator-ending text is a paragraph
-     * like any other — `starts` includes its position (= text length), so
-     * the same loop covers it: dense table always, sparse tables when its
-     * value differs. That is the corpus's exact shape, and the entry is
-     * load-bearing — see replaceRange.
-     */
     writeParagraphTable(tableField, starts, values) {
       const table = this.msg.getMessage(tableField);
       if (!table)
@@ -8106,13 +7608,6 @@ var LokumPages = (() => {
       }
       table.setMessages(ATTR_TABLE_ENTRIES, entries);
     }
-    /**
-     * Restore the phantom-paragraph invariant: a text ending with a
-     * terminator carries a paragraph-style entry at `text.length` for the
-     * empty paragraph the app draws there (31 of 31 corpus body storages;
-     * the entry names no style). Pages refuses a file with the terminator
-     * and no entry. Idempotent; a no-op when the text ends mid-paragraph.
-     */
     ensureTrailingParagraphEntry() {
       const text = this.text;
       if (!text.endsWith("\n") && !text.endsWith(""))
@@ -8133,15 +7628,6 @@ var LokumPages = (() => {
     deleteRange(start, end) {
       this.replaceRange(start, end, "");
     }
-    /**
-     * Apply several non-overlapping edits from one snapshot of the text.
-     *
-     * Every edit's offsets refer to the text as it is *now*: the batch is
-     * sorted descending internally, so no edit shifts another's offsets and
-     * callers need no re-reading discipline between spans. Overlapping
-     * edits are refused before anything is written. An omitted
-     * `replacement` deletes the range.
-     */
     applyEdits(edits) {
       const length = this.text.length;
       const sorted = [...edits].sort((a, b) => b.start - a.start || b.end - a.end);
@@ -8158,11 +7644,9 @@ var LokumPages = (() => {
       for (const e of sorted)
         this.replaceRange(e.start, e.end, e.replacement ?? "");
     }
-    /** Replace the storage's whole text, keeping run structure where possible. */
     setText(text) {
       this.replaceRange(0, this.text.length, text);
     }
-    /** Literal find/replace across the storage. Returns replacement count. */
     replaceAll(find, replace) {
       if (find.length === 0)
         throw new RangeError("replaceAll: empty search string");
@@ -8178,33 +7662,6 @@ var LokumPages = (() => {
       }
       return count;
     }
-    /**
-     * Append a paragraph, preserving the file's trailing-newline convention.
-     * Returns the new paragraph's index.
-     *
-     * The new paragraph states its own list membership rather than
-     * inheriting the previous one's: attribute tables are read as runs, so
-     * one bulleted paragraph would otherwise turn every later append into
-     * a list item — invisibly, because membership lives in the list table
-     * and not in the paragraph style. Apple writes the same statement,
-     * with a list style named "None" (222 of 222 corpus list-table entries
-     * name a style; 82 name that one). Pass a list style to opt in, or
-     * call {@link setListStyle} afterwards.
-     *
-     * Character styling ends at the same seam: a character-style run open
-     * at the end of the text is closed before the new paragraph is
-     * inserted, so a styled last line never bleeds into what is appended
-     * after it. Raw {@link insertText}/{@link replaceRange} keep the
-     * typing model — text inserted inside or at the edge of a run takes
-     * the run's style.
-     *
-     * Writing direction is stated the same way: when the storage has a
-     * bidi table, the new paragraph gets its own pair, copying the
-     * baseline at position 0 — 2594 of the corpus's 2896 bidi-bearing
-     * storages cover every paragraph start, and an open-ended RTL entry
-     * appears only where no paragraph follows it. Without the statement
-     * one flipped paragraph turns every later append RTL.
-     */
     appendParagraph(text, listStyle) {
       if (text.includes("\n"))
         throw new RangeError("appendParagraph: text must not contain \\n");
@@ -8236,44 +7693,16 @@ ${text}`;
       }
       return index;
     }
-    /**
-     * True when the text ends with a paragraph terminator, so the app
-     * draws one more, empty paragraph after the last one
-     * {@link paragraphs} lists.
-     *
-     * Both tail states are the apps' own. Of the corpus's 26 body
-     * storages, 15 end bare — the shape typing leaves, and what a
-     * current Pages saves for a document whose last paragraph was typed,
-     * not returned past — 8 end with a terminator and carry the
-     * paragraph-style entry at `text.length` for the phantom paragraph,
-     * and 3 are empty. A built document that should not show a stray
-     * final line wants the bare shape; {@link normalizeTail} produces
-     * it, keeping every attribute table lawful on the way.
-     */
     get endsWithEmptyParagraph() {
       const text = this.text;
       return text.length > 0 && text.endsWith("\n");
     }
-    /**
-     * Delete a final trailing `\n` terminator so the text ends the way
-     * typed text does — bare, with no empty paragraph drawn after the
-     * last line. The phantom paragraph's table entries go with it and
-     * any character-style run or smart field ending at the old
-     * terminator stays closed exactly where its text ends.
-     *
-     * Idempotent. A no-op on empty text, a bare tail, or a tail ending
-     * with a section, layout or page break — those characters carry
-     * structure this call must not remove, and no corpus storage ends
-     * with one (all 32 terminator-ending tails are U+000A). Returns
-     * whether a terminator was removed.
-     */
     normalizeTail() {
       if (!this.text.endsWith("\n"))
         return false;
       this.deleteRange(this.text.length - 1, this.text.length);
       return true;
     }
-    /** Set (or clear) the paragraph style of one paragraph. */
     setParagraphStyle(paragraphIndex, styleId) {
       const text = this.text;
       const starts = this.paragraphStarts(text);
@@ -8285,16 +7714,6 @@ ${text}`;
       this.ensureTable(Storage.TABLE_PARA_STYLE);
       this.writeParagraphTable(Storage.TABLE_PARA_STYLE, starts, values);
     }
-    /**
-     * Apply (or clear, with undefined) a character-style object over a range.
-     * The previous effective style resumes at `end`.
-     *
-     * A range ending at `text.length` writes no resume entry — no corpus
-     * storage (0 of 2896) carries a character-table entry at `text.length`,
-     * so the run is left open there. {@link appendParagraph} closes it when
-     * it next extends the text, keeping the styled range at exactly
-     * `[start, end)`.
-     */
     setCharacterStyleRange(start, end, styleId) {
       const text = this.text;
       if (!Number.isInteger(start) || !Number.isInteger(end) || start < 0 || end <= start || end > text.length) {
@@ -8321,19 +7740,9 @@ ${text}`;
       kept.sort((a, b) => (a.getUint(ENTRY_CHARACTER_INDEX) ?? 0) - (b.getUint(ENTRY_CHARACTER_INDEX) ?? 0));
       table.setMessages(ATTR_TABLE_ENTRIES, kept);
     }
-    /** Character-style runs (undefined objectId = paragraph style applies). */
     characterStyleRuns() {
       return this.objectRuns(Storage.TABLE_CHAR_STYLE);
     }
-    /**
-     * Adopt a sibling storage's attribute shape: its paragraph style, and
-     * its character-table and language entries when it has them. This is
-     * how text written into one of a page master's always-empty
-     * header/footer storages becomes drawable — the bare default shape
-     * those storages carry is one the app never draws from, while every
-     * rendered corpus header/footer storage states its own paragraph
-     * style with the char-style table or the language table beside it.
-     */
     copyShapeFrom(sibling) {
       const source = sibling.object.message;
       const firstEntryRef = (tableField) => {
@@ -8354,14 +7763,6 @@ ${text}`;
         this.msg.setMessage(Storage.TABLE_LANGUAGE, table);
       }
     }
-    /**
-     * End any character-style run open at `index` by writing an objectless
-     * entry there — the shape that ends runs throughout the corpus (624 of
-     * 2079 character-table entries carry no object; 459 sit directly after
-     * a styled run). Text inserted at or after `index` then falls back to
-     * the paragraph style instead of extending the run. No-op when nothing
-     * is in effect at `index`.
-     */
     closeCharacterRun(index) {
       if (this.effectiveObjectAt(Storage.TABLE_CHAR_STYLE, index) === void 0)
         return;
@@ -8384,14 +7785,11 @@ ${text}`;
       }
       this.msg.setMessage(tableField, table);
     }
-    // -------------------------------------------------------- styles & fluency
-    /** The stylesheet governing this storage, if resolvable. */
     sheet() {
       const id = this.stylesheetId;
       const obj = id !== void 0 ? this.store.object(id) : void 0;
       return obj ? new StylesheetModel(this.store, obj) : void 0;
     }
-    /** Resolve a style given by name (searched in the sheet chain) or id. */
     resolveStyle(style, type) {
       if (typeof style === "bigint")
         return style;
@@ -8401,20 +7799,6 @@ ${text}`;
         throw new RangeError(`style not found: ${JSON.stringify(style)}`);
       return found.id;
     }
-    /**
-     * UI name of a style object — the name the app's style panel shows.
-     *
-     * Direct formatting parents a paragraph on an *anonymous* child of the
-     * named style, so the applied object usually carries no name of its
-     * own: 644 of 2093 corpus paragraphs sit on such a style, and every
-     * one of the 644 has a named ancestor (one fixture's every paragraph
-     * does). The name therefore resolves up the parent chain, which is
-     * what makes a directly formatted heading still read as "Heading" —
-     * and still be collected by a table of contents, which matches on the
-     * named style.
-     *
-     * {@link ownStyleNameOf} answers the literal question instead.
-     */
     styleNameOf(styleId) {
       const sheet = this.sheet();
       const seen = /* @__PURE__ */ new Set();
@@ -8428,23 +7812,15 @@ ${text}`;
       }
       return void 0;
     }
-    /**
-     * The name written on this style object itself — `undefined` for the
-     * anonymous style direct formatting creates. Use it to tell "styled as
-     * Heading" from "styled as Heading, then modified here".
-     */
     ownStyleNameOf(styleId) {
       return this.store.object(styleId)?.message.getMessage(1)?.getString(1);
     }
-    /** A live fluent handle over [start, end). */
     range(start, end) {
       return new TextRange(this, start, end);
     }
-    /** Fluent handle for one paragraph. */
     paragraph(index) {
       return new ParagraphHandle(this, index);
     }
-    /** Find matches as fluent ranges (string = literal; RegExp honored with /g). */
     find(pattern) {
       const text = this.text;
       const out = [];
@@ -8469,8 +7845,6 @@ ${text}`;
       }
       return out;
     }
-    // ------------------------------------------------------------- list styles
-    /** Effective list-style object id of a paragraph. */
     listStyleIdAt(paragraphIndex) {
       const text = this.text;
       const starts = this.paragraphStarts(text);
@@ -8479,11 +7853,9 @@ ${text}`;
         throw new RangeError(`paragraph ${paragraphIndex} out of range`);
       return this.effectiveObjectAt(Storage.TABLE_LIST_STYLE, start);
     }
-    /** Set the list style of a paragraph (see also PagesDocument.setListStyle). */
     setListStyle(paragraphIndex, styleId) {
       this.setParagraphTableValue(Storage.TABLE_LIST_STYLE, paragraphIndex, styleId);
     }
-    /** Set one paragraph's value in any paragraph-aligned object table. */
     setParagraphTableValue(tableField, paragraphIndex, styleId) {
       const text = this.text;
       const starts = this.paragraphStarts(text);
@@ -8495,8 +7867,6 @@ ${text}`;
       this.ensureTable(tableField);
       this.writeParagraphTable(tableField, starts, values);
     }
-    // -------------------------------------------------------------- hyperlinks
-    /** Hyperlink runs in this storage. */
     links() {
       const out = [];
       for (const run of this.objectRuns(Storage.TABLE_SMARTFIELD)) {
@@ -8510,21 +7880,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Make [start, end) a hyperlink. Creates a TSWP.HyperlinkFieldArchive in
-     * this storage's component and spans it in the smart-field table.
-     *
-     * The link also gets the document's **Link character style** — identifier
-     * `character-style-hyperlink`, name "Link", property bag `{underline: 1}`
-     * in every native Pages fixture that carries links, and shipped by every
-     * template in the corpus. The hyperlink *works* without it (the first
-     * in-app check clicked through fine) and does not *look* like one: the
-     * field makes it live, the style makes it underlined.
-     *
-     * `characterStyle` overrides the convention: a style id or identifier
-     * applies that style instead; `false` leaves the run unstyled — the text
-     * keeps whatever formatting it had.
-     */
     insertLink(start, end, url, options = {}) {
       const text = this.text;
       if (start < 0 || end <= start || end > text.length) {
@@ -8542,10 +7897,6 @@ ${text}`;
         this.setCharacterStyleRange(start, end, style);
       return field.identifier;
     }
-    /**
-     * Resolve a convention-style option: `false` skips, an id or identifier
-     * overrides, undefined takes the measured default.
-     */
     conventionStyle(option, fallback) {
       if (option === false)
         return void 0;
@@ -8560,11 +7911,6 @@ ${text}`;
       }
       return fallback();
     }
-    /**
-     * The document's Link character style, created if a template ever lacks
-     * one — none in the corpus does, so creation is the untrodden path and
-     * says so by matching the measured shape exactly.
-     */
     linkCharacterStyle() {
       const sheet = this.sheet();
       const existing = sheet?.findByIdentifier("character-style-hyperlink");
@@ -8578,7 +7924,6 @@ ${text}`;
         character: { underline: 1 }
       });
     }
-    /** Remove any hyperlink overlapping [start, end); the text is untouched. */
     removeLinks(start, end) {
       let removed = 0;
       for (const link of this.links()) {
@@ -8589,7 +7934,6 @@ ${text}`;
       }
       return removed;
     }
-    /** Span an object over [start, end) in a character-run object table. */
     spanObject(tableField, start, end, objectId) {
       const text = this.text;
       this.ensureTable(tableField);
@@ -8613,12 +7957,6 @@ ${text}`;
       kept.sort((a, b) => (a.getUint(ENTRY_CHARACTER_INDEX) ?? 0) - (b.getUint(ENTRY_CHARACTER_INDEX) ?? 0));
       table.setMessages(ATTR_TABLE_ENTRIES, kept);
     }
-    // ------------------------------------------------------------ smart fields
-    /**
-     * All smart-field runs (hyperlinks, page numbers, dates, bookmarks, merge
-     * fields, TOC fields, …). `kind` is the registry name of the field archive
-     * so callers can switch on it without importing type IDs.
-     */
     smartFields() {
       const out = [];
       for (const run of this.objectRuns(Storage.TABLE_SMARTFIELD)) {
@@ -8644,10 +7982,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Inline attachment runs: page numbers, page counts, footnote marks and
-     * anchored drawables, each at its U+FFFC character.
-     */
     attachments() {
       const out = [];
       const table = this.msg.getMessage(Storage.TABLE_ATTACHMENT);
@@ -8670,17 +8004,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Insert a live page number (or page count) at `pos`.
-     *
-     * A page number is not text: no digits exist in the storage, because the
-     * value depends on pagination the app performs. What is inserted is a
-     * U+FFFC placeholder plus an attachment archive that renders it — which
-     * is why this cannot simply be `insertText("1")`.
-     *
-     * Returns the attachment's object identifier. Nothing here computes the
-     * number; the app fills it in when it lays the document out.
-     */
     insertPageNumber(pos, options = {}) {
       const component = this.store.componentOf(this.id);
       if (!component)
@@ -8689,29 +8012,12 @@ ${text}`;
       this.insertAttachment(pos, attachment.identifier);
       return attachment.identifier;
     }
-    /** Insert a live page count — "of 12" — at `pos`. */
     insertPageCount(pos, options = {}) {
       return this.insertPageNumber(pos, { ...options, kind: AttachmentKind.PAGE_COUNT });
     }
-    /**
-     * Put an existing attachment archive at `pos`.
-     *
-     * Inserts the U+FFFC placeholder through {@link replaceRange}, so every
-     * other attribute table shifts with it, then anchors the attachment at
-     * the new character. Doing it the other way round leaves the entry
-     * pointing one character short.
-     */
     insertAttachment(pos, objectId) {
       this.anchorObject(pos, objectId, Storage.TABLE_ATTACHMENT, OBJECT_REPLACEMENT_CHARACTER);
     }
-    /**
-     * Insert an anchor character and point a point-anchored table at it.
-     *
-     * Two anchor characters exist and they are not interchangeable: an
-     * attachment sits at U+FFFC, a footnote reference at U+000E. Each has its
-     * own table, and putting one character in the other's table gives a
-     * document the apps render with the mark missing.
-     */
     anchorObject(pos, objectId, tableField, character2) {
       const text = this.text;
       if (pos < 0 || pos > text.length) {
@@ -8727,22 +8033,6 @@ ${text}`;
       entries.sort((a, b) => (a.getUint(ENTRY_CHARACTER_INDEX) ?? 0) - (b.getUint(ENTRY_CHARACTER_INDEX) ?? 0));
       table.setMessages(ATTR_TABLE_ENTRIES, entries);
     }
-    /**
-     * Add a footnote anchored at `pos`, with `text` as its content.
-     *
-     * A footnote is two storages, not one: this one gains a U+000E reference
-     * character, and a new storage of kind FOOTNOTE holds the note itself.
-     * That note's text starts with its own U+FFFC placeholder — the spot
-     * where the app draws the footnote's number — so the note reads
-     * "<mark> your text", exactly as Apple writes it.
-     *
-     * Numbering is not set here. Which number a footnote gets depends on how
-     * many precede it and on the document's numbering settings, both of which
-     * the app resolves when it lays the document out.
-     *
-     * Returns the new footnote storage, so its text can be styled or edited
-     * like any other.
-     */
     addFootnote(pos, text, options = {}) {
       const component = this.store.componentOf(this.id);
       if (!component)
@@ -8787,16 +8077,6 @@ ${text}`;
         this.setCharacterStyleRange(pos, pos + 1, markStyle);
       return note;
     }
-    /**
-     * The one character style every footnote mark shares.
-     *
-     * Anonymous, and its whole property bag is `superscript = 1` — that is
-     * the complete corpus recipe, identical on the body's 8 U+000E marks
-     * and their notes' U+FFFC in the footnote fixture, all pointing at a
-     * single style object. Found by matching that exact shape
-     * so a second footnote reuses the first one's style rather than minting
-     * a twin; created through the stylesheet when the document has none.
-     */
     footnoteMarkStyle() {
       for (const { obj } of this.store.allObjects()) {
         if (obj.type !== TSWP_TYPE.CHARACTER_STYLE)
@@ -8818,13 +8098,6 @@ ${text}`;
         throw new RangeError("storage has no stylesheet to create the mark style in");
       return sheet.createCharacterStyle({ character: { superscript: 1 } });
     }
-    /**
-     * Remove a footnote: its reference character goes, and with it the note.
-     *
-     * Takes the note storage's identifier, which is what {@link footnotes}
-     * reports. The archives stay in the package; what removes the footnote is
-     * the body no longer referencing it.
-     */
     removeFootnote(noteStorageId) {
       const table = this.msg.getMessage(Storage.TABLE_FOOTNOTE);
       for (const entry of table?.getMessages(ATTR_TABLE_ENTRIES) ?? []) {
@@ -8838,17 +8111,6 @@ ${text}`;
       }
       return false;
     }
-    /**
-     * Remove an attachment and the placeholder character it occupies.
-     *
-     * What goes here is the character and the table entry, which is what
-     * makes the field disappear from the text. The archives it left behind
-     * — for an image, the drawable and its attachment — are reclaimed by
-     * `IWorkDocument.compact()`, which collects whatever the document no
-     * longer reaches. The image *bytes* stay: a Data/ file's link to its
-     * object is not something this library can safely trace, so nothing
-     * collects one (see docs/BLOCKERS.md).
-     */
     removeAttachment(objectId) {
       const found = this.attachments().find((entry) => entry.objectId === objectId);
       if (!found)
@@ -8856,7 +8118,6 @@ ${text}`;
       this.replaceRange(found.index, found.index + 1, "");
       return true;
     }
-    /** Page-number and page-count fields in this storage, with their formats. */
     pageNumberFields() {
       const out = [];
       for (const entry of this.attachments()) {
@@ -8867,17 +8128,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Insert a live date field showing `text`.
-     *
-     * Unlike a page number, a date field spans **real characters**: the text
-     * is in the storage and the app rewrites it when the field updates. So
-     * the text to show is supplied rather than rendered here — formatting a
-     * date the way a given locale and pattern would is Foundation's job, and
-     * approximating it would put subtly wrong text in the document. The field
-     * is marked as needing an update, so the app replaces it with its own
-     * rendering at the first opportunity.
-     */
     insertDateField(pos, text, options = {}) {
       if (text.length === 0) {
         throw new RangeError("insertDateField: a date field must span some text");
@@ -8894,7 +8144,6 @@ ${text}`;
       this.spanObject(Storage.TABLE_SMARTFIELD, pos, pos + text.length, field.identifier);
       return field.identifier;
     }
-    /** The date fields in this storage, with their settings. */
     dateFields() {
       const out = [];
       for (const run of this.objectRuns(Storage.TABLE_SMARTFIELD)) {
@@ -8914,13 +8163,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * A paragraph's base writing direction, from the storage's bidi table
-     * (`table_para_bidi`): the run-anchored entry pair whose first slot is
-     * the direction — 0 LTR, 1 RTL, 65535 natural — with the second slot 0,
-     * or 65535 when the first is natural. The paragraph style plays no part;
-     * the app writes only this pair when a paragraph is flipped.
-     */
     paragraphDirection(paragraphIndex) {
       const start = this.paragraphStarts()[paragraphIndex];
       if (start === void 0) {
@@ -8929,13 +8171,6 @@ ${text}`;
       const first = this.bidiPairAt(start)[0];
       return first === 1 ? "rtl" : first === 0 ? "ltr" : "natural";
     }
-    /**
-     * Set a paragraph's base writing direction, writing the same pair the
-     * app writes when the direction control flips a paragraph: (1, 0) for
-     * RTL, (0, 0) for LTR, (65535, 65535) for natural. Every paragraph gets
-     * its own entry so no run bleeds into a neighbour, with existing values
-     * carried.
-     */
     setParagraphDirection(paragraphIndex, direction) {
       const starts = this.paragraphStarts();
       if (starts[paragraphIndex] === void 0) {
@@ -8952,7 +8187,6 @@ ${text}`;
       }
       this.msg.setMessage(Storage.TABLE_PARA_BIDI, table);
     }
-    /** The bidi pair ruling `pos` — the last entry at or before it. */
     bidiPairAt(pos) {
       const entries = this.msg.getMessage(Storage.TABLE_PARA_BIDI)?.getMessages(ATTR_TABLE_ENTRIES) ?? [];
       let pair = [65535, 65535];
@@ -8966,11 +8200,6 @@ ${text}`;
       }
       return pair;
     }
-    /**
-     * Placeholder text runs — a template's "tap or click to add …" spans,
-     * which the app selects whole on a click and replaces on the first
-     * keystroke (`TSWP.PlaceholderSmartFieldArchive`).
-     */
     placeholders() {
       const text = this.text;
       const out = [];
@@ -8988,21 +8217,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Fill a placeholder: put real text in its span and shed the placeholder
-     * marking, which is what typing into one does in Pages. The replacement
-     * keeps the placeholder's styling — a template styles its ghost text the
-     * way the final content should look. Returns the filled span.
-     *
-     * Address the placeholder by its `fieldId` — the id
-     * {@link placeholders} reports, passed bare or on the listing's own
-     * entry — and the span is resolved live at this call: filling several
-     * from one listing lands each in its own field no matter how earlier
-     * fills moved the text. A filled or removed field throws rather than
-     * editing whatever text now occupies its old offsets. An entry
-     * carrying only `start`/`end` keeps positional meaning, offsets
-     * against the text as it is *now*.
-     */
     fillPlaceholder(placeholder, text) {
       let span;
       if (typeof placeholder === "bigint")
@@ -9015,7 +8229,6 @@ ${text}`;
       this.replaceRange(span.start, span.end, text);
       return { start: span.start, end: span.start + text.length };
     }
-    /** The live span of a placeholder field, by id; throws when absent. */
     placeholderSpan(fieldId) {
       const live = this.placeholders().find((p) => p.fieldId === fieldId);
       if (!live) {
@@ -9023,12 +8236,6 @@ ${text}`;
       }
       return { start: live.start, end: live.end };
     }
-    /**
-     * Mark [start, end) as placeholder text, the way Format → Advanced →
-     * Define as Placeholder Text does: a click in the app selects the whole
-     * span and typing replaces it. Any smart field already on the span is
-     * replaced, like inserting any other field. Returns the field's id.
-     */
     defineAsPlaceholder(start, end) {
       const length = this.text.length;
       if (start < 0 || end <= start || end > length) {
@@ -9041,13 +8248,6 @@ ${text}`;
       this.spanObject(Storage.TABLE_SMARTFIELD, start, end, field.identifier);
       return field.identifier;
     }
-    /**
-     * Mark [start, end) as a bookmark — a named destination a link can target.
-     *
-     * A bookmark with no name is what the apps create for a link pointing at
-     * a stretch of text rather than a named place; both shapes occur in the
-     * corpus and both are written here.
-     */
     addBookmark(start, end, name) {
       const length = this.text.length;
       if (start < 0 || end <= start || end > length) {
@@ -9060,7 +8260,6 @@ ${text}`;
       this.spanObject(Storage.TABLE_BOOKMARK, start, end, field.identifier);
       return field.identifier;
     }
-    /** Remove a bookmark. The text it marked stays. */
     removeBookmark(fieldId) {
       const found = this.bookmarks().find((bookmark) => bookmark.fieldId === fieldId);
       if (!found)
@@ -9068,7 +8267,6 @@ ${text}`;
       this.spanObject(Storage.TABLE_BOOKMARK, found.start, found.end, void 0);
       return true;
     }
-    /** Bookmarks anchored in this storage (named destinations). */
     bookmarks() {
       const out = [];
       for (const run of this.objectRuns(Storage.TABLE_BOOKMARK)) {
@@ -9086,8 +8284,6 @@ ${text}`;
       }
       return out;
     }
-    // ------------------------------------------------------ footnotes/comments
-    /** Footnotes/endnotes anchored in this storage (their text is editable). */
     footnotes() {
       const out = [];
       const table = this.msg.getMessage(Storage.TABLE_FOOTNOTE);
@@ -9111,7 +8307,6 @@ ${text}`;
       }
       return out;
     }
-    /** Comments anchored in this storage (from both anchor tables). */
     comments() {
       const out = [];
       const resolve = (highlightId, start, end) => {
@@ -9140,18 +8335,6 @@ ${text}`;
       }
       return out.sort((a, b) => a.start - b.start);
     }
-    /**
-     * Attach a comment to [start, end).
-     *
-     * Creates the three objects a comment needs — highlight, comment storage,
-     * author — and spans the highlight over the range, which is what makes
-     * the words show highlighted. The author is *reused* by default: a
-     * document where every comment has its own copy of the same person is not
-     * what the apps produce.
-     *
-     * Returns the comment storage's identifier, which {@link removeComment}
-     * takes.
-     */
     addComment(start, end, text, options = {}) {
       const length = this.text.length;
       if (start < 0 || end <= start || end > length) {
@@ -9164,12 +8347,6 @@ ${text}`;
       this.spanObject(Storage.TABLE_HIGHLIGHT, start, end, highlight.identifier);
       return commentStorage.identifier;
     }
-    /**
-     * Detach a comment. The commented text stays; the highlight goes.
-     *
-     * The archives are left in the package, as everywhere else here — what
-     * makes the comment disappear is the text no longer pointing at it.
-     */
     removeComment(commentStorageId) {
       const found = this.comments().find((comment) => comment.commentStorageId === commentStorageId);
       if (!found)
@@ -9181,17 +8358,6 @@ ${text}`;
       }
       return true;
     }
-    /**
-     * The first attribute-table entry outside its lawful positions, if any.
-     *
-     * The law, measured across the corpus's 2921 storages: no entry sits
-     * past `text.length` in any table, and an entry at exactly
-     * `text.length` occurs only in the paragraph-family tables — and only
-     * when a final empty paragraph exists to describe: empty text, or text
-     * ending with a terminator. The character-content tables (character
-     * styles, smart fields, anchors, language runs) leave a run reaching
-     * the end of the text open instead.
-     */
     tablePositionViolation() {
       const length = this.text.length;
       const tailLawful = length === 0 || isParagraphTerminator(this.text.charCodeAt(length - 1));
@@ -9236,7 +8402,6 @@ ${text}`;
     }
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsd/drawables.js
   var SHADOW_SUBARCHIVE_FIELDS = [
     ShadowFields.DROP_SHADOW,
     ShadowFields.CONTACT_SHADOW,
@@ -9306,7 +8471,6 @@ ${text}`;
         flags: g.getUint(Geometry.FLAGS)
       };
     }
-    /** Move and/or resize. Only the provided components are changed. */
     setGeometry(update) {
       const core = this.core();
       if (!core)
@@ -9356,13 +8520,6 @@ ${text}`;
       else
         core.setString(Drawable.ACCESSIBILITY_DESCRIPTION, value);
     }
-    /**
-     * Visual style — fill, stroke, opacity, shadow, reflection.
-     *
-     * This is where drawable **shadows** live. Cell and table styles have no
-     * shadow field at all, so a shadow on a table means a shadow on the
-     * shape or image, not on its cells.
-     */
     style() {
       const reference = this.styleReference();
       return reference ? new DrawableStyleHandle(this.store, reference.object, {
@@ -9370,14 +8527,6 @@ ${text}`;
         field: reference.field
       }) : void 0;
     }
-    /**
-     * Resolve the drawable's style object and the field referencing it.
-     *
-     * The field number differs per concrete archive (`ShapeArchive.style` is
-     * 2, `ImageArchive.style` is 3, and so on), so rather than tabulate every
-     * subclass we resolve each reference-shaped field and keep the one that
-     * lands on a shape or media style.
-     */
     styleReference() {
       for (const field of this.object.message.fields) {
         if (field.wire !== WireType.Bytes)
@@ -9420,7 +8569,6 @@ ${text}`;
   var DrawableStyleHandle = class {
     store;
     styleObject;
-    /** Set when the handle came from a drawable, enabling copy-on-write. */
     ownedBy;
     constructor(store, object, ownedBy) {
       this.store = store;
@@ -9434,15 +8582,6 @@ ${text}`;
     get id() {
       return this.styleObject.identifier;
     }
-    /**
-     * True for images and movies, whose property bag omits `fill` and so
-     * numbers every later field one lower.
-     *
-     * Decided by declared type where known, and structurally otherwise:
-     * field 2 is a stroke message in a shape bag but the float opacity in a
-     * media bag, so its wire type settles the question for wrapper types the
-     * registry does not name.
-     */
     get isMedia() {
       if (this.object.type === TSD_MEDIA_STYLE)
         return true;
@@ -9461,7 +8600,6 @@ ${text}`;
     fields() {
       return this.isMedia ? MEDIA_STYLE_FIELDS : SHAPE_STYLE_FIELDS;
     }
-    /** Everything this style sets, in one object. */
     read() {
       const props = this.properties();
       const out = {};
@@ -9490,24 +8628,6 @@ ${text}`;
     shadow() {
       return this.read().shadow ?? void 0;
     }
-    /**
-     * Merge visual properties into this style.
-     *
-     * `null` removes a property outright; omitting it leaves whatever was
-     * there. Note that a shadow with `enabled: false` is how the apps store
-     * "shadow configured but switched off" — removing the archive and
-     * disabling it are different states, and both are expressible.
-     *
-     * Copies on write: a style archive is routinely shared — the theme
-     * lists one, templates hand one to every drawable using them, and a
-     * deep copy shares its source's — so writing through a shared archive
-     * would restyle every drawable holding it. When the handle knows its
-     * drawable and the archive has other referrers, the write goes to a
-     * private clone with the drawable's reference repointed, which is the
-     * app's own behaviour: styling one object never edits the shared
-     * style. A handle from {@link drawableStylesOf} has no owning
-     * drawable and edits the archive in place.
-     */
     set(style) {
       this.privatise();
       let props = this.properties();
@@ -9565,25 +8685,10 @@ ${text}`;
       this.object.message.setVarint(DRAWABLE_STYLE_OVERRIDE_COUNT, props.fields.length);
       return this;
     }
-    /** Turn a shadow on or off without discarding its parameters. */
     setShadowEnabled(enabled) {
       const existing = this.read().shadow;
       return this.set({ shadow: { ...existing ?? DEFAULT_SHADOW, enabled } });
     }
-    /**
-     * Give the owning drawable its own copy of a shared style archive.
-     *
-     * The clone takes the app's style-one-object shape whole: anonymous —
-     * no name, no `style_identifier`, since no two of the corpus's 18554
-     * identified styles share an identifier and a byte-copy keeping the
-     * source's would put two styles behind one — parented on the
-     * identified style it copies (30 of 183 drawable-referenced corpus
-     * styles are exactly that; the other 153 are the identified originals
-     * themselves), and listed in its stylesheet's `styles` list with the
-     * reference declared (183 of 183 are listed). The app's style
-     * machinery asserts over archives outside this shape when the
-     * inspector edits one, and the assert aborts the whole app.
-     */
     privatise() {
       if (!this.ownedBy)
         return;
@@ -9625,7 +8730,6 @@ ${text}`;
   });
   var SheetFields = protoFields("TSS.StylesheetArchive", { STYLES: "styles" });
 
-  // Tools/PagesBuild/cupertino/package/dist/tsd/masks.js
   var MaskFields = protoFields("TSD.MaskArchive", { SUPER: "super", PATH_SOURCE: "pathsource" });
   var PathSourceFields = protoFields("TSD.PathSourceArchive", {
     HORIZONTAL_FLIP: "horizontalFlip",
@@ -9647,52 +8751,26 @@ ${text}`;
     CLOSE_SUBPATH: "closeSubpath"
   });
   var MaskModel = class extends DrawableModel {
-    /** The mask's path source, if it has one. */
     pathSource() {
       return this.object.message.getMessage(MaskFields.PATH_SOURCE);
     }
-    /** The mask's `TSD.BezierPathSourceArchive`, if it has one. */
     bezier() {
       return this.pathSource()?.getMessage(PathSourceFields.BEZIER_PATH_SOURCE);
     }
-    /**
-     * True when the path traces a rectangle **in its own space**.
-     *
-     * Not "a rectangle the size of the frame": the path is stretched to
-     * `naturalSize` when drawn, so its own dimensions are arbitrary. The only
-     * shape any corpus file uses, and the only one {@link setSize} will
-     * touch — resizing an instant-alpha outline would distort the cut-out.
-     */
     get isRectangular() {
       const elements = this.bezier()?.getMessage(BezierPathSourceFields.PATH)?.getMessages(PathFields.ELEMENTS);
       return elements !== void 0 && pathIsRectangle(elements);
     }
-    /**
-     * The rectangle the path traces, in the path's own coordinates.
-     *
-     * Rarely interesting on its own — the drawn size is `naturalSize` — but
-     * it is what {@link isRectangular} tests, so it is worth being able to
-     * see.
-     */
     pathSize() {
       const elements = this.bezier()?.getMessage(BezierPathSourceFields.PATH)?.getMessages(PathFields.ELEMENTS);
       return elements ? rectangleOf(elements) : void 0;
     }
-    /** The size the path is stretched to, which is what sizes the crop. */
     naturalSize() {
       const size = this.bezier()?.getMessage(BezierPathSourceFields.NATURAL_SIZE);
       const width = size?.getFloat(SizeFields.WIDTH);
       const height = size?.getFloat(SizeFields.HEIGHT);
       return width !== void 0 && height !== void 0 ? { width, height } : void 0;
     }
-    /**
-     * Resize the crop window.
-     *
-     * Changes the frame and `naturalSize` together — they are equal in every
-     * corpus file, and `naturalSize` is what the path is stretched to. The
-     * path itself is left alone: it already describes a rectangle, and its
-     * own dimensions do not reach the rendered result.
-     */
     setSize(width, height) {
       if (!this.isRectangular) {
         throw new RangeError(`mask ${this.id} is not a rectangle; resizing it would distort the cut-out`);
@@ -9826,7 +8904,6 @@ ${text}`;
     return Math.abs(found - wanted) <= Math.max(1, Math.abs(wanted)) * 1e-5;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsd/images.js
   var IMAGE_ADJUSTMENTS = 14;
   var IMAGE_ADJUSTED_DATA = 15;
   var IMAGE_ENHANCED_DATA = 17;
@@ -9869,15 +8946,9 @@ ${text}`;
       }
       super(store, object);
     }
-    /** Data-space identifier of the primary backing media, if any. */
     get dataId() {
       return this.object.message.getMessage(Image.DATA)?.getVarint(1);
     }
-    /**
-     * Every media variant this image references, in preference order:
-     * the primary image, then the original, adjusted, enhanced and thumbnail
-     * variants the apps keep alongside it.
-     */
     dataVariants() {
       const roles = [
         ["data", Image.DATA],
@@ -9894,23 +8965,10 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * File name of the primary backing media within `Data/`.
-     *
-     * Note this is `TSP.DataInfo.file_name` when set (the real on-disk name,
-     * which the apps disambiguate by appending the data identifier), falling
-     * back to `preferred_file_name`.
-     */
     get fileName() {
       const id = this.dataId;
       return id === void 0 ? void 0 : this.store.dataFileName(id);
     }
-    /**
-     * True when the primary media is actually present in the package. Apple
-     * documents can reference media that was never materialized (optimized
-     * storage, template assets); those images render in the app but have no
-     * bytes to extract here.
-     */
     get isMaterialized() {
       return this.bytesFor(this.fileName) !== void 0;
     }
@@ -9919,11 +8977,6 @@ ${text}`;
         return void 0;
       return this.store.pendingFiles.get(`Data/${name}`) ?? this.store.container.otherFiles().get(`Data/${name}`);
     }
-    /**
-     * Raw bytes of the backing media. Falls back to any other materialized
-     * variant (original/adjusted/enhanced/thumbnail) when the primary is not
-     * present in the package; `dataSource()` reports which one was used.
-     */
     data() {
       for (const variant of this.dataVariants()) {
         const bytes2 = this.bytesFor(variant.fileName);
@@ -9932,7 +8985,6 @@ ${text}`;
       }
       return void 0;
     }
-    /** Which media variant {@link data} would return, if any. */
     dataSource() {
       for (const variant of this.dataVariants()) {
         if (this.bytesFor(variant.fileName) !== void 0)
@@ -9940,30 +8992,19 @@ ${text}`;
       }
       return void 0;
     }
-    /** Intrinsic pixel size recorded by the app, if present. */
     get originalSize() {
       const size = this.object.message.getMessage(Image.ORIGINAL_SIZE);
       const width = size?.getFloat(SizeFields.WIDTH);
       const height = size?.getFloat(SizeFields.HEIGHT);
       return width !== void 0 && height !== void 0 ? { width, height } : void 0;
     }
-    /** True when the image is clipped by a mask (shape crop / instant alpha). */
     get hasMask() {
       return this.object.message.has(Image.MASK);
     }
-    /** The mask drawable defining the crop, if the image has one. */
     mask() {
       const target = this.store.resolve(refId(this.object.message, Image.MASK));
       return target ? new MaskModel(this.store, target) : void 0;
     }
-    /**
-     * The crop, in both the spaces that matter.
-     *
-     * `window` is the visible rectangle in the image's own coordinates —
-     * which part of the picture shows. `visible` is where that lands in the
-     * image's parent, which is `image.position + mask.position` (see
-     * `docs/FORMAT.md` §8.2). An uncropped image has no crop at all.
-     */
     crop() {
       const mask = this.mask();
       const image = this.geometry();
@@ -9989,21 +9030,6 @@ ${text}`;
         isRectangular: mask.isRectangular
       };
     }
-    /**
-     * Choose which part of the picture shows, in image-local points —
-     * the image's *drawn* geometry space, not source pixels: an image
-     * scaled to 260 pt wide crops with windows inside 260, wherever the
-     * source's pixel count landed. A window outside the drawn frame is
-     * one the app renders as a broken top-left crop and refuses to open
-     * the mask editor on.
-     *
-     * The visible rectangle moves with the window: cropping to `{x: 10, …}`
-     * shifts what appears on the page 10pt right, because the window is
-     * positioned relative to the image. To keep the result where it was, call
-     * {@link setVisibleFrame} afterwards — or use it instead, which does both.
-     *
-     * An image with no mask gets one, built as the rectangle Apple writes.
-     */
     setCrop(window) {
       const existing = this.mask();
       if (existing) {
@@ -10031,14 +9057,6 @@ ${text}`;
         .../* @__PURE__ */ new Set([...this.object.getObjectReferences(), mask.identifier])
       ]);
     }
-    /**
-     * Place the cropped result at a rectangle in the parent's space.
-     *
-     * Keeps the same part of the picture visible: the image slides so that
-     * `image.position + mask.position` lands on `frame`, and the window is
-     * resized in place. This is the operation "move and resize the cropped
-     * image", as opposed to {@link setCrop}'s "choose what shows".
-     */
     setVisibleFrame(frame) {
       const crop = this.crop();
       if (!crop) {
@@ -10048,14 +9066,6 @@ ${text}`;
       this.setGeometry({ x: frame.x - crop.window.x, y: frame.y - crop.window.y });
       this.mask().setSize(frame.width, frame.height);
     }
-    /**
-     * Show the whole picture again.
-     *
-     * The mask object is left in the package — something else may reference
-     * it, and this library never collects the graph — but the image no longer
-     * points at it, so the full extent shows at the image's own frame. That
-     * frame is larger than the crop was, which is the point.
-     */
     removeCrop() {
       if (!this.hasMask)
         return false;
@@ -10064,11 +9074,9 @@ ${text}`;
       this.object.setObjectReferences(this.object.getObjectReferences().filter((id) => id !== maskId));
       return true;
     }
-    /** True when any image filter is applied. */
     get hasFilters() {
       return this.object.message.has(IMAGE_ADJUSTMENTS);
     }
-    /** Current image-filter settings ({} when none are applied). */
     filters() {
       const adjustments = this.object.message.getMessage(IMAGE_ADJUSTMENTS);
       const out = {};
@@ -10082,11 +9090,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Apply image filters. Only the properties given are changed; pass
-     * `undefined` for a property to clear it. The apps re-render from the
-     * untouched original media, so this is non-destructive.
-     */
     setFilters(filters) {
       let adjustments = this.object.message.getMessage(IMAGE_ADJUSTMENTS);
       if (!adjustments) {
@@ -10106,7 +9109,6 @@ ${text}`;
         }
       }
     }
-    /** Remove all image filters, restoring the unadjusted rendering. */
     clearFilters() {
       this.object.message.remove(IMAGE_ADJUSTMENTS);
     }
@@ -10120,19 +9122,15 @@ ${text}`;
     return out;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsch/appearance.js
   var GENERATED_PROPERTIES = 1e4;
   var SeriesStyleProperty = protoFields("TSCH.Generated.ChartSeriesStyleArchive", {
-    /** `TSD.FillArchive`, one per geometry — see the module note. */
     AREA_FILL: "tschchartseriesareafill",
     BAR_FILL: "tschchartseriesbarfill",
     COLUMN_FILL: "tschchartseriescolumnfill",
-    /** The template's fallback, *not* this series' colour. Left alone. */
     DEFAULT_FILL: "tschchartseriesdefaultfill",
     MIXED_AREA_FILL: "tschchartseriesmixedareafill",
     MIXED_COLUMN_FILL: "tschchartseriesmixedcolumnfill",
     PIE_FILL: "tschchartseriespiefill",
-    /** float */
     DEFAULT_OPACITY: "tschchartseriesdefaultopacity"
   });
   var SERIES_GEOMETRY_FILLS = [
@@ -10168,25 +9166,15 @@ ${text}`;
     get id() {
       return this.object.identifier;
     }
-    /**
-     * The property bag, or `undefined` on an archive that carries none.
-     *
-     * An archive with no field 10000 is inheriting everything from its
-     * preset. Reading returns `undefined` rather than inventing defaults,
-     * because the value that applies then is the preset's, and this module
-     * does not resolve preset inheritance.
-     */
     properties() {
       return this.object.message.getMessage(GENERATED_PROPERTIES);
     }
-    /** The bag, created if the archive has none. */
     requireProperties() {
       const existing = this.properties();
       if (existing)
         return existing;
       throw new RangeError(`chart style ${this.id} has no property bag (field ${GENERATED_PROPERTIES}); it inherits from a preset, and writing one would override every inherited value with nothing`);
     }
-    /** A `TSD.FillArchive` property, decoded. */
     fillProperty(field) {
       return readFill(this.properties()?.getMessage(field));
     }
@@ -10194,7 +9182,6 @@ ${text}`;
       this.requireProperties().setMessage(field, writeFill(fill));
       this.object.message.markDirty();
     }
-    /** A float property, e.g. an opacity. */
     floatProperty(field) {
       return this.properties()?.getFloat(field);
     }
@@ -10204,19 +9191,11 @@ ${text}`;
     }
   };
   var ChartSeriesStyle = class extends ChartStyleArchive {
-    /** Position of the series this styles, from the sparse array. */
     index;
     constructor(store, object, index) {
       super(store, object);
       this.index = index;
     }
-    /**
-     * The series colour.
-     *
-     * Read from the column fill, which every chart carries whatever its
-     * geometry, falling back through the other geometries and finally to the
-     * template default so that a chart authored as a pie still answers.
-     */
     fill() {
       for (const field of [SeriesStyleProperty.COLUMN_FILL, ...SERIES_GEOMETRY_FILLS]) {
         const fill = this.fillProperty(field);
@@ -10225,17 +9204,10 @@ ${text}`;
       }
       return this.fillProperty(SeriesStyleProperty.DEFAULT_FILL);
     }
-    /**
-     * Set the series colour across every geometry.
-     *
-     * See the module note: Apple keeps the six geometry fills identical and
-     * the seventh — the template default — distinct, so this writes the six.
-     */
     setFill(fill) {
       for (const field of SERIES_GEOMETRY_FILLS)
         this.setFillProperty(field, fill);
     }
-    /** Per-geometry fills, for callers that need the distinction. */
     fills() {
       return {
         area: this.fillProperty(SeriesStyleProperty.AREA_FILL),
@@ -10258,14 +9230,10 @@ ${text}`;
     }
   };
   var LegendStyleProperty = protoFields("TSCH.Generated.LegendStyleArchive", {
-    /** `TSD.FillArchive` */
     FILL: "tschlegendmodeldefaultfill",
     LABEL_PARAGRAPH_STYLE_INDEX: "tschlegendmodeldefaultlabelparagraphstyleindex",
-    /** float */
     OPACITY: "tschlegendmodeldefaultopacity",
-    /** `TSD.ShadowArchive` */
     SHADOW: "tschlegendmodeldefaultshadow",
-    /** `TSD.StrokeArchive` */
     STROKE: "tschlegendmodeldefaultstroke"
   });
   var ChartLegendStyle = class extends ChartStyleArchive {
@@ -10293,39 +9261,26 @@ ${text}`;
     }
   };
   var AxisStyleProperty = {
-    /** bool — is the axis line drawn at all */
     SHOW_AXIS: [24, 25],
-    /** bool */
     SHOW_MAJOR_GRIDLINES: [27, 28],
-    /** bool */
     SHOW_MINOR_GRIDLINES: [32, 33],
-    /** bool */
     SHOW_MAJOR_TICK_MARKS: [29, 30],
-    /** bool */
     SHOW_MINOR_TICK_MARKS: [34, 35],
-    /** `TSD.StrokeArchive` */
     MAJOR_GRIDLINE_STROKE: [16, 17],
-    /** `TSD.StrokeArchive` */
     MINOR_GRIDLINE_STROKE: [22, 23],
-    /** float */
     MAJOR_GRIDLINE_OPACITY: [12, 13],
-    /** float */
     MINOR_GRIDLINE_OPACITY: [18, 19],
-    /** float — label rotation */
     LABELS_ORIENTATION: [9, 11],
-    /** int — where tick marks sit relative to the axis */
     TICK_MARK_LOCATION: [36, 37]
   };
   var ChartAxisStyle = class extends ChartStyleArchive {
     kind;
-    /** Position among the axes of this kind. */
     index;
     constructor(store, object, kind, index) {
       super(store, object);
       this.kind = kind;
       this.index = index;
     }
-    /** Resolve a `[category, value]` pair against this axis's kind. */
     field(property) {
       const pair = AxisStyleProperty[property];
       if (!pair)
@@ -10364,7 +9319,6 @@ ${text}`;
     setMajorGridlineStroke(stroke) {
       this.setStroke("MAJOR_GRIDLINE_STROKE", stroke);
     }
-    /** Everything this module names, for inspection. */
     describe() {
       const properties = this.properties();
       if (!properties)
@@ -10381,7 +9335,6 @@ ${text}`;
     }
   };
 
-  // Tools/PagesBuild/cupertino/package/dist/tsch/charts.js
   var TSCH_TYPE = {
     CHART_DRAWABLE: 5021,
     PREUFF_CHART_INFO: 5e3,
@@ -10456,33 +9409,16 @@ ${text}`;
     get id() {
       return this.object.identifier;
     }
-    /** The TSCH.ChartArchive carried in the drawable's extension field. */
     chart() {
       return this.object.message.getMessage(ChartDrawable.UNITY);
     }
-    /** Numeric TSCH.ChartType value. */
     get chartTypeId() {
       return this.chart()?.getUint(Chart.CHART_TYPE);
     }
-    /** Chart type as a readable name ("column2D", "pie2D", …). */
     get chartType() {
       const id = this.chartTypeId;
       return id === void 0 ? "undefined" : CHART_TYPE_NAMES[id] ?? `type ${id}`;
     }
-    /**
-     * Change the chart type, by name or by raw enum value.
-     *
-     * This sets one field. It does **not** rebuild the style archives, and
-     * that is a real limitation rather than an omission: a pie chart's axis
-     * styles are meaningless and a scatter chart wants two value axes, so
-     * switching between distant geometries leaves styling the previous type
-     * chose. Within a family — column ⇄ bar ⇄ stacked, pie ⇄ donut — the same
-     * archives apply and the switch is clean, which is why every series
-     * carries a fill per geometry (see `appearance.ts`).
-     *
-     * Numbers redraws from the type, so a mismatch shows up as styling that
-     * looks untouched, not as a damaged document.
-     */
     setChartType(type) {
       const id = typeof type === "number" ? type : CHART_TYPE_IDS.get(type);
       if (id === void 0) {
@@ -10494,14 +9430,6 @@ ${text}`;
       chart.setVarint(Chart.CHART_TYPE, id);
       this.object.message.markDirty();
     }
-    /**
-     * Per-series styles, in series order.
-     *
-     * Sparse by design — a chart styles the series the template gave a colour
-     * to and leaves the rest inheriting — so the returned entries carry their
-     * own {@link ChartSeriesStyle.index} and there may be fewer than
-     * {@link rowCount}.
-     */
     seriesStyles() {
       const array = this.chart()?.getMessage(Chart.SERIES_PRIVATE_STYLES);
       const out = [];
@@ -10512,24 +9440,14 @@ ${text}`;
       }
       return out.sort((a, b) => a.index - b.index);
     }
-    /** The style of one series, if it has its own rather than inheriting. */
     seriesStyle(index) {
       return this.seriesStyles().find((style) => style.index === index);
     }
-    /** The legend's style archive, if the chart has one of its own. */
     legendStyle() {
       const id = this.chart()?.getMessage(Chart.LEGEND_STYLE)?.getVarint(REFERENCE_IDENTIFIER);
       const object = id === void 0 ? void 0 : this.store.resolve(id);
       return object ? new ChartLegendStyle(this.store, object) : void 0;
     }
-    /**
-     * Axis styles, category axes first.
-     *
-     * The chart keeps the two kinds in separate repeated fields, so nothing
-     * has to be inferred — which matters, because an axis archive populates
-     * only its own family of properties and reading a value axis as a
-     * category one would silently return `undefined` for everything.
-     */
     axisStyles() {
       const out = [];
       for (const [field, kind] of [
@@ -10545,21 +9463,9 @@ ${text}`;
       }
       return out;
     }
-    /** The first axis style of a kind, which is the only one most charts have. */
     axisStyle(kind, index = 0) {
       return this.axisStyles().find((axis) => axis.kind === kind && axis.index === index);
     }
-    /**
-     * Give this chart its own copy of an axis or legend style, if it shares one.
-     *
-     * The same hazard as {@link setSeriesFill} — these archives live in the
-     * document stylesheet and a template hands one to every chart using it —
-     * but the reference is a plain `TSP.Reference` in a repeated field rather
-     * than a sparse-array entry, so the repointing differs and the sharing
-     * check does not.
-     *
-     * Returns the archive to write to, which is the clone when one was made.
-     */
     privatiseStyle(style, field, index = 0) {
       const others = this.store.referrers(style.id).filter((id) => id !== this.id);
       if (others.length === 0)
@@ -10582,12 +9488,6 @@ ${text}`;
       this.store.retargetReference(this.object, style.id, clone.identifier);
       return clone;
     }
-    /**
-     * Show or hide an axis's major gridlines, copying on write.
-     *
-     * The convenience wrapper for the common axis edit; anything else goes
-     * through {@link privatiseStyle} and the {@link ChartAxisStyle} setters.
-     */
     setAxisMajorGridlines(kind, visible, index = 0) {
       const axis = this.axisStyle(kind, index);
       if (!axis)
@@ -10597,26 +9497,6 @@ ${text}`;
       target.setShowMajorGridlines(visible);
       return target;
     }
-    /**
-     * Set the colour of one series — the safe way.
-     *
-     * **Series style archives are shared.** They live in the document
-     * stylesheet, and a template hands the same archive to every chart that
-     * uses that palette slot: in one borrowed document a single
-     * `ChartSeriesStyleArchive` is referenced by ten different charts, and
-     * nine of the eighteen present are used by more than one. Reaching for
-     * {@link ChartSeriesStyle.setFill} directly on such an archive recolours
-     * every chart sharing it, with nothing in the result to suggest anything
-     * unusual happened.
-     *
-     * So this copies on write. If the archive is referenced by anything other
-     * than this chart it is cloned, this chart's slot is repointed at the
-     * clone, and the clone is what gets the new colour. An archive already
-     * private to this chart is edited in place.
-     *
-     * Returns the style that was actually written, which is the clone when
-     * one was made.
-     */
     setSeriesFill(index, fill) {
       const style = this.seriesStyle(index);
       if (!style) {
@@ -10626,12 +9506,6 @@ ${text}`;
       target.setFill(fill);
       return target;
     }
-    /**
-     * Give this chart its own copy of a series style, if it is sharing one.
-     *
-     * Split out because the sharing check and the repointing are the
-     * interesting part; the colour is not.
-     */
     privatiseSeriesStyle(style) {
       const others = this.store.referrers(style.id).filter((id) => id !== this.id);
       if (others.length === 0)
@@ -10662,58 +9536,37 @@ ${text}`;
       this.store.retargetReference(this.object, style.id, clone.identifier);
       return new ChartSeriesStyle(this.store, clone, style.index);
     }
-    /** True when the chart still holds Apple's placeholder data. */
     get hasDefaultData() {
       return this.chart()?.getBool(Chart.CONTAINS_DEFAULT_DATA) ?? false;
     }
     grid() {
       return this.chart()?.getMessage(Chart.GRID);
     }
-    /** Series (row) names. */
     rowNames() {
       return this.grid()?.getStrings(ChartGrid.ROW_NAME) ?? [];
     }
-    /** Category (column) names. */
     columnNames() {
       return this.grid()?.getStrings(ChartGrid.COLUMN_NAME) ?? [];
     }
-    /** Plotted values, row-major: `data()[row][column]`. */
     data() {
       const grid = this.grid();
       if (!grid)
         return [];
       return grid.getMessages(ChartGrid.GRID_ROW).map((row) => row.getMessages(GridRow.VALUE).map((value) => decodeGridValue(value)));
     }
-    /** Convenience: rows as `{ name, values }`, pairing names with data. */
     series() {
       const names = this.rowNames();
       return this.data().map((values, i) => ({ name: names[i], values }));
     }
-    /**
-     * Whether grid rows are series or categories.
-     *
-     * Raw `series_direction`. Both corpus charts store 1 and lay their series
-     * out as rows, which is the arrangement this module's row/series naming
-     * assumes; a chart storing something else is read the same way and its
-     * direction is exposed here so a caller can tell.
-     */
     get seriesDirection() {
       return this.chart()?.getUint(Chart.SERIES_DIRECTION);
     }
-    // ------------------------------------------------------------- data editing
     requireGrid() {
       const grid = this.grid();
       if (!grid)
         throw new RangeError(`chart ${this.id} has no data grid`);
       return grid;
     }
-    /**
-     * Replace one plotted value.
-     *
-     * Nothing else in the archive is indexed by a value, so this is the safe
-     * edit: series styling, axes and the id map all key off *positions*,
-     * which do not move.
-     */
     setValue(row, column, value) {
       const grid = this.requireGrid();
       const rows = grid.getMessages(ChartGrid.GRID_ROW);
@@ -10728,15 +9581,6 @@ ${text}`;
       target.setMessages(GridRow.VALUE, values);
       this.markDirty();
     }
-    /**
-     * Replace one series' values, keeping the number of categories.
-     *
-     * Charts are rectangular: every series must have a value for every
-     * category, or the app plots a series shorter than its axis. Supplying a
-     * different count is refused rather than padded, because padding with
-     * zeroes and padding with gaps look identical in the data and completely
-     * different on the page.
-     */
     setSeriesValues(row, values) {
       const grid = this.requireGrid();
       const rows = grid.getMessages(ChartGrid.GRID_ROW);
@@ -10750,7 +9594,6 @@ ${text}`;
       target.setMessages(GridRow.VALUE, values.map(encodeGridValue));
       this.markDirty();
     }
-    /** Replace the whole grid, keeping its shape. */
     setData(data) {
       if (data.length !== this.rowCount) {
         throw new RangeError(`chart has ${this.rowCount} series but ${data.length} rows were given; use addSeries or removeSeries to change the count`);
@@ -10784,16 +9627,6 @@ ${text}`;
       setStrings(grid, ChartGrid.COLUMN_NAME, names);
       this.markDirty();
     }
-    /**
-     * Append a series.
-     *
-     * Three things move together: the name list, the grid row, and the id
-     * map — a UUID per series that the app uses to track one across a reorder.
-     * The series' *styling* deliberately does not: theme styles are a
-     * six-colour palette the app cycles, and per-series overrides live in a
-     * sparse array where an absent entry means "use the theme". A new series
-     * with no override is therefore correct, not incomplete.
-     */
     addSeries(name, values) {
       const grid = this.requireGrid();
       const width = this.columnCount;
@@ -10809,13 +9642,6 @@ ${text}`;
       this.markDirty();
       return index;
     }
-    /**
-     * Remove a series, and everything indexed by its position.
-     *
-     * The id map renumbers and the sparse style arrays shift down. Skipping
-     * either leaves a chart whose styling has slid onto the wrong series —
-     * a file that loads without complaint and is visibly wrong.
-     */
     removeSeries(row) {
       const grid = this.requireGrid();
       const rows = grid.getMessages(ChartGrid.GRID_ROW);
@@ -10833,7 +9659,6 @@ ${text}`;
       this.markDirty();
       return true;
     }
-    /** Append a category, giving every series a value for it. */
     addCategory(name, values) {
       const grid = this.requireGrid();
       const rows = grid.getMessages(ChartGrid.GRID_ROW);
@@ -10852,7 +9677,6 @@ ${text}`;
       this.markDirty();
       return index;
     }
-    /** Remove a category from every series. */
     removeCategory(column) {
       const grid = this.requireGrid();
       if (column < 0 || column >= this.columnCount)
@@ -10869,14 +9693,6 @@ ${text}`;
       this.markDirty();
       return true;
     }
-    /**
-     * Mark the chart as changed, and no longer holding Apple's placeholder
-     * data.
-     *
-     * `contains_default_data` is what makes the apps replace a template
-     * chart's numbers wholesale the first time it is edited; leaving it set
-     * on a chart we have filled in invites exactly that.
-     */
     markDirty() {
       const chart = this.chart();
       if (!chart)
@@ -10980,7 +9796,6 @@ ${text}`;
     return out;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/cellrecord.js
   var CellType = {
     EMPTY: 0,
     SPAN: 1,
@@ -11056,9 +9871,7 @@ ${text}`;
   EMPTY_RECORD[0] = STORAGE_VERSION;
   var CellRecord = class _CellRecord {
     type;
-    /** Bytes 2-5: zero in every file examined, but preserved anyway. */
     reserved;
-    /** Bytes 6-7: the extras bitfield (see {@link EXTRAS_BY_FLAG}). */
     extras;
     fields = /* @__PURE__ */ new Map();
     constructor(type = CellType.EMPTY) {
@@ -11100,7 +9913,6 @@ ${text}`;
     raw(flag) {
       return this.fields.get(flag);
     }
-    /** Read a 4-byte id field. */
     id(flag) {
       const b = this.fields.get(flag);
       if (!b || b.length !== 4)
@@ -11131,14 +9943,12 @@ ${text}`;
       if (this.fields.delete(flag))
         this.syncExtras(flag, false);
     }
-    /** Drop every flag in a mask. */
     removeAll(mask) {
       for (const [flag] of FLAG_SIZES) {
         if ((mask & flag) !== 0)
           this.remove(flag);
       }
     }
-    /** Keep bytes 6-7 consistent with which format ids are present. */
     syncExtras(flag, present) {
       const bit = EXTRAS_BY_FLAG.get(flag);
       if (bit === void 0)
@@ -11220,7 +10030,6 @@ ${text}`;
     return out;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/styles.js
   var STYLE_PROPERTIES = 11;
   var STYLE_OVERRIDE_COUNT = 10;
   var TST_STYLE_TYPE = {
@@ -11458,7 +10267,6 @@ ${text}`;
     }
   };
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/function-names.js
   var HARVESTED_FUNCTIONS = /* @__PURE__ */ new Map([
     [1, "ABS"],
     [3, "ACCRINTM"],
@@ -11733,14 +10541,12 @@ ${text}`;
     [323, "FORMULATEXT"]
   ]);
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/function-builtins.js
   var BUILTIN_FUNCTIONS = /* @__PURE__ */ new Map([
     [86, "MEDIAN"],
     [168, "SUM"],
     [212, "DURATION"]
   ]);
 
-  // Tools/PagesBuild/cupertino/package/dist/tsce/owners.js
   var FORMULA_OWNER_DEPENDENCIES = 4008;
   var FormulaOwnerFields = protoFields("TSCE.FormulaOwnerDependenciesArchive", {
     FORMULA_OWNER_UID: "formula_owner_uid",
@@ -11770,31 +10576,14 @@ ${text}`;
   var TABLE_INFO_MODEL = 2;
   var TABLE_MODEL_NAME = 8;
   var OwnerKind = {
-    /** The table itself. Carries the `formula_owner` reference. */
     TABLE: 1,
-    /** Formulas backing conditional-formatting rules. */
     CONDITIONAL_STYLE: 3,
-    /** Formulas backing row hiding — filters and manual hides. */
     HIDDEN_STATE_ROWS: 4,
-    /** Formulas backing merged cell ranges. */
     MERGE: 5,
-    /** Formulas backing categories (row grouping). */
     CATEGORIES: 8,
-    /** Formulas backing a category's summary aggregates. */
     SUMMARY_AGGREGATES: 9,
-    /** Formulas backing column hiding. */
     HIDDEN_STATE_COLUMNS: 11,
-    /** Apple's "haunted owner" for the table. */
     HAUNTED: 35,
-    /**
-     * The document as a whole, not any table.
-     *
-     * Recognisable without knowing the enum: every kind-200 owner in every
-     * corpus file — 23 of them, across all three apps and every era — has the
-     * *same* identity, `uid = 666` derived from `base = 466`. Real owners get
-     * random 128-bit UUIDs; this is a hardcoded sentinel, which is why it
-     * names no table and should not be reported as an unresolved one.
-     */
     DOCUMENT: 200
   };
   var OWNER_KIND_NAMES = /* @__PURE__ */ new Map([
@@ -11883,29 +10672,12 @@ ${text}`;
     get size() {
       return this.byUid.size;
     }
-    /** Look an owner up by its identity. */
     lookup(uid) {
       return uid ? this.byUid.get(ownerKey(uid)) : void 0;
     }
-    /**
-     * The name of the table an owner belongs to.
-     *
-     * The point of the whole map: an AST's cross-table `table_id` is one of
-     * these identities, so this is what turns an unnameable reference into
-     * `Revenue::A2`.
-     */
     tableName(uid) {
       return this.lookup(uid)?.tableName;
     }
-    /**
-     * The other direction: the identity `Revenue::A2` must *store*.
-     *
-     * Every cross-table node in the corpus — 1020 of 1020 — carries the
-     * target table's kind-1 owner UUID, so that is the only kind consulted.
-     * Two tables sharing a name is refused rather than guessed: Numbers
-     * scopes names per sheet, and a reference that silently picked one
-     * would compute the wrong number somewhere far from the mistake.
-     */
     tableUid(name) {
       let found;
       for (const owner of this.byUid.values()) {
@@ -11918,20 +10690,12 @@ ${text}`;
       }
       return found?.uid;
     }
-    /** Every owner, for diagnostics. */
     all() {
       return [...this.byUid.values()];
     }
-    /**
-     * Owners that name no object.
-     *
-     * Excludes the document-level sentinel, which names nothing by design —
-     * counting it as unresolved would report a gap in every file.
-     */
     unresolved() {
       return this.all().filter((owner) => owner.ownerId === void 0 && owner.kind !== OwnerKind.DOCUMENT);
     }
-    /** True for the fixed document-level identity rather than a real owner. */
     static isDocumentOwner(uid) {
       return uid?.hi === 0n && uid.lo === DOCUMENT_OWNER_UID.lo;
     }
@@ -11944,7 +10708,6 @@ ${text}`;
     return model.message.getString(TABLE_MODEL_NAME);
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsce/ast.js
   var FormulaFields = protoFields("TSCE.FormulaArchive", {
     AST_NODE_ARRAY: "AST_node_array",
     HOST_COLUMN: "host_column",
@@ -12021,7 +10784,6 @@ ${text}`;
   });
   var CROSS_TABLE_PREFIX = "OTHER_TABLE::";
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/formulas.js
   var TractRangeFields = { BEGIN: 1, END: 2 };
   var SELF_CELL_MARKER = "THIS_CELL";
   var BINARY_OPERATORS = /* @__PURE__ */ new Map([
@@ -12339,7 +11101,6 @@ ${text}`;
     return double === void 0 ? "0" : String(double);
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/predicates.js
   var PredicateFields = protoFields("TST.FormulaPredicateArchive", {
     PREDICATE_TYPE: "predicate_type",
     QUALIFIER1: "qualifier1",
@@ -12498,7 +11259,6 @@ ${text}`;
     return decodeDecimal128(bytes2);
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/formula-builder.js
   var BINARY_NODE = {
     "+": AstNodeType.ADDITION,
     "-": AstNodeType.SUBTRACTION,
@@ -12790,7 +11550,6 @@ ${text}`;
       }
       this.fail("expression expected");
     }
-    /** A reference or a range; both start the same way. */
     tryReference() {
       const cell = /^\$?[A-Za-z]+\$?\d+/.exec(this.text.slice(this.at));
       if (!cell) {
@@ -12899,7 +11658,6 @@ ${text}`;
     }
   };
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/conditional.js
   var ConditionalStyleSetFields = protoFields("TST.ConditionalStyleSetArchive", {
     RULE_COUNT: "ruleCount",
     RULES_PRE_PIVOT: "rules_prepivot",
@@ -12914,7 +11672,6 @@ ${text}`;
   var ConditionalStyleSet = class {
     store;
     object;
-    /** Key in the owning table's conditional-style table. */
     key;
     constructor(store, object, key) {
       this.store = store;
@@ -12924,22 +11681,9 @@ ${text}`;
     get id() {
       return this.object.identifier;
     }
-    /**
-     * The count Apple records, which may exceed the rules actually stored:
-     * it counts the set as authored, and a rule whose style was deleted
-     * leaves the count behind. Compare against `rules().length`.
-     */
     get declaredRuleCount() {
       return this.object.message.getUint(ConditionalStyleSetFields.RULE_COUNT) ?? 0;
     }
-    /**
-     * The rules, in evaluation order.
-     *
-     * `subject` is the address the condition is being asked about, so a rule
-     * on B4 reads `B4<0` rather than the generic marker. Omit it and rules
-     * render generically, which is right when describing the set itself
-     * rather than its effect on one cell.
-     */
     rules(subject, extra = {}) {
       const selfCell = subject ? cellAddress(subject.column, subject.row) : void 0;
       const options = {
@@ -12965,7 +11709,6 @@ ${text}`;
         legacy: true
       }));
     }
-    /** Turn a rule set into lines a person can read. */
     describe(subject) {
       return this.rules(subject).map((rule2) => {
         const condition = rule2.predicate?.text || "(unreadable condition)";
@@ -13084,7 +11827,6 @@ ${text}`;
     return arg;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/filters.js
   var FilterSetFields = protoFields("TST.FilterSetArchive", {
     TYPE: "type",
     IS_ENABLED: "is_enabled",
@@ -13096,9 +11838,7 @@ ${text}`;
   });
   var FilterRuleFields = { PREDICATE: 1, DISABLED: 2 };
   var FilterSetType = protoEnum("TST.FilterSetArchive.FilterSetType", {
-    /** A row must match every enabled rule. */
     ALL: "FilterSetArchiveTypeAll",
-    /** A row matching any enabled rule is shown. */
     ANY: "FilterSetArchiveTypeAny"
   });
   var FilterSet = class {
@@ -13111,7 +11851,6 @@ ${text}`;
     get id() {
       return this.object.identifier;
     }
-    /** Whether the app is applying this set at all. */
     get enabled() {
       return this.object.message.getBool(FilterSetFields.IS_ENABLED) ?? true;
     }
@@ -13124,29 +11863,18 @@ ${text}`;
     setMode(mode) {
       this.object.message.setVarint(FilterSetFields.TYPE, mode === "any" ? FilterSetType.ANY : FilterSetType.ALL);
     }
-    /** Column each rule applies to, in rule order. */
     offsets() {
       return this.object.message.getPackedVarints(FilterSetFields.OFFSETS).map(Number);
     }
-    /** Per-rule switches, as booleans. */
     ruleFlags() {
       return this.object.message.getPackedVarints(FilterSetFields.ENABLED).map((v) => v !== 0n);
     }
-    /**
-     * The rules, in stored order.
-     *
-     * The modern list wins where both exist, matching how the apps read
-     * them; a file written before the 2016 format change carries only the
-     * older one.
-     */
     rules(options = {}) {
       const offsets = this.offsets();
       const enabled = this.ruleFlags();
       const build = (messages, legacy) => messages.map((rule2, index) => ({
         index,
         column: offsets[index],
-        // A rule is live unless its own switch says otherwise. The legacy
-        // shape stores the inverse — `disabled` — on the rule itself.
         enabled: legacy ? !(rule2.getBool(FilterRuleFields.DISABLED) ?? false) : enabled[index] ?? true,
         predicate: readPredicate(rule2.getMessage(FilterRuleFields.PREDICATE), options),
         legacy
@@ -13156,15 +11884,6 @@ ${text}`;
         return build(modern, false);
       return build(this.object.message.getMessages(FilterSetFields.RULES_PRE_PIVOT), true);
     }
-    /**
-     * True when the parallel arrays line up with the rule list.
-     *
-     * `filter_offsets` and `filter_enabled` are indexed by rule position, so
-     * a set where they are shorter than the rules is one whose later rules
-     * have no column — worth detecting rather than silently reading as
-     * column 0. An empty set with a single stray offset, which is what every
-     * fixture holds, counts as consistent.
-     */
     get consistent() {
       const count = this.rules().length;
       if (count === 0)
@@ -13172,7 +11891,6 @@ ${text}`;
       const enabled = this.ruleFlags();
       return this.offsets().length >= count && (enabled.length === 0 || enabled.length >= count);
     }
-    /** Turn a rule on or off without removing it. */
     setRuleEnabled(index, enabled) {
       const rules = this.rules();
       const rule2 = rules[index];
@@ -13189,7 +11907,6 @@ ${text}`;
       flags[index] = enabled;
       this.object.message.setVarints(FilterSetFields.ENABLED, flags.map((flag) => flag ? 1 : 0));
     }
-    /** Readable summary, one line per rule. */
     describe() {
       return this.rules().map((rule2) => {
         const where = rule2.column === void 0 ? "column ?" : `column ${columnName(rule2.column)}`;
@@ -13199,7 +11916,6 @@ ${text}`;
     }
   };
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/uidmap.js
   var UidMapFields = protoFields("TST.ColumnRowUIDMapArchive", {
     SORTED_COLUMN_UIDS: "sorted_column_uids",
     COLUMN_INDEX_FOR_UID: "column_index_for_uid",
@@ -13240,7 +11956,6 @@ ${text}`;
         byIndex[index] = sorted[Number(slot)];
       }
     }
-    /** Column holding this identity, or `undefined` if it is not this table's. */
     columnIndex(uid) {
       return uid ? this.columnByUid.get(uidKey(uid)) : void 0;
     }
@@ -13259,11 +11974,9 @@ ${text}`;
     get rowCount() {
       return this.rowByUid.size;
     }
-    /** Per-position column identities, densely, for rewriting. */
     columnUidList() {
       return [...this.uidByColumn];
     }
-    /** Per-position row identities, densely, for rewriting. */
     rowUidList() {
       return [...this.uidByRow];
     }
@@ -13302,7 +12015,6 @@ ${text}`;
     return store.resolve(refId(tableModel, BASE_COLUMN_ROW_UIDS));
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/categories.js
   var CATEGORY_OWNER = 86;
   var CategoryOwnerRef = { GROUP_BY: 1 };
   var GroupByFields = protoFields("TST.GroupByArchive", {
@@ -13347,19 +12059,12 @@ ${text}`;
   var IndexSet = { ENTRIES: 1 };
   var IndexRange = { BEGIN: 1, END: 2 };
   var GroupingType = {
-    /** One group per distinct value. */
     BY_VALUE: 0,
-    /** Dates bucketed by year: every group value is 1 January. */
     BY_YEAR: 1,
-    /** By calendar month: every group value is the 1st. */
     BY_YEAR_MONTH: 2,
-    /** By day of the week: seven buckets, dated within one reference week. */
     BY_WEEKDAY: 3,
-    /** By exact day. */
     BY_DAY: 4,
-    /** By week: every group value falls on the week's first day. */
     BY_YEAR_WEEK: 5,
-    /** By quarter: every group value is 1 January, April, July or October. */
     BY_YEAR_QUARTER: 6
   };
   var GROUPING_TYPE_NAMES = /* @__PURE__ */ new Map([
@@ -13373,7 +12078,6 @@ ${text}`;
   ]);
   var TableCategories = class {
     store;
-    /** The `TST.GroupByArchive`. */
     object;
     uids;
     constructor(store, object, uids) {
@@ -13384,14 +12088,12 @@ ${text}`;
     get id() {
       return this.object.identifier;
     }
-    /** Whether the app is currently grouping rows by this definition. */
     get enabled() {
       return this.object.message.getBool(GroupByFields.IS_ENABLED) ?? false;
     }
     setEnabled(enabled) {
       this.object.message.setBool(GroupByFields.IS_ENABLED, enabled);
     }
-    /** The columns grouped by, outermost first. */
     groupColumns() {
       return this.object.message.getMessages(GroupByFields.GROUP_COLUMN).map((column) => {
         const columnUid = readUid(column.getMessage(GroupColumnFields.COLUMN_UID));
@@ -13405,7 +12107,6 @@ ${text}`;
         };
       });
     }
-    /** Per-group column summaries, where the table defines any. */
     aggregates() {
       return this.object.message.getMessages(GroupByFields.COLUMN_AGG_TYPE).map((aggregate) => {
         const columnUid = readUid(aggregate.getMessage(ColumnAggregateFields.COLUMN_UID));
@@ -13418,29 +12119,14 @@ ${text}`;
         };
       });
     }
-    /**
-     * The root of the group tree.
-     *
-     * Written two ways. Current files put the root in a separate object and
-     * reference it (`group_node_root_ref`), keeping the tree out of the table
-     * model's own record; older ones inline it (`group_node_root`). The
-     * reference wins where both exist, matching how the apps read it.
-     */
     rootNode() {
       const referenced = this.store.resolve(refId(this.object.message, GroupByFields.GROUP_NODE_ROOT_REF));
       return referenced?.message ?? this.object.message.getMessage(GroupByFields.GROUP_NODE_ROOT);
     }
-    /**
-     * The groups, as a tree.
-     *
-     * The root node is not a group — it holds every row — so its children are
-     * returned as the top level.
-     */
     groups() {
       const root = this.rootNode();
       return root ? this.childrenOf(root, 0) : [];
     }
-    /** Groups at every level, flattened, for callers that just want a list. */
     flatGroups() {
       const out = [];
       const walk = (groups) => {
@@ -13466,7 +12152,6 @@ ${text}`;
       }
       return out;
     }
-    /** A node's children, whichever of the two encodings it uses. */
     childNodes(node) {
       const referenced = node.getMessages(GroupNodeFields.CHILD_REF).flatMap((ref) => {
         const target = this.store.resolve(ref.getVarint(1));
@@ -13474,38 +12159,10 @@ ${text}`;
       });
       return referenced.length > 0 ? referenced : node.getMessages(GroupNodeFields.CHILD);
     }
-    /**
-     * The rows in one group.
-     *
-     * `row_lookup_uids` is typed as an index set and, despite its name,
-     * holds row **indexes**: across every categorised fixture, the rows a
-     * group names hold exactly that group's value in the grouping column, and
-     * the groups together cover every data row exactly once. `row_indexes`
-     * carries the same thing when present, so either is read.
-     */
     rowsOf(node) {
       const set = node.getMessage(GroupNodeFields.ROW_LOOKUP_UIDS) ?? node.getMessage(GroupNodeFields.ROW_INDEXES);
       return expandIndexSet(set);
     }
-    /**
-     * Check the cached tree against the data it claims to describe.
-     *
-     * Grouping happens in the app. This library can change cells but does not
-     * regroup them, so a tree can go stale — and unlike a table of contents,
-     * a stale category tree is checkable, because the grouping column's
-     * values are right there. Returns the groups whose rows no longer all
-     * hold the group's value.
-     *
-     * Comparison is on **values, not rendered text**: a boolean group is
-     * `false` where the cell renders as `FALSE`, and a date group is a
-     * `Date` where the cell renders in the document's format. Comparing the
-     * strings would report every boolean and date category as stale.
-     *
-     * Only the outermost grouping column is checked, and only for
-     * {@link GroupingType.BY_VALUE}: a bucketed group ("dates in 1979") names
-     * the bucket, not any cell's value, so checking it means evaluating the
-     * bucketing formula.
-     */
     verify(valueAt) {
       const [first] = this.groupColumns();
       if (!first || first.column === void 0 || first.groupingType !== GroupingType.BY_VALUE) {
@@ -13519,30 +12176,6 @@ ${text}`;
       }
       return mismatches;
     }
-    /**
-     * Re-sort rows into the groups their values now put them in.
-     *
-     * {@link verify} says the cached tree has gone stale; this fixes it. Only
-     * membership moves — every group node, its identity and its value stay
-     * exactly as the app wrote them, and only the row index set inside each
-     * one is rewritten.
-     *
-     * That restriction is what makes this safe to do offline. Deciding which
-     * rows belong to "Animal" is reading the grouping column and comparing
-     * values, which needs nothing this library cannot already do. *Creating*
-     * a group would mean minting a group identity, placing the node in
-     * whatever order the app sorts groups in, and populating the several
-     * per-column and per-row fields alongside the tree whose meaning no
-     * fixture explains. So a value with no group is refused rather than
-     * invented, and the tree is left untouched when that happens.
-     *
-     * Returns how many rows moved. Regrouping data that has not changed moves
-     * none and rewrites the archive to the same bytes, which is how the tests
-     * check it.
-     *
-     * @throws RangeError if a row's value matches no existing group, or if
-     * the outermost grouping is bucketed rather than by value.
-     */
     regroup(valueAt) {
       const [first] = this.groupColumns();
       if (!first || first.column === void 0) {
@@ -13582,7 +12215,6 @@ ${text}`;
       }
       return moved;
     }
-    /** Readable summary, one line per group. */
     describe() {
       return this.flatGroups().map((group) => `${"  ".repeat(group.level)}${group.label} (${group.rows.length} rows)`);
     }
@@ -13666,7 +12298,6 @@ ${text}`;
     return out;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/controls.js
   var CONTROL_CELL_SPEC_TABLE = 21;
   var CellSpecFields = protoFields("TST.CellSpecArchive", {
     INTERACTION_TYPE: "interaction_type",
@@ -13765,16 +12396,7 @@ ${text}`;
     return void 0;
   }
   var PopUpMenuModelFields = protoFields("TST.PopUpMenuModel", {
-    /** `repeated CellValue item` — Apple marks this deprecated. */
     LEGACY_ITEM: "item",
-    /**
-     * `repeated TSCE.CellValueArchive tsce_item` — the live one.
-     *
-     * Named for the proto field rather than for what it holds, because
-     * `proto:check` matches constants to schema fields *by name*: called
-     * `ITEM` it matched `item = 1` and reported permanent drift against a
-     * field number three verified menus in Numbers say is right.
-     */
     TSCE_ITEM: "tsce_item"
   });
   var CellValueFields2 = { TYPE: 1, BOOLEAN: 2, DATE: 3, NUMBER: 4, STRING: 5 };
@@ -13814,7 +12436,6 @@ ${text}`;
     return model;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/prebnc.js
   var PRE_BNC_VERSION = 4;
   var HEADER_SIZE2 = 12;
   var Header = {
@@ -13826,11 +12447,8 @@ ${text}`;
   };
   var PRE_BNC_LAYOUTS = /* @__PURE__ */ new Map([
     [2, [16, 20]],
-    // number
     [3, [8, 12]],
-    // text
     [5, [20]]
-    // date
   ]);
   var PreBncType = { NUMBER: 2, TEXT: 3, DATE: 5 };
   function decodePreBncRecord(bytes2) {
@@ -13888,7 +12506,6 @@ ${text}`;
     return out;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/formats.js
   var FormatFields = protoFields("TSK.FormatStructArchive", {
     FORMAT_TYPE: "format_type",
     DECIMAL_PLACES: "decimal_places",
@@ -13919,24 +12536,7 @@ ${text}`;
     TEXT: 260,
     DATE: 261,
     MULTIPLE_CHOICE: 266,
-    /**
-     * How a checkbox cell is drawn — a boolean format, not a number one.
-     *
-     * Measured, not published: two borrowed documents put a checkbox cell's
-     * `bool_format` at a format whose whole body is `{ format_type: 263 }`.
-     * The minimal case is the convincing one — `test-format-save.numbers` has
-     * a checkbox with this format and *no* number format at all, which is
-     * what shows the format is the thing that draws the control.
-     */
     CHECKBOX: 263,
-    /**
-     * How a star-rating cell is drawn — a number format.
-     *
-     * Weaker evidence than {@link CHECKBOX}: one document, where it is the
-     * `num_format` of both the star-rating cell and (alongside its bool
-     * format) the checkbox. Sliders and steppers use a plain NUMBER instead,
-     * which fits — they display their value and a rating does not.
-     */
     STAR_RATING: 267,
     CUSTOM_NUMBER: 270,
     CUSTOM_TEXT: 271,
@@ -14178,7 +12778,6 @@ ${text}`;
     return m;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tst/tables.js
   var OWNER_REGISTRIES = /* @__PURE__ */ new WeakMap();
   var TST_TYPE = {
     TABLE_INFO: 6e3,
@@ -14445,7 +13044,6 @@ ${text}`;
   var TableModel = class {
     store;
     object;
-    /** The TST.TableInfoArchive drawable owning this model, when known. */
     infoObject;
     constructor(store, object, infoObject) {
       this.store = store;
@@ -14458,13 +13056,6 @@ ${text}`;
     set name(value) {
       this.object.message.setString(TableModelFields.TABLE_NAME, value);
     }
-    /**
-     * Whether the app draws the table's name above it.
-     *
-     * `table_name_enabled` — true on 29 corpus tables, absent on 23; a
-     * renamed table with the flag unset keeps its new name in the file and
-     * shows nothing, which reads as the rename having failed.
-     */
     get nameVisible() {
       return this.object.message.getBool(TableModelFields.TABLE_NAME_ENABLED) ?? false;
     }
@@ -14486,7 +13077,6 @@ ${text}`;
     dataStore() {
       return this.object.message.getMessage(TableModelFields.BASE_DATA_STORE);
     }
-    /** key → string map of a TableDataList referenced from the data store. */
     dataListMap(field, value) {
       const out = /* @__PURE__ */ new Map();
       const ds = this.dataStore();
@@ -14504,7 +13094,6 @@ ${text}`;
     stringTable() {
       return this.dataListMap(DataStoreFields.STRING_TABLE, (e) => e.getString(ListEntry2.STRING));
     }
-    /** Rich-text entries resolved through their payload storage's plain text. */
     richTextTable() {
       return this.dataListMap(DataStoreFields.RICH_TEXT_TABLE, (e) => {
         const payload = this.store.resolve(refId(e, ListEntry2.RICH_TEXT_PAYLOAD));
@@ -14512,21 +13101,6 @@ ${text}`;
         return storage?.message.getStrings(Storage.TEXT)[0];
       });
     }
-    /**
-     * Merged cell ranges, anchored at their top-left cell.
-     *
-     * Two encodings exist and the *documented* one is not the one current
-     * apps use. `DataStore.merge_region_map` holds packed CellRange values,
-     * but no document in the corpus — Numbers or Pages, 2013 through 26.x —
-     * actually has one. Real merges live in the calc engine, as colon-tract
-     * AST nodes inside `TableModelArchive.merge_owner.formula_store`. A
-     * reader that only knows the region map silently reports zero merges for
-     * every merged table it will ever meet, so the formula store is read
-     * first and the region map kept as a fallback.
-     *
-     * Ranges are deduplicated: a table can carry the same rectangle in both
-     * encodings, and the same merge more than once in the formula store.
-     */
     merges() {
       const out = [...this.mergesFromFormulaStore(), ...this.mergesFromRegionMap()];
       const seen = /* @__PURE__ */ new Set();
@@ -14538,13 +13112,6 @@ ${text}`;
         return true;
       });
     }
-    /**
-     * Decode merges from the merge owner's formula store.
-     *
-     * Each merge is a one-argument function node over a colon tract whose
-     * `absolute_column` / `absolute_row` ranges give the rectangle. An
-     * omitted `range_end` means a single row or column.
-     */
     mergesFromFormulaStore() {
       const out = [];
       const store = this.object.message.getMessage(TableModelFields.MERGE_OWNER)?.getMessage(MergeOwner.FORMULA_STORE);
@@ -14587,11 +13154,6 @@ ${text}`;
       }
       return out;
     }
-    // ----------------------------------------------------------------- formats
-    /**
-     * How a cell's value is displayed, or undefined when it has no explicit
-     * format and the app falls back to its automatic rendering.
-     */
     cellFormat(row, column) {
       const record = this.recordAt(row, column);
       if (!record)
@@ -14607,14 +13169,6 @@ ${text}`;
       }
       return void 0;
     }
-    /**
-     * Set how a cell's value is displayed.
-     *
-     * A cell shows one format, so any format the record already carried is
-     * cleared first — leaving a stale currency id beside a new date id would
-     * make the display depend on which flag the app happens to read first.
-     * @agentTool set_cell_format
-     */
     setCellFormat(row, column, format) {
       this.requireWritable();
       if (format.kind === "checkbox") {
@@ -14627,7 +13181,6 @@ ${text}`;
       }
       this.writeCellFormat(row, column, format);
     }
-    /** The format write itself, shared by {@link setCellFormat} and the control path. */
     writeCellFormat(row, column, format) {
       const located = this.locateRow(row);
       if (!located)
@@ -14645,11 +13198,6 @@ ${text}`;
       layout.records[column] = record.encode();
       this.writeRowLayout(located.rowInfo, layout);
     }
-    /**
-     * Apply one format across a rectangular block.
-     *
-     * @agentTool set_cell_format
-     */
     setRangeFormat(row, column, rowCount, columnCount, format) {
       for (let r = row; r < row + rowCount; r++) {
         for (let c = column; c < column + columnCount; c++) {
@@ -14658,12 +13206,6 @@ ${text}`;
         }
       }
     }
-    /** key → TSK.FormatStructArchive from the data store's format table. */
-    /**
-     * Apply table-level formatting — the setter `tableStyle().setTable`
-     * reaches, surfaced here because a method named `formatTable` that
-     * silently does nothing was a reported trap.
-     */
     formatTable(formatting) {
       const style = this.tableStyle();
       if (!style)
@@ -14681,13 +13223,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Add or reuse a format-table entry, returning its key.
-     *
-     * Reuse is by encoded equality: two cells showing "2 decimal places, no
-     * separator" should share one entry, exactly as they do in Apple's own
-     * files, rather than growing the table by one per formatted cell.
-     */
     internFormat(format) {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.FORMAT_TABLE));
       if (!list)
@@ -14714,7 +13249,6 @@ ${text}`;
       m.setVarint(DataList2.NEXT_LIST_ID, key + 1);
       return key;
     }
-    /** The decoded record of a cell, if it has storage. */
     recordAt(row, column) {
       const located = this.locateRow(row);
       if (!located)
@@ -14722,12 +13256,6 @@ ${text}`;
       const raw = readRowLayout(located.rowInfo, this.columnCount).records[column];
       return raw ? CellRecord.decode(raw) : void 0;
     }
-    /**
-     * Records whose string or rich-text reference has no entry in this
-     * table's own data list. Empty on every corpus table (0 of 5019
-     * records); anything here reloads as an empty cell, so a save that
-     * would persist one is refused (`verifyCellStorageIntegrity`).
-     */
     orphanReferences() {
       const out = [];
       if (this.storageGeneration !== "v5")
@@ -14756,7 +13284,6 @@ ${text}`;
       }
       return out;
     }
-    /** Keys present in one of the data store's lists. */
     dataListKeys(field) {
       const out = /* @__PURE__ */ new Set();
       const list = this.store.resolve(refId(this.dataStore(), field));
@@ -14767,22 +13294,9 @@ ${text}`;
       }
       return out;
     }
-    // ---------------------------------------------------------------- formulas
-    /**
-     * The formula in a cell, as text, or undefined when it holds a literal.
-     *
-     * Rendered from the cell's position because references are stored as
-     * *offsets* from the cell using them — one formula entry is shared by
-     * every cell in a filled-down column, and each renders differently.
-     *
-     * Function names come from a registry the format does not contain (see
-     * `formulas.ts`); an unrecognised one renders as `FUNCTION_<id>` rather
-     * than a guess. Use {@link cellFormulaDetail} to see what was unnamed.
-     */
     cellFormula(row, column) {
       return this.cellFormulaDetail(row, column)?.text || void 0;
     }
-    /** {@link cellFormula} plus the ids and node types it could not name. */
     cellFormulaDetail(row, column) {
       const id = this.formulaId(row, column);
       if (id === void 0)
@@ -14792,14 +13306,6 @@ ${text}`;
         return void 0;
       return renderFormula(formula, { row, column }, { owners: this.owners() });
     }
-    /**
-     * The document's calc-engine owner map, built once and cached.
-     *
-     * What turns a cross-table reference from an unnameable identity into
-     * `Revenue::A2`. Scanning every object to build it is not something to do
-     * per formula, so it is memoised on the store — a document's owners do
-     * not change while its formulas are being read.
-     */
     owners() {
       let registry = OWNER_REGISTRIES.get(this.store);
       if (!registry) {
@@ -14808,18 +13314,10 @@ ${text}`;
       }
       return registry;
     }
-    /**
-     * The raw `TSCE.FormulaArchive` behind a cell, if it has one.
-     *
-     * The unrendered truth — what {@link cellFormulaDetail} renders, and the
-     * yardstick formula *writing* is measured against: a rebuilt formula is
-     * proven by comparing bytes with what Apple stored here.
-     */
     formulaArchiveAt(row, column) {
       const id = this.formulaId(row, column);
       return id === void 0 ? void 0 : this.formulaTable().get(id);
     }
-    /** `formula_id` of a cell, if its record carries one. */
     formulaId(row, column) {
       const located = this.locateRow(row);
       if (!located)
@@ -14827,15 +13325,9 @@ ${text}`;
       const raw = readRowLayout(located.rowInfo, this.columnCount).records[column];
       return raw ? CellRecord.decode(raw).id(CellFlag.FORMULA_ID) : void 0;
     }
-    /**
-     * `text_style_id` of a cell, if its record carries one — the style-table
-     * key, same currency as {@link cellStyleId}. {@link textStyle} resolves
-     * it to a handle.
-     */
     textStyleId(row, column) {
       return this.recordAt(row, column)?.id(CellFlag.TEXT_STYLE_ID);
     }
-    /** The `TSWP.CharacterStyleArchive` behind a cell's text, as a handle. */
     textStyle(row, column) {
       const key = this.textStyleId(row, column);
       if (key === void 0)
@@ -14843,16 +13335,6 @@ ${text}`;
       const obj = this.store.resolve(this.styleTableEntry(key));
       return obj ? new TableStyleHandle(this.store, obj) : void 0;
     }
-    /**
-     * Every formula cell in the table, with its rendered text.
-     *
-     * Walks the row records for a formula id rather than going through
-     * {@link cells}: a formula the app wrote carries a cached value, but a
-     * freshly authored one does not until the app recomputes, and it is a
-     * formula either way.
-     *
-     * @agentTool list_formulas
-     */
     formulas() {
       const out = [];
       if (this.storageGeneration !== "v5")
@@ -14878,7 +13360,6 @@ ${text}`;
       }
       return out;
     }
-    /** key → TSCE.FormulaArchive from the data store's formula table. */
     formulaTable() {
       const out = /* @__PURE__ */ new Map();
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.FORMULA_TABLE));
@@ -14890,29 +13371,13 @@ ${text}`;
       }
       return out;
     }
-    /** The merge covering a cell, if any — including the one it anchors. */
     mergeAt(row, column) {
       return this.merges().find((m) => row >= m.row && row < m.row + m.rowCount && column >= m.column && column < m.column + m.columnCount);
     }
-    /**
-     * True when a cell is swallowed by a merge anchored elsewhere.
-     *
-     * Such a cell is not displayed at all: the anchor's content spans it.
-     * Writing to it produces a value nobody will ever see.
-     */
     isCovered(row, column) {
       const merge = this.mergeAt(row, column);
       return merge !== void 0 && (merge.row !== row || merge.column !== column);
     }
-    /**
-     * Cell-storage generation used by this table:
-     *  - "v5"     "BNC" storage — readable. Observed in files as early as the
-     *             2018-era apps (format 3.2.13), not only Numbers 10+.
-     *  - "preBNC" storage versions 3/4 written by iWork '13/'15-era apps —
-     *             NOT readable (undocumented layout; the reference Python
-     *             implementation refuses these too)
-     *  - "empty"  no tile rows at all
-     */
     get storageGeneration() {
       const tiles = this.dataStore()?.getMessage(DataStoreFields.TILES);
       if (!tiles)
@@ -14938,26 +13403,9 @@ ${text}`;
       }
       return sawRow ? "preBNC" : "empty";
     }
-    /**
-     * True when {@link cells} decodes **every** cell in this table.
-     *
-     * Always true for v5 storage. For pre-BNC it means every record matched a
-     * measured shape — the interesting case is `false`, which says the list
-     * `cells()` returns is short and {@link undecodedPreBncCells} says by how
-     * much.
-     */
     get hasReadableCells() {
       return this.storageGeneration !== "preBNC" || this.undecodedPreBncCells() === 0;
     }
-    /**
-     * All non-empty cells in reading order.
-     *
-     * Reads pre-BNC (storage version 4) tables too, for the record shapes
-     * that have been measured — see {@link ./prebnc.ts}. A cell whose shape
-     * is unmeasured is **omitted**, and {@link undecodedPreBncCells} counts
-     * them, so "this table read clean" and "this table half-read" stay
-     * distinguishable.
-     */
     cells() {
       const out = [];
       const ds = this.dataStore();
@@ -15012,13 +13460,6 @@ ${text}`;
       out.sort((a, b) => a.row - b.row || a.column - b.column);
       return out;
     }
-    /**
-     * Cells of a pre-BNC table.
-     *
-     * Kept separate from the v5 path rather than folded into it: the two
-     * share a header shape and nothing else, and interleaving them would
-     * make both harder to read for no gain.
-     */
     preBncCells(ds) {
       const out = [];
       const strings = this.stringTable();
@@ -15049,15 +13490,6 @@ ${text}`;
       out.sort((a, b) => a.row - b.row || a.column - b.column);
       return out;
     }
-    /**
-     * How many pre-BNC cells this table holds that {@link cells} could not
-     * decode — zero for a v5 table, and zero for a pre-BNC table that read
-     * cleanly.
-     *
-     * Exposed because a partial read is the one outcome a caller must be able
-     * to detect: `cells()` returning fewer rows than the file contains is
-     * otherwise indistinguishable from a sparse table.
-     */
     undecodedPreBncCells() {
       if (this.storageGeneration !== "preBNC")
         return 0;
@@ -15078,7 +13510,6 @@ ${text}`;
       }
       return undecoded;
     }
-    /** Dense 2-D array of the table (null = empty cell). */
     grid() {
       const rows = [];
       for (let r = 0; r < this.rowCount; r++) {
@@ -15091,13 +13522,6 @@ ${text}`;
       }
       return rows;
     }
-    /**
-     * One cell's typed value, or `undefined` when the cell is empty.
-     *
-     * `undefined` also covers a pre-BNC cell whose record shape has not been
-     * measured — see {@link undecodedPreBncCells}, which is how the two are
-     * told apart.
-     */
     cellValue(row, column) {
       for (const c of this.cells()) {
         if (c.row === row && c.column === column)
@@ -15105,26 +13529,10 @@ ${text}`;
       }
       return void 0;
     }
-    /** Convenience: cell text/number as a display string ("" for empty). */
     cellText(row, column) {
       const value = this.cellValue(row, column);
       return value === void 0 ? "" : cellValueToString(value);
     }
-    // --------------------------------------------------------------- writing
-    /**
-     * Write a value into an existing cell.
-     *
-     * Presentation the record already carries — cell and text style ids,
-     * number formats, comments, conditional styles — is preserved, except
-     * that format ids tied to the *old* value type are dropped when the type
-     * changes (a date format on a number cell would render nonsense). Writing
-     * a literal also clears any formula on the cell.
-     *
-     * Rich text (`{ type: "richText" }`) cannot be written: the value lives
-     * in a separate TSWP storage object. Set plain `text` instead, or edit
-     * the existing rich-text storage through {@link richTextStorage}.
-     * @agentTool set_cells
-     */
     setCell(row, column, input, options = {}) {
       const value = normalizeCellInput(input);
       this.requireWritable();
@@ -15155,39 +13563,9 @@ ${text}`;
       this.refreshRowHeader(row, layout.records.filter((r) => r !== void 0).length);
       this.refreshTileTotals();
     }
-    /** Clear a cell's value, keeping its styling. */
     clearCell(row, column) {
       this.setCell(row, column, { type: "empty" });
     }
-    /**
-     * Write a formula into a cell.
-     *
-     * The formula is compiled to a TSCE AST, interned in the table's formula
-     * table, and the cell's record points at it — the same three steps the
-     * app performs. Relative references are stored as offsets from this cell,
-     * so `=A1+1` in B2 and in B3 compile to different bytes, exactly as in
-     * the app.
-     *
-     * **Nothing here evaluates.** A cell record carries the formula *and* its
-     * cached result, and the apps display the cache until the engine
-     * recalculates. `value` is that cache: supply it and the cell reads
-     * correctly before any app has touched the file; omit it and whatever the
-     * cell held is kept, which is right when the formula reproduces the value
-     * already there and wrong otherwise. There is no third option that does
-     * not involve implementing Apple's calc engine.
-     *
-     * **The dependency tracker is not written — and does not need to be.**
-     * The calc engine keeps its own per-cell ledger
-     * (`TSCE.FormulaOwnerDependenciesArchive`) that this method leaves
-     * alone. Numbers rebuilds it on open rather than trusting it: the e2e
-     * recompute probe writes a formula with a deliberately wrong cached
-     * value and the app reports the recomputed result on every
-     * `npm run test:e2e`.
-     *
-     * Refuses a function it has no index for rather than inventing one — see
-     * `authorableFunctions()` for the 272 it knows.
-     * @agentTool set_formula
-     */
     setFormula(row, column, formula, options = {}) {
       this.requireWritable();
       if (row < 0 || row >= this.rowCount || column < 0 || column >= this.columnCount) {
@@ -15229,12 +13607,6 @@ ${text}`;
       this.refreshRowHeader(row, layout.records.filter((r) => r !== void 0).length);
       this.refreshTileTotals();
     }
-    /**
-     * Remove a cell's formula, keeping the value it last cached.
-     *
-     * Returns false when the cell had none. This is what "convert to value"
-     * does in the app: the number stays, the recipe goes.
-     */
     clearFormula(row, column) {
       this.requireWritable();
       const located = this.locateRow(row);
@@ -15255,14 +13627,6 @@ ${text}`;
       this.refreshTileTotals();
       return true;
     }
-    /**
-     * Add a formula to the table's formula table, returning its key.
-     *
-     * Unlike strings, formulas are not deduplicated: two cells running the
-     * same calculation from different origins compile to different ASTs, and
-     * comparing encoded messages to find the rare true duplicate would cost
-     * more than the entry it saves.
-     */
     internFormula(archive) {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.FORMULA_TABLE));
       if (!list) {
@@ -15278,18 +13642,11 @@ ${text}`;
       message.setVarint(DataList2.NEXT_LIST_ID, key + 1);
       return key;
     }
-    /**
-     * Bump a formula-table entry's refcount by one more referencing cell.
-     *
-     * Apple's convention, measured across every fixture: the refcount equals
-     * the number of cell records naming the key — 39 of 39 entries agree.
-     */
     retainFormula(key) {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.FORMULA_TABLE));
       const entry = list?.message.getMessages(DataList2.ENTRIES).find((e) => e.getUint(ListEntry2.KEY) === key);
       entry?.setVarint(ListEntry2.REFCOUNT, (entry.getUint(ListEntry2.REFCOUNT) ?? 0) + 1);
     }
-    /** Drop one cell's reference to a formula entry, removing it at zero. */
     releaseFormula(key) {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.FORMULA_TABLE));
       if (!list)
@@ -15306,25 +13663,6 @@ ${text}`;
       }
       m.setMessages(DataList2.ENTRIES, entries.filter((e) => e !== entry));
     }
-    /**
-     * Merge a rectangle of cells, anchored at its top-left.
-     *
-     * A merge is not a property of the cells. It is a **formula owned by the
-     * calc engine**: `TableModelArchive.merge_owner.formula_store` holds one
-     * colon-tract AST node per merged rectangle, and the covered cells are
-     * simply deleted — Apple leaves them with no record at all, which is why
-     * `cellValue` returns `undefined` for them rather than "empty".
-     *
-     * Every table in every document examined already carries a `merge_owner`
-     * with an owner id, merged or not, so nothing here has to mint a calc
-     * engine identity. A table that somehow lacks one is refused rather than
-     * guessed at: an owner the engine does not know about is worse than no
-     * merge, because the document would load and then behave oddly.
-     *
-     * The anchor's value survives; everything the rectangle covers is
-     * discarded, exactly as merging does in the app.
-     * @agentTool merge_cells
-     */
     mergeCells(row, column, rowCount, columnCount) {
       this.requireWritable();
       if (rowCount < 1 || columnCount < 1) {
@@ -15372,18 +13710,6 @@ ${text}`;
         }
       }
     }
-    /**
-     * The calc engine's dependency ledger entry for one merge.
-     *
-     * The merge owner's `FormulaOwnerDependenciesArchive` lists each merge
-     * as a synthetic cell — `(row 0, column = formula_index)` with an empty
-     * edges message; both merge-bearing corpus documents agree byte for
-     * byte, 8 records of 8. Idempotent, because recreating a merge at an
-     * index the ledger still remembers must not duplicate the record. A
-     * document with no kind-5 dependencies archive (the pre-4008 era) is
-     * left alone: its merges live in the region map and the engine has no
-     * ledger to keep consistent.
-     */
     addMergeLedgerRecord(index) {
       const owner = this.mergeDependenciesOwner();
       if (!owner)
@@ -15421,7 +13747,6 @@ ${text}`;
       tile.message.addMessage(CellRecordTileFields.CELL_RECORDS, record);
       tile.message.markDirty();
     }
-    /** Drop a merge's ledger record; the tile stays, like the high-water index. */
     removeMergeLedgerRecord(index) {
       const owner = this.mergeDependenciesOwner();
       const tiled = owner?.message.getMessage(FormulaOwnerFields.TILED_CELL_DEPENDENCIES);
@@ -15438,7 +13763,6 @@ ${text}`;
         }
       }
     }
-    /** The kind-5 dependencies archive matching this table's merge owner id. */
     mergeDependenciesOwner() {
       const uid = readCfUid(this.object.message.getMessage(TableModelFields.MERGE_OWNER)?.getMessage(MergeOwner.OWNER_ID));
       if (!uid)
@@ -15452,14 +13776,6 @@ ${text}`;
       }
       return void 0;
     }
-    /**
-     * Remove the merge anchored at a cell, returning false if there is none.
-     *
-     * The cells it covered come back empty, which is what the app does: the
-     * values they held before merging were discarded at merge time and are
-     * not recoverable from the file.
-     * @agentTool merge_cells
-     */
     unmergeCells(row, column) {
       this.requireWritable();
       const owner = this.object.message.getMessage(TableModelFields.MERGE_OWNER);
@@ -15485,16 +13801,6 @@ ${text}`;
       }
       return true;
     }
-    /**
-     * One merged rectangle as the calc engine stores it.
-     *
-     * `cross_table_info` names the table's *own* formula owner — a merge
-     * reaches nowhere else — and is taken from the registry rather than
-     * derived arithmetically, because the `base + kind` derivation holds for
-     * most files and demonstrably not all (see `src/tsce/owners.ts`). When an
-     * existing merge is present its cross-table info is copied verbatim,
-     * which is both cheaper and safer than reconstructing it.
-     */
     mergeNode(row, column, lastRow, lastColumn) {
       const node = RawMessage.create();
       node.setVarint(AstNode.TYPE, AST_COLON_TRACT_NODE);
@@ -15514,7 +13820,6 @@ ${text}`;
       node.setMessage(AstNode.COLON_TRACT, tract);
       return node;
     }
-    /** A merge node already in this table, to copy the invariant parts from. */
     existingMergeNode() {
       const store = this.object.message.getMessage(TableModelFields.MERGE_OWNER)?.getMessage(MergeOwner.FORMULA_STORE);
       for (const pair of store?.getMessages(FormulaStore.FORMULAS) ?? []) {
@@ -15526,7 +13831,6 @@ ${text}`;
       }
       return void 0;
     }
-    /** `cross_table_info` naming this table's own formula owner. */
     crossTableInfo() {
       const ours = new Set([this.object.identifier, this.infoObject?.identifier].filter((id) => id !== void 0));
       const own = this.owners().all().find((o) => o.kind === OwnerKind.TABLE && o.ownerId !== void 0 && ours.has(o.ownerId));
@@ -15541,7 +13845,6 @@ ${text}`;
       info.setMessage(1, uid);
       return info;
     }
-    /** Delete a cell's record outright, as merging does to a covered cell. */
     deleteCellRecord(row, column) {
       const located = this.locateRow(row);
       if (!located)
@@ -15558,14 +13861,6 @@ ${text}`;
       this.refreshRowHeader(row, layout.records.filter((r) => r !== void 0).length);
       this.refreshTileTotals();
     }
-    /**
-     * Clear every cell, keeping the table's shape, styling and bands.
-     *
-     * A blank table laid out like the one it was copied from, which is what
-     * "add a table" usually means — as opposed to a duplicate of the data.
-     * Covered cells are cleared too: leaving them would strand values inside
-     * a merge whose anchor is now empty.
-     */
     clearAllCells() {
       this.requireWritable();
       for (let row = 0; row < this.rowCount; row++) {
@@ -15574,13 +13869,11 @@ ${text}`;
         }
       }
     }
-    /** Write a whole row left-to-right, padding with empties. */
     setRow(row, values, options = {}) {
       for (let column = 0; column < this.columnCount; column++) {
         this.setCell(row, column, values[column] ?? { type: "empty" }, options);
       }
     }
-    /** Write a rectangular block anchored at `row`,`column`. */
     setCells(row, column, values, options = {}) {
       for (let r = 0; r < values.length; r++) {
         const line = values[r];
@@ -15588,7 +13881,6 @@ ${text}`;
           this.setCell(row + r, column + c, line[c], options);
       }
     }
-    /** The TSWP storage backing a rich-text cell, for editing its runs. */
     richTextStorage(row, column) {
       const located = this.locateRow(row);
       if (!located)
@@ -15608,34 +13900,21 @@ ${text}`;
       }
       return void 0;
     }
-    // ------------------------------------------------------------- structure
     get footerRowCount() {
       return this.object.message.getUint(TableModelFields.FOOTER_ROWS) ?? 0;
     }
-    /** Header rows stay visible while the table scrolls (Numbers). */
     get headerRowsFrozen() {
       return this.object.message.getBool(TableModelFields.HEADER_ROWS_FROZEN) ?? false;
     }
     get headerColumnsFrozen() {
       return this.object.message.getBool(TableModelFields.HEADER_COLUMNS_FROZEN) ?? false;
     }
-    /** Header rows repeat at the top of each page/slide the table spans. */
     get repeatingHeaderRows() {
       return this.object.message.getBool(TableModelFields.REPEATING_HEADER_ROWS) ?? false;
     }
     get repeatingHeaderColumns() {
       return this.object.message.getBool(TableModelFields.REPEATING_HEADER_COLUMNS) ?? false;
     }
-    /**
-     * Change how many leading rows/columns are header bands, and how those
-     * bands behave.
-     *
-     * Bands are presentation only — cell storage is identical either way —
-     * so this is a safe edit that does not touch the tiles. Counts are
-     * clamped to the table's real size: a header count past the last row
-     * would leave the app with no body.
-     * @agentTool set_table_bands
-     */
     setBands(bands) {
       const m = this.object.message;
       if (bands.headerRows !== void 0) {
@@ -15658,7 +13937,6 @@ ${text}`;
           m.setBool(field, value);
       }
     }
-    /** Height of a row in points, falling back to the table default. */
     rowHeight(row) {
       const size = this.header(DataStoreFields.ROW_HEADERS, row)?.getFloat(HeaderFields.SIZE) ?? 0;
       return size > 0 ? size : this.object.message.getDouble(TableModelFields.DEFAULT_ROW_HEIGHT) ?? 0;
@@ -15667,42 +13945,24 @@ ${text}`;
       const size = this.header(DataStoreFields.COLUMN_HEADERS, column)?.getFloat(HeaderFields.SIZE) ?? 0;
       return size > 0 ? size : this.object.message.getDouble(TableModelFields.DEFAULT_COLUMN_WIDTH) ?? 0;
     }
-    /**
-     * Set an explicit row height; 0 restores the table default.
-     *
-     * @agentTool modify_table
-     */
     setRowHeight(row, points) {
       const header = this.header(DataStoreFields.ROW_HEADERS, row);
       if (!header)
         throw new RangeError(`row ${row} has no header entry to size`);
       header.setFloat(HeaderFields.SIZE, points);
     }
-    /**
-     * Set one column's width in points.
-     *
-     * @agentTool modify_table
-     */
     setColumnWidth(column, points) {
       const header = this.header(DataStoreFields.COLUMN_HEADERS, column);
       if (!header)
         throw new RangeError(`column ${column} has no header entry to size`);
       header.setFloat(HeaderFields.SIZE, points);
     }
-    /** True when the row or column is hidden. */
     isRowHidden(row) {
       return (this.header(DataStoreFields.ROW_HEADERS, row)?.getUint(HeaderFields.HIDING_STATE) ?? 0) !== 0;
     }
     isColumnHidden(column) {
       return (this.header(DataStoreFields.COLUMN_HEADERS, column)?.getUint(HeaderFields.HIDING_STATE) ?? 0) !== 0;
     }
-    /**
-     * Locate a row or column header entry.
-     *
-     * `rowHeaders` is a bucket list, `columnHeaders` a single bucket
-     * reference — the two are shaped differently in the proto, so both
-     * spellings are handled here rather than at every call site.
-     */
     header(field, index) {
       const ds = this.dataStore();
       if (!ds)
@@ -15724,22 +13984,6 @@ ${text}`;
       }
       return void 0;
     }
-    // ------------------------------------------------- rows and columns
-    /**
-     * Insert blank rows before `at`.
-     *
-     * The whole table's storage is rebuilt rather than patched: tiles, row
-     * headers and per-column cell counts all have to agree afterwards, and
-     * shifting them independently is how those three drift apart.
-     *
-     * **Formula references are not adjusted.** Relative references survive
-     * by construction — they are offsets from the cell using them, so a
-     * formula that moves keeps pointing at the same relative neighbour — but
-     * an absolute range spanning the insertion point still names its old
-     * bounds. Adjusting those correctly is calc-engine work; see
-     * docs/FORMAT.md §14.7.
-     * @agentTool modify_table
-     */
     insertRows(at, count = 1) {
       this.requireWritable();
       if (count <= 0)
@@ -15750,10 +13994,6 @@ ${text}`;
       const rows = this.snapshotRows();
       const template = rows[Math.min(at, rows.length - 1)];
       const blank = () => ({
-        // A new cell inherits the displaced row's cell and text styles the
-        // way it inherits its height: a blank-but-styled record is Apple's
-        // own shape — 2043 of the corpus's 2275 empty records carry a text
-        // style — and without it an inserted row loses the band's look.
         records: Array.from({ length: this.columnCount }, (_, column) => this.inheritedBlankRecord(template?.records[column])),
         height: template?.height ?? 0,
         hidden: 0
@@ -15763,10 +14003,6 @@ ${text}`;
       this.spliceUidMap("rows", at, 0, count);
       this.shiftMergesForRows(at, count);
     }
-    /**
-     * An empty record carrying the style ids of the record it displaces,
-     * with the style table's refcounts bumped for the new references.
-     */
     inheritedBlankRecord(displaced) {
       if (!displaced)
         return void 0;
@@ -15783,7 +14019,6 @@ ${text}`;
       }
       return any ? blank.encode() : void 0;
     }
-    /** Bump a style-table entry's refcount for one more referencing record. */
     retainStyleKey(key) {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.STYLE_TABLE));
       for (const e of list?.message.getMessages(DataList2.ENTRIES) ?? []) {
@@ -15794,11 +14029,6 @@ ${text}`;
         return;
       }
     }
-    /**
-     * Delete rows starting at `at`.
-     *
-     * @agentTool modify_table
-     */
     deleteRows(at, count = 1) {
       this.requireWritable();
       if (count <= 0)
@@ -15816,11 +14046,6 @@ ${text}`;
       this.spliceUidMap("rows", at, count, 0);
       this.shiftMergesForRows(at, -count);
     }
-    /**
-     * Insert blank columns before `at`.
-     *
-     * @agentTool modify_table
-     */
     insertColumns(at, count = 1) {
       this.requireWritable();
       if (count <= 0)
@@ -15842,11 +14067,6 @@ ${text}`;
       this.spliceUidMap("columns", at, 0, count);
       this.shiftMergesForColumns(at, count);
     }
-    /**
-     * Delete columns starting at `at`.
-     *
-     * @agentTool modify_table
-     */
     deleteColumns(at, count = 1) {
       this.requireWritable();
       if (count <= 0)
@@ -15870,14 +14090,6 @@ ${text}`;
       this.spliceUidMap("columns", at, count, 0);
       this.shiftMergesForColumns(at, -count);
     }
-    /**
-     * Keep the identity map in lockstep with a row/column splice.
-     *
-     * Numbers renders a table at its identity map's size, not the grid's:
-     * an inserted column the map does not know is invisible in the app.
-     * New positions mint fresh identities; surviving positions keep theirs,
-     * which is the map's whole purpose. Tables without a map stay without.
-     */
     spliceUidMap(kind, at, removed, added) {
       const target = uidMapTarget(this.store, this.object.message);
       if (!target)
@@ -15889,7 +14101,6 @@ ${text}`;
       list.splice(at, removed, ...Array.from({ length: added }, randomUid));
       writeUidMap(target, columns, rows);
     }
-    /** Every row's records and header geometry, indexed by table row. */
     snapshotRows() {
       const rows = [];
       for (let row = 0; row < this.rowCount; row++) {
@@ -15913,13 +14124,6 @@ ${text}`;
       }
       return widths;
     }
-    /**
-     * Rebuild every tile, row info and row header from a snapshot.
-     *
-     * Rows are redistributed across tiles of `tile_size` from scratch, which
-     * is what makes an insert in the middle of a multi-tile table correct
-     * rather than only correct within one tile.
-     */
     rewriteRows(rows) {
       const ds = this.dataStore();
       const tiles = ds?.getMessage(DataStoreFields.TILES);
@@ -16007,7 +14211,6 @@ ${text}`;
       });
       bucket.message.setMessages(HeaderBucket.HEADERS, headers);
     }
-    /** The single bucket object behind a header storage field. */
     headerBucket(field) {
       const ds = this.dataStore();
       if (!ds)
@@ -16018,7 +14221,6 @@ ${text}`;
       }
       return this.store.resolve(refId(ds, field));
     }
-    /** Header bands cannot outlive the rows and columns they describe. */
     clampBandsToSize() {
       const m = this.object.message;
       for (const [field, limit] of [
@@ -16031,23 +14233,12 @@ ${text}`;
           m.setVarint(field, limit);
       }
     }
-    /** Move or drop merges when rows are inserted (`delta > 0`) or deleted. */
     shiftMergesForRows(at, delta) {
       this.rewriteMerges((merge) => shiftRange(merge, at, delta, "row"));
     }
     shiftMergesForColumns(at, delta) {
       this.rewriteMerges((merge) => shiftRange(merge, at, delta, "column"));
     }
-    /**
-     * Apply a transform to every merge, writing the result to the region map.
-     *
-     * Merges are *read* from the calc engine's formula store (§14.4), which
-     * cannot be rewritten without inventing calc-engine identity. Writing the
-     * adjusted set to `merge_region_map` instead keeps this library's own
-     * reading correct after a structural edit, and is the encoding the format
-     * documents even though current apps do not emit it. The stale formulas
-     * are left alone rather than corrupted.
-     */
     rewriteMerges(transform) {
       const before = this.merges();
       if (before.length === 0)
@@ -16077,7 +14268,6 @@ ${text}`;
       map.message.setMessages(MergeMap.CELL_RANGE, ranges);
       this.object.message.getMessage(TableModelFields.MERGE_OWNER)?.remove(MergeOwner.FORMULA_STORE);
     }
-    /** Drop the string- and formula-table references a deleted row held. */
     releaseRowRefs(row) {
       for (const record of row.records)
         this.releaseRecordRefs(record);
@@ -16093,40 +14283,18 @@ ${text}`;
       if (formulaId !== void 0)
         this.releaseFormula(formulaId);
     }
-    // --------------------------------------------------------------- styling
-    /**
-     * The table's own style (banded rows, grid strokes, visibility toggles).
-     *
-     * Editing it affects every table sharing the style — Numbers' stock
-     * themes give each table its own, but a document built by duplication may
-     * not. {@link styleTable} is where per-cell styles live instead.
-     */
     tableStyle() {
       const obj = this.store.resolve(refId(this.object.message, TableModelFields.TABLE_STYLE));
       return obj ? new TableStyleHandle(this.store, obj) : void 0;
     }
-    /**
-     * Cell formatting of a named band — fill, borders, padding, alignment.
-     *
-     * A band has two styles, not one: this covers the *cell* (background and
-     * borders); {@link bandTextStyle} covers the *text* inside it. Making a
-     * header row bold means editing the text style, not this one.
-     */
     bandStyle(band) {
       const obj = this.store.resolve(refId(this.object.message, BAND_STYLE_FIELDS[band]));
       return obj ? new TableStyleHandle(this.store, obj) : void 0;
     }
-    /**
-     * Character formatting of a named band's text.
-     *
-     * A `TSWP.CharacterStyleArchive`, so it takes the same
-     * {@link CharacterFormatting} as any other text in the suite.
-     */
     bandTextStyle(band) {
       const obj = this.store.resolve(refId(this.object.message, BAND_TEXT_STYLE_FIELDS[band]));
       return obj ? new StyleHandle(this.store, obj) : void 0;
     }
-    /** The cell style applied to one cell, if it has an explicit one. */
     cellStyle(row, column) {
       const id = this.cellStyleId(row, column);
       if (id === void 0)
@@ -16134,18 +14302,9 @@ ${text}`;
       const obj = this.store.resolve(this.styleTableEntry(id));
       return obj ? new TableStyleHandle(this.store, obj) : void 0;
     }
-    /** Read the formatting in effect for a cell, or `{}` when it has none. */
     cellFormatting(row, column) {
       return this.cellStyle(row, column)?.cell() ?? {};
     }
-    /**
-     * Style one cell: fill, borders, padding, vertical alignment, wrapping.
-     *
-     * A new cell style is created, based on the cell's current one so
-     * unspecified properties are inherited rather than lost, registered in the
-     * table's style table and referenced from the cell record. Styling a cell
-     * therefore never disturbs its neighbours, even when they shared a style.
-     */
     setCellFormatting(row, column, formatting) {
       this.requireWritable();
       const located = this.locateRow(row);
@@ -16172,14 +14331,6 @@ ${text}`;
       if (formatting.borders)
         this.applyCellBorders(row, column, formatting.borders);
     }
-    /**
-     * A paragraph style for a cell's text, interned into the style table.
-     *
-     * Cloned from the cell's current text style so everything but the
-     * alignment is inherited; identity is stripped the way
-     * {@link createCellStyle} strips it — an anonymous per-cell style, not
-     * a panel entry.
-     */
     createCellTextStyle(alignment, basedOn) {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.STYLE_TABLE));
       if (!list)
@@ -16218,14 +14369,6 @@ ${text}`;
       this.refreshDataListReferences(list);
       return key;
     }
-    /**
-     * Write a cell's borders into the table's stroke sidecar
-     * (`TST.StrokeSidecarArchive`, `TableModelArchive.stroke_sidecar`) —
-     * where every corpus table keeps them. Layers for the left/right
-     * families are indexed by column with runs spanning rows; top/bottom
-     * by row spanning columns. Each run carries a complete stroke and a
-     * draw order above everything already there.
-     */
     applyCellBorders(row, column, borders) {
       const sidecar = this.ensureStrokeSidecar();
       if (!sidecar)
@@ -16244,12 +14387,6 @@ ${text}`;
       }
       sidecar.message.markDirty();
     }
-    /**
-     * The table's stroke sidecar, created if absent — and always brought
-     * to the table's current size. The sidecar declares a grid, and the
-     * app clips runs outside it: a donor's sidecar declaring the donor's
-     * old 2×11 swallowed every run this library wrote at row 12.
-     */
     ensureStrokeSidecar() {
       const existing = this.store.resolve(refId(this.object.message, TableModelFields.STROKE_SIDECAR));
       if (existing) {
@@ -16272,7 +14409,6 @@ ${text}`;
       this.store.declareReference(this.object, sidecar.identifier);
       return sidecar;
     }
-    /** Add (or, with null, remove) a one-cell run on one edge layer. */
     writeEdgeRun(sidecar, family, index, origin, stroke) {
       let layer;
       for (const ref of sidecar.message.getMessages(family)) {
@@ -16307,11 +14443,6 @@ ${text}`;
       layer.message.setMessages(StrokeLayer.STROKE_RUNS, runs);
       layer.message.markDirty();
     }
-    /**
-     * A cell's borders as the sidecar states them — the mechanism the app
-     * actually draws. The style bag's per-side strokes (older files, and
-     * this library's own pre-sidecar output) are the fallback.
-     */
     cellBorders(row, column) {
       const out = {};
       const sidecar = this.store.resolve(refId(this.object.message, TableModelFields.STROKE_SIDECAR));
@@ -16355,28 +14486,12 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Apply the same formatting to a rectangular block of cells — fill,
-     * borders, padding, alignment, wrap — leaving every cell's value
-     * untouched.
-     *
-     * @agentTool format_cells
-     */
     setRangeFormatting(row, column, rowCount, columnCount, formatting) {
       for (let r = row; r < row + rowCount; r++) {
         for (let c = column; c < column + columnCount; c++)
           this.setCellFormatting(r, c, formatting);
       }
     }
-    // --------------------------------------------------- conditional formatting
-    /**
-     * Every conditional-formatting rule set the table interns, by key.
-     *
-     * Rule sets are shared: one entry covers every cell it was applied to,
-     * and its `refcount` is that cell count. So this returns a handful of
-     * sets even for a table where hundreds of cells are conditionally
-     * formatted.
-     */
     conditionalStyleSets() {
       const out = /* @__PURE__ */ new Map();
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.CONDITIONAL_STYLE_TABLE));
@@ -16388,25 +14503,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Attach a conditional-formatting rule set to a cell, or to a block of
-     * them via `span`.
-     *
-     * `(row, column)` first, like every other cell method — the reader
-     * {@link conditionalRules} is positional, and taking a range object here
-     * made the pair read as two unrelated APIs.
-     *
-     * The set is interned in the table's conditional-style table and every
-     * cell in the range points at it — which is how the app writes it too:
-     * three sets cover 1921 cells in one corpus document, because a rule is
-     * authored once and applied to a column.
-     *
-     * Only the four comparisons whose `predicate_type` has been *observed*
-     * can be written. `>` and `>=` are predicted to be 7 and 8, and a rule
-     * stored under a wrong code is one the condition editor shows as a
-     * different condition while the formula says the truth — a disagreement
-     * that is very hard to spot. Refused rather than guessed.
-     */
     setConditionalRules(row, column, conditions, span = {}) {
       this.requireWritable();
       const uid = this.crossTableInfo()?.getMessage(1);
@@ -16426,21 +14522,6 @@ ${text}`;
       }
       return key;
     }
-    /**
-     * Create — or reuse — the `TST.PopUpMenuModel` behind a menu.
-     *
-     * Two cells offering the same choices share one archive, matched on the
-     * encoded bytes, which is what Apple does and what keeps a column of
-     * forty menus from becoming forty identical objects.
-     *
-     * The model goes in **the control list's own component**, for the reason
-     * a conditional rule set does: Numbers decides which components to open
-     * from `ComponentInfo.external_references`, a data list's type has no
-     * extractor to declare them, and a reference reaching out of the
-     * component it was found in gets the document called damaged. Keeping the
-     * model with the list that points at it means there is no cross-component
-     * reference to declare in the first place.
-     */
     internPopupModel(items) {
       const encoded = buildPopupMenuModel(items).toBytes();
       const dataStore = this.dataStore();
@@ -16460,7 +14541,6 @@ ${text}`;
       object.setMessageBytes(encoded);
       return object.identifier;
     }
-    /** Add a rule set to the conditional-style table, returning its key. */
     internConditionalSet(set) {
       const dataStore = this.dataStore();
       if (!dataStore)
@@ -16490,49 +14570,19 @@ ${text}`;
       list.message.setVarint(DataList2.NEXT_LIST_ID, key + 1);
       return key;
     }
-    /** Key into {@link conditionalStyleSets} carried by a cell's record. */
     conditionalStyleKey(row, column) {
       return this.recordAt(row, column)?.id(CellFlag.COND_STYLE_ID);
     }
-    /**
-     * The second conditional id a cell record carries, meaning unconfirmed.
-     *
-     * Sits in the `COND_RULE_STYLE_ID` slot, which by position corresponds to
-     * `CellArchive.conditional_style_applied_rule` — the rule that last
-     * matched. The corpus does not bear that out: in the one fixture with
-     * real rules, every cell sharing a one-rule set carries the same value
-     * (15) regardless of content, and cells on other sets carry 0, which is
-     * not a valid key in any of the table's lists. So it is exposed raw and
-     * preserved byte-for-byte rather than interpreted. See
-     * `docs/VERIFICATION.md`.
-     */
     conditionalRuleId(row, column) {
       return this.recordAt(row, column)?.id(CellFlag.COND_RULE_STYLE_ID);
     }
-    /** The rule set governing one cell, if it has one. */
     conditionalStyleSet(row, column) {
       const key = this.conditionalStyleKey(row, column);
       return key === void 0 ? void 0 : this.conditionalStyleSets().get(key);
     }
-    /**
-     * The conditional-formatting rules on a cell, in evaluation order.
-     *
-     * Conditions render against the cell asked about, so a rule on B4 reads
-     * `B4<0`. Nothing here evaluates them: deciding which rule *matches*
-     * means running the calc engine over the document, and a wrong answer
-     * would be indistinguishable from a right one.
-     */
     conditionalRules(row, column) {
       return this.conditionalStyleSet(row, column)?.rules({ row, column }, { owners: this.owners() }) ?? [];
     }
-    /**
-     * Apply an existing rule set to another cell.
-     *
-     * Only re-points a cell at a set the table already interns — the sets
-     * themselves come from the app. That covers the common edit (extend this
-     * conditional format to more cells) without asserting a rule layout no
-     * fixture demonstrates.
-     */
     setConditionalStyleKey(row, column, key) {
       this.requireWritable();
       if (key !== void 0 && !this.conditionalStyleSets().has(key)) {
@@ -16555,15 +14605,6 @@ ${text}`;
       layout.records[column] = record.encode();
       this.writeRowLayout(located.rowInfo, layout);
     }
-    // -------------------------------------------------------------- filtering
-    /**
-     * The table's row and column filter sets.
-     *
-     * Reached through `hidden_states_owner`, because a filter set belongs to
-     * a hidden-state extent rather than to the table directly — the extent
-     * records *which* rows ended up hidden, the filter set records *why*.
-     * Tables written before that structure existed have neither.
-     */
     filterSets() {
       const owner = this.object.message.getMessage(TableModelFields.HIDDEN_STATES_OWNER);
       for (const states of owner?.getMessages(HiddenStatesOwner.HIDDEN_STATES) ?? []) {
@@ -16578,58 +14619,19 @@ ${text}`;
       }
       return { rows: void 0, columns: void 0 };
     }
-    /**
-     * A filter set's rules with this table's owner registry supplied, so a
-     * rule reaching into another table names it instead of rendering
-     * `OTHER_TABLE::`.
-     *
-     * {@link FilterSet.rules} takes the registry as an argument rather than
-     * finding it itself: a `FilterSet` is constructible from any object and
-     * has no table to ask.
-     */
     filterRules(set) {
       return set?.rules({ owners: this.owners() }) ?? [];
     }
-    /**
-     * Data-entry controls (checkbox, slider, stepper, pop-up menu) the table
-     * interns, by key. A cell's record points at one through `CONTROL_ID`.
-     *
-     * Empty for every corpus document — see `src/tst/controls.ts`.
-     */
     controls() {
       return controlsOf(this.store, this.dataStore());
     }
-    /** Key into {@link controls} carried by a cell's record, if it has one. */
     controlKey(row, column) {
       return this.recordAt(row, column)?.id(CellFlag.CONTROL_ID);
     }
-    /** The control on one cell, if it has one. */
     cellControl(row, column) {
       const key = this.controlKey(row, column);
       return key === void 0 ? void 0 : this.controls().get(key);
     }
-    /**
-     * Put a data-entry widget on a cell — checkbox, star rating, slider or
-     * stepper.
-     *
-     * The spec is interned in the table's control table exactly as strings
-     * and formats are, and the cell's record points at it through
-     * `CONTROL_ID`. Identical specs are shared: a column of checkboxes is one
-     * archive and forty pointers, which is what the app writes.
-     *
-     * The **value still lives in the cell**, and the widget only changes how
-     * it is edited. A checkbox therefore needs a boolean in its cell and a
-     * slider a number; writing the widget without the value gives a control
-     * with nothing to show, so the value is set here when one is supplied.
-     *
-     * A pop-up menu additionally needs a `chooser_control_popup_model` — a
-     * separate archive holding the list of choices — which is created here
-     * and shared between cells given the same items. That part is built from
-     * the vendored schema rather than measured against a real menu, so it is
-     * the one widget here nobody has yet seen work; see
-     * {@link buildPopupMenuModel}. {@link setPopupMenu} still attaches a
-     * model a caller already has.
-     */
     setCellControl(row, column, control, options = {}) {
       this.requireWritable();
       const spec = RawMessage.create();
@@ -16672,60 +14674,20 @@ ${text}`;
       this.ensureControlFormat(row, column, control.widget, control.widget === "popupMenu" ? typeof control.items[0] : void 0);
       return key;
     }
-    /**
-     * Give a control cell the format that draws it.
-     *
-     * **The spec alone is not enough.** A control needs two things: the spec,
-     * which says what the widget is, and a *format*, which says to draw the
-     * cell as that widget rather than as its value. Without the format
-     * Numbers renders the underlying value — `TRUE` for a checkbox, a bare
-     * number for a slider — and the control is nowhere to be seen. That is
-     * exactly what shipped: the spec was written, the reader read it back,
-     * and no cell ever showed a widget.
-     *
-     * Every control cell in every borrowed document carries a format id
-     * matching its value type: bool cells a `bool_format`, string cells a
-     * `text_format`, numeric cells a `num_format`. The minimal case settles
-     * which is load-bearing — a checkbox in `test-format-save.numbers` has
-     * the boolean format and no number format at all.
-     *
-     * A format the caller already set is left alone, so choosing a percentage
-     * for a stepper survives.
-     */
     ensureControlFormat(row, column, widget, itemType) {
       const numberFormat = {
-        // Apple writes the two zeros explicitly on a slider's plain number
-        // format, so this comes out byte-identical to theirs.
         kind: "number",
         decimals: "auto",
         negativeStyle: 0,
         thousandsSeparator: false
       };
       const format = widget === "checkbox" ? { kind: "checkbox" } : widget === "starRating" ? { kind: "starRating" } : (
-        // A menu follows its items: Apple's text menus carry a
-        // `text_format` and its numeric ones a `num_format`, the same
-        // value-type rule every other control cell obeys.
         widget === "popupMenu" ? itemType === "number" ? numberFormat : { kind: "text" } : numberFormat
       );
       if (this.recordAt(row, column)?.id(flagForFormat(format)) !== void 0)
         return;
       this.writeCellFormat(row, column, format);
     }
-    /**
-     * Point a cell at a pop-up menu model that already exists.
-     *
-     * Kept alongside {@link setCellControl}, which builds a model from a list
-     * of items, for the case where a caller already has one — from another
-     * cell, or another document — and wants that exact archive shared rather
-     * than a second copy of the same choices.
-     *
-     * `itemType` decides the cell's format, and the default is `"string"`
-     * because text menus are the common case. Passing the wrong one leaves a
-     * numeric menu formatted as text; passing none on a numeric menu does the
-     * same. This path shipped for a while with **no format at all**, which is
-     * the defect that made every other widget invisible — a spec without a
-     * format is a control the app never draws.
-     */
     setPopupMenu(row, column, popupModelId, options = {}) {
       this.requireWritable();
       const spec = RawMessage.create();
@@ -16737,7 +14699,6 @@ ${text}`;
       this.ensureControlFormat(row, column, "popupMenu", options.itemType ?? "string");
       return key;
     }
-    /** Take the widget off a cell, keeping its value. Returns false if none. */
     removeCellControl(row, column) {
       this.requireWritable();
       const located = this.locateRow(row);
@@ -16756,7 +14717,6 @@ ${text}`;
       this.refreshTileTotals();
       return true;
     }
-    /** Point a cell's record at a control key. */
     attachControl(row, column, key) {
       const located = this.locateRow(row);
       if (!located) {
@@ -16771,14 +14731,6 @@ ${text}`;
       this.refreshRowHeader(row, layout.records.filter((r) => r !== void 0).length);
       this.refreshTileTotals();
     }
-    /**
-     * Add a control spec to the table's control table, reusing an identical
-     * one, and creating the table itself when the document has none.
-     *
-     * Deduplication matters here in a way it does not for formulas: a column
-     * of checkboxes is one spec shared by every cell, and writing forty
-     * copies would be both larger and unlike anything the app produces.
-     */
     internControl(spec) {
       const dataStore = this.dataStore();
       if (!dataStore)
@@ -16812,35 +14764,15 @@ ${text}`;
       list.message.setVarint(DataList2.NEXT_LIST_ID, key + 1);
       return key;
     }
-    // ------------------------------------------------------------- categories
-    /**
-     * Row and column identities, for the parts of the format that address
-     * cells by UID rather than position.
-     */
     uidMap() {
       return uidMapOf(this.store, this.object.message);
     }
-    /**
-     * The table's category (row grouping) definitions.
-     *
-     * More than one can exist — Numbers keeps a definition around when
-     * grouping is switched off — so `enabled` says which is live.
-     */
     categories() {
       return categoriesOf(this.store, this.object.message, this.uidMap());
     }
-    /** The category definition the app is currently applying, if any. */
     activeCategories() {
       return this.categories().find((definition) => definition.enabled);
     }
-    /**
-     * Groups whose cached membership no longer matches the cells.
-     *
-     * The group tree is what the app worked out last time it grouped the
-     * rows; editing cells here does not regroup them. Unlike a table of
-     * contents, the staleness is checkable, because the grouping column's
-     * values are in the table.
-     */
     staleCategoryGroups() {
       const definition = this.activeCategories();
       if (!definition)
@@ -16850,16 +14782,6 @@ ${text}`;
         byPosition.set(`${cell.row}:${cell.column}`, cell.value);
       return definition.verify((row, column) => groupValueOf(byPosition.get(`${row}:${column}`)));
     }
-    /**
-     * Put rows back in the groups their current values call for.
-     *
-     * The fix for what {@link staleCategoryGroups} reports. Returns the number
-     * of rows that moved — zero when the tree was already correct, in which
-     * case the archive is rewritten to the same bytes.
-     *
-     * Throws if a row's value has no group: see
-     * {@link TableCategories.regroup} for why creating one is refused.
-     */
     regroupCategories() {
       const definition = this.activeCategories();
       if (!definition)
@@ -16869,7 +14791,6 @@ ${text}`;
         byPosition.set(`${cell.row}:${cell.column}`, cell.value);
       return definition.regroup((row, column) => groupValueOf(byPosition.get(`${row}:${column}`)));
     }
-    /** `cell_style_id` of a cell, if its record carries one. */
     cellStyleId(row, column) {
       const located = this.locateRow(row);
       if (!located)
@@ -16877,33 +14798,6 @@ ${text}`;
       const raw = readRowLayout(located.rowInfo, this.columnCount).records[column];
       return raw ? CellRecord.decode(raw).id(CellFlag.CELL_STYLE_ID) : void 0;
     }
-    /**
-     * Create a cell style object and register it in the table's style table.
-     *
-     * The style table is a `TableDataList` of references, so the new object
-     * must be reachable from it *and* from the component's external
-     * references — hence the explicit `object_references` refresh, which the
-     * generic save path cannot do for a type it has no extractor for.
-     */
-    /**
-     * Fill in a condition's two required style references.
-     *
-     * `TST.ConditionalStyleRule` declares `cell_style` and `text_style` as
-     * `required`, so neither can be left out — a rule missing one is a
-     * malformed message, not a rule that formats less. Callers should not
-     * have to know that, so:
-     *
-     *  - `cell` formatting becomes a new `TST.CellStyleArchive`, interned in
-     *    the table's style table the same way {@link setCellFormatting} does.
-     *  - the text style defaults to the table's **body** text style, which is
-     *    a real `TSWP.ParagraphStyleArchive` and leaves the text looking
-     *    exactly as it did. Satisfying the reference is the point; changing
-     *    the text is opt-in via `textStyleId`.
-     *
-     * A condition naming no formatting at all is refused. It cannot be
-     * represented, and silently pointing it at the defaults would write a
-     * rule that does nothing while reading back as though it did.
-     */
     resolveConditionStyles(condition) {
       if (condition.cellStyleId === void 0 && !condition.cell) {
         throw new RangeError("a conditional rule must format something: pass `cell` formatting (e.g. { cell: { fill: { kind: 'color', color: red } } }) or an existing cellStyleId. TST.ConditionalStyleRule declares both style references as `required`, so a rule that formats nothing cannot be written \u2014 it would be a malformed message");
@@ -16918,14 +14812,6 @@ ${text}`;
       }
       return { ...condition, cellStyleId, textStyleId };
     }
-    /**
-     * The stylesheet a new style should belong to.
-     *
-     * Read off a style the table already interns rather than looked up from
-     * the document, so a table in a component with its own stylesheet gets
-     * that one. `undefined` when the table has no styles to learn from, which
-     * leaves the reference out rather than pointing it somewhere wrong.
-     */
     stylesheetReference() {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.STYLE_TABLE));
       for (const entry of list?.message.getMessages(DataList2.ENTRIES) ?? []) {
@@ -16971,7 +14857,6 @@ ${text}`;
       this.refreshDataListReferences(list);
       return key;
     }
-    /** Object id behind a style-table key. */
     styleTableEntry(key) {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.STYLE_TABLE));
       for (const e of list?.message.getMessages(DataList2.ENTRIES) ?? []) {
@@ -16980,14 +14865,6 @@ ${text}`;
       }
       return void 0;
     }
-    /**
-     * Refresh a data list's `object_references`.
-     *
-     * The store's save pass only rewrites references for types it has an
-     * extractor for; TableDataList holds references inline in its entries, so
-     * we collect them here rather than teaching the generic path about a
-     * structure only tables use.
-     */
     refreshDataListReferences(list) {
       const ids = [];
       for (const e of list.message.getMessages(DataList2.ENTRIES)) {
@@ -16999,15 +14876,6 @@ ${text}`;
       }
       list.setObjectReferences([...new Set(ids)]);
     }
-    /**
-     * Refuse to write a cell a merge has swallowed.
-     *
-     * The value would be stored faithfully and displayed nowhere, because
-     * the merge anchor's content spans the cell. Silently accepting the
-     * write is the worse failure: the caller believes the edit landed.
-     * `allowCovered: true` writes anyway, for callers deliberately staging
-     * data under a merge they are about to remove.
-     */
     requireVisible(row, column, options) {
       if (options.allowCovered || !this.isCovered(row, column))
         return;
@@ -17023,7 +14891,6 @@ ${text}`;
         throw new RangeError(`table ${JSON.stringify(this.name ?? "")}: no cell storage to write into`);
       }
     }
-    /** Set the value-carrying fields of a record for a new value. */
     applyValue(record, value) {
       const previousType = record.type;
       record.removeAll(VALUE_FLAGS);
@@ -17055,7 +14922,6 @@ ${text}`;
       if (record.type !== previousType)
         record.removeAll(FORMAT_FLAGS);
     }
-    /** Add or reuse a string-table entry, returning its key. */
     internString(text) {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.STRING_TABLE));
       if (!list)
@@ -17079,7 +14945,6 @@ ${text}`;
       m.setVarint(DataList2.NEXT_LIST_ID, key + 1);
       return key;
     }
-    /** Drop one reference to a string-table entry, removing it at zero. */
     releaseString(key) {
       const list = this.store.resolve(refId(this.dataStore(), DataStoreFields.STRING_TABLE));
       if (!list)
@@ -17096,7 +14961,6 @@ ${text}`;
       }
       m.setMessages(DataList2.ENTRIES, entries.filter((e) => e !== entry));
     }
-    /** Find the tile row info holding a table row. */
     locateRow(row) {
       const tiles = this.dataStore()?.getMessage(DataStoreFields.TILES);
       if (!tiles)
@@ -17115,7 +14979,6 @@ ${text}`;
       }
       return void 0;
     }
-    /** Re-serialize a row's cell buffer, offsets and legacy stubs. */
     writeRowLayout(rowInfo, layout) {
       const buffer = new ByteWriter(256);
       const offsets = new Int16Array(layout.offsetSlots).fill(-1);
@@ -17143,14 +15006,6 @@ ${text}`;
       rowInfo.setVarint(TileRowInfo.STORAGE_VERSION, 5);
       this.writeLegacyStubs(rowInfo, layout, offsets.length);
     }
-    /**
-     * Rewrite the pre-BNC fields, which proto2 marks `required`.
-     *
-     * Apple's own current writers keep them present but inert: a 12-byte
-     * all-zero record per cell (version byte 4) plus a matching offsets
-     * array. We reproduce that shape exactly rather than leaving stale
-     * offsets pointing into a buffer that no longer matches.
-     */
     writeLegacyStubs(rowInfo, layout, slots) {
       const STUB_SIZE = 12;
       const offsets = new Int16Array(slots).fill(-1);
@@ -17167,7 +15022,6 @@ ${text}`;
       rowInfo.setBytes(TileRowInfo.CELL_STORAGE_BUFFER_PRE_BNC, buffer);
       rowInfo.setBytes(TileRowInfo.CELL_OFFSETS_PRE_BNC, new Uint8Array(offsets.buffer.slice(0)));
     }
-    /** Keep the row header's cell count in step with the row's storage. */
     refreshRowHeader(row, cellCount) {
       const storage = this.dataStore()?.getMessage(DataStoreFields.ROW_HEADERS);
       for (const ref of storage?.getMessages(HeaderStorage.BUCKETS) ?? []) {
@@ -17180,14 +15034,6 @@ ${text}`;
         }
       }
     }
-    /**
-     * Recompute each tile's cell/row totals.
-     *
-     * Apple leaves `maxColumn`/`maxRow`/`numCells` at 0 in files we have
-     * examined, so we only maintain them when they were already non-zero —
-     * writing real values into fields the app zeroes would be a gratuitous
-     * difference from what Numbers itself produces.
-     */
     refreshTileTotals() {
       const tiles = this.dataStore()?.getMessage(DataStoreFields.TILES);
       for (const t of tiles?.getMessages(TileStorageFields.TILES) ?? []) {
@@ -17315,47 +15161,26 @@ ${text}`;
   }
   var FLAG_SIZES2 = [
     [1, 16],
-    // decimal128 value
     [2, 8],
-    // double
     [4, 8],
-    // datetime seconds
     [8, 4],
-    // string_id
     [16, 4],
-    // rich_id
     [32, 4],
-    // cell_style_id
     [64, 4],
-    // text_style_id
     [128, 4],
-    // conditional-style id
     [256, 4],
-    // conditional-rule-style id
     [512, 4],
-    // formula_id
     [1024, 4],
-    // control_id
     [2048, 4],
-    // formula-error id
     [4096, 4],
-    // suggest_id
     [8192, 4],
-    // num_format_id
     [16384, 4],
-    // currency_format_id
     [32768, 4],
-    // date_format_id
     [65536, 4],
-    // duration_format_id
     [131072, 4],
-    // text_format_id
     [262144, 4],
-    // bool_format_id
     [524288, 4],
-    // comment id
     [1048576, 4]
-    // import-warning id
   ];
   function decodeCellRecord(record, strings, richText) {
     if (record.length < 12)
@@ -17425,7 +15250,6 @@ ${text}`;
     }
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsa/document.js
   function containerParentFor(app) {
     if (app !== "keynote")
       return drawableParent;
@@ -17435,16 +15259,12 @@ ${text}`;
   var PKG_WRITE_VERSION = 6;
   var PKG_FILE_FORMAT_VERSION = 7;
   var FormatInfo = class _FormatInfo {
-    /** TSP.PackageMetadata read/write/file-format version triples. */
     readVersion = [];
     writeVersion = [];
     fileFormatVersion = [];
-    /** `fileFormatVersion` string from Metadata/Properties.plist (e.g. "14.1.1"). */
     propertiesFileFormatVersion;
     documentUUID;
-    /** Build strings from Metadata/BuildVersionHistory.plist (template + app builds). */
     buildHistory = [];
-    /** Non-fatal compatibility observations. */
     warnings = [];
     static read(container, packageMetadata) {
       const info = new _FormatInfo();
@@ -17485,18 +15305,12 @@ ${text}`;
       this.store = store;
       this.format = FormatInfo.read(container, store.packageMetadata.message);
     }
-    /**
-     * Load any modern iWork document, auto-detecting the app. Prefer the app
-     * subclasses' `load` when the type is known — they expose richer APIs.
-     */
     static open(bytes2) {
       const container = IWorkContainer.fromBytes(bytes2);
       const app = detectApp(container);
       const store = new ObjectStore(container, {
         app,
         referenceExtractors: SHARED_REFERENCE_EXTRACTORS,
-        // Same rule the app subclasses inject via loadStore — open() must not
-        // scan references differently from PagesDocument.load and friends.
         containerParentOf: containerParentFor(app)
       });
       return new _IWorkDocument(container, store);
@@ -17506,7 +15320,6 @@ ${text}`;
       const store = new ObjectStore(container, {
         app,
         referenceExtractors: extractors,
-        // The drawable parent rule, injected so tsp never imports a family.
         containerParentOf: containerParentFor(app)
       });
       return { container, store };
@@ -17514,7 +15327,6 @@ ${text}`;
     get app() {
       return this.store.app;
     }
-    /** Every text storage in the document (bodies, headers, cells, notes …). */
     textStorages(kind) {
       const out = [];
       for (const { obj } of this.store.allObjects()) {
@@ -17526,7 +15338,6 @@ ${text}`;
       }
       return out;
     }
-    /** All stylesheets (document + theme). */
     stylesheets() {
       const out = [];
       for (const { obj } of this.store.allObjects()) {
@@ -17535,7 +15346,6 @@ ${text}`;
       }
       return out;
     }
-    /** Every object that carries drawable geometry (shapes, images, boxes). */
     drawables() {
       const out = [];
       for (const { obj } of this.store.allObjects()) {
@@ -17547,25 +15357,15 @@ ${text}`;
       }
       return out;
     }
-    /** Every chart, with its plotted data (see ChartModel). */
     charts() {
       return chartsOf(this.store);
     }
-    /** Every image, with filter/mask access (see ImageModel). */
     images() {
       return imagesOf(this.store);
     }
-    /**
-     * Every table (see TableModel).
-     *
-     * Lives on the base because tables are not a Numbers feature: Pages
-     * documents and Keynote slides embed the same TST archives, and the
-     * reading and writing code is identical for all three.
-     */
     tables() {
       return tablesOf(this.store);
     }
-    /** Concatenated plain text of all in-document storages (reading order approximation). */
     allText() {
       return this.textStorages().map((s) => s.text).filter((t) => t.length > 0).join("\n");
     }
@@ -17590,13 +15390,6 @@ ${text}`;
         typeHistogram: histogram
       };
     }
-    /**
-     * What this library can and cannot do with THIS document: declared
-     * versions, the era they place it in, structural probes (unknown type
-     * IDs, cell-storage generation, patch archives, collaboration state) and
-     * any unsupported features. Loading never fails on version grounds — this
-     * is how a caller finds out what to expect.
-     */
     compatibility() {
       const f = this.format;
       return buildCompatibilityReport({
@@ -17609,43 +15402,15 @@ ${text}`;
         probe: probeStructure(this.store)
       });
     }
-    /** One-line human summary of {@link compatibility}. */
     compatibilitySummary() {
       return summarizeCompatibility(this.compatibility());
     }
-    /** Format era this document was written by (see tsp/version.ts). */
     get era() {
       return eraOf(IWorkVersion.parse(this.format.propertiesFileFormatVersion) ?? IWorkVersion.parse(this.format.fileFormatVersion));
     }
-    /** Serialize the document back to package bytes. */
-    /**
-     * Drop archives nothing can reach, returning how many went.
-     *
-     * **What this collects today is very little, and that is worth knowing
-     * before reaching for it.** Removing a sheet or a table unlinks it from
-     * the document tree, but the calc engine keeps its own references to
-     * every table it ever knew, so those archives stay genuinely reachable.
-     * The gap is in *removal* — unregistering a table's formula owners is
-     * calc-engine surgery this library does not do yet — not in the walk.
-     * What compaction does reclaim is objects created and then abandoned.
-     *
-     * Roots are the package metadata, each component's first object, and
-     * every selection archive; see {@link ObjectStore.prune} for the scan and
-     * for why it errs towards keeping things. It is a no-op on every
-     * untouched document in the corpus, which is the property that matters:
-     * a collector that trims a file nobody edited is broken.
-     */
     compact() {
       return this.store.prune(this.pruneRoots());
     }
-    /**
-     * Objects that must survive {@link compact}.
-     *
-     * The package metadata anchors the component and data tables, and each
-     * component's first object anchors that component — a component whose
-     * objects all vanished would still be listed in the metadata, which is a
-     * worse state than a few extra archives.
-     */
     pruneRoots() {
       const roots = [2n];
       for (const component of this.store.components) {
@@ -17689,7 +15454,6 @@ ${text}`;
     return best;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/pages/blank-donor.generated.js
   var BASE64 = [
     "UEsDBBQAAAAAAAAAIVhAo3l0EhwAABIcAAASAAAASW5kZXgvRG9jdW1lbnQuaXdhAA4cAIteaFYIARJSCJBOEgMBAAUYvQwi",
     "BwoDCgEuGAEiCQEJ8MIvEAEYASILCgUKAw8BERADGAAqJILgaYPgaYTgaf7gaYXgaf/WaYbgafndaaXdaf3cabjfaYfgaRIE",
@@ -18702,7 +16466,6 @@ ${text}`;
     return bytes2;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsp/clone.js
   var SHARED_TYPE_PATTERNS = [
     /StyleArchive$/,
     /StylesheetArchive$/,
@@ -18712,18 +16475,14 @@ ${text}`;
   ];
   var SHARED_TYPE_IDS = /* @__PURE__ */ new Set([
     401,
-    // TSS.StylesheetArchive
     2021,
     2022,
     2023,
     2024,
-    // TSWP character/paragraph/list/column styles
     3015,
     3016,
-    // TSD shape/media styles
     6003,
     6004
-    // TST table/cell styles
   ]);
   function defaultFollow(object, typeName2) {
     if (SHARED_TYPE_IDS.has(object.type))
@@ -18807,39 +16566,13 @@ ${text}`;
     return message.fields.length === 1 && message.fields[0].no === 1 && message.fields[0].wire === WireType.Varint;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/tsd/placement.js
   var DrawableContainer = class {
     store;
-    /** The slide, sheet or section that owns the list. */
     owner;
     listField;
     zOrderField;
-    /**
-     * `host` is the message the lists actually live in, when that is not the
-     * owner's own message. Pages nests its floating drawables inside a
-     * per-page group submessage; the object that must be marked dirty and
-     * whose reference list must stay current is still the owner.
-     */
     host;
-    /**
-     * Where the identifier sits inside a list entry.
-     *
-     * Two shapes exist. Keynote and Numbers list bare `TSP.Reference`
-     * messages — the identifier is field 1 of the entry. Pages wraps each in
-     * a `TP.DrawableEntry` whose field 1 is *itself* a reference, so the
-     * identifier is one level further down. Reading tolerates both; writing
-     * has to be told which to produce.
-     */
     entryReferenceField;
-    /**
-     * Called whenever a drawable joins this container.
-     *
-     * Keynote and Numbers keep paint order inside the container, which
-     * {@link zOrderField} covers. Pages does not: it has one document-level
-     * `TP.DrawablesZOrderArchive`, and a floating drawable that is in a page
-     * group but not in that archive **does not render at all**. Placing it is
-     * only half the job, so the owner gets a hook to do the other half.
-     */
     onAttach;
     constructor(store, owner, listField, zOrderField, host, entryReferenceField, onAttach) {
       this.onAttach = onAttach;
@@ -18850,7 +16583,6 @@ ${text}`;
       this.host = host;
       this.entryReferenceField = entryReferenceField;
     }
-    /** Identifier from a list entry, whichever of the two shapes it is. */
     entryId(entry) {
       if (entry.fieldWire(1) === WireType.Varint)
         return entry.getVarint(1);
@@ -18871,7 +16603,6 @@ ${text}`;
     get message() {
       return this.host ?? this.owner.message;
     }
-    /** Object ids in the container, in the order the app stores them. */
     ids() {
       return this.message.getMessages(this.listField).flatMap((entry) => {
         const id = this.entryId(entry);
@@ -18884,15 +16615,6 @@ ${text}`;
         return object ? [new DrawableModel(this.store, object)] : [];
       });
     }
-    /**
-     * Copy a drawable into this container.
-     *
-     * The copy is deep, so the two drawables are independent — a shallow one
-     * would leave both sharing a text storage or an image reference, and
-     * editing either would change the other. Styles, stylesheets and themes
-     * are shared rather than copied, so the copy still looks like the
-     * document it lives in.
-     */
     addCopyOf(source, placement = {}) {
       const object = source instanceof DrawableModel ? source.object : source;
       const component = this.store.componentOf(this.owner.identifier);
@@ -18906,7 +16628,6 @@ ${text}`;
       this.attach(clone.identifier);
       return model;
     }
-    /** Put an existing object into this container without copying it. */
     attach(id) {
       const ids = this.ids();
       if (!ids.includes(id)) {
@@ -18920,12 +16641,6 @@ ${text}`;
       this.refreshOwnerReferences();
       this.onAttach?.(id);
     }
-    /**
-     * Take a drawable out of the container.
-     *
-     * The object itself is left in the package: something else may still
-     * reference it, and this library never garbage-collects the graph.
-     */
     remove(id) {
       const ids = this.ids();
       if (!ids.includes(id))
@@ -18937,7 +16652,6 @@ ${text}`;
       this.refreshOwnerReferences();
       return true;
     }
-    /** Paint order, where the container keeps one separately. */
     zOrder() {
       if (this.zOrderField === void 0)
         return this.ids();
@@ -18946,7 +16660,6 @@ ${text}`;
         return id === void 0 ? [] : [id];
       });
     }
-    /** Move a drawable within the paint order; higher index paints later. */
     moveInZOrder(id, to) {
       const field = this.zOrderField ?? this.listField;
       const order = this.zOrder();
@@ -18959,7 +16672,6 @@ ${text}`;
       this.writeList(field, order);
       this.refreshOwnerReferences();
     }
-    /** Send to the back / bring to the front of the paint order. */
     bringToFront(id) {
       this.moveInZOrder(id, this.zOrder().length - 1);
     }
@@ -18969,13 +16681,6 @@ ${text}`;
     writeList(field, ids) {
       this.message.setMessages(field, ids.map((id) => this.makeEntry(id)));
     }
-    /**
-     * Keep the owner's `object_references` in step.
-     *
-     * Slides, sheets and sections are not all covered by a registered
-     * reference extractor, and a container whose reference list omits a
-     * drawable it owns is a component the apps may fail to load lazily.
-     */
     refreshOwnerReferences() {
       const existing = this.owner.getObjectReferences();
       const wanted = new Set(existing);
@@ -19017,7 +16722,6 @@ ${text}`;
     return false;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/base/imagesize.js
   function imageDimensions(data) {
     if (data.length > 8 && data[0] === 37 && data[1] === 80 && data[2] === 68 && data[3] === 70) {
       const text = new TextDecoder("latin1").decode(data);
@@ -19064,26 +16768,19 @@ ${text}`;
     return void 0;
   }
 
-  // Tools/PagesBuild/cupertino/package/dist/pages/schema.js
   var TP_TYPE = {
     DOCUMENT: 1e4,
     THEME: 10001,
     FLOATING_DRAWABLES: 10010,
-    /** Pages-only meaning; the same ID is TSWP.SectionPlaceholderArchive elsewhere. */
     SECTION: 10011,
     SETTINGS: 10012,
     DRAWABLES_ZORDER: 10015,
-    /** Named PageMasterArchive in iWork '13, SectionTemplateArchive today. */
     SECTION_TEMPLATE: 10143
   };
   var ThemeArchive = {
     ...protoFields("TP.ThemeArchive", { SUPER: "super" }),
-    // Both lists are extensions on `TSS.ThemeArchive`, so they are addressed
-    // by the type they carry rather than by name — every one of the five
-    // families that extends a theme calls its field `extension`.
     ...protoFields("TSS.ThemeArchive", {
       PARAGRAPH_STYLE_LIST: "TSWP.ThemePresetsArchive",
-      /** Object titles and captions live in their own list. */
       OBJECT_STYLE_LIST: "TSA.ThemePresetsArchive"
     }),
     ...protoFields("TSWP.ThemePresetsArchive", {
@@ -19104,7 +16801,6 @@ ${text}`;
     CITATION_RECORDS: "citation_records",
     TOC_STYLES: "toc_styles",
     SUPER: "super",
-    // TSA.DocumentArchive
     CHANGE_SESSIONS: "change_sessions",
     DRAWABLES_ZORDER: "drawables_zorder",
     USES_SINGLE_HEADER_FOOTER: "uses_single_header_footer",
@@ -19143,7 +16839,6 @@ ${text}`;
     MASTER_DRAWABLES: "master_drawables"
   });
   var SettingsFields = protoFields("TP.SettingsArchive", {
-    /** false ⇒ page-layout document (no body text flow). */
     BODY: "body",
     HEADERS: "headers",
     FOOTERS: "footers",
@@ -19190,7 +16885,6 @@ ${text}`;
     [TP_TYPE.SECTION_TEMPLATE, sectionTemplateExtractor]
   ]);
 
-  // Tools/PagesBuild/cupertino/package/dist/pages/document.js
   var PAGES_REFERENCE_EXTRACTORS = new Map([
     ...SHARED_REFERENCE_EXTRACTORS,
     ...TP_REFERENCE_EXTRACTORS
@@ -19198,7 +16892,6 @@ ${text}`;
   var PagesSection = class {
     document;
     object;
-    /** Body-text range this section spans. */
     start;
     end;
     index;
@@ -19236,7 +16929,6 @@ ${text}`;
     get evenOddDifferent() {
       return this.object.message.getBool(Section.EVEN_ODD_DIFFERENT) ?? false;
     }
-    /** The section's page-master variants with their header/footer storages. */
     templates() {
       const out = [];
       const roles = [
@@ -19268,12 +16960,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Header/footer text of this section, from the odd-page master (the
-     * default variant Pages shows). Slot 1 — the default — is the field
-     * modern Pages draws, page-wide; 0 and 2 are the legacy layout's
-     * outer slots.
-     */
     headerText(column = 1) {
       const t = this.templates();
       const master = t.find((x) => x.role === "odd") ?? t[0];
@@ -19284,10 +16970,6 @@ ${text}`;
       const master = t.find((x) => x.role === "odd") ?? t[0];
       return master?.footers[column]?.text ?? "";
     }
-    /**
-     * Drawables placed on this section's master pages (watermarks, logos,
-     * repeating page furniture), keyed by page-master role.
-     */
     masterDrawables() {
       return this.templates().map((t) => {
         const template = this.document.store.object(t.templateId);
@@ -19300,16 +16982,6 @@ ${text}`;
         return { role: t.role, drawables };
       });
     }
-    /**
-     * Write header text into every page-master variant. The default slot
-     * 1 is the field modern Pages draws — one page-wide field whose text
-     * renders with its own paragraph alignment; slots 0 and 2 are the
-     * legacy layout's outer slots, preserved but not drawn in modern
-     * documents. Text written into a previously-empty slot copies the
-     * attribute shape of a non-empty sibling — its paragraph style,
-     * character-table and language entries — because a bare `setText`
-     * leaves the donor's empty-storage shape.
-     */
     setHeaderText(text, column = 1) {
       this.writeMasterText("headers", text, column);
     }
@@ -19346,20 +17018,6 @@ ${text}`;
       }
       return new _PagesDocument(container, store, docObject);
     }
-    /**
-     * A new, empty document built from one you supply.
-     *
-     * **There is no from-nothing constructor, and there will not be one.** A
-     * Pages document is dozens of interlinked archives — theme, stylesheet,
-     * section templates, master drawables — and inventing that graph would
-     * produce a file nothing offline could validate. Emptying a real one is
-     * safe: every identity, style and master stays exactly as an Apple app
-     * wrote it, and only the content goes.
-     *
-     * The body text is cleared and the first paragraph's style is kept, so
-     * the result is a blank page in the template's design. Headers, footers
-     * and masters are left alone — they are the template.
-     */
     static blankFrom(template) {
       const doc = _PagesDocument.load(template);
       const body = doc.bodyOrUndefined;
@@ -19370,35 +17028,14 @@ ${text}`;
       doc.compact();
       return doc;
     }
-    /**
-     * A new, empty Pages document — A4, vanilla styling, no template file
-     * needed.
-     *
-     * The embedded donor is an Apple-written corpus fixture emptied by
-     * {@link blankFrom} and re-papered to A4 with byte-measured values, so
-     * every style and identity in the "new" document was authored by an
-     * Apple app. `scripts/make-blanks.ts` records its provenance.
-     *
-     * @agentTool create_document
-     */
     static blank() {
       return _PagesDocument.load(blankDonorBytes());
     }
-    // ------------------------------------------------------------------- body
-    /**
-     * The document body text storage, or undefined for page-layout documents
-     * (Pages' "Document Body" switch off) where text lives only in text boxes.
-     */
     get bodyOrUndefined() {
       const id = refId(this.docObject.message, TPDocument.BODY_STORAGE);
       const obj = id !== void 0 ? this.store.object(id) : void 0;
       return obj ? new TextStorage(this.store, obj) : void 0;
     }
-    /**
-     * The document body text storage. Throws for page-layout documents — check
-     * {@link isPageLayout} or use {@link bodyOrUndefined} when the document
-     * kind is unknown.
-     */
     get body() {
       const body = this.bodyOrUndefined;
       if (!body) {
@@ -19406,11 +17043,6 @@ ${text}`;
       }
       return body;
     }
-    /**
-     * True for page-layout documents: TP.SettingsArchive.body is false, or the
-     * document has no body storage at all. Word-processing documents (the
-     * default) have a body text flow; page-layout ones only have text boxes.
-     */
     get isPageLayout() {
       if (this.bodyOrUndefined === void 0)
         return true;
@@ -19418,11 +17050,9 @@ ${text}`;
       const settings = settingsId !== void 0 ? this.store.object(settingsId) : void 0;
       return settings?.message.getBool(SettingsFields.BODY) === false;
     }
-    /** Plain body text ("" for page-layout documents). */
     get bodyText() {
       return this.bodyOrUndefined?.text ?? "";
     }
-    /** Body paragraphs with resolved style names ([] for page-layout documents). */
     paragraphs() {
       const body = this.bodyOrUndefined;
       if (!body)
@@ -19432,12 +17062,6 @@ ${text}`;
         styleName: p.styleId !== void 0 ? body.styleNameOf(p.styleId) : void 0
       }));
     }
-    /**
-     * Literal find/replace across the body, preserving the styling of the
-     * surrounding text. Returns how many occurrences changed.
-     *
-     * @agentTool replace_text
-     */
     replaceText(find, replace) {
       return this.body.replaceAll(find, replace);
     }
@@ -19447,15 +17071,6 @@ ${text}`;
     deleteRange(start, end) {
       this.body.deleteRange(start, end);
     }
-    /**
-     * Append a paragraph to the body. `style` may be a style name ("Heading 1")
-     * or a style object id. Returns the new paragraph index.
-     *
-     * `list` names a list style ("Bullet", "Numbered") to make the
-     * paragraph a list item; without it the paragraph is not one, whatever
-     * the paragraph before it was.
-     * @agentTool append_paragraph
-     */
     appendParagraph(text, style, list) {
       const listId = list === void 0 ? void 0 : this.body.resolveStyle(list, TSWP_TYPE.LIST_STYLE);
       const index = this.body.appendParagraph(text, listId);
@@ -19463,17 +17078,10 @@ ${text}`;
         this.setParagraphStyle(index, style);
       return index;
     }
-    /** Set a paragraph's style by name or id. */
     setParagraphStyle(paragraphIndex, style) {
       const id = this.resolveParagraphStyle(style);
       this.body.setParagraphStyle(paragraphIndex, id);
     }
-    /**
-     * Apply direct character formatting to a body range: creates an anonymous
-     * TSWP.CharacterStyleArchive (parented on the effective style at `start`)
-     * and spans it over [start, end). Returns the new style's id.
-     * @agentTool format_text
-     */
     applyCharacterFormatting(start, end, formatting) {
       const current = this.body.effectiveObjectAt(Storage.TABLE_CHAR_STYLE, start);
       const styleId = this.stylesheet.createCharacterStyle({
@@ -19483,8 +17091,6 @@ ${text}`;
       this.body.setCharacterStyleRange(start, end, styleId);
       return styleId;
     }
-    // ------------------------------------------------------------------ styles
-    /** The document stylesheet (named styles live here). */
     get stylesheet() {
       const id = refId(this.docObject.message, TPDocument.STYLESHEET);
       const obj = id !== void 0 ? this.store.object(id) : void 0;
@@ -19492,7 +17098,6 @@ ${text}`;
         throw new RangeError("document stylesheet not found");
       return new StylesheetModel(this.store, obj);
     }
-    /** Named paragraph styles available to this document. */
     paragraphStyles() {
       const seen = /* @__PURE__ */ new Set();
       const out = [];
@@ -19508,13 +17113,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Which paragraph styles the body actually uses, most-used first — as
-     * against {@link paragraphStyles}, which is everything the template
-     * *defines*. A template usually defines styles its own sample content
-     * never demonstrates, and those are the ones whose look nobody has
-     * seen next to the rest.
-     */
     paragraphStylesInUse() {
       const counts = /* @__PURE__ */ new Map();
       const paragraphs = this.body.paragraphs();
@@ -19526,49 +17124,11 @@ ${text}`;
       }
       return [...counts.entries()].map(([name, count]) => ({ name, count })).sort((a, b) => b.count - a.count || a.name.localeCompare(b.name));
     }
-    /**
-     * Create a paragraph style and list it in the app's style panel.
-     *
-     * **Confirmed in Pages.** A style created here applies as asked and
-     * appears in the paragraph styles panel. Four requirements, found one
-     * failed round in the app at a time, each necessary and none sufficient:
-     *
-     *   1. a `super.name`;
-     *   2. a `super.identifier` and a matching `identifier_to_style_map`
-     *      entry — of the 146 paragraph styles in the ladder's base, the 21
-     *      that are listed all carry both;
-     *   3. both property bags, the field set all 3130 paragraph styles in
-     *      these fixtures share;
-     *   4. an entry in `TSWP.ThemePresetsArchive.paragraph_style_presets`
-     *      (`TP.ThemeArchive.super.110.7`), which in every fixture holds
-     *      exactly the names the app shows and whose length tracks what the
-     *      user sees — twelve in a stock document, 35 and 61 in the two
-     *      imported from Word.
-     *
-     * The first three produce a style that renders correctly and whose name
-     * Pages prefills when adding a style by hand — and still does not list.
-     * {@link unlistParagraphStyle} was built as the control (removal proves
-     * which list the panel reads in a way addition cannot), and
-     * {@link listedParagraphStyles} reads the panel's own order back.
-     *
-     * `copyOf` starts the new style's property bags as a full copy of an
-     * existing style's — the dense shape every listed corpus style has.
-     * Whether density is *also* required went unrecorded in the confirming
-     * report, so sparse styles list on faith; dense ones on evidence.
-     */
     createParagraphStyle(options) {
       const id = this.stylesheet.createParagraphStyle(options);
       this.listInThemeStyles(id);
       return id;
     }
-    /**
-     * The paragraph styles the app lists in its style panel, in panel order.
-     *
-     * Distinct from {@link paragraphStyles}, which is every style the
-     * stylesheet chain holds — 146 of them in the ladder's base document
-     * against the twelve the panel shows. The rest are overrides and
-     * variations the app deliberately hides.
-     */
     listedParagraphStyles() {
       const out = [];
       for (const entry of this.themeStyleList()?.getMessages(ThemeArchive.LIST_ENTRIES) ?? []) {
@@ -19579,16 +17139,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Take a paragraph style out of the panel list, leaving the style itself
-     * in place and still applied wherever it is used.
-     *
-     * Returns whether it was listed. The inverse of what
-     * {@link createParagraphStyle} does, and the control for it: adding an
-     * entry and seeing nothing appear says only that the addition did not
-     * work, while removing an entry and seeing an entry vanish says the list
-     * is the thing the panel reads.
-     */
     unlistParagraphStyle(id) {
       const list = this.themeStyleList();
       const theme = this.store.resolve(refId(this.docObject.message, TPDocument.THEME));
@@ -19603,23 +17153,11 @@ ${text}`;
       theme.message.markDirty();
       return true;
     }
-    /** `TSWP.ThemePresetsArchive.paragraph_style_presets`, if this theme has one. */
     themeStyleList() {
       const theme = this.store.resolve(refId(this.docObject.message, TPDocument.THEME));
       const sup = theme?.message.getMessage(ThemeArchive.SUPER);
       return sup?.getMessage(ThemeArchive.PARAGRAPH_STYLE_LIST);
     }
-    /**
-     * Put a floating drawable into the document's paint order.
-     *
-     * A page group says which page a drawable belongs to; it does not say
-     * that the document draws it. That is `TP.DrawablesZOrderArchive`, one
-     * per document, and a drawable in a page group but missing from it does
-     * not appear at all — no warning, no blank box, nothing. Copying onto the
-     * page the drawable already lived on failed exactly as completely as
-     * copying onto a fresh page, which is what showed the fault was here
-     * rather than in the page group.
-     */
     addToZOrder(id) {
       const zorder = this.store.resolve(refId(this.docObject.message, TPDocument.DRAWABLES_ZORDER));
       if (!zorder)
@@ -19631,13 +17169,6 @@ ${text}`;
       zorder.message.markDirty();
       this.store.declareReference(zorder, id);
     }
-    /**
-     * Append a style to the theme's panel list, in the preset list its
-     * type belongs to: `TSWP.ThemePresetsArchive` carries three —
-     * paragraph, character and list style presets — and the app refuses a
-     * document whose paragraph list holds a character style. A style of
-     * any other type throws.
-     */
     listInThemeStyles(styleId) {
       const entriesField = this.store.object(styleId)?.type === TSWP_TYPE.PARAGRAPH_STYLE ? ThemeArchive.LIST_ENTRIES : this.store.object(styleId)?.type === TSWP_TYPE.CHARACTER_STYLE ? ThemeArchive.CHARACTER_ENTRIES : this.store.object(styleId)?.type === TSWP_TYPE.LIST_STYLE ? ThemeArchive.LIST_STYLE_ENTRIES : void 0;
       if (entriesField === void 0) {
@@ -19664,11 +17195,6 @@ ${text}`;
         throw new RangeError(`paragraph style not found: ${JSON.stringify(style)}`);
       return found.id;
     }
-    // --------------------------------------------------------------- sections
-    /**
-     * Sections of the document, from the body storage's section table. Every
-     * document has at least one.
-     */
     sections() {
       const body = this.bodyOrUndefined;
       const text = body?.text ?? "";
@@ -19693,7 +17219,6 @@ ${text}`;
       }
       return out;
     }
-    // ------------------------------------------------------------- page setup
     pageSetup() {
       const m = this.docObject.message;
       return {
@@ -19709,11 +17234,6 @@ ${text}`;
         paperId: m.getString(TPDocument.PAPER_ID)
       };
     }
-    /**
-     * Update page geometry (points; 1 pt = 1/72 in). Only given fields change.
-     *
-     * @agentTool set_page_setup
-     */
     setPageSetup(update) {
       const m = this.docObject.message;
       const setF = (no, v) => {
@@ -19735,44 +17255,21 @@ ${text}`;
         m.setString(TPDocument.PAPER_ID, update.paperId);
       }
     }
-    // ------------------------------------------------------- fluent delegates
-    /** Fluent range over body text. */
     range(start, end) {
       return this.body.range(start, end);
     }
-    /** Find body-text matches as fluent ranges. */
     find(pattern) {
       return this.body.find(pattern);
     }
-    /** Fluent handle for one body paragraph. */
     paragraph(index) {
       return this.body.paragraph(index);
     }
-    /**
-     * Apply several non-overlapping body edits from one snapshot — offsets
-     * for every edit refer to the text as it is now, in any order; an
-     * omitted `replacement` deletes the range. The safe way to make many
-     * changes gathered from one `paragraphs()`/`find()` pass.
-     */
     applyEdits(edits) {
       this.body.applyEdits(edits);
     }
-    /** The body's placeholder-text spans ("tap or click to add …"). */
     placeholders() {
       return this.bodyOrUndefined?.placeholders() ?? [];
     }
-    /**
-     * Fill a body placeholder: real text in, placeholder marking off,
-     * styling kept — what typing into one does in Pages. Returns the
-     * filled span as a fluent range.
-     *
-     * A number indexes the listing *as of this call*: a fill removes its
-     * entry, so the indexes of the placeholders after it shift down by
-     * one — filling 0, 1, 2 from one remembered listing lands two of them
-     * in the wrong fields. To fill several, pass the entries of one
-     * {@link placeholders} snapshot (each carries the `fieldId` that pins
-     * it, resolved live at the fill), or pass field ids directly.
-     */
     fillPlaceholder(placeholder, text) {
       let target;
       if (typeof placeholder === "number") {
@@ -19787,22 +17284,15 @@ ${text}`;
       const span = this.body.fillPlaceholder(target, text);
       return this.body.range(span.start, span.end);
     }
-    /**
-     * Mark a body span as placeholder text, the way Format → Advanced →
-     * Define as Placeholder Text does. Returns the field's id.
-     */
     defineAsPlaceholder(start, end) {
       return this.body.defineAsPlaceholder(start, end);
     }
-    /** Effective character formatting at a body position, inheritance folded in. */
     characterFormattingAt(pos) {
       return this.body.characterFormattingAt(pos);
     }
-    /** Body hyperlinks ([] for page-layout documents). */
     links() {
       return this.bodyOrUndefined?.links() ?? [];
     }
-    /** Every hyperlink in the document, including those inside text boxes. */
     allLinks() {
       const out = [];
       for (const storage of this.textStorages()) {
@@ -19812,42 +17302,30 @@ ${text}`;
       }
       return out;
     }
-    /** Body smart fields — page numbers, dates, merge fields, links, … */
     smartFields() {
       return this.bodyOrUndefined?.smartFields() ?? [];
     }
-    /** Body inline attachments (page-number fields, images, footnote marks). */
     attachments() {
       return this.bodyOrUndefined?.attachments() ?? [];
     }
-    /** Bookmarks (named destinations) declared in the body. */
     bookmarks() {
       return this.bodyOrUndefined?.bookmarks() ?? [];
     }
-    /**
-     * Make a body range a hyperlink.
-     *
-     * @agentTool insert_link
-     */
     insertLink(start, end, url, options = {}) {
       return this.body.insertLink(start, end, url, options);
     }
-    /** Footnotes/endnotes anchored in the body (edit via `.storage`). */
     footnotes() {
       return this.bodyOrUndefined?.footnotes() ?? [];
     }
-    /** Comments anchored anywhere in the document. */
     comments() {
       const out = [];
       for (const storage of this.textStorages())
         out.push(...storage.comments());
       return out;
     }
-    /** Apply a list style ("Bullet", "Numbered", "None", …) to a paragraph. */
     setListStyle(paragraphIndex, style) {
       this.body.setListStyle(paragraphIndex, this.body.resolveStyle(style, TSWP_TYPE.LIST_STYLE));
     }
-    /** Named list styles available to this document. */
     listStyles() {
       const seen = /* @__PURE__ */ new Set();
       const out = [];
@@ -19861,13 +17339,6 @@ ${text}`;
       }
       return out;
     }
-    // ---------------------------------------------------------- more features
-    /**
-     * Tables in document order: the body's anchored tables first, by their
-     * position in the text, then floating tables in paint order, then any
-     * the anchors do not reach (storage order). `tables()[0]` is the first
-     * table in the document whatever was added this session.
-     */
     tables() {
       const anchored = [];
       for (const attachment of this.body.attachments()) {
@@ -19896,7 +17367,6 @@ ${text}`;
       take(tablesOf(this.store));
       return out;
     }
-    /** Document-wide settings (hyphenation, ligatures, footnote config …). */
     get settings() {
       const id = refId(this.docObject.message, TPDocument.SETTINGS);
       const obj = id !== void 0 ? this.store.object(id) : void 0;
@@ -19904,7 +17374,6 @@ ${text}`;
         throw new RangeError("TP.SettingsArchive not found");
       return new PagesSettings(obj);
     }
-    /** Text boxes and shapes carrying text: drawable + its text storage. */
     textBoxes() {
       const out = [];
       for (const { obj } of this.store.allObjects()) {
@@ -19922,15 +17391,6 @@ ${text}`;
       }
       return out;
     }
-    /**
-     * Start a new section at the given body paragraph. The new section clones
-     * the enclosing section's configuration *and its page masters*: every
-     * section owns its three master variants and their header/footer
-     * storages — no two sections in the corpus's 25 sectioned documents
-     * share a master object — so the sections' headers stay independently
-     * editable. `inherit_previous_header_footer` is set, matching Pages'
-     * "Create a new section" default. Returns the new section.
-     */
     insertSectionBreak(paragraphIndex, options = {}) {
       const body = this.body;
       const starts = body.paragraphStarts();
@@ -20001,24 +17461,6 @@ ${text}`;
         throw new RangeError("section insertion failed");
       return found;
     }
-    /**
-     * Floating drawables of one page, for adding, removing and reordering.
-     *
-     * Pages groups floating objects **per page**, not per section or per
-     * document: `TP.FloatingDrawablesArchive.page_groups` holds one entry per
-     * page that has any, each with background, foreground and main lists.
-     * `pageIndex` selects the group; omit it for the first one the document
-     * has. Pages with no floating objects have no group, so a document can
-     * be missing the page you ask for even though the page exists — which is
-     * why `create` exists: without it there is no way to put the first
-     * drawable on a page, and "copy this onto page 3" is the ordinary case.
-     *
-     * A created group carries exactly what Apple's do. Every page group in
-     * every fixture here holds two fields and no others — the page index and
-     * the drawable list — and `libetonyek-pages5-extra-dir` has three of them
-     * for pages 0, 1 and 2, in page order, which is what the insert below
-     * preserves.
-     */
     floatingDrawables(pageIndex, options = {}) {
       const holder = this.store.resolve(refId(this.docObject.message, TPDocument.FLOATING_DRAWABLES));
       if (!holder)
@@ -20048,29 +17490,10 @@ ${text}`;
         }
       });
     }
-    /** Page indexes that currently hold floating drawables. */
     floatingDrawablePages() {
       const holder = this.store.resolve(refId(this.docObject.message, TPDocument.FLOATING_DRAWABLES));
       return (holder?.message.getMessages(FloatingDrawables.PAGE_GROUPS) ?? []).map((g) => g.getUint(PageGroup.PAGE_INDEX) ?? 0);
     }
-    /**
-     * Insert an image inline at a body-text position. Registers the bytes
-     * as a Data/ file (SHA-1 deduped), creates the TSD.ImageArchive +
-     * attachment objects, anchors them at a U+FFFC character, and sizes
-     * the image from its intrinsic dimensions — PNG/JPEG/GIF pixels, or a
-     * PDF's first-page MediaBox in points — scaled to fit `maxWidth`
-     * (default 400 pt) unless explicit width/height are given. A PDF is
-     * media like any raster image: the corpus's PDF figures use the same
-     * archive, and stay vector when the app scales them.
-     * App-confirmed: ladder rung P11 renders at the size asked.
-     *
-     * The image rides the text: it sits in the text column and moves with
-     * the paragraph's indent, because the drawable carries the
-     * in-the-text-flow `exterior_text_wrap`. Pass `wrap: "page"` for the
-     * other behaviour, where the image is placed against the page margins
-     * and text flows around it — with an indented body that means the
-     * picture will not line up with the words above it.
-     */
     insertInlineImage(pos, data, options) {
       const body = this.body;
       const wrap = options.wrap ?? "text";
@@ -20152,24 +17575,6 @@ ${text}`;
       table.setMessages(ATTR_TABLE_ENTRIES, entries);
       return { imageId: image.identifier, dataId };
     }
-    /**
-     * Insert a table inline at a body-text position, cloned from a table
-     * already in the document.
-     *
-     * Clone-based like `NumbersDocument.addTable`, because a table's object
-     * graph — model, data store, tiles, data lists, per-band styles — is
-     * far beyond what can be invented safely; every identity in the copy
-     * comes from an Apple-authored source. A document with no table has
-     * nothing to clone, and throws. The copy forks its data lists (the
-     * clone walk follows the whole table subtree), so filling it never
-     * touches the source — the save-time integrity gate would refuse the
-     * file if it did.
-     *
-     * The anchoring is the measured inline-table shape: the info's
-     * `parent` is the body storage, its geometry sits at the origin with
-     * the standard flags, and a five-field attachment ties it to a U+FFFC
-     * character.
-     */
     insertInlineTable(pos, options = {}) {
       const body = this.body;
       const component = this.store.componentOf(body.id);
@@ -20207,7 +17612,6 @@ ${text}`;
       body.insertAttachment(pos, attachment.identifier);
       return model;
     }
-    /** A table name no other table in the document uses. */
     uniqueTableName(preferred, exclude) {
       const used = new Set(this.tables().filter((table) => table.infoObject?.identifier !== exclude).map((table) => table.name).filter((name) => name !== void 0));
       const base = preferred ?? "Table";
@@ -20250,21 +17654,18 @@ ${text}`;
     set useLigatures(value) {
       this.object.message.setBool(SettingsFields.USE_LIGATURES, value);
     }
-    /** 0 footnotes, 1 document endnotes, 2 section endnotes. */
     get footnoteKind() {
       return this.object.message.getUint(SettingsFields.FOOTNOTE_KIND) ?? 0;
     }
     set footnoteKind(value) {
       this.object.message.setVarint(SettingsFields.FOOTNOTE_KIND, value);
     }
-    /** 0 numeric, 1 roman, 2 symbolic, 3/4 japanese. */
     get footnoteFormat() {
       return this.object.message.getUint(SettingsFields.FOOTNOTE_FORMAT) ?? 0;
     }
     set footnoteFormat(value) {
       this.object.message.setVarint(SettingsFields.FOOTNOTE_FORMAT, value);
     }
-    /** 0 continuous, 1 restart each page, 2 restart each section. */
     get footnoteNumbering() {
       return this.object.message.getUint(SettingsFields.FOOTNOTE_NUMBERING) ?? 0;
     }
@@ -20279,10 +17680,8 @@ ${text}`;
     }
   };
 
-  // Tools/PagesBuild/table-seed.pages
   var table_seed_default = __toBinary("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BNjgRcAA4EnAAOFJwADiScAA40nAAORJwADlScAE5eBFwATl4EXABOXgRcAE5eBFwATg4EXABOHgRcAE4uBFwATj4EXABOTgRcAAnEnAAJ1JwACeRcDu4gAF4gAVwYo2wAIAzUXAAM1FwADN/sAC/sAC/sAC/sACOsAC6KDZaaLZaaPZaaTZaaHZaefgaejgaengaebgae/gabTZafDgafHgafLgafPgafTgafXgabXZabbZabfZOsACgkoADAoECOZFwADnRcAA6EXAAOlFwAChRcAAokXAAKNFwACkRcAAoEXAAO9FwBi02WlgAmoEATgAcgUGAHoFBkHAAOhJwADoScAA8EnAAPFJwADyScAA80nAAPRJwAD1ScAA9UnAAPVJwAD1ScAA9UnAAPBJwADxScAA8knAAPNJwAD0ScAAtUnAALZJwAC3RcDu4gAF4gAVDkQJNsACAM5FwADORcAAzv7AAv7AAv7AAv7AAjrAAui52Wm72Wm82Wm92Wm62Wn34Gn44Gn54Gn24Gn/4GnN2WmA4WmB4WmC4WmD4WmE4WmF4WnO2WnP2WnQ2TrAAoJKAAwKBAj2RcAA90XAAPhFwAD5RcAAukXAALtFwAS82aGAAL1FwAC5RcAA/0XAGM3ZaWADagQBOAByBQYAegUGQcAA+EnAAPhJwASA4RJACASB4RJACASC4RJACASD4RJACASE4RJACASF4RJACASF4aWABIXhpYAEheGlgASF4aWABIDhpYAEgeGlgASC4aWABIPhpYAEhOGlgADOScAAz0nAANBFwO7iAAXiABUO/gs2wAIAz0XAAM9FwADP/sAC/sAC/sAC/sACOsAC6NLZadTZadXZadbZadPZaYfhaYjhaYnhaYbhaY/haebZaZDhaZHhaZLhaZPhaZThaZXhaefZaejZaenZOsACgkoADAoECIYSqAwEh+EOAAsEiOEOAAsEieEOAAsA00XABNTZDkAIANVFwADWRcAA0kXABI/hDgALGObZaWAEagQBOAByBQYAegUGQcAEiOESQAgEiOESQAgAkEnAAJFJwACSScAAk0nAAJRJwACVScAAlUnAAJVJwACVScAAlUnAAJBJwACRScAAkknAAJNJwACUScAA50nAAOhJwADpRcDu4gAF4gAVDrgONsACANBFwADQRcAA0P7AAv7AAv7AAv7AAjrA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aZPcaZTcaZXcaZXgaZXgaZBCGAAEIhcBNwAIBTcQDIzcaY0FA/SNCozcaSq3DY/caY7cabvXabrXaYjaaYTaaYXaaZDaaZHaaZraaZvaaZzaaZ3aaZ7aaZ/aaaDaaaHaaaLaaaPaaZLaaaTaaaXaaabaaafaaajaaanaaaraaavaaazaaa3aaZPaaZTaaZXaaZbaaZfaaZjaaZnaaa7aaYnaaYraaYvaaYzaaY3aaY7aaYbaaYfaabTaabDaabHaabzaab3aacbaacfaacjaacnaacraacvaaczaac3aac7aac/aab7aadDaadHaadLaadPaadTaadXaadbaadfaadjaadnaab/aacDaacHaacLaacPaacTaacXaadraabXaabbaabfaabjaabnaabraabLaabPaaeDaadzaad3aaejaaenaafLaafPaafTaafXaafbaaffaafjaafnaafraafvaaeraafzaaf3aaf7aaf/aaYDbaYHbaYLbaYPbaYTbaYXbaevaaezaae3aae7aae/aafDaafHaaYbbaeHaaeLaaePaaeTaaeXaaebaad7aad/aaYzbaYjbaYnbaZTbaZXbaZ7baZ/baaDbaaHbaaLbaaPbaaTbaaXbaabbaafbaZbbaajbaanbaarbaavbaazbaa3baa7baa/babDbabHbaZfbaZjbaZnbaZrbaZvbaZzbaZ3babLbaY3baY7baY/baZDbaZHbaZLbaYrbaYvbabjbabTbabXbacDbacHbacrbacvbaczbac3bac7bac/badDbadHbadLbadPbacLbadTbadXbadbbadfbadjbadnbadrbadvbadzbad3bacPbacTbacXbacbbacfbacjbacnbad7babnbabrbabvbabzbab3bab7babbbabfbaeTbaeDbaeHbaezbae3bafbbaffbafjbafnbafrbafvbafzbaf3baf7baf/bae7baYDcaYHcaYLcaYPcaYTcaYXcaYbcaYfcaYjcaYncae/bafDbafHbafLbafPbafTbafXbaYrcaeXbaebbaefbaejbaenbaerbaeLbaePbaaDcadvXaZTgac/XadDXadHXadLXadPXadTXac7hadDhaazhab7hab/hacDhacHhacLhacPhac/hadHhaZTiaZbiaa3haa/habHhabPhabXhabfhabnhabvhab3hacLXacPXacTXacXXacbXacfXadXXadbXadfXadjXadnXadrXaYnXacjXacnXacrXacvXaczXac3XadzXaZfgaZjgaZngaZrgaZvgaZzgaZ3gaZ7gad3XaZbgae7YaYfZaaDZabnZadLZaevZae/YafPYafTYafXYafbYaffYafLYafHYafDYafjYafnYafrYafvYafzYaYTZaYPZaYXZaYjZaYzZaY3ZaY7ZaY/ZaZDZaYvZaYrZaYnZaZHZaZLZaZPZaZTZaZXZaZ3ZaZzZaZ7ZaaHZaaXZaabZaafZaajZaanZaaTZaaPZaaLZaarZaavZaazZaa3Zaa7ZabbZabXZabfZabrZab7Zab/ZacDZacHZacLZab3ZabzZabvZacPZacTZacXZacbZacfZac/Zac7ZadDZadPZadfZadjZadnZadrZadvZadbZadXZadTZadzZad3Zad7Zad/ZaeDZaejZaefZaenZaezZafDZafHZafLZafPZafTZae/Zae7Zae3ZafXZafbZaffZafjZafnZaYHaaYDaaYLaacbgacrgacvgaczgac3gac7gacngacjgacfgaf3Yaf7Yaf/YaYDZaYHZadbgadrgadvgadzgad3gad7gadngadjgadfgaZbZaZfZaZjZaZnZaZrZaebgaergaevgaezgae3gae7gaengaejgaefgaa/ZabDZabHZabLZabPZafbgafrgafvgafzgaf3gaf7gafngafjgaffgacjZacnZacrZacvZaczZaYbhaYrhaYvhaYzhaY3haY7haYnhaYjhaYfhaeHZaeLZaePZaeTZaeXZaZbhaZrhaZvhaZzhaZ3haZ7haZnhaZjhaZfhafrZafvZafzZaf3Zaf7ZaYLZac/gaZvZad/gabTZae/gac3Zaf/gaebZaY/haf/ZaZ/habfgaYDXaYrXabjgaYHXaZfcaZXXaZbXaZfXaZjXabngaYLXaZjcaZ7Xabzgab7gab/gaaTXaafXabrgaYPXaZncaanXaarXaavXaazXaa3Xaa7Xaa/XabDXabHXabvgaYTXaZrcabLXabPXaYXXaYbXaZDXaYfXaYjXac7XaZbcaY3caYzcaZXgaZDcaZHcaZLcaZPcaZTcaZXcaQoECIDXaQoECIHXaQoECILXaQoECIPXaQoECITXaQoECIXXaQoECIbXaQoECIfXaQoECIjXaQoECInXaQoECIrXaQoECJDXaQoECJXXaQoECJbXaQoECJfXaQoECJjXaQoECJ7XaQoECKTXaQoECKfXaQoECKnXaQoECKrXaQoECKvXaQoECKzXaQoECK3XaQoECK7XaQoECK/XaQoECLDXaQoECLHXaQoECLLXaQoECLPXaQoECLrXaQoECLvXaQoECMLXaQoECMPXaQoECMTXaQoECMXXaQoECMbXaQoECMfXaQoECMjXaQoECMnXaQoECMrXaQoECMvXaQoECMzXaQoECM3XaQoECM7XaQoECM/XaQoECNDXaQoECNHXaQoECNLXaQoECNPXaQoECNTXaQoECNXXaQoECNbXaQoECNfXaQoECNjXaQoECNnXaQoECNrXaQoECNvXaQoECNzXaQoECN3XaQoECO7YaQoECO/YaQoECPDYaQoECPHYaQoECPLYaQoECPPYaQoECPTYaQoECPXYaQoECPbYaQoECPfYaQoECPjYaQoECPnYaQoECPrYaQoECPvYaQoECPzYaQoECP3YaQoECP7YaQoECP/YaQoECIDZaQoECIHZaQoECILZaQoECIPZaQoECITZaQoECIXZaQoECIfZaQoECIjZaQoECInZaQoECIrZaQoECIvZaQoECIzZaQoECI3ZaQoECI7ZaQoECI/ZaQoECJDZaQoECJHZaQoECJLZaQoECJPZaQoECJTZaQoECJXZaQoECJbZaQoECJfZaQoECJjZaQoECJnZaQoECJrZaQoECJvZaQoECJzZaQoECJ3ZaQoECJ7ZaQoECKDZaQoECKHZaQoECKLZaQoECKPZaQoECKTZaQoECKXZaQoECKbZaQoECKfZaQoECKjZaQoECKnZaQoECKrZaQoECKvZaQoECKzZaQoECK3ZaQoECK7ZaQoECK/ZaQoECLDZaQoECLHZaQoECLLZaQoECLPZaQoECLTZaQoECLXZaQoECLbZaQoECLfZaQoECLnZaQoECLrZaQoECLvZaQoECLzZaQoECL3ZaQoECL7ZaQoECL/ZaQoECMDZaQoECMHZaQoECMLZaQoECMPZaQoECMTZaQoECMXZaQoECMbZaQoECMfZaQoECMjZaQoECMnZaQoECMrZaQoECMvZaQoECMzZaQoECM3ZaQoECM7ZaQoECM/ZaQoECNDZaQoECNLZaQoECNPZaQoECNTZaQoECNXZaQoECNbZaQoECNfZaQoECNjZAaIE2dkBBgDaBQYA2wUGANwFBgDdBQYA3gUGAN8FBgDgBQYA4QUGAOIFBgDjBQYA5AUGAOUFBgDmBQYA5wUGAOgFBgDpBQYA6wUGAOwFBgDtBQYA7gUGAO8FBgDwBQYA8QUGAPIFBgDzBQYA9AUGAPUFBgD2BQYA9wUGAPgFBgD5BQYA+gUGAPsFBgD8BQYA/QUGAP4FBgD/BQYEgNoB5ACBBQYAggUGAIQFBgCFBQYAhgUGAIcFBgCIBQYAiQUGAIoFBgCLBQYAjAUGAI0FBgCOBQYAkAUGAJEFBgCSBQYAkwUGAJQFBgCVBQYAlgUGAJcFBgCYBQYAmQUGAJoFBgCbBQYAnAUGAJ0FBgCeBQYAnwUGAKAFBgChBQYAogUGAKMFBgCkBQYApQUGAKYFBgCnBQYAqAUGAKkFBgCqBQYAqwUGAKwFBgCtBQYArgUGALAFBgCxBQYAsgUGALMFBgC0BQYAtQUGALYFBgC3BQYAuAUGALkFBgC6BQYAvAUGAL0FBgC+BQYAvwUGAMAFBgDBBQYAwgUGAMMFBgDEBQYAxQUGAMYFBgDHBQYAyAUGAMkFBgDKBQYAywUGAMwFBgDNBQYAzgUGAM8FBgDQBQYA0QUGANIFBgDTBQYA1AUGANUFBgDWBQYA1wUGANgFBgDZBQYA2gUGANwFBgDdBQYA3gUGAN8FBgDgBQYA4QUGAOIFBgDjBQYA5AUGAOUFBgDmBQYA6AUGAOkFBgDqBQYA6wUGAOwFBgDtBQYA7gUGAO8FBgDwBQYA8QUGAPIFBgDzBQYA9AUGAPUFBgD2BQYA9wUGAPgFBgD5BQYA+gUGAPsFBgD8BQYA/QUGAP4FBgD/BQYEgNtF3AUGAIIFBgCDBQYAhAUGAIUFBgCGBQYAiAUGAIkFBgCKBQYAiwUGAIwFBgCNBQYAjgUGAI8FBgCQBQYAkQUGAJIFBgCUBQYAlQUGAJYFBgCXBQYAmAUGAJkFBgCaBQYAmwUGAJwFBgCdBQYAngUGAJ8FBgCgBQYAoQUGAKIFBgCjBQYApAUGAKUFBgCmBQYApwUGAKgFBgCpBQYAqgUGAKsFBgCsBQYArQUGAK4FBgCvBQYAsAUGALEFBgCyBQYAtAUGALUFBgC2BQYAtwUGALgFBgC5BQYAugUGALsFBgC8BQYAvQUGAL4FBgDABQYAwQUGAMIFBgDDBQYAxAUGAMUFBgDGBQYAxwUGAMgFBgDJBQYAygUGAMsFBgDMBQYAzQUGAM4FBgDPBQYA0AUGANEFBgDSBQYA0wUGANQFBgDVBQYA1gUGANcFBgDYBQYA2QUGANoFBgDbBQYA3AUGAN0FBgDeBQYA4AUGAOEFBgDiBQYA4wUGAOQFBgDlBQYA5gUGAOcFBgDoBQYA6QUGAOoFBgDsBQYA7QUGAO4FBgDvBQYA8AUGAPEFBgDyBQYA8wUGAPQFBgD1BQYA9gUGAPcFBgD4BQYA+QUGAPoFBgD7BQYA/AUGAP0FBgD+BQYA/wUGBIDcRdwFBgCCBQYAgwUGAIQFBgCFBQYAhgUGAIcFBgCIBQYAiQUGAIoFBgCMBQYAjQUGAI4FBgCPBQYAkAUGAJEFBgCSBQYAkwUGAJQFBgCVBQYAlgUGAJcFBgCYBQYAmQUGAJoFBgCgBQYElOABogCVBQYAlgUGAJcFBgCYBQYAmQUGAJoFBgCbBQYAnAUGAJ0FBgCeBQYAtwUGALgFBgC5BQYAugUGALsFBgC8BQYAvQUGAL4FBgC/BQYAxgUGAMcFBgDIBQYAyQUGAMoFBgDLBQYAzAUGAM0FBgDOBQYAzwUGANAFBgDRBQYA0gUGANMFBgDUBQYA1QUGANYFBgDXBQYA2AUGANkFBgDaBQYA2wUGANwFBgDdBQYA3gUGAN8FBgDgBQYA4QUGAOIFBgDjBQYA5AUGAOUFBgDmBQYA5wUGAOgFBgDpBQYA6gUGAOsFBgDsBQYA7QUGAO4FBgDvBQYA8AUGAPEFBgDyBQYA8wUGAPQFBgD1BQYA9gUGAPcFBgD4BQYA+QUGAPoFBgD7BQYA/AUGAP0FBgD+BQYA/wUGBIDhIdQAgQUGAIIFBgCDBQYAhAUGAIUFBgCGBQYAhwUGAIgFBgCJBQYAigUGAIsFBgCMBQYAjQUGAI4FBgCPBQYAkAUGAJEFBgCSBQYAkwUGAJQFBgCVBQYAlgUGAJcFBgCYBQYAmQUGAJoFBgCbBQYAnAUGAJ0FBgCeBQYAnwUGAKAFBgChBQYAogUGAKMFBgCkBQYApQUGAKwFBgCtBQYArwUGALEFBgCzBQYAtQUGALcFBgC5BQYAuwUGAL0FBgC+BQYAvwUGAMAFBgDB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yvwAsjwtlk8BADIWXSwwY5RnPiUTE70+LRGCCh7fDwA6ahwAGhQvUjgAAEpqOAAAUmocAABaahwAAGJqHAAAamocABrxLlKoAAB6ajgABIIBah0AAIpuHQAMkAEAmB45LxSwAQC4AQAe/i14ANABANgBAOABAOgBAPIBAPoBAIICAIoCAJICAJoCLxJJMFK2CVQVAAC0Qh0mk8k/IAMtXI/CPjABOACiwjIAAKrCMgAMugIAwsI1AADKwjIADNICANrCNQAQ4gIA6gJpZBCyGXo/JQEFAC0BBRqdEg6BM2Fkun4xAPL+VABKVAAA+v5UAEpUAASCAwn8UtoCDrQ2AEDGejIAig1UIUb+UAExUACS/lQASlQAAJoNVP78AC78AACiDVT+/AAu/AAAqg1U/qgALqgABLIDapkEALpuHQAAwm4dAADKbh0AANJuHQAA2m4dAKDgAwHoAwDwAwGABACIBACQBACYBACgBACoBAC1BP//f3+9BAAAIEHFBAEMBM0EAQwA1QUGBNoESd/+jwEujwEA4v5UAEpUAADqDVRe4wHSgwQNVP78AC78AAD6DVT+qAAuqAAEggUppP5UAC5UAASNBQ4qNQyQBQGdBQkQoAUBqgV2GgcE9ELhNQBAqejlGgCyDZgcpp8JPyVetFQytBgO6gmhG7p3CrC4BQjABQbIBQrQBUDYBSbgBQjoBUDwBSb4BQqABgiIBgaQBgCYBgCgBgCCCFFyygcAAMGVun4ASMAJAcgJAaoKALgKAcAKAcoKAOIaWwswYWGNPiWV3OY+LZ0eKd37zv8FKPoKAIgLAJgLAK0LYYkEugsp3/5jAC5jACzICwDgCwDtC5qZGT4ORDgYkPEEAREItobMCxpbI/7MC/7MC/7MC/7MC47MCzAAEYI+JQ5j1D4t9ZUbURMazAtSHAAazAtSHAAazAtSHAAAUsmKUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAHswLUh0AHswLUh0A/swL/swL/swL/swL/swL/swL/swL/swL/swLuswLUoQC/swL/swL/swLmswL/vwALvwA/swLbswL/qgALqgAHswLUlQAHswLUh0AHswLUh0AHswLUh0AHswLUh0AHswLUh0A/swL/swL/swLoswLUv4A3k8QGngL/swLTswL/qgALqgAHswL/lQALlQA/swLLswLHHl0TT4lVPk0Mn1D/swL/swL/swLOswLMHW3yD4lZV4MPy3QKUIeuQna/wVazAv+YwAuYwBWzAsAtzLMCwDuTpgXGrQtDILxBMf+mBf+mBf+mBf+mBd+mBcwz1eQPiUJs+s+LdqpLFETGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAHswLUh0AHswLUh0A/swL/swL/swL/swL/swL/swL/swL/swL/swLuswLUoQC2s0F/pgX/pgXvpgX/vwALvwA/swLbswL/qgALqgAHswLUlQAHswLUh0AHswLUh0AHswLUh0AHswLUh0AHswLUh0A/swL/swL/swLoswLUv4A/swL/swLSswL/qgALqgAHswL/lQALlQA/swLLswLMHHt6TQlDd0WPy3o220e1Qj+zAv+zAvyzAsWCRUw45K3NCV2x+w+LbWoOgHYJAA/YAG4CgDACgAqshdCJgAIgD9gAf4AgDKWGJb6TgD6DXoAgSI2PQB1JjY9HswXDlsbHswXln0AAY+GqFAIyAsISswXALiGAAwaHS7+AAz+AAz+AAz+AAyOAAwwX9amPiUcdwM/LSKEPkFTQS0aAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAeAAxSHQAeAAxSHQD+AAz+AAz+AAz+AAz+AAz+AAz+AAz+AAz+AAy6AAxShAL+AAz+AAz+AAyaAAz+/AAu/AD+AAxuAAz+qAAuqAAeAAxSVAAeAAxSHQAeAAxSHQAeAAxSHQAeAAxSHQAeAAxSHQD+AAz+AAz+AAyiAAxS/gD+AAz+AAxKAAz+qAAuqAAeAAz+VAAuVAD+AAwuAAwwCn/POiUL79c+LTQzMx7VCP4ADP4ADO4ADBoADDAsNpQ6JQg9mj4tAQAAAdhSAAxCJgAO0wkOK1z+AAyOAAyWfQABj94ADAC5hgAMGqs4AIL+ABj+ABj+ABj+ABiKABgwWG7oPiUnwRU/LQk5RkFTQS0aAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAeAAxSHQAeAAxSHQD+AAz+AAz+AAz+AAz+AAz+AAz+AAz+AAz+AAy6AAxShAL+AAz+AAz+AAyaAAz+/AAu/AD+AAxuAAz+qAAuqAAeAAxSVAAeAAxSHQAeAAxSHQAeAAxSHQAeAAxSHQAeAAxSHQD+AAz+AAz+AAyiAAxS/gD+AAz+AAxKAAz+qAAuqAAeAAz+VAAuVAD+AAwuAAwwe1cwNCXyAqA+LezNFR7VCP4ADP4ADO4ADBoADDzFJOgzJValUj4tcjXFPjUAVgAMQiYADtMJ/gAMngAMln0AAY/eAAwAuoYADBo5Q/4ADP4ADP4ADP4ADI4ADDC7oyU/JQe7Nz8tPZJWcSsaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAaAAxSHAAeAAxSHQAeAAxSHQD+AAz+AAz+AAz+AAz+AAz+AAz+AAz+AAz+AAy6AAxShAL+AAz+AAz+AAyaAAz+/AAu/AD+AAxuAAz+qAAuqAAeAAxSVAAeAAxSHQAeAAxSHQAeAAxSHQAeAAxSHQAeAAxSHQD+AAz+AAz+AAyiAAxS/gD+AAz+AAxKAAz+qAAuqAAeAAz+VAAuVAD+AAwuAAwwrzA0OyVz9zc+Lfg01A4oCxoCC/6YO/6YO+aYOxYAJDDFero6JUdjvj0tJJ1bAdhSABhCJgAN/v4AGJIAGJZ9AGEh3gAMALISAAwAohqYRxTiAgobEhMemEccdmFsdWVheGkum0cAvA7qJASAPxouRw4+df5IdR5IdRQwADgAQAASBnMAbQ5VPgx6AIoBFtI8/mYALmYADkhzFIA/qgEAug1dXsJFzvFHbMgBAeABAfABAfgBAYgCAJgCAKgCA7ACALgCAMAOlXMAAQ5EPQgRCLOSdAEAMRb2ZASC8f50Af50Af50AUZ0ARCJLjk/JQEFAC0BBSYBRs5sP5p0AQDgMnQBFOoCCh4SFknoJDItY2F0ZWdvcnk66wIIwQINQYgAGkmFAapOtADOKAIAKE3tAE1BfQBlAWUIcgCCTZBeaADOHAEWO3YMogEAsv5dAEpdAAjAAQEWIUkk6AEBgAIAkAIAoF3tAMhd8ADcJXwAno1kFJMdChUSDTV8DoF4VeoE8xwlcwAS/kp+/kp+/kp+/kp+/kp+/kp+/kp+/kp+vkp+EBq3BAoLGkp+Enx8DhKBEFRvcCBMcmh/ENPRUj8VAQUS63oeEoEBEToWAAAtkhKBAEAOfYAAyBLgRBb6axASiwEKEBLwfxYGgRAgSGlnaGJ+gBxoxXQ/FbQ8eDaOAEoWAHpHfhqggRIYfQC0AY4EyEISiGz+foDufoASfoAAIA2IDpOBLhYBCExvd2IVAaEdDm4VNhUBShYADt17alx/MhUBCMIdADEVICKxBAoKU29mdE0r/oGARoGACM3MzIaBgAAwQTsASC6tASEl/riCTriCAICeJQEujQD+uIJKuIKKFQH+uIL+uIJeuIIAKv40Av40Av40Av40Av40Av40Av40Av40Aso0Av4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh/4dh4IdhwDdEjBbSh2HADL+HYe6HYcA6DIrXa4dhwAy/h2H/h2H/h2H/h2Hwh2HAOn+bAE5bBqvEy6JiP4dh/4dh/4dh/4dhzYdhwDyMmwBri13QtgC/h2H/h2H/h2H/h2Hnh2HAPP+cwE9c1ngIqqFVndhDtQUEnAQDpIPHiuM/ndhgndhUnYA/ltkyltkAPT+cwE9cxp5SQRQOTlzBPBB/vh8/vh8/vh8/vh8Rvh8APX+cwE9cxrsPi5zAf7mAv7mAv7mAv7mAk7mAgD2/nMBPXMaXzT+cwH+cwH+cwH+cwF+cwEA9/5zAT1zGtIpLnMB/mFx/mFx/mFx/mFxTmFxAPj+cwE9c6IMbVKnhv4/B4I/B1J2AP4/B8o/BwD5/nMBPXNKDW3+5gL+5gL+5gL+5gJO5gIA+v5zAT1z/g5t/g5t/g5t/g5tmg5tAPv+cwE9c0oPbf4dh/4dh/4dh/4dh04dhwDqMnMBri13Qn4OSpcLViQK/oFu/oFu/oFu7oFuCDEI/DJyAfLwD/4dh/4dh/4dh/4dh54dhwD9/nMBPXNK8A/+Pgf+Pgf+Pgf+PgdOPgcA/v5zAT1zSlkE/vAP/vAP/vAP/vAPTvAPAP/+cwE9c0rwD/7mAv7mAv7mAv7mAk7mAgSA2y6xn/bMBUrwD/5zAf5zAf5zAf5zAU5zAQCB/nMBPXP+8A/+8A/+8A/+8A+a8A8Agv5zAT1z/vAP/vAP/vAP/vAPmvAPAIP+cwE9c0rwD1aYC1L5ff5jEYJjEVJ2AP5jEcpjEQCE/nMBPXNK8A/+zAX+zAX+zAX+zAVOzAUAhf5zAT1zSvAP/nMB/nMB/nMB/nMBTnMBAOsyJQry8A9KJApWWARShBz+WASCWARSdgD+WATKWAQA7P5yATlySiMKVnIB/mIR/mIR/mIR9mIRAO3+cgE5ckoiClZyAVJuAv7kAv7kAv7kAqLkAgDu/nIBOXKiIQpSOAj+cgGCcgFSdgD+VgTKVgQA7/5yATlyoiAK/lYE/lYE/lYE9lYEAPD+cgE5ckofCv5WBP5WBP5WBP5WBE5WBADx/nIBOXJKHgpWcgH+5AL+5AL+5ALu5AIMEAiG2w4Ks0odhwAy/h2H0h2HAOESITtOHYcAMv4dh/4dh/4dh/4dh8odhzDktAw/JdKCaj4thLdhDthBDrJBGoVLUhwAGoVLUhwAGoVLUhwAGoVLUhwAGoVLUhwAGoVLUhwAGoVLUhwAGoVLUhwAGoVLUhwAHoVLUh0AHoVLUh0A/oVL/oVL/oVL/oVL/oVL/oVL/oVL/oVL/oVLuoVLUoQC/oVL/oVL/oVLmoVL/vwALvwA/oVLboVL/qgALqgAHoVLUlQAHoVLUh0AHoVLUh0AHoVLUh0AHoVLUh0AHoVLUh0A/oVL/oVL/oVLooVLUv4A/oVL/oVLSoVL/qgALqgAHoVL/lQALlQA/oVLLoVLDF5t5D4SoUIMLfP/fx7VCP6FV/6FV/KFV0YdhzDUzSs/JYYrjz4tF82JHeT+HYcqHYf+YwAuYwBWUXsA4obMCxpbI/4dh/4dh/4dh/4dh44dhzAuDh4/JXu2gz4tFIx9URMazAtSHAAazAtSHAAazAtSHAAazAtSHAAazAtSHAAazAtSHAAazAtSHAAazAtSHAAazAtSHAAezAtSHQAezAtSHQD+zAv+zAv+zAv+zAv+zAv+zAv+zAv+zAv+zAu6zAtShAL+zAv+zAv+zAuazAv+/AAu/AD+zAtuzAv+qAAuqAAezAtSVAAezAtSHQAezAtSHQAezAtSHQAezAtSHQAezAtSHQD+zAv+zAv+zAuizAtS/gD+zAv+zAtKzAv+qAAuqAAezAv+VAAuVAD+zAsuzAswyR6+NCUoLC8/LX/jJy7/UjJTbiGmhtZV/umS/umSXumSLK7uRD8llibKPi2M4BJdYw6FFdr/BVodh/5jAC5jAFbMCwDjMswLANQqHYcimBcatC0MgvEErf4dh/4dh/4dh/4dh34dhzB3Zy8/JY4rkj4tU7CMOswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAHswLUh0AHswLUh0A/swL/swL/swL/swL/swL/swL/swL/swL/swLuswLUoQC2s0F/h2H/h2Hvh2H/vwALvwA/swLbswL/qgALqgAHswLUlQAHswLUh0AHswLUh0AHswLUh0AHswLUh0AHswLUh0A/swL/swL/swLoswLUv4A/swL/swLSswL/qgALqgAHswL/lQALlQA/swLLswLNDMnFT4lE81kPy2P/BA7Kste/swL/swL7swLOgOHNH+N5z0l4JkxPy2WFeE6GeQ2A2NBioawDMIDh/59AC59AFYDhwDkhuYLGgMu/uYL/uYL/uYL/uYLjuYLMBp8QT8l4rWoPi3bGaM65gtSHAAa5gtSHAAa5gtSHAAa5gtSHAAa5gtSHAAa5gtSHAAa5gtSHAAa5gtSHAAa5gtSHAAe5gtSHQAe5gtSHQD+5gv+5gv+5gv+5gv+5gv+5gv+5gv+5gv+5gu65gtShAL+5gv+5gv+5gua5gv+/AAu/AD+5gtu5gv+qAAuqAAe5gtSVAAe5gtSHQAe5gtSHQAe5gtSHQAe5gtSHQAe5gtSHQD+5gv+5gv+5gui5gtS/gD+5gv+5gtK5gv+qAAuqAAe5gv+VAAuVAD+5gsu5gsM+4bHPRZ+IwgxtGX+shf+shf+shceshc65gswRYu0PSXVpGc/LX/ZTx3k/uYLkuYL/n0ALn0AVuYLAOWG5gsadzj+5gv+5gv+5gv+5guO5gswlsZIPyV7kek+LT0w5jrmC1IcABrmC1IcABrmC1IcABrmC1IcABrmC1IcABrmC1IcABrmC1IcABrmC1IcABrmC1IcAB7mC1IdAB7mC1IdAP7mC/7mC/7mC/7mC/7mC/7mC/7mC/7mC/7mC7rmC1KEAv7mC/7mC/7mC5rmC/78AC78AP7mC27mC/6oAC6oAB7mC1JUAB7mC1IdAB7mC1IdAB7mC1IdAB7mC1IdAB7mC1IdAP7mC/7mC/7mC6LmC1L+AP7mC/7mC0rmC/6oAC6oAB7mC/5UAC5UAP7mCy7mCzAC8PA7JVOMJD8tzDkl/swX/swX/swXWswXMPX3pTslP7LiPi09oeP+zBe+zBf+fQAufQBW5gsA5obmCxrrQv7mC/7mC/7mC/7mC47mCzDvT1g/JQbrJT8t8xclHhMOGn4vUhwAGuYLUhwAGuYLUhwAGuYLUhwAGuYLUhwAGuYLUhwAGuYLUhwAGuYLUhwAGuYLUhwAHuYLUh0AHuYLUh0A/uYL/uYL/uYL/uYL/uYL/uYL/uYL/uYL/uYLuuYLUoQC/uYL/uYL/uYLmuYL/vwALvwA/uYLbuYL/qgALqgAHuYLUlQAHuYLUh0AHuYLUh0AHuYLUh0AHuYLUh0AHuYLUh0A/uYL/uYL/uYLouYLUv4A/uYL/uYLSuYL/qgALqgAHuYL/lQALlQA/uYLLuYLMJ5n3TQlxg1cPy1DRU0e1Qj+Sjv+Sju6SjsABx0AgIAE8EwAJQAAAADACQHICQGqCgC4CgDACgDKCgDiClEKGAgBHfPjqTQlk9ooPy2bgh0/NQAAgD9gARUAAIBAGAAgAC0AAIBAMicIARUAAAAAGAlNBVJOBQAI+goaBVQQgfp/PyUBSgwtdfh/EVQ0iAsAmAsArQv//39/ugv+fQBGfQDwT8gLCOALAO0LmpkZPojxBAGQ8QQBEQje2mkSCwiiJxIDAQAFGOICChsSE2NoYXJ0LTItdmFsdWVheGlzXzAqBAiG4GmC8QS8AhUAAIA/IlEKIR0QRFMIPyUBBQAtAQUANQHTKR0UPxgAIAEtsh0BGDAAOABAAF0hjgBtAUkMegCKASkGAVz+ZgARZgSdAQFcDKoBALoNXQFwJawALQEKOsMAARWq4AGAyAEB4AEB8AEB+AEBiAIAmAIAqAIDsAIAuAIAwAIA4AIBIXgIEQjfknQBADH+dAH+dAH+dAFmdAEQiS45PyUBBQAtAQU5dAAAQTf+dAFWdAEEjNsu6AIY6gIKHhIWY0XoJDMtY2F0ZWdvcnk66wIIwQINQSwAGkmFAapOtABF67q0AAAoTe0ATUFzAGUBZQhyAIJNkF5oAM4cAQCVRe0MogEAsv5dAEpdAEjAAQHQAQDYAQDoAQGAAgCQAgCgXe0AyF3wAIglfACejWQUkx0KFRINNXwhhFXqBPMcJXN4Eq4ECgdEZWZhdWx0EoYBCgtGaWxsIENlbnRlchIUDSE2pXBxvQiAPxoBFgSAP6GYBD8dIVGlXwAiUhYAFC3NzMw+MgEbAAAVRwCAATEgAAA4AUABShYKARwsIEEVAABwQR0AAPBBhSBMEooBCg9EaXJlY3Rpb25hbCBLZXnujQANjQwAAEA/Zo0AAFIBjTQCv4C+FSi5Eb8dR2RIvwmNDIUBCgolFhBSaWdodO6IAA2ICM3MTIYVAQTIQjJ4ARgAABKEAQoJBYgITGVm/ocACYcEzD1mDwEtnATIwjqHACgatwQKC01lZGl1bQmJAZcQVG9wIExyHgEQ09FSPxUBBTIzAgEROhYAQTOGlwAAQEEzBMhCUZYYAAASiwEKECUeSbwQIEhpZ2hirAEcaMV0PxW0PHg2jgBKFgAMLWZmZmo0Ai0lAEghJQC0AY4EyEL+NAL+NAJJNAAgDYhhSS4WAQhMb3diFQFhzJbWAwgAAACeFQEIwh0AMRUgIrEECgpTb2Z0TSv+bgTabgQAMEE7AEgurQEhJf5uBE5uBACAniUBLo0A/m4ESm4EioMF/m4E/m4EXm4EACr+NAL+NAL+NAL+NAL+NAL+NAL+NAL+NALKNAIAMv7TCP7TCP7TCP7TCP7TCP7TCP7TCP7TCL7TCBA61AQKDRrTCBY+CP6cBkqcBgiamZmG9QkUQMEVAABALgoLAKr+CgtSCgt21gg8WjYKFA0BAfBBFZEAIEId9CKXCzgUDTFcxj4VJigUvx1rtTcWIAsQHc3MTEAm9ggMRWRnZXoqCwjmDmYeaQgA+BqeEQQiFE4WAJYqCwBIDioLAKAhNQAAFl8QEpMKBYhyKgv+hwA+hwAOBQouhwAAQhaCEg5XCRIjDQ6kER6CDwBKFuoO/m8RLm8RAFUBaQhaAGL+WgBGWgAIaAByassAAH0BeASFAQ4qDnCNAQAAFkOQAQCgAQCoAQDwAQD4AQCFAgAAwEDVBwEhDpURIBAIidtpEgoIoBqlDhB4ChYSDhKcDiAtMy1sZWdlbmQipQ4MXAoAEA57DgiAPyoJ1wFFRWwOhApiQxIOOROGIxQkMQiU22kSKwjmDxaSEyy6AiIICgQKAgsrGAENChAvGAEiCgUUIC4QAxgBCiASGBGqNHBhcmFncmFwaFN0eWxlHrcTFFA5WqUBCAm1LJBBKgdDYW1icmlhOg7CE1K8AChAAVAAWABgAGgAdQEgAH0BBSSAAQGgAQGwAQHFElUQDMgBAd0lXwzgAQH1BRIs+AEAgAIAiAIBmAL/EQEgAaACAbACAcACDhAQENgCAfICMbRtFi4yAUT4AgBibAgCGgEuJQAAEEIoAT0BeBBAAUgAUBYXFCBqAHAAeACKAQomAhAW4hAAnQWKAKUFBgCtBQYcygEA0AEB2AEBiQQP4CHzVAG4AgHIAgHYAgDgAgDoAgDwAgAxCJX+bAE5bBqvEy5sAQAg/mwB/mwB/mwB/mwBMmwBAJ4ybAEAwYbYAgghEhla2AIEMTBpjQxQOVqrUdlAQEEqDUhlbHZldGljYU5ldWX+3wL+3wL+3wLu3wJN3wCf/nMBPXNZ4P5zAf5zAf5zAf5zAXJzAQCg/nMBPXMAMkbmAgDw/uYC/uYC/uYC/uYCSuYCAKH+cwE9cwAzRnMB/lkE/lkE/lkE/lkETlkEAKL+cwE9cwA0/nMB/nMB/nMB/nMBlnMBAKP+cwE9cwA1RnMBACD+WQT+WQT+WQT+WQRKWQQApP5zAT1zADZGcwFWWQQACSIcIAADJhwg/pELgpELUnYA/pELypELAKX+cwE9cwA3RnMB/uYC/uYC/uYC/uYCTuYCAKb+cwE9cwA4RnMBVuYCDtoNQjMP/uYCguYCUnYA/uYCyuYCAKf+cwE9cwA5RnMBBABC/gsN/gsN/gsN/gsNRgsNAJYycwEAwIZ+DmZWEUqXC1blAgAFtcsAAf7LBarLBVJ2AP7lAsrlAgCoMnIB8vAPADJK8A/+ywX+ywX+ywX+ywVOywUAqf5zAT1zSvAP/nMB/nMB/nMB/nMBTnMBAKr+cwE9c0pZBP7wD/7wD/7wD/7wD07wDwCr/nMBPXNK8A/+5gL+5gL+5gL+5gJO5gIArP5zAT1zSvAP/nMB/nMB/nMB/nMBTnMBAK3+cwE9c/7wD/7wD/7wD/7wD5rwDwCu/nMBPXP+8A/+8A/+8A/+8A+a8A8Ar/5zAT1zSvAPVpgLJMf/fz8l//9/Py0BBRp/Lv59DoJ9DlJ2AP6YC8qYCwCw/nMBPXNK8A/+zAX+zAX+zAX+zAVOzAUAsf5zAT1zSvAP/nMB/nMB/nMB/nMBTnMBAJcycwHy8A9KJApWWARSXxL+WASCWARSdgD+WATKWAQAmP5yATlySiMKVnIBUuwQ/nIBgnIBUnYA/nIBynIBAJn+cgE5ckoiClZyAVJuAv5yAYJyAVJ2AP5yAcpyAQCa/nIBOXKiIQpSOAj+cgGCcgFSdgD+cgHKcgEAm/5yATlyoiAKUuAD/nIBgnIBUnYA/nIBynIBAJz+cgE5ckofCv5WBP5WBP5WBP5WBE5WBACd/nIBOXJKHgpWcgFSbgL+5AL+5AL+5AKa5AIIEAiyEu0rAKYa7SsQfgofEhceaygscmVmZXJlbmNlTGluIkIrDILxBFkaEEBSiwYUFQAA4D8YwhBABBIAATQMEQiN2w6dPACkDY8UuhcKGBIQEZAUc2VyaWVzHssrNILxBJMXCjYKIAoOCAESKgkrDAoOCAIFEATAQBIcOQgQABoBHjRAQBXNzEy/KgRsaW5lEto4AAQaABrvP178AM4EPbI8LSFhhjwtADIWXSw0uy7jPiXZCgk/LV5ygj4a3w8AOmocABoUL1I4AABKajgAAFJqHAAAWmocAABiahwAAGpqHAAa8S5SqAAAemo4AASCAWodAACKbh0ADJABAJgeOS8UsAEAuAEAHv4tAAAW/D0A4A7/PUgA8gEA+gEAggIAigIAkgIAmgIvEudCXi8CSLRCHSaTyT8gAy1cj8I+MAE4AKLCMgAAqsIyAAy6AgDCwjUAAMrCMgAM0gIA2sI1ABDiAgDqAhZNMBCyGXo/JQEFAC0BBU2+DoEzgWC6U0MA8v5UAEpUAAD6/lQASlQABIIDCfxS2gIOhz8AQMZPRACKDVQhRv5QATFQAJL+VABKVAAAmg1U/vwALvwAAKINVP78AC78AACqDVT+qAAuqAAEsgNqmQQAum4dAADCbh0AAMpuHQAA0m4dAADabh0AcOADAegDAPADAYAEAIgEAJAEAJgEAKAEAKgEALUEDrZHGL0EAAAgQcUFDADNBQwA1QUGBNoESd/+jwEujwEA4v5UAEpUAADqDVRe4wHSgwQNVP78AC78AAD6DVT+qAAuqAAEggUppP5UAC5UAASNBQ6GNgyQBQGdBQkQoAUBqgV2GgcA9A51PwQAQKno5RoAsg2YAUoMJQIAQA6xNy5kNgAAoRsORzWqp0iwuAUIwAUGyAUK0AVA2AUm4AUI6AVA8AUm+AUKgAYIiAYGkAYAmAYAoAYAgghRcsoHzpVGKmtLDAHACgEqa0swKbIKPyV4VCc/LdJGnx65Cdr/BQj6CgAeUUthlR5RS/5jAC5jABTICwDgCwE+UUsAjobMCxpbI/7MC/7MC/7MC/7MC47MCzCPMf8+JXrwGT8t0IeSURMazAtSHAAazAtSHAAazAtSHAAAUsmKUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAHswLUh0AHswLUh0A/swL/swL/swL/swL/swL/swL/swL/swL/swLuswLUoQC2s0F/swL/swLvswL/vwALvwA/swLbswL/qgALqgAHswLUlQAHswLUh0AHswLUh0AHswLUh0AHswLUh0AHswLUh0A/swL/swL/swLoswLUv4A3k8QGngL/swLTswL/qgALqgAHswL/lQALlQA/swLQswLCKSDKRZLRCbjEf7MC/7MC/7MCy7MCzCLOiM/JQFSQD8t6HPXHeTOyxFazAv+YwAuYwBWzAsAjzLMCwDuTpgXGrQtDILxBMf+mBf+mBf+mBf+mBd+mBcwMZoNPyUb1io/LUGdolETGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAGswLUhwAHswLUh0AHswLUh0A/swL/swL/swL/swL/swL/swL/swL/swL/swLuswLUoQC/swL/swL/swLmswL/vwALvwA/swLbswL/qgALqgAHswLUlQAHswLUh0AHswLUh0AHswLUh0AHswLUh0AHswLUh0A/swL/swL/swLoswLUv4A/swL/swLSswL/qgALqgAHswL/lQALlQA/swLQswLDCvC7D4SF1D+zAv+zAv+zAsOzAsWCRUScBgMtvKnPi6iTUIdY1ImAA6vWcqWGMIdY/59AC59ABIdY0LMFwCQhgAMGh0u/gAM/gAM/gAM/gAMjgAMMMP1HD8look8Py1tsrlxKxoADFIcABoADFIcABoADFIcABoADFIcABoADFIcABoADFIcABoADFIcABoADFIcABoADFIcAB4ADFIdAB4ADFIdAP4ADP4ADP4ADP4ADP4ADP4ADP4ADP4ADP4ADLoADFKEAv4ADP4ADP4ADJoADP78AC78AP4ADG4ADP6oAC6oAB4ADFJUAB4ADFIdAB4ADFIdAB4ADFIdAB4ADFIdAB4ADFIdAP4ADP4ADP4ADKIADFL+AP4ADP4ADEoADP6oAC6oAB4ADP5UAC5UAP4ADEIADCB2HhQ+LS2TTD3+AAz+AAz+AAwmAAwwx59uPyXEEAo+LYKwPhHYQgAMUiYA/gAMngAM/n0ALn0AVgAMAJGGAAwaqzj+AAz+AAz+AAz+AAyOAAww8QkqPyWkhkQ/LWhB9DoADFIcABoADFIcABoA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AJL+VABKVAAAmv5UAEpUAACi/lQASlQAAKr+VABKVAAAsnpUAM6gAgC6elQAzkwCAML+VABKVAAAyv5UAEpUAADS/lQASlQA/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tkeptkeAKBi2R4AMnrZHjAEa34/JfFRbz8twNRo/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tke/tkeRtkeALli2R4AM3rZHg74SEIOSV6yPVYNPxKwK7pRQyKyPf5TABlTIrI9VlMAzgs/NrI9VlgA/v4A/v4A/v4Aav4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4AMrI9/v4A/v4A/v4Awv4A4rI9VioBzmgOJrI9/lQAGVQmsj1WVADOuA4msj3+VAAZVCayPf5UABlUJrI9/lQAGVQmsj3+VAAZVCayPf5UABlUJrI9WlQAymdQJrI9VlQAzvQCJrI9VlQAzqACJrI9/lQAGVQmsj1WVADO/AAmsj1WVADO/AAmi1z+VAAZVCaLXP5UABlUJotcVlQAzlABJotc/lQAGVQmi1z+VAAZVCaLXP5UABlUJotc/lQAGVQmi1xWVAD2i1z+VAAZVCaLXP5UABlUJotc/lQAGVQmi1z+VAAZVCaLXFZUAM5EBCaLXP5UABlUJotc/lQAGVQmi1z+VAAZVCaLXP5UABlU/otc/otc/otc/otc/otc/otctotcVvgBxZC63homi1z+VAAZVP6LXHaLXP6oABmoJotc/lQAGVT+i1x2i1z+qAAZqCaLXP5UABlU/otcdotcVqgAEtZJuvQCJotcVlQAzkgDCBEI0mLZHgA0etkeEMFOZz8lAQUALQEFGv9hXtke/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otc/otcxotcAOti2R4ANVrZHgAAGmR7/rI9HrI9uuuGjrI9ulMAerI9EsImulMAorI9ulgA/v4A/v4Amv4AnrI9/v4A/v4A/v4AVv4AnrI9/v4A/v4A/v4AVv4AnrI9/v4A/v4A/v4AVv4AnrI9/v4A/v4A/v4AVv4AnrI9/v4A/v4A/v4AVv4AnrI9/v4A/v4A/v4AVv4AnrI9/v4A/v4A/v4AVv4AnrI9/v4A/v4A/v4AVv4AnrI9/v4A/v4A/v4AVv4AnrI9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LSgaChgIAR2Ihwc/JQEFAC0BBRw1AACAP2ABEAEwQisAEJ6dHT8lAQUsLZ6dHT81AACAP2ABUEsDBBQAAAAAAAAAIVg/SfbB/gEAAP4BAAAZAAAATWV0YWRhdGEvUHJvcGVydGllcy5wbGlzdGJwbGlzdDAw2QECAwQFBgcICQoLDA0ODxARElhyZXZpc2lvblxkb2N1bWVudFVVSURbdmVyc2lvblVVSURfEDdoYXNFeHRlcm5hbFJlZmVyZW5jZU9yTWlzc2luZ09yVW5tYXRlcmlhbGl6ZWRSZW1vdGVEYXRhW3ByaXZhdGVVVUlEW2lzTXVsdGlQYWdlXxASc3RhYmxlRG9jdW1lbnRVVUlEWXNoYXJlVVVJRF8QEWZpbGVGb3JtYXRWZXJzaW9uXxAnMDo6RDQ2QjRCNTgtMEMwRS00RTEzLTk0MUUtRDE2MTlBODQ4OUU0XxAkQTQ2RTc1RjUtN0I2RC00RjkwLUIzNDUtMEFFOTQwQjIzQTFEXxAkRDQ2QjRCNTgtMEMwRS00RTEzLTk0MUUtRDE2MTlBODQ4OUU0CF8QJEI3MDJFQkRFLUY4OEUtNDhFQi04MjE2LTBBRUVBQzA4MEFBOQlfECQxRjdFMkIyQS1CMDQwLTQ4OTktODhCNS0wNUFFMTAzQjVFMTlfECRBNDZFNzVGNS03QjZELTRGOTAtQjM0NS0wQUU5NDBCMjNBMURWMTQuNC4xAAgAGwAkADEAPQB3AIMAjwCkAK4AwgDsARMBOgE7AWIBYwGKAbEAAAAAAAACAQAAAAAAAAATAAAAAAAAAAAAAAAAAAABuFBLAwQUAAAAAAAAACFYixL85CQAAAAkAAAAGwAAAE1ldGFkYXRhL0RvY3VtZW50SWRlbnRpZmllckE0NkU3NUY1LTdCNkQtNEY5MC1CMzQ1LTBBRTk0MEIyM0ExRFBLAwQUAAAAAAAAACFY1lEp8PkAAAD5AAAAIgAAAE1ldGFkYXRhL0J1aWxkVmVyc2lvbkhpc3RvcnkucGxpc3Q8P3htbCB2ZXJzaW9uPSIxLjAiIGVuY29kaW5nPSJVVEYtOCI/Pgo8IURPQ1RZUEUgcGxpc3QgUFVCTElDICItLy9BcHBsZS8vRFREIFBMSVNUIDEuMC8vRU4iICJodHRwOi8vd3d3LmFwcGxlLmNvbS9EVERzL1Byb3Bl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L0hlYWRlclN0b3JhZ2VCdWNrZXQtMTczMzA1NS0yLml3YVBLAQI+ABQAAAAAAAAAIVhzXwu9GQAAABkAAAAuAAAAAAAAAAAAAAAAALJdAABJbmRleC9UYWJsZXMvSGVhZGVyU3RvcmFnZUJ1Y2tldC0xNzMzMDU2LTIuaXdhUEsBAj4AFAAAAAAAAAAhWLPbC4obAAAAGwAAACMAAAAAAAAAAAAAAAAAF14AAEluZGV4L1RhYmxlcy9EYXRhTGlzdC0xNzMzMDU3LTIuaXdhUEsBAj4AFAAAAAAAAAAhWAkV5vtHAAAARwAAAC4AAAAAAAAAAAAAAAAAc14AAEluZGV4L1RhYmxlcy9IZWFkZXJTdG9yYWdlQnVja2V0LTE3MzMwODEtMi5pd2FQSwECPgAUAAAAAAAAACFYBzK4Qz0AAAA9AAAALgAAAAAAAAAAAAAAAAAGXwAASW5kZXgvVGFibGVzL0hlYWRlclN0b3JhZ2VCdWNrZXQtMTczMzA4Mi0yLml3YVBLAQI+ABQAAAAAAAAAIVjN+1zkGwAAABsAAAAjAAAAAAAAAAAAAAAAAI9fAABJbmRleC9UYWJsZXMvRGF0YUxpc3QtMTczMzA4My0yLml3YVBLAQI+ABQAAAAAAAAAIVhGSqDgGQAAABkAAAAuAAAAAAAAAAAAAAAAAOtfAABJbmRleC9UYWJsZXMvSGVhZGVyU3RvcmFnZUJ1Y2tldC0xNzMzMDkyLTIuaXdhUEsBAj4AFAAAAAAAAAAhWAWBBmcZAAAAGQAAAC4AAAAAAAAAAAAAAAAAUGAAAEluZGV4L1RhYmxlcy9IZWFkZXJTdG9yYWdlQnVja2V0LTE3MzMwOTMtMi5pd2FQSwECPgAUAAAAAAAAACFY7Cax5hsAAAAbAAAAIwAAAAAAAAAAAAAAAAC1YAAASW5kZXgvVGFibGVzL0RhdGFMaXN0LTE3MzMwOTQtMi5pd2FQSwECPgAUAAAAAAAAACFYRXxk1RsAAAAbAAAAIQAAAAAAAAAAAAAAAAARYQAASW5kZXgvVGFibGVzL0RhdGFMaXN0LTE3MzcyMDAuaXdhUEsBAj4AFAAAAAAAAAAhWInMm+IbAAAAGwAAACEAAAAAAAAAAAAAAAAAa2EAAEluZGV4L1RhYmxlcy9EYXRhTGlzdC0xNzM3MjAxLml3YVBLAQI+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");
 
-  // scripts/pages-interop-entry.js
   function check() {
     if (typeof _lokumCheckCancelled === "function" && _lokumCheckCancelled()) throw new Error("Operation cancelled.");
   }

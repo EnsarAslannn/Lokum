@@ -77,8 +77,6 @@ final class PDFEditableReadabilityTests: XCTestCase {
         context.scaleBy(x: 2, y: 2)
         context.drawPDFPage(try XCTUnwrap(page.pageRef))
         let data = try XCTUnwrap(context.data).assumingMemoryBound(to: UInt8.self)
-        // Reconstructed table borders are #999999. Counting only substantially
-        // darker pixels proves actual text visibility, not just a visible grid.
         return (0..<(width * height)).filter { data[$0 * 4] < 100 && data[$0 * 4 + 1] < 100 && data[$0 * 4 + 2] < 100 }.count
     }
 

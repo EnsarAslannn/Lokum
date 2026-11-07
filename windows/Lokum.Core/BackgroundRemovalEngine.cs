@@ -4,8 +4,6 @@ using System.Security.Cryptography;
 
 namespace Lokum.Core;
 
-/// Offline U²-Net inference. The model is embedded, pinned and never fetched at runtime.
-/// One instance belongs to one preview/export; callers run CPU work off the UI thread.
 public sealed class BackgroundRemovalEngine : IDisposable
 {
     private const int Size=320;
@@ -20,7 +18,6 @@ public sealed class BackgroundRemovalEngine : IDisposable
         var width=checked((int)image.Width);var height=checked((int)image.Height);
         using var pixels=image.GetPixels();
         var rgba=pixels.ToByteArray(PixelMapping.RGBA)!;
-        // Hidden RGB in transparent pixels must not affect foreground detection.
         using var small=(MagickImage)image.Clone();
         small.BackgroundColor=MagickColors.White;small.Alpha(AlphaAction.Remove);
         small.FilterType=FilterType.Lanczos;small.Resize(new MagickGeometry(Size,Size){IgnoreAspectRatio=true});

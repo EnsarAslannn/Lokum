@@ -2,12 +2,7 @@ import Foundation
 import AppKit
 import PDFKit
 
-/// Reconstructs document objects from PDF geometry. PDF has no paragraph/table
-/// model, so those boundaries are inferred; the resulting objects remain real
-/// editable paragraphs and tables rather than a picture of each document page.
 enum PDFDocumentReconstruction {
-    /// Deliberate appearance-preserving mode: one raster per PDF page. The
-    /// editable reconstruction remains the default and uses the separate path.
     static func preservePages(_ pdf: PDFDocument, at output: URL, options: OperationOptions, token: CancellationToken) throws -> URL {
         var layouts = "", masters = "", styles = "", body = ""
         for index in 0..<pdf.pageCount {
@@ -142,9 +137,6 @@ enum PDFDocumentReconstruction {
             try token.check()
             guard let page = pdf.page(at: index) else { continue }
             let box = page.bounds(for: .mediaBox)
-            // A fixed half-inch margin consumes most of a small PDF page.
-            // Cap the ordinary margin while reserving at least 90% of a small
-            // page's narrow dimension for editable content.
             let margin = min(36, min(box.width, box.height) * 0.05)
             let rows = try textRows(page, token: token)
             var blocks = textBlocks(rows)
@@ -172,9 +164,6 @@ enum PDFDocumentReconstruction {
                 previousBottom = min(previousBottom, block.bounds.minY)
             }
         }
-        // Word requires a paragraph after a final table. Supplying a tiny one
-        // prevents LibreOffice from appending a normal-height paragraph that
-        // spills an otherwise complete small document onto a blank extra page.
         writer.styles += "<style:style style:name=\"DocumentEnd\" style:family=\"paragraph\"><style:paragraph-properties fo:line-height=\"0.1pt\" fo:margin-top=\"0pt\" fo:margin-bottom=\"0pt\"/><style:text-properties fo:font-size=\"0.1pt\"/></style:style>"
         body += "<text:p text:style-name=\"DocumentEnd\"/>"
         let xml = """
@@ -199,10 +188,6 @@ enum PDFDocumentReconstruction {
             let attributes = attributed.attributes(at: index, effectiveRange: nil)
             index = NSMaxRange(range)
             if value == "\n" || value == "\r" || value == "\u{0c}" { continue }
-            // characterBounds(at:) indexes PDF glyphs, while PDFKit inserts
-            // line separators in string/attributedString. Selection ranges use
-            // the normalized string indices and avoid losing a character at
-            // every line boundary (also preserving composed Unicode glyphs).
             guard let selection = page.selection(for: range) else { continue }
             let rect = selection.bounds(for: page)
             if rect.isNull || rect.isInfinite || rect.width <= 0 || rect.height <= 0 { continue }
@@ -283,8 +268,6 @@ enum PDFDocumentReconstruction {
             let components = [color.redComponent, color.greenComponent, color.blueComponent].map { max(0, min(1, Double($0))) }
             let linear = components.map { $0 <= 0.04045 ? $0 / 12.92 : pow(($0 + 0.055) / 1.055, 2.4) }
             let luminance = 0.2126 * linear[0] + 0.7152 * linear[1] + 0.0722 * linear[2]
-            // Editable output has a white page, without the source's vector
-            // background. Light PDF text must not become invisible on that page.
             if 1.05 / (luminance + 0.05) < 3 { return "#202020" }
             return String(format: "#%02X%02X%02X", Int(components[0] * 255), Int(components[1] * 255), Int(components[2] * 255))
         } ?? "#000000"
@@ -292,9 +275,6 @@ enum PDFDocumentReconstruction {
     }
 }
 
-/// Finds actual placed PDF Image XObjects, including images nested inside Form
-/// XObjects. Cropping those placed regions preserves masks and image orientation
-/// without depending on PDF compression/color-space implementations.
 enum PDFPlacedImages {
     static func regions(_ page: PDFPage, token: CancellationToken) throws -> [CGRect] {
         guard let cgPage = page.pageRef, let dictionary = cgPage.dictionary else { return [] }

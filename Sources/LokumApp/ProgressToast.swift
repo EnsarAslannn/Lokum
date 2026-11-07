@@ -2,7 +2,6 @@ import AppKit
 import SwiftUI
 import Combine
 
-/// The same chrome-free card hosts every local conversion/tool and web job.
 @MainActor final class ProgressToastController {
     private(set) var panel:NSPanel?
     private var observation:AnyCancellable?
@@ -53,8 +52,6 @@ struct JobProgressBar:View {
             }.frame(height:5).lokumAnimation(value:state.progress)
                 .accessibilityElement().accessibilityLabel("Progress").accessibilityValue("\(Int(state.progress*100)) percent")
         } else {
-            // The native indeterminate indicator respects Reduce Motion and never
-            // invents a percentage for an opaque PDFKit/Office/archive operation.
             ProgressView().progressViewStyle(.linear).frame(height:5)
                 .accessibilityLabel("In progress").accessibilityValue(state.progressLabel)
         }

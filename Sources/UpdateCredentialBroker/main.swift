@@ -1,12 +1,8 @@
-// Adapted from the Tendedero personal fork credential broker; see Resources/licenses/Tendedero-MIT.txt.
 import Foundation
 import LocalAuthentication
 import Security
 import Darwin
 
-/// NSXPC authenticates each incoming message against the caller requirement
-/// compiled into this frozen executable. A PID or caller-supplied path is never
-/// an identity; matching the UID is an additional boundary.
 enum CredentialBrokerConnectionPolicy {
     static func accepts(user: uid_t, expectedUser: uid_t = getuid()) -> Bool { user == expectedUser }
     static var callerRequirement: String { CredentialBrokerBuildIdentity.callerRequirement }
@@ -33,7 +29,6 @@ struct CredentialBrokerRepository: Equatable {
 }
 
 enum CredentialBrokerQuery {
-    // Keep Lokum credentials separate from the original app's Keychain items.
     static let service = "local.lokum.app.github-updates"
 
     static func make(repository: CredentialBrokerRepository, allowInteraction: Bool = false) -> [String: Any] {
@@ -57,9 +52,6 @@ enum CredentialBrokerQuery {
 }
 
 final class CredentialBroker: NSObject, UpdateCredentialBrokerProtocol {
-    // The legacy interaction switch is process-global. Every instance shares
-    // this queue, so an explicit authorization cannot enable UI for another
-    // read, write, or deletion. No operation changes an ACL or partition list.
     private static let queue = DispatchQueue(label: "local.lokum.app.credentials.keychain")
 
     private func error(_ status: OSStatus) -> NSError {
@@ -145,7 +137,6 @@ final class CredentialBrokerListener: NSObject, NSXPCListenerDelegate {
         let delegate = CredentialBrokerListener()
         let listener = NSXPCListener.service()
         listener.delegate = delegate
-        // The frozen service uses RunLoopType=dispatch_main, matching Tende.
         withExtendedLifetime(delegate) { listener.resume() }
     }
 }

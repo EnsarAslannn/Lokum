@@ -1,8 +1,5 @@
 import Foundation
 
-/// A failed or cancelled job must not leave unreported partial exports. Each
-/// destination gets a private sibling staging directory, allowing publication
-/// by same-volume renames without replacing an existing file.
 final class ExportTransaction {
     final class Area {
         let directory:URL
@@ -50,8 +47,6 @@ final class ExportTransaction {
             for child in children {
                 try token.check()
                 let destination=uniqueDestination(for:child,in:area.destination)
-                // moveItem refuses an existing destination, including a file
-                // created by another process after our name check.
                 try manager.moveItem(at:child,to:destination)
                 published.append(destination)
                 destinations[child.lastPathComponent]=destination

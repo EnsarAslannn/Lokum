@@ -1,8 +1,6 @@
 using System.Runtime.InteropServices;
 namespace Lokum.Windows;
 
-// Read-only AcroForm appearance rendering. No JavaScript platform, URI actions,
-// focus events or timers are supplied to a preview document.
 internal sealed class PdfFormPreview:IDisposable
 {
     private nint info,page;private int pageIndex;private readonly nint document;private readonly Delegate[] callbacks;
@@ -17,8 +15,6 @@ internal sealed class PdfFormPreview:IDisposable
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]private delegate nint CurrentPage(nint self,nint document);
     [UnmanagedFunctionPointer(CallingConvention.Cdecl)]private delegate int Rotation(nint self,nint page);
     [StructLayout(LayoutKind.Sequential)]private struct SystemTime{public ushort Year,Month,DayOfWeek,Day,Hour,Minute,Second,Milliseconds;}
-    // Exact version-1 prefix from the pinned PDFium fpdf_formfill.h. All
-    // callbacks remain rooted until ExitFormFillEnvironment returns.
     [StructLayout(LayoutKind.Sequential)]private struct FormInfo
     {
         public int Version;

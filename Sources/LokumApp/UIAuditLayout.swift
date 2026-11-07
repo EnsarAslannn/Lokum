@@ -1,7 +1,6 @@
 import SwiftUI
 import AppKit
 
-/// Explicit QA only. No geometry readers or preference traffic in normal UI.
 private struct UIAuditEnabledKey: EnvironmentKey { static let defaultValue=false }
 extension EnvironmentValues {
     var uiAuditEnabled:Bool { get { self[UIAuditEnabledKey.self] } set { self[UIAuditEnabledKey.self]=newValue } }
@@ -73,8 +72,6 @@ extension View {
     }
 }
 
-/// A bounded sample catches clear/flat cacheDisplay captures without walking a
-/// full-resolution Retina bitmap. Text rendering quality still needs visual QA.
 struct UIAuditRaster {
     let samples:Int
     let visibleSamples:Int

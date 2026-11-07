@@ -14,7 +14,6 @@ enum WindowPlacementGlyph {
     }
 }
 
-/// Observes an existing native move/resize gesture. It never captures or rewrites mouse events.
 @MainActor final class WindowManagementController {
     private struct Target {
         let element:AXUIElement
@@ -54,7 +53,6 @@ enum WindowPlacementGlyph {
     static func requestAccess() {
         let options=[kAXTrustedCheckOptionPrompt.takeUnretainedValue() as String:true] as CFDictionary
         _=AXIsProcessTrustedWithOptions(options)
-        // The pane anchor is unchanged on macOS 27 even though its visible name changed.
         if let url=URL(string:"x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility") {
             NSWorkspace.shared.open(url)
         }
@@ -77,7 +75,6 @@ enum WindowPlacementGlyph {
                !captured.intent.cancelled,!freshFile {
                 let screen=screen(at:point)
                 cancel();target=nil
-                // Let the originating app finish its native tracking loop before resizing it.
                 placementTask?.cancel()
                 placementTask=Task { [weak self] in
                     try? await Task.sleep(nanoseconds:80_000_000)
@@ -112,7 +109,6 @@ enum WindowPlacementGlyph {
         captureOwnWheelForQA()
     }
 
-    /// An explicit QA invocation renders only our own view, without recording the screen.
     private func captureOwnWheelForQA() {
         guard !qaCaptureAttempted,wheel?.selected != nil,
               let index=CommandLine.arguments.firstIndex(of:"--capture-window-wheel"),index+1<CommandLine.arguments.count,
@@ -136,7 +132,6 @@ enum WindowPlacementGlyph {
               let hit else { return nil }
         AXUIElementSetMessagingTimeout(hit,0.075)
         let role=Self.attribute(hit,kAXRoleAttribute) as? String
-        // Text selection, tab rearrangement and scrollbars are never window-arranging gestures.
         guard ![kAXTextFieldRole,kAXTextAreaRole,kAXScrollBarRole,"AXSecureTextField"].contains(role ?? "") else { return nil }
         var element:AXUIElement?
         if role==kAXWindowRole { element=hit }
@@ -146,7 +141,6 @@ enum WindowPlacementGlyph {
         guard let frame=Self.frame(of:window) else { return nil }
         var pid:pid_t=0
         guard AXUIElementGetPid(window,&pid) == .success,Self.isUsable(window,pid:pid) else { return nil }
-        // A title bar/toolbar or a resize border, followed by a real frame change.
         let inTop=p.y>=frame.minY-5 && p.y<=frame.minY+88
         let edge=min(abs(p.x-frame.minX),abs(p.x-frame.maxX),abs(p.y-frame.minY),abs(p.y-frame.maxY))<=9
         guard inTop || edge else { return nil }
@@ -212,16 +206,12 @@ enum WindowPlacementGlyph {
         for attempt in 0..<4 {
             guard !Task.isCancelled,Self.isUsable(window,pid:pid) else{return}
             let acknowledged=Self.requestFrame(wanted,of:window)
-            // AX writes can be acknowledged before Chrome/Electron applies the
-            // native layout. Do not report an error from the immediate read.
             try? await Task.sleep(nanoseconds:120_000_000)
             guard !Task.isCancelled,let actual=Self.frame(of:window) else{return}
             let origin=Self.accessibilityPoint(NSPoint(x:wanted.minX,y:wanted.maxY))
             if abs(actual.width-wanted.width)<3,abs(actual.height-wanted.height)<3,
                abs(actual.minX-origin.x)<3,abs(actual.minY-origin.y)<3 {return}
             if acknowledged,attempt>=1,actual.width>wanted.width+3,abs(actual.height-wanted.height)<3 {
-                // Respect an app's minimum width, while retaining the chosen
-                // left/center/right anchor instead of rejecting the placement.
                 wanted=placement.frame(in:screen.visibleFrame,scale:screen.backingScaleFactor,minimumSize:actual.size)
             }
         }
@@ -263,7 +253,6 @@ enum WindowPlacementGlyph {
         guard let s=AXValueCreate(.cgSize,&size),let p=AXValueCreate(.cgPoint,&position) else { return false }
         guard AXUIElementSetAttributeValue(window,kAXSizeAttribute as CFString,s) == .success,
               AXUIElementSetAttributeValue(window,kAXPositionAttribute as CFString,p) == .success else { return false }
-        // Some apps constrain the first resize to the old display. Repeat after the move.
         _=AXUIElementSetAttributeValue(window,kAXSizeAttribute as CFString,s)
         _=AXUIElementSetAttributeValue(window,kAXPositionAttribute as CFString,p)
         return true

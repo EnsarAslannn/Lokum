@@ -12,9 +12,6 @@
     }
     const senderUrl = http(sender.url);
     if (message.operation !== "open" || !senderUrl || !Number.isInteger(sender.tab?.id) || !["image","video"].includes(message.kind)) throw new Error("Invalid media request.");
-    // Chrome's isolated-world sender URL can remain the original document URL
-    // after history.pushState (YouTube Shorts/feed navigation). Accept the live
-    // document location only within Chrome's authenticated frame origin.
     const live = http(message.pageUrl);
     const pageUrl = live && new URL(live).origin === new URL(senderUrl).origin ? live : senderUrl;
     let url;

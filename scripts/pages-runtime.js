@@ -1,5 +1,3 @@
-// Web platform primitives supplied by JavaScriptCore's native host. This file
-// is independently written; it contains no code from Lokum.app.
 if (typeof globalThis.atob !== "function") globalThis.atob = value => _lokumBase64Decode(String(value));
 if (typeof globalThis.btoa !== "function") globalThis.btoa = value => _lokumBase64Encode(String(value));
 if (typeof globalThis.TextEncoder !== "function") {

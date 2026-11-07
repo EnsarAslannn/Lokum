@@ -1,6 +1,5 @@
 import CoreGraphics
 
-/// Image-space geometry, independent of preview scale and mouse-event delivery.
 enum CropSelectionGeometry {
     enum Handle: Int, CaseIterable {
         case nw, n, ne, e, se, s, sw, w
@@ -41,7 +40,6 @@ enum CropSelectionGeometry {
                                  y: handle.y == 0 ? min(anchor.y - 1, point.y) : max(anchor.y + 1, point.y))
             return selection(from: anchor, to: target, bounds: bounds, aspectRatio: ratio)
         }
-        // Side handles keep the opposite side and the perpendicular center fixed.
         if handle.x != 0.5 {
             let anchor = handle.x == 0 ? rect.maxX : rect.minX
             let available = handle.x == 0 ? anchor : bounds.width - anchor

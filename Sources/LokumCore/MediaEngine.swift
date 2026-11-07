@@ -47,7 +47,6 @@ public struct AudioLoudness: Sendable, Equatable {
     public let targetOffset: Double
 }
 
-/// Local media operations. Every export creates a new file; source files are never rewritten.
 public enum MediaEngine {
     public static let audioFormats: Set<String> = ["mp3", "m4a", "wav", "flac", "ogg", "opus", "aiff", "aif", "wma", "aac"]
     public static let videoFormats: Set<String> = ["mp4", "mov", "mkv", "webm", "avi", "wmv", "m4v", "gif"]
@@ -63,7 +62,6 @@ public enum MediaEngine {
             let disposition = item["disposition"] as? [String: Any] ?? [:]
             let rotation = sideData.compactMap { integer($0["rotation"]) }.first ?? Int(metadata["rotate"] ?? "0") ?? 0
             let swap = abs(rotation % 180) == 90
-            // FFmpeg and AVPlayer apply the display matrix; editing coordinates use that canvas.
             let width = integer(item[swap ? "height" : "width"]), height = integer(item[swap ? "width" : "height"])
             return MediaStream(index: integer(item["index"]) ?? 0, kind: item["codec_type"] as? String ?? "unknown", codec: item["codec_name"] as? String ?? "unknown", duration: number(item["duration"]), width: width, height: height, channels: integer(item["channels"]), sampleRate: integer(item["sample_rate"]), bitsPerSample: integer(item["bits_per_sample"]), bitsPerRawSample: integer(item["bits_per_raw_sample"]), sampleFormat: item["sample_fmt"] as? String, bitRate: integer(item["bit_rate"]), frameRate: fraction(item["avg_frame_rate"] as? String) ?? fraction(item["r_frame_rate"] as? String), isAttachedPicture: integer(disposition["attached_pic"]) == 1, rotation: rotation, metadata: metadata)
         }
@@ -75,7 +73,6 @@ public enum MediaEngine {
         return MediaInfo(duration: duration, size: size, format: format["format_name"] as? String ?? input.pathExtension, streams: streams, chapters: chapters, metadata: tags(format["tags"]))
     }
 
-    /// Keys are `file:title`, `track[0]:language`, or `chapter[0]:title`.
     public static func readMetadata(_ input: URL, token: CancellationToken = .init()) throws -> [String: String] {
         let info = try inspect(input, token: token)
         var fields = Dictionary(uniqueKeysWithValues: info.metadata.map { ("file:\($0.key)", $0.value) })
@@ -91,10 +88,7 @@ public enum MediaEngine {
         let output = try outputURL(input, ext: ext, suffix: " Metadata", options: options)
         var arguments = ["-i", input.path, "-map", "0", "-c", "copy"]
         if removeAll {
-            // Timed data tracks can retain chapter text, GPS, or camera telemetry after tag removal.
             arguments += ["-map", "-0:d?", "-map_metadata", "-1", "-map_metadata:s", "-1", "-map_chapters", "-1", "-fflags", "+bitexact", "-flags:v", "+bitexact", "-flags:a", "+bitexact"]
-            // Album artwork is stored as an attached video stream rather than
-            // a text tag. Remove that metadata image while retaining real video.
             for stream in info.streams where stream.isAttachedPicture {
                 arguments += ["-map", "-0:\(stream.index)"]
             }
@@ -128,7 +122,6 @@ public enum MediaEngine {
                 let scale = try scalingFilter(options)
                 let first = (["fps=\(options.gifFrameRate)"] + (scale.map { [$0] } ?? []) + ["scale=w='min(\(options.gifMaxWidth),iw)':h=-2:force_original_aspect_ratio=decrease"]).joined(separator: ",")
                 arguments += ["-filter_complex", "[0:v:0]\(first),split[p0][p1];[p0]palettegen=stats_mode=diff[pal];[p1][pal]paletteuse=dither=sierra2_4a", "-an", "-loop", "0"]
-                // Complex filters map their final output automatically.
                 arguments.removeSubrange(2..<4)
             } else {
                 arguments += ["-map", "0:a:0?"]
@@ -197,7 +190,6 @@ public enum MediaEngine {
         return AudioLoudness(integrated: number(json["input_i"]) ?? -.infinity, truePeak: number(json["input_tp"]) ?? -.infinity, range: number(json["input_lra"]) ?? 0, threshold: number(json["input_thresh"]) ?? -70, targetOffset: number(json["target_offset"]) ?? 0)
     }
 
-    /// The caller owns this temporary preview and may delete its parent directory after playback.
     public static func previewChannel(_ input: URL, channel: Int, options: OperationOptions = .init(), token: CancellationToken = .init()) throws -> URL {
         guard channel == 0 || channel == 1 else { throw LokumError.invalidInput("Choose the left or right channel.") }
         let info = try inspect(input, token: token)
@@ -284,7 +276,6 @@ public enum MediaEngine {
             clips.append(clip)
         }
         let list = temp.appendingPathComponent("clips.txt")
-        // Generated names are relative to this private directory, never user-controlled shell text.
         try clips.map { "file '\($0.lastPathComponent)'\n" }.joined().write(to: list, atomically: true, encoding: .utf8)
         let out = try outputURL(inputs[0], ext: "mp4", suffix: " Joined", options: options)
         try render(["-f", "concat", "-safe", "1", "-i", list.path, "-map", "0", "-c", "copy", "-movflags", "+faststart"], to: out, token: token, duration: infos.map(\.duration).reduce(0, +), progress: { value,_ in progress(OperationProgress.map(value, from: 0.95, to: 1),"Joining clips…") })
@@ -328,8 +319,6 @@ public enum MediaEngine {
         let retained = (0..<(boundaries.count - 1)).filter { !discarded.contains($0) }
         guard !retained.isEmpty else { throw LokumError.invalidInput("Keep at least one clip to export.") }
         if options.joinSplitClips {
-            // All retained intervals come from one source and share encoding settings. The
-            // concat demuxer preserves their order without an additional lossy encode.
             let temporary = try OutputFiles.temporaryDirectory()
             defer { try? FileManager.default.removeItem(at: temporary) }
             let ext = videoExtension(input)
@@ -339,15 +328,12 @@ public enum MediaEngine {
                 clipOptions.outputDirectory = temporary
                 clipOptions.start = boundaries[index]; clipOptions.end = boundaries[index + 1]
                 let rendered = try trim(input, info: info, audio: false, options: clipOptions, token: token, suffix: " Part \(index + 1)", progress: { value,_ in progress(OperationProgress.map(value, from: Double(position)/Double(retained.count)*0.95, to: Double(position+1)/Double(retained.count)*0.95),"Saving clip \(position+1) of \(retained.count)…") })[0]
-                // Generated names keep concat-file syntax independent of the source name.
                 let clip = temporary.appendingPathComponent("segment-\(index)").appendingPathExtension(ext)
                 try FileManager.default.moveItem(at: rendered, to: clip)
                 clips.append(clip)
             }
             let list = temporary.appendingPathComponent("clips.txt")
             let durations = retained.map { boundaries[$0 + 1] - boundaries[$0] }
-            // Container-reported clip durations can include audio encoder padding (notably
-            // ASF/WMA). Explicit intervals keep that padding from accumulating at each cut.
             try zip(clips, durations).map { "file '\($0.0.lastPathComponent)'\nduration \(decimal($0.1))\n" }.joined().write(to: list, atomically: true, encoding: .utf8)
             let out = try outputURL(input, ext: ext, suffix: " Split", options: options)
             var arguments = ["-f", "concat", "-safe", "1", "-i", list.path, "-map", "0", "-t", decimal(durations.reduce(0, +)), "-c", "copy"]
@@ -529,14 +515,11 @@ public enum MediaEngine {
             } catch LokumError.failed(let diagnostic) {
                 guard diagnostic.contains("libvorbis"), diagnostic.contains("encoder setup failed"), let fallback = vorbisQualityFallback(arguments) else { throw LokumError.failed(diagnostic) }
                 try token.check()
-                // Managed Vorbis bitrate ranges depend on both channel count and sample
-                // rate. Retry only this initialization failure, preserving that geometry.
                 try? FileManager.default.removeItem(at: temporary)
                 try ffmpeg(fallback + [temporary.path], token: token, duration: duration, progress: progress)
             }
             try token.check()
             try OutputFiles.validate([temporary])
-            // moveItem never replaces an existing file, including one created by another job.
             try FileManager.default.moveItem(at: temporary, to: output)
         } catch { throw error }
     }
@@ -676,8 +659,6 @@ public enum MediaEngine {
     }
     private static func redactionPixelRect(_ rect: EditRect, width: Int, height: Int) throws -> (x: Int, y: Int, w: Int, h: Int) {
         _ = try pixelRect(rect,width:width,height:height)
-        // Cover every pixel touched by the selection, matching image redaction.
-        // Truncating origin and size separately can leave the far edge visible.
         let x=Int(floor(rect.x)),y=Int(floor(rect.y))
         let right=min(width,Int(ceil(rect.x+rect.width))),bottom=min(height,Int(ceil(rect.y+rect.height)))
         return (x,y,right-x,bottom-y)

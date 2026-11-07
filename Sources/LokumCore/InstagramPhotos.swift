@@ -26,9 +26,6 @@ enum InstagramPhotos {
                 func dimension(_ key:String)->Int? { (item[key] as? Int).flatMap{(1...16_384).contains($0) ? $0:nil} }
                 return (image,dimension("width"),dimension("height"))
             }
-            // Instagram sometimes omits every dimension. Its grid crops and
-            // scaled variants still describe transforms in `stp`; prefer the
-            // full-frame original without changing its signed URL.
             func quality(_ item:(URL,Int?,Int?),index:Int)->(Int,Int,Int,Int) {
                 let transform=URLComponents(url:item.0,resolvingAgainstBaseURL:false)?.queryItems?.first{$0.name=="stp"}?.value ?? item.0.path
                 let crop=transform.range(of:"(?:^|[_/])c[0-9]+[.]",options:.regularExpression) != nil

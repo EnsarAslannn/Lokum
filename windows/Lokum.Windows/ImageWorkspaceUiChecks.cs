@@ -32,8 +32,6 @@ internal static class ImageWorkspaceUiChecks
     }
     internal static void Verify(ToolEditor editor,BitmapSource source,string input,string output,bool cropped)
     {
-        // A normalized crop must describe the same region in both the fitted preview
-        // and the full-resolution export, after resize/rotation have been applied.
         var region=new Rect(100d/640,80d/400,200d/640,170d/400);
         var settings=new ImageOptions{Width=640,Height=400,NormalizedCrop=region};
         var hash=SHA256.HashData(File.ReadAllBytes(input));
@@ -74,7 +72,6 @@ internal static class ImageWorkspaceUiChecks
     }
     internal static void Palette(BackgroundRemovalWindow editor)
     {
-        // The picker must drive the same color field used by background composition.
         var hue=Find<Slider>(editor,"BackgroundHue");
         hue.Value=120;
         var surface=Descendants<FrameworkElement>(editor).Single(e=>AutomationProperties.GetAutomationId(e)=="BackgroundColorSpectrum");

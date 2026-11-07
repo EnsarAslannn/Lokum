@@ -50,8 +50,6 @@ public enum DocumentEngine {
         var source = input
         let ext = normalized(input.pathExtension)
         if ext == "pages" {
-            // Modern IWA Pages files are parsed locally; the original is
-            // never opened by or handed to an installed Apple office app.
             source = try PagesCodec.materializeHTML(input, in: work, token: token)
         } else if ext == "epub" {
             source = try EPUBCodec.unpackToHTML(input, in: work, token: token)
@@ -76,7 +74,6 @@ public enum DocumentEngine {
 
         if ["png", "jpg"].contains(format) {
             let pdf = try office(source, to: "pdf", in: staging, token: token)
-            // Give rendered pages the input's name and the requested destination.
             let named = work.appendingPathComponent(input.deletingPathExtension().lastPathComponent).appendingPathExtension("pdf")
             if pdf != named { try FileManager.default.copyItem(at: pdf, to: named) }
             var renderOptions = options
@@ -132,8 +129,6 @@ public enum DocumentEngine {
         return try publish(archive, to: destination(input, format: format, options: options), token: token)
     }
 
-    /// Each invocation owns an isolated LibreOffice profile. Headless conversion
-    /// therefore cannot reuse or alter a user's open LibreOffice documents.
     static func office(_ input: URL, to format: String, in directory: URL, token: CancellationToken) throws -> URL {
         try token.check()
         let filter = try officeFilter(format, category: FileCategory.detect(input))
@@ -165,9 +160,6 @@ public enum DocumentEngine {
             arguments.append("--infilter=Markdown")
         }
         arguments += ["--convert-to", filter, "--outdir", directory.path, source.path]
-        // LibreOffice imports linked HTML resources. Denying IP networking at
-        // the process boundary keeps conversions local. Unix-domain IPC remains
-        // available because the upstream macOS build requires it to start.
         let result: ProcessResult
         let sandbox = URL(fileURLWithPath: "/usr/bin/sandbox-exec")
         if fm.isExecutableFile(atPath: sandbox.path) {
@@ -234,9 +226,6 @@ public enum DocumentEngine {
                   let mime=UTType(type as String)?.preferredMIMEType,mime.hasPrefix("image/"),!mime.contains("svg") else{return ""}
             return "data:\(mime);base64,\(data.base64EncodedString())"
         }
-        // Linked resources must be local raster images beside the selected HTML.
-        // External CSS and SVG may load arbitrary additional resources, so they
-        // are excluded instead of handing those references to the importer.
         for pattern in [#"(?is)<link\b[^>]*>"#,#"(?is)@import\s+[^;]+;"#] {
             let expression=try NSRegularExpression(pattern:pattern)
             source=expression.stringByReplacingMatches(in:source,range:NSRange(source.startIndex...,in:source),withTemplate:"")
@@ -288,8 +277,6 @@ enum RichTextCodec {
             let directory = work.appendingPathComponent("Rich text resources", isDirectory: true)
             try wrapper.write(to: directory, options: .atomic, originalContentsURL: nil)
             let output = directory.appendingPathComponent("index.html")
-            // Cocoa writes RTFD attachment URLs as file:///image.png even when
-            // its HTML file wrapper placed image.png beside index.html.
             var html = try DocumentText.read(output)
             let pattern = try NSRegularExpression(pattern: #"(?i)\bsrc\s*=\s*(["'])(file:[^"']+)\1"#)
             for match in pattern.matches(in: html, range: NSRange(html.startIndex..., in: html)).reversed() {

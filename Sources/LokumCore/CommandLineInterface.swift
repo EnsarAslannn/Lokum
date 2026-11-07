@@ -24,7 +24,6 @@ do {
     var options=OperationOptions(), paths=Array(args.dropFirst(3))
     let jsonOutput=paths.contains("--json");paths.removeAll{$0=="--json"}
     if let i=paths.firstIndex(of:"--options"),i+1<paths.count {
-        // Missing keys keep defaults via a JSON overlay encoded from defaults.
         guard var supplied=try JSONSerialization.jsonObject(with:Data(paths[i+1].utf8)) as? [String:Any] else { throw LokumError.invalidInput("Options must be a JSON object.") }
         normalizeFileURLs(&supplied)
         var defaults=try JSONSerialization.jsonObject(with:JSONEncoder().encode(options)) as! [String:Any]

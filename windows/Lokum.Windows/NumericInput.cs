@@ -1,7 +1,6 @@
 using System.Globalization;
 namespace Lokum.Windows;
 
-/// Validation copy stays localizable instead of exposing framework messages.
 internal static class NumericInput
 {
     internal static double ParseFinite(string text,CultureInfo? culture=null)

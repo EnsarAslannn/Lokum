@@ -23,7 +23,6 @@ public sealed partial class ToolEditor
         if(tool=="redactAudio")
         {
             options.Children.Add(L10n.Label(new TextBlock{Text="Replace selected audio with"}));options.Children.Add(bleepMode);options.Children.Add(MainWindow.Button("Add selected range",()=>{try{var a=Value("Start");var b=Value("End",duration);
-        // Displayed milliseconds can round a valid source endpoint slightly upward.
         var displayedEnd=double.Parse(Number(duration),CultureInfo.CurrentCulture);
         if(b==displayedEnd&&Math.Abs(b-duration)<=.0005001)b=duration;if(a<0||b<=a||b>duration)throw new ArgumentException("Choose a valid range first.");bleepRanges.Add(new(a,b));ReloadRanges();}catch(ArgumentException error){MessageBox.Show(this,L10n.Text(error.Message),L10n.Text("Check selected range"));}}));options.Children.Add(rangesList);options.Children.Add(MainWindow.Button("Remove selected range",()=>{if(rangesList.SelectedIndex is var i&&i>=0&&i<bleepRanges.Count){bleepRanges.RemoveAt(i);ReloadRanges();}}));
         }
@@ -33,7 +32,6 @@ public sealed partial class ToolEditor
     private (double Start,double End) ReadPlaybackRange()
     {
         var a=Value("Start");var b=Value("End",duration);
-        // Displayed milliseconds can round a valid source endpoint slightly upward.
         var displayedEnd=double.Parse(Number(duration),CultureInfo.CurrentCulture);
         if(b==displayedEnd&&Math.Abs(b-duration)<=.0005001)b=duration;
         if(a<0||b<=a||b>duration)throw new ArgumentException("Start must be before End, within the media duration.");

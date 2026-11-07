@@ -2,8 +2,6 @@ import AppKit
 import SwiftUI
 import LokumCore
 
-/// Isolated first-run UI replay: fake publishers, real setup shortcuts and model.
-/// It never downloads tools, touches the user's tool directory or requests TCC.
 @MainActor final class ToolSetupSmoke:NSObject,NSApplicationDelegate {
     private let output:URL
     private var window:NSWindow?
@@ -26,8 +24,6 @@ import LokumCore
         guard let window else {throw NSError(domain:"Lokum Setup QA",code:2)}
         let cancel=identifier=="SetupCancel"
         let event=NSEvent.keyEvent(with:.keyDown,location:.zero,modifierFlags:[],timestamp:ProcessInfo.processInfo.systemUptime,windowNumber:window.windowNumber,context:nil,characters:cancel ? "\u{1b}":"\r",charactersIgnoringModifiers:cancel ? "\u{1b}":"\r",isARepeat:false,keyCode:cancel ? 53:36)!
-        // Dispatch through this fixture window's native default/cancel shortcut.
-        // No global keyboard injection or access to another application is used.
         if !window.performKeyEquivalent(with:event) {window.sendEvent(event)}
         checks.append("Own-window shortcut dispatched: "+identifier)
     }

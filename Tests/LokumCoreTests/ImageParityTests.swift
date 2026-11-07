@@ -140,7 +140,6 @@ final class ImageParityTests: XCTestCase {
             annotation.text="Hello";annotation.color="#FF0000";annotation.number=7;annotation.strokeWidth=8
             annotation.imageURL=overlay;annotation.points=[.init(x:30,y:30),.init(x:60,y:80),.init(x:120,y:50)]
             var options=OperationOptions();options.imageAnnotations=[annotation]
-            // A magnifier over uniform white needs a visible border to distinguish its result.
             let output=try ImageEngine.preview(input,tool:.annotateImage,options:options)
             XCTAssertEqual(output.width,input.width);XCTAssertEqual(output.height,input.height)
             XCTAssertGreaterThan(try difference(output,input),0.05,kind.rawValue)
@@ -177,8 +176,6 @@ final class ImageParityTests: XCTestCase {
         XCTAssertTrue(CGImageDestinationFinalize(destination))
         var original=try Data(contentsOf:input);XCTAssertEqual(original.last,0x3b);original.removeLast()
         let comment=Data("Private comment".utf8);original.append(contentsOf:[0x21,0xfe,UInt8(comment.count)]);original.append(comment);original.append(contentsOf:[0,0x3b]);try original.write(to:input)
-        // Exercise the same category dispatcher used by the app: GIF is video for
-        // conversion, but metadata removal must retain its animation structure.
         let result=try XCTUnwrap(ConversionEngine.run(ConversionRequest(inputs:[input],operation:.tool(.removeMetadata))).first)
         let source=try XCTUnwrap(CGImageSourceCreateWithURL(result as CFURL,nil));XCTAssertEqual(CGImageSourceGetCount(source),2)
         let global=try XCTUnwrap(CGImageSourceCopyProperties(source,nil) as? [String:Any])
@@ -256,8 +253,6 @@ final class ImageParityTests: XCTestCase {
         changes=ImageMetadataOptions();changes.removeAll=true
         let clean=try ImageEngine.editMetadata(updated,changes:changes)
         XCTAssertNil(ImageEngine.metadata(clean)["{TIFF}.Artist"])
-        // Color-space/orientation essentials may retain a minimal EXIF container.
-        // Identity fields and the XMP packet must be gone; samples remain exact.
         XCTAssertNil(ImageEngine.metadata(clean)["{Exif}.UserComment"])
         XCTAssertFalse(try WebPMetadataContainer.chunks(Data(contentsOf:clean)).contains{$0.name=="XMP "})
         XCTAssertEqual(try WebPMetadataContainer.chunks(Data(contentsOf:clean)).filter{imageChunks.contains($0.name)}.map(\.payload),payloads)

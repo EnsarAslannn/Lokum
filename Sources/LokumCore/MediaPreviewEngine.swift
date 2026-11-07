@@ -7,13 +7,11 @@ public struct MediaPreviewResult: Sendable, Equatable {
     public let ownedTemporaryDirectory: URL?
     public var isProxy: Bool { playbackURL != originalURL }
 
-    /// Pause/release the player before removing its temporary preview.
     public func removeTemporaryFiles() {
         if let ownedTemporaryDirectory { try? FileManager.default.removeItem(at: ownedTemporaryDirectory) }
     }
 }
 
-/// Playable previews and bounded-memory waveform analysis for native media editors.
 public enum MediaPreviewEngine {
     public static func prepare(_ input: URL, forceProxy: Bool = false, token: CancellationToken = .init()) async throws -> MediaPreviewResult {
         try checkCancellation(token)
@@ -28,7 +26,6 @@ public enum MediaPreviewEngine {
             let output = directory.appendingPathComponent(info.hasVideo ? "Preview.mp4" : "Preview.m4a")
             var arguments = ["-hide_banner", "-nostdin", "-v", "error", "-n", "-i", input.path, "-map_metadata", "-1", "-map_chapters", "-1"]
             if info.hasVideo {
-                // Autorotation is enabled by FFmpeg. reset_sar also preserves anamorphic display geometry.
                 let scale = "scale=w='min(1920,iw)':h='min(1080,ih)':force_original_aspect_ratio=decrease:force_divisible_by=2:reset_sar=1"
                 arguments += ["-map", "0:v:0", "-map", "0:a:0?", "-vf", scale, "-c:v", "libx264", "-preset", "veryfast", "-crf", "24", "-pix_fmt", "yuv420p"]
             } else { arguments += ["-map", "0:a:0", "-vn"] }
@@ -45,8 +42,6 @@ public enum MediaPreviewEngine {
         }
     }
 
-    /// Linear 0...1 peaks over approximately uniform time bins. Output always has `bins` values.
-    /// FFmpeg accumulates peaks in small audio frames; neither decoded PCM nor per-frame logs are retained.
     public static func waveformPeaks(_ input: URL, bins: Int = 600, channel: Int? = nil, token: CancellationToken = .init()) throws -> [Float] {
         try checkCancellation(token)
         guard (1...10000).contains(bins) else { throw LokumError.invalidInput("Choose between 1 and 10,000 waveform bins.") }
@@ -64,8 +59,6 @@ public enum MediaPreviewEngine {
         guard framesPerBin <= Int64(Int32.max) else { throw LokumError.invalidInput("The media is too long for the requested waveform resolution.") }
         let groups = (frameCount + framesPerBin - 1) / framesPerBin
         let paddedSamples = groups * framesPerBin * frameSize
-        // The final partial bin is padded with silence. aselect emits only completed bins and
-        // caps logs at `bins` even if a damaged container reports an incorrect duration.
         let isolate=channel.map{"pan=mono|c0=c\($0),"} ?? ""
         let filter = isolate + "apad=whole_len=\(paddedSamples),asetnsamples=n=\(frameSize):p=1,astats=metadata=1:reset=\(framesPerBin):measure_perchannel=none:measure_overall=Peak_level,aselect='lt(selected_n,\(bins))*not(mod(n+1,\(framesPerBin)))',ametadata=print:key=lavfi.astats.Overall.Peak_level:file=-"
         let result = try ProcessRunner.run(Dependencies.executable("ffmpeg"), ["-hide_banner", "-nostdin", "-v", "error", "-i", input.path, "-map", "0:a:0", "-vn", "-sn", "-dn", "-af", filter, "-f", "null", "-"], token: token)
@@ -77,8 +70,6 @@ public enum MediaPreviewEngine {
         }
         guard !peaks.isEmpty else { throw LokumError.failed("Could not decode the audio waveform.") }
         if peaks.count == bins { return peaks }
-        // Very short files and integer frame grouping can yield fewer bins. Preserve peak
-        // values while spreading these uniform groups over the requested display width.
         return (0..<bins).map { index in
             let lower = min(peaks.count - 1, index * peaks.count / bins)
             let upper = min(peaks.count, max(lower + 1, (index + 1) * peaks.count / bins))
@@ -86,8 +77,6 @@ public enum MediaPreviewEngine {
         }
     }
 
-    /// Export into an owned temporary folder, then prepare a native player-compatible preview.
-    /// Use this for Original / Processed comparison without creating exports beside the source.
     public static func processedPreview(_ kind: ToolKind, input: URL, options: OperationOptions = .init(), token: CancellationToken = .init()) async throws -> MediaPreviewResult {
         let supported: Set<ToolKind> = [.normalizeAudio, .muteVideo, .trimVideo, .cropVideo, .changeVideoSpeed, .splitVideo, .audioToVideo, .trimAudio, .audioChannels, .redactVideo, .redactAudio]
         guard supported.contains(kind) else { throw LokumError.unsupported("This operation does not produce a single media preview.") }
@@ -115,8 +104,6 @@ public enum MediaPreviewEngine {
         try await processedPreview(.redactAudio, input: input, options: options, token: token)
     }
 
-    /// The visualizer needs a responsive preview even for hours-long recordings.
-    /// Its actual export still uses the complete input and the requested dimensions.
     public static func visualizationPreview(_ input:URL,options:OperationOptions = .init(),maximumDuration:Double = 12,token:CancellationToken = .init()) async throws -> MediaPreviewResult {
         try checkCancellation(token)
         guard maximumDuration.isFinite,maximumDuration>0,maximumDuration<=60 else { throw LokumError.invalidInput("Preview duration must be between 0 and 60 seconds.") }

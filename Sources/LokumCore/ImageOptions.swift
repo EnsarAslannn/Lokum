@@ -1,7 +1,5 @@
 import Foundation
 
-/// Neutral values leave the corresponding image adjustment unchanged.
-/// Tonal/color amounts use -1...1, exposure uses EV and gamma uses its actual exponent.
 public struct ImageAdjustments: Codable, Sendable {
     public var exposure: Double = 0
     public var brightness: Double = 0
@@ -49,7 +47,6 @@ public struct ImageFrameOptions: Codable, Sendable {
     public var aspectRatio: Double? = nil
     public var width: Int? = nil
     public var height: Int? = nil
-    /// Normalized image position. (0,0) is top left, (1,1) bottom right.
     public var position: ImagePoint = .init(x: 0.5, y: 0.5)
     public var imageScale: Double = 1
     public init() {}
@@ -69,7 +66,6 @@ public struct CollageOptions: Codable, Sendable {
     public var backgroundColor: String = "#FFFFFF"
     public var backgroundImage: URL? = nil
     public var imageFit: ImageFit = .fill
-    /// An empty list retains selection order; a nonempty list must be a permutation.
     public var imageOrder: [Int] = []
     public init() {}
 }
@@ -79,7 +75,6 @@ public enum ImageAnnotationKind: String, Codable, CaseIterable, Sendable {
 }
 public struct ImageAnnotation: Codable, Sendable {
     public var kind: ImageAnnotationKind
-    /// All image-edit coordinates are pixels measured from the image's top left.
     public var rect: EditRect
     public var points: [ImagePoint] = []
     public var text: String = ""
@@ -120,7 +115,6 @@ public struct DetectedImageRegion: Codable, Sendable {
 }
 
 public struct ImageMetadataOptions: Codable, Sendable {
-    /// Paths correspond to ImageEngine.metadata(), for example "{TIFF}.Artist".
     public var updates: [String: String] = [:]
     public var removals: [String] = []
     public var removeAll: Bool = false

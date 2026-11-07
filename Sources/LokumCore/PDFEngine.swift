@@ -89,9 +89,6 @@ public enum PDFEngine {
                 } else { try bytes.write(to:output,options:.atomic) }
                 outputs.append(output)
             case .removeMetadata:
-                // Mutating documentAttributes alone leaves the catalog's old XMP
-                // packet in the saved PDF. A fresh document copies page content
-                // without that catalog, then restores navigation and annotations.
                 let cleaned=try withoutSourceMetadata(pdf,clearAnnotationMetadata:options.metadataRemoveAll || options.metadata.isEmpty,token:token)
                 cleaned.documentAttributes=options.metadataRemoveAll ? [:]:Dictionary(uniqueKeysWithValues:options.metadata.map{(AnyHashable($0.key),$0.value as Any)})
                 let output=OutputFiles.unique(for:input,extension:"pdf",suffix:" - Clean",directory:options.outputDirectory)
@@ -145,10 +142,6 @@ public enum PDFEngine {
         guard documents.contains(where:{$0.isEncrypted}) else {
             return try PDFPreservingCodec.transform(inputs,selections:selections,rotations:rotations,token:token)
         }
-        // PDFKit can unlock a PDF for ordinary page copying. Its complete write
-        // still emits encrypted bytes, which the object-graph parser cannot read.
-        // Keep that established path for simple PDFs, and refuse rich encrypted
-        // documents instead of exporting orphan form widgets or losing attachments.
         guard !documents.contains(where:requiresPreservingWrite) else {
             throw LokumError.unsupported("This password-protected PDF contains document features that this page operation cannot safely preserve. Use an unencrypted copy for form fields, attachments or links. No copy was exported.")
         }
@@ -183,8 +176,6 @@ public enum PDFEngine {
     }
 
     private static func withoutSourceMetadata(_ source:PDFDocument,clearAnnotationMetadata:Bool,token:CancellationToken) throws -> PDFDocument {
-        // Copying pages does not carry the catalog's AcroForm field registry.
-        // Retaining orphan widget appearances would silently break editability.
         let catalog=source.documentRef?.catalog
         func hasKey(_ dictionary:CGPDFDictionaryRef?,_ key:String)->Bool {
             guard let dictionary else { return false }
@@ -207,7 +198,6 @@ public enum PDFEngine {
             guard let page=source.page(at:index)?.copy() as? PDFPage else { throw LokumError.failed("A PDF page could not be copied.") }
             for annotation in page.annotations {
                 if clearAnnotationMetadata {
-                    // Widget /T is its field name, not an annotation author.
                     if annotation.type != "Widget" { annotation.userName=nil }
                     annotation.modificationDate=nil
                     annotation.removeValue(forAnnotationKey:PDFAnnotationKey(rawValue:"/CreationDate"))

@@ -4,7 +4,6 @@ import ApplicationServices
 import LokumCore
 import LokumUpdates
 
-/// Opt-in QA uses an isolated preference suite and only its own Lokum window.
 @MainActor final class LocalizationSmoke:NSObject,NSApplicationDelegate {
     private let output:URL
     private var window:NSWindow?

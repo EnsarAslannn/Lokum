@@ -13,8 +13,7 @@ public sealed partial class OfficeDocuments(string office,string deno,string ass
     private static string Escape(string value)=>WebUtility.HtmlEncode(value);
     public async Task<string> OfficeAsync(string input,string format,string outputDirectory,CancellationToken token)
     {
-        Directory.CreateDirectory(outputDirectory);// LibreOffice creates deeply nested profile/cache paths. Keep its job short
-        // even when the destination is an already nested export transaction.
+        Directory.CreateDirectory(outputDirectory);
         var job=Path.Combine(Path.GetTempPath(),"LokumOffice-"+Guid.NewGuid().ToString("N"));var profile=Path.Combine(job,"profile");var rendered=Path.Combine(job,"out");Directory.CreateDirectory(Path.Combine(profile,"user"));Directory.CreateDirectory(rendered);
         try
         {

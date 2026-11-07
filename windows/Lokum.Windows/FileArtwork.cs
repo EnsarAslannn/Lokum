@@ -21,7 +21,6 @@ internal readonly record struct FileArtworkStamp(bool Exists,bool Directory,long
     }
 }
 
-/// The shell lookup and file metadata both stay off the dispatcher; duplicate rows share a flight.
 internal sealed class FileArtworkCache
 {
     private sealed record Entry(FileArtworkStamp Stamp,ImageSource? Image,long Access);
@@ -49,7 +48,6 @@ internal sealed class FileArtworkCache
             var current=stamp(path);
             lock(gate)if(cache.TryGetValue(path,out var entry)&&entry.Stamp==current){cache[path]=entry with{Access=++clock};return entry.Image;}
             var image=await load(path,current).ConfigureAwait(false);
-            // Every consumer receives immutable artwork, safe to use on another dispatcher.
             if(image is not null&&!image.IsFrozen){if(!image.CanFreeze)return null;image.Freeze();}
             lock(gate)
             {
@@ -121,7 +119,7 @@ internal static class FileArtwork
                 });
             }
             catch(OperationCanceledException){}
-            catch(Exception error)when(error is IOException or UnauthorizedAccessException or COMException or InvalidOperationException or ArgumentException){/* Keep the placeholder; never break a row for an icon. */}
+            catch(Exception error)when(error is IOException or UnauthorizedAccessException or COMException or InvalidOperationException or ArgumentException){ }
             finally
             {
                 if(target.TryGetTarget(out var image)&&!image.Dispatcher.HasShutdownStarted)await image.Dispatcher.InvokeAsync(()=>
@@ -133,13 +131,12 @@ internal static class FileArtwork
     }
     private static ImageSource? NativeIcon(string path,FileArtworkStamp stamp)
     {
-        var flags=0x100u|0x1u; // SHGFI_ICON | SHGFI_SMALLICON
-        if(!stamp.Exists)flags|=0x10; // name/extension association for missing entries
+        var flags=0x100u|0x1u;
+        if(!stamp.Exists)flags|=0x10;
         _ = SHGetFileInfo(path,stamp.Directory?0x10u:0x80u,out var info,(uint)Marshal.SizeOf<Info>(),flags);
         if(info.Icon==IntPtr.Zero)return null;
         try{var image=Imaging.CreateBitmapSourceFromHIcon(info.Icon,Int32Rect.Empty,System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions());image.Freeze();return image;}finally{DestroyIcon(info.Icon);}
     }
-    /// Shell extensions can require COM/STA. A single background worker also bounds concurrent shell work.
     private static class ShellWorker
     {
         private static readonly BlockingCollection<Action> jobs=new();

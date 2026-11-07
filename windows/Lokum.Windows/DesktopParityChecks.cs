@@ -16,14 +16,12 @@ internal static class DesktopParityChecks
         var isolated=new LibraryStore(Path.Combine(root,"Desktop parity library"));isolated.SetAppearance(Theme.Dark?"dark":"light");var folder=Directory.CreateDirectory(Path.Combine(root,"Folder clipboard fixture")).FullName;
         var result=ClipboardImport.Read(new DataObject(DataFormats.FileDrop,new[]{folder,image,folder}),isolated);check(result.Paths.Length==2&&result.Paths.Contains(folder),"Folder paste rejected a directory or duplicated it");
         var window=new MainWindow(library:isolated,checkForUpdates:false);window.Show();DesktopInput.Pump();
-        // Actual OS clipboard import, routed through native Ctrl+V, into the separate fixture Library.
         var drops=new System.Collections.Specialized.StringCollection{folder,image};Clipboard.SetFileDropList(drops);Children(window).OfType<Button>().First(b=>b.Content as string=="Home").Focus();DesktopInput.Key(window,Key.V,control:true);
         check(window.SelectedFiles.Contains(folder)&&window.SelectedFiles.Contains(image),"Native folder clipboard gesture lost selected items");
         isolated.Record("Preview batch",[text,pastedImage]);DesktopInput.Key(window,Key.F,control:true);window.SearchField.Text="Preview batch";DesktopInput.Key(window,Key.Down);
         check(!window.SearchField.IsKeyboardFocused&&window.LibraryVisible,"Down from Library search did not focus a result");
         DesktopInput.Key(window,Key.Space);var preview=Application.Current.Windows.OfType<FilePreviewWindow>().Single();DesktopInput.Pump();
         check(preview.CurrentPath==text&&Children(preview).OfType<TextBox>().Any(t=>t.Text.Contains("Türkçe")),"Library Space preview lost Unicode text");
-        // The preview text is selectable; navigate from its header rather than hijacking text arrows.
         Children(preview).OfType<Button>().First().Focus();DesktopInput.Key(preview,Key.Right);DesktopInput.Pump();check(preview.CurrentPath==pastedImage&&Children(preview).OfType<Image>().Any(i=>i.Source is BitmapSource{PixelWidth:320,PixelHeight:180}),"Preview Right did not navigate to pasted image");
         var capture=new RenderTargetBitmap((int)preview.ActualWidth,(int)preview.ActualHeight,96,96,PixelFormats.Pbgra32);capture.Render(preview);ImageEngine.Save(capture,Path.Combine(root,"windows-library-preview.png"),"png");DesktopInput.Key(preview,Key.Escape);check(!preview.IsVisible,"Preview Escape did not close");
         window.Activate();DesktopInput.Pump();DesktopInput.Key(window,Key.Enter);check(window.SelectedFiles.SequenceEqual(new[]{text,pastedImage})&&!window.LibraryVisible,"Library Enter did not reuse the selected batch");window.OfferUpdate(new("99.0.0","https://github.com/EnsarAslannn/Lokum/releases/download/v99.0.0/Lokum-Windows-x64.zip",1,Convert.ToBase64String(new byte[64])));check(window.UpdateBannerVisible&&Children(window).OfType<Button>().Any(b=>b.Content as string=="Update to 99.0.0"),"A discovered update has no visible Home action");window.Close();
@@ -32,7 +30,6 @@ internal static class DesktopParityChecks
         var audio=Path.Combine(root,"Keyboard preview.wav");var audioInfo=new MediaInfo(5,new FileInfo(audio).Length,[new MediaStream(0,"audio","pcm_s16le",null,null,false)]);
         preview=new FilePreviewWindow(owner,[audio,image],tools);preview.Show();DesktopInput.Pump();Children(preview).OfType<Button>().First().Focus();DesktopInput.Key(preview,Key.Right,alt:true);check(preview.CurrentPath==image,"Native Alt+Right did not leave media preview for the next file");DesktopInput.Key(preview,Key.Left,alt:true);check(preview.CurrentPath==audio,"Native Alt+Left did not return to the previous media file");DesktopInput.Key(preview,Key.Escape);
         var mediaEditor=new ToolEditor(owner,"normalizeAudio","Normalize Audio",audio,audioInfo);mediaEditor.ConfigureMediaRuntime(tools);mediaEditor.Show();DesktopInput.Pump();check(DesktopGeometry.FitsWorkArea(mediaEditor),"Media editor extends beyond the display work area");
-        // Force the same FFmpeg fallback used by MediaFailed, independently of installed OS codecs.
         WaitFor(mediaEditor.CreatePreviewProxy());var playback=Children(mediaEditor).OfType<MediaElement>().Single();var proxy=playback.Source.LocalPath;
         check(proxy!=audio&&File.Exists(proxy),"Codec fallback did not create a playable source proxy");
         var normalize=Children(mediaEditor).OfType<Button>().Single(b=>b.Content as string=="Preview Processed");normalize.Focus();DesktopInput.Key(mediaEditor,Key.Space);
@@ -49,8 +46,6 @@ internal static class DesktopParityChecks
         for(var n=0;n<labels.Length;n++){var bounds=captions[n].TransformToAncestor(wheelCanvas).TransformBounds(new Rect(0,0,captions[n].ActualWidth,captions[n].ActualHeight));check(new[]{bounds.TopLeft,bounds.TopRight,bounds.BottomLeft,bounds.BottomRight}.All(petals[n].Data.FillContains),"Multiple-PDF wheel label escaped its petal: "+labels[n].Title);}wheel.Close();
         if(Environment.GetEnvironmentVariable("GITHUB_ACTIONS")=="true")
         {
-            // Hosted runners can initialize a fresh LibreOffice profile and font cache here.
-            // Keep asserting a rendered page and navigation after bounded cold-start readiness.
             var runtime=new OfficeRuntime(Path.Combine(Environment.GetEnvironmentVariable("RUNNER_TEMP")!,"Lokum-Parity-Runtimes"));var docx=Path.Combine(root,"Parity exports","Office fixtures","Document.docx");var documentPreview=new FilePreviewWindow(owner,[docx],tools,runtime);documentPreview.Show();limit=DateTime.UtcNow.AddMinutes(2);while(!Children(documentPreview).OfType<Image>().Any(i=>i.Source is BitmapSource{PixelWidth:>100})&&DateTime.UtcNow<limit)DesktopInput.Pump(50);check(Children(documentPreview).OfType<Image>().Any(i=>i.Source is BitmapSource{PixelWidth:>100})&&Children(documentPreview).OfType<Button>().Any(b=>b.Content as string=="Next page"),"Office document did not open as an in-app paged preview: "+documentPreview.PreviewStatus+"; office runtime="+(runtime.Executable is null?"missing":"ready"));documentPreview.Close();check(File.Exists(docx),"Office preview changed its source document");
         }
         check(File.Exists(text)&&File.Exists(pastedImage),"Preview changed imported source files");

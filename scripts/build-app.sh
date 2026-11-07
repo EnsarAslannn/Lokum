@@ -5,12 +5,9 @@ configuration=${1:-release}
 source scripts/signing-configuration.sh
 lokum_load_signing_configuration
 lokum_selected_update_config=${LOKUM_UPDATE_CONFIG:-Configuration/Updates.plist}
-# Portable runtime setup is independent of whether a release feed exists.
-# Set LOKUM_EXTERNAL_TOOLS=false only for a deliberately bundled-tools build.
 lokum_public_build=${LOKUM_EXTERNAL_TOOLS:-true}
 if [[ "$lokum_public_build" != true && "$lokum_public_build" != false ]]; then print -u2 "LOKUM_EXTERNAL_TOOLS must be true or false"; exit 1; fi
 if [[ "$lokum_signing_mode" != ad-hoc && "$lokum_public_build" == false ]]; then python3 scripts/build-credential-broker.py; fi
-# Release binaries do not embed the builder's home-directory/source paths.
 swift build -c "$configuration" --product Lokum -Xswiftc -file-prefix-map -Xswiftc "$PWD=/lokum" -Xswiftc -file-compilation-dir -Xswiftc /lokum
 binary_dir=$(swift build -c "$configuration" --show-bin-path)
 application=${LOKUM_APP_OUTPUT:-"$PWD/build/Lokum.app"}
@@ -72,7 +69,6 @@ cp Resources/THIRD-PARTY-NOTICES.txt "$application/Contents/Resources/THIRD-PART
 ditto Resources/licenses "$application/Contents/Resources/licenses"
 cp "$sparkle_root/LICENSE" "$application/Contents/Resources/licenses/Sparkle-LICENSE.txt"
 sparkle_embedded="$application/Contents/Frameworks/Sparkle.framework/Versions/B"
-# Sign inside out. The downloader's sandbox entitlements must be retained.
 codesign "${lokum_signing_flags[@]}" "$sparkle_embedded/XPCServices/Installer.xpc"
 codesign "${lokum_signing_flags[@]}" --preserve-metadata=entitlements "$sparkle_embedded/XPCServices/Downloader.xpc"
 codesign "${lokum_signing_flags[@]}" "$sparkle_embedded/Autoupdate"

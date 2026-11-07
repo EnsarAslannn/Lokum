@@ -8,8 +8,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 namespace Lokum.Windows;
 
-/// Uses the production control and UIA providers inside an isolated fixture
-/// window. No SendInput, clipboard, user Library or system permissions are used.
 internal static class RangeAccessibilityChecks
 {
     internal static void Run(string output,Window owner,Action<bool,string> check)

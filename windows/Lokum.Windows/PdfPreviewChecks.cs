@@ -8,8 +8,6 @@ internal static class PdfPreviewChecks
 {
     internal static void Run(string root,Action<bool,string> check)
     {
-        // A blank page whose only visible text is the AcroForm appearance.
-        // Rendering page contents alone silently loses this field value.
         const string appearance="q 1 1 1 rg 0 0 240 50 re f 0 g BT /F1 20 Tf 10 16 Td (LOKUM FORM) Tj ET Q";
         var objects=new[]{"<< /Type /Catalog /Pages 2 0 R /AcroForm 6 0 R >>","<< /Type /Pages /Kids [3 0 R] /Count 1 >>","<< /Type /Page /Parent 2 0 R /MediaBox [0 0 300 150] /Annots [5 0 R] /Resources << /Font << /F1 4 0 R >> >> /Contents 7 0 R >>","<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>","<< /Type /Annot /Subtype /Widget /FT /Tx /T (Name) /V (LOKUM FORM) /Rect [30 50 270 100] /F 4 /AP << /N 8 0 R >> /P 3 0 R >>","<< /Fields [5 0 R] /DA (/F1 20 Tf 0 g) /DR << /Font << /F1 4 0 R >> >> >>","<< /Length 0 >>\nstream\n\nendstream","<< /Type /XObject /Subtype /Form /BBox [0 0 240 50] /Resources << /Font << /F1 4 0 R >> >> /Length "+appearance.Length+" >>\nstream\n"+appearance+"\nendstream"};
         using var output=new MemoryStream();void Write(string text){var bytes=Encoding.ASCII.GetBytes(text);output.Write(bytes);}Write("%PDF-1.4\n");var offsets=new List<long>{0};

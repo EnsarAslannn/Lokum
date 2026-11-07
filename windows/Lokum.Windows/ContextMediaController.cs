@@ -4,9 +4,6 @@ using System.Windows;
 using Lokum.Core;
 namespace Lokum.Windows;
 
-// Only explicit Ctrl + right-clicks are inspected. The normal context menu is
-// allowed to open; its media command supplies the address the browser actually
-// exposes, without reading pages or using a remembered/clipboard URL as a guess.
 internal sealed class ContextMediaController:IDisposable
 {
     [StructLayout(LayoutKind.Sequential)]internal struct Point{public int X,Y;}
@@ -24,9 +21,6 @@ internal sealed class ContextMediaController:IDisposable
     {
         this.owner=owner;this.preferences=preferences;this.chosen=chosen;this.notice=notice;
         this.unresolvedDownload=unresolvedDownload;
-        // A UI-thread WH_MOUSE_LL hook can be silently removed by Windows after
-        // a slow render or dialog. Observe button transitions independently of
-        // drag movement, using the same bounded polling model as global drags.
         timer=new(){Interval=TimeSpan.FromMilliseconds(16)};timer.Tick+=(_,_)=>Poll();timer.Start();
     }
     private bool Available=>!disposed&&preferences.Value.Enabled&&DesktopGeometry.IsInteractive(owner);
@@ -85,12 +79,10 @@ internal sealed class ContextMediaController:IDisposable
                 if(!BrowserContextMedia.IsSourceForeground(window))return;
                 BrowserContextMedia.DismissContextMenu(window);
                 source=await ShellMediaSource.AtAsync(window,nameHint,token).WaitAsync(TimeSpan.FromSeconds(3),token);
-                if(source is not null)PostMessage(window,0x001F,0,0); // Cancel Explorer's native context menu.
+                if(source is not null)PostMessage(window,0x001F,0,0);
             }
             else if(browser)
             {
-                // Chrome may already have opened an owned popup on button-down.
-                // Explorer retains its shell-view HWND for COM path resolution.
                 window=GetAncestor(window,3);
                 try{source=await BrowserContextMedia.ReadAsync((int)processId,token,window);}
                 catch(Exception error)when(error is TimeoutException or ArgumentException or System.Windows.Automation.ElementNotAvailableException||ClipboardImport.IsClipboardError(error)){Trace.WriteLine(error);source=null;}
@@ -98,7 +90,6 @@ internal sealed class ContextMediaController:IDisposable
             }
             else return;
             token.ThrowIfCancellationRequested();if(!Available||(!browser&&source is null)){Trace.WriteLine("Context source unavailable or owner disabled");return;}
-            // Never steal focus after the user switched to a different application.
             if(!BrowserContextMedia.IsSourceForeground(window)){Trace.WriteLine("Context source is no longer foreground");return;}
             if(browser)BrowserContextMedia.DismissContextMenu(window);else PostMessage(window,0x001F,0,0);
             var target=source;

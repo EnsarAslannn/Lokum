@@ -75,7 +75,6 @@ public enum WebDownloadEngine {
         let heights=Array(Set(formats.compactMap{$0["height"] as? Int}.filter{$0>0 && $0<=16_384})).sorted()
         let audioExtensions=["mp3","m4a","wav","flac","ogg","opus","aac","aiff"]
         let audioOnly=item["vcodec"] as? String == "none" || (!formats.isEmpty && formats.allSatisfy { $0["vcodec"] as? String == "none" || audioExtensions.contains($0["ext"] as? String ?? "") })
-        // Generic HTML5 videos often omit both height and codec metadata.
         let video = !heights.isEmpty || !audioOnly
         let duration=(item["duration"] as? Double).flatMap{$0.isFinite && $0>0 && $0<31_536_000 ? $0:nil}
         return WebMediaInfo(url:url,title:String((item["title"] as? String ?? "Web media").prefix(300)),kind:video ? .video:.audio,site:item["extractor_key"] as? String ?? url.host ?? "Web",duration:duration,heights:heights,direct:false,filename:nil,byteCount:nil)
@@ -116,8 +115,6 @@ public enum WebDownloadEngine {
         return output
     }
 
-    // Some sites omit dimensions or report stale values for their direct formats.
-    // Verify the actual local file instead of trusting the format selector alone.
     static func enforceVideoHeight(_ files:[URL],maximum:Int,directory:URL,token:CancellationToken,progress:@escaping ProgressHandler) throws {
         for file in files {
             try token.check()
@@ -172,9 +169,6 @@ public enum WebDownloadEngine {
             }
         }
         defer { watchdog.cancel();session.invalidateAndCancel() }
-        // The async convenience download API installs an internal download delegate
-        // and suppresses didWriteData, even with a task delegate. Use the real
-        // delegate lifecycle so progress arrives while the transfer is running.
         let (temporary,response)=try await withTaskCancellationHandler {
             try await delegate.download(info.url,session:session)
         } onCancel:{ delegate.cancel() }
@@ -254,8 +248,6 @@ public enum WebDownloadEngine {
             active?.cancel()
         }
         func urlSession(_ session:URLSession,downloadTask:URLSessionDownloadTask,didFinishDownloadingTo location:URL) {
-            // URLSession removes its temporary file when this callback returns.
-            // Retain only our own copy until didComplete validates the transfer.
             let copy=FileManager.default.temporaryDirectory.appendingPathComponent("Lokum-Download-\(UUID().uuidString).tmp")
             do {
                 guard let response=downloadTask.response else { throw LokumError.failed("The server did not return a response.") }

@@ -1,7 +1,5 @@
 import Foundation
 
-/// A browser can publish its drag before the first sampled pressed-button state.
-/// Give that edge 200 ms without treating a completed drag as new on the next click.
 struct DragPasteboardSession {
     private var baseline:Int?
     private var previous:Int?

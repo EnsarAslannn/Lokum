@@ -83,10 +83,6 @@ enum SubtitleCodec {
 enum DocumentText {
     static func read(_ url: URL) throws -> String {
         let data = try Data(contentsOf: url)
-        // UTF-16 decoders can accept arbitrary pairs of legacy single-byte
-        // characters. Only prefer UTF-16 when a BOM or a clear alternating
-        // zero-byte pattern identifies it; otherwise a CP1252 document can
-        // silently turn into unrelated CJK characters.
         if data.starts(with: [0xff, 0xfe]) || data.starts(with: [0xfe, 0xff]) {
             guard let text = String(data: data, encoding: .utf16) else {
                 throw LokumError.invalidInput("The UTF-16 text in \(url.lastPathComponent) is damaged.")

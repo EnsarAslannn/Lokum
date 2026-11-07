@@ -10,7 +10,7 @@ internal static class ShellMediaSource
         for(var n=0;n<6&&element is not null;n++,element=TreeWalker.ControlViewWalker.GetParent(element))
         {
             if(element.Current.IsPassword)return null;
-            if(element.Current.ControlType==ControlType.Edit)break; // Read only the containing file row, never edit text/value.
+            if(element.Current.ControlType==ControlType.Edit)break;
             if(element.Current.ControlType==ControlType.ListItem||element.Current.ControlType==ControlType.DataItem)return element.Current.Name;
         }
         return root is null?null:ItemNameAt(root,point);
@@ -46,9 +46,6 @@ internal static class ShellMediaSource
     }
     internal static string? ItemAt(ContextMediaController.Point point,nint sourceWindow=0)
     {
-        // Explorer's shell view supplies real filesystem paths, including when
-        // extensions are hidden. Accessibility is used only to identify the item
-        // under the pointer, never to concatenate a display name into a path.
         try
         {
             if(sourceWindow!=0)
@@ -58,9 +55,6 @@ internal static class ShellMediaSource
             }
             var element=AutomationElement.FromPoint(new Point(point.X,point.Y));
             System.Diagnostics.Trace.WriteLine("Explorer hit control: "+element.Current.ControlType.ProgrammaticName);
-            // Details-view cells can hit-test to the view or an adjacent column,
-            // rather than the file row. Use a unique actual row containing the
-            // original click, scoped to this Explorer window, never selection alone.
             return ItemNameFromElement(element,sourceWindow==0?null:AutomationElement.FromHandle(sourceWindow),new Point(point.X,point.Y));
         }
         catch(Exception error)when(error is InvalidOperationException or COMException){}
@@ -78,7 +72,6 @@ internal static class ShellMediaSource
                 dynamic browser=Track(windows.Item(n));if(browser is null||(nint)(long)browser.HWND!=window)continue;
                 dynamic document=Track(browser.Document);dynamic selected=Track(document.SelectedItems());
                 var target=Match((object)selected,names,Track,allowSingle:true);if(target is not null)return target;
-                // An unselected file can be right-clicked without first selecting it.
                 dynamic folder=Track(document.Folder);dynamic items=Track(folder.Items());return Match((object)items,names,Track);
             }
             var type=new System.Text.StringBuilder(64);GetClassName(window,type,type.Capacity);
@@ -100,7 +93,6 @@ internal static class ShellMediaSource
             dynamic item=track(items.Item(n));string name=item.Name;string path=item.Path;
             if((allowSingle&&names.Count==0&&(int)items.Count==1)||names.Any(value=>string.Equals(value,name,StringComparison.OrdinalIgnoreCase)||string.Equals(value,Path.GetFileName(path),StringComparison.OrdinalIgnoreCase)))matches.Add(path);
         }
-        // Ambiguous display names are deliberately left to the native menu.
         return matches.Distinct(StringComparer.OrdinalIgnoreCase).Count()==1?MediaToolSource.Local(matches):null;
     }
 }

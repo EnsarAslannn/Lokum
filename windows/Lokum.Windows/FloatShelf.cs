@@ -9,7 +9,6 @@ using System.Windows.Threading;
 using Microsoft.Win32;
 namespace Lokum.Windows;
 
-/// A compact file stack that opens into a narrow, temporary shelf.
 public sealed class FloatShelf:Window
 {
     private readonly ListBox files=new(){SelectionMode=SelectionMode.Extended,BorderThickness=new(0),Background=Brushes.Transparent,Padding=new(8,4,8,4)};
@@ -46,7 +45,6 @@ public sealed class FloatShelf:Window
         {
             if(!stack.IsMouseCaptured||e.LeftButton!=MouseButtonState.Pressed||(e.GetPosition(stack)-mouseOrigin).Length<4)return;
             dragging=true;stack.ReleaseMouseCapture();
-            // The wire clip is the move grip. The artwork carries the actual files.
             if(mouseOrigin.X>62&&mouseOrigin.Y<60)MoveShelf();else Carry(stack,paths.ToArray());e.Handled=true;
         };
         stack.MouseLeftButtonUp+=(_,e)=>{if(!stack.IsMouseCaptured)return;stack.ReleaseMouseCapture();interacting=false;if(!dragging)SetExpanded(!IsExpanded);e.Handled=true;};

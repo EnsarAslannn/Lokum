@@ -345,7 +345,6 @@ final class DocumentEngineTests: XCTestCase {
         let model = try PagesCodec.model(pages,token:.init())
         let blocks = try XCTUnwrap(model["blocks"] as? [[String:Any]])
         let paragraphs = blocks.filter { $0["type"] as? String == "paragraph" }
-        // The pre-existing binary PDF fixture retains its original document title.
         let runs = paragraphs.flatMap { $0["runs"] as? [[String:Any]] ?? [] }
         XCTAssertTrue(runs.compactMap { $0["text"] as? String }.joined().contains("Quarterly Tangerine Report"))
         XCTAssertTrue(runs.contains { ($0["character"] as? [String:Any])?["bold"] as? Bool == true })
@@ -436,9 +435,6 @@ final class DocumentEngineTests: XCTestCase {
         let package = root.appendingPathComponent("Rich DOCX package", isDirectory: true)
         try ArchiveCodec.extract(docx, into: package, token: .init())
         let xml = try XMLDocument(contentsOf: package.appendingPathComponent("word/document.xml"), options: [.nodePreserveWhitespace, .nodeLoadExternalEntitiesNever])
-        // NSXMLDocument drops whitespace-only w:t nodes even with the preserve
-        // option on this macOS version. SAX keeps the exact OpenXML text Word
-        // displays, including standalone xml:space="preserve" separator runs.
         let paragraphReader = WordParagraphReader()
         let parser = XMLParser(data: try Data(contentsOf: package.appendingPathComponent("word/document.xml")))
         parser.delegate = paragraphReader
@@ -479,7 +475,7 @@ final class DocumentEngineTests: XCTestCase {
         let epub = try XCTUnwrap(DocumentEngine.convert(rotated, to: "epub", options: options, token: .init()).first)
         let bytes = try Data(contentsOf: epub)
         XCTAssertEqual(Array(bytes.prefix(4)), [0x50, 0x4b, 0x03, 0x04])
-        XCTAssertEqual(bytes[8], 0); XCTAssertEqual(bytes[9], 0) // The first mimetype entry must be uncompressed.
+        XCTAssertEqual(bytes[8], 0); XCTAssertEqual(bytes[9], 0)
         let package = root.appendingPathComponent("Fixed EPUB package", isDirectory: true)
         try ArchiveCodec.extract(epub, into: package, token: .init())
         let opf = try XMLDocument(contentsOf: package.appendingPathComponent("OEBPS/content.opf"), options: [.nodeLoadExternalEntitiesNever])

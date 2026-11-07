@@ -1,9 +1,6 @@
 import Foundation
 import CryptoKit
 
-/// Public packages keep large upstream runtimes outside the signed app bundle.
-/// Setup acquires exact upstream versions, verifies hashes, stages them and only
-/// then publishes a complete tool directory. No credential store is involved.
 public enum ExternalToolSetup {
     public static var root: URL {
         FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)[0].appendingPathComponent("Lokum/Tools", isDirectory:true)

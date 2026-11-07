@@ -25,8 +25,6 @@ internal sealed record MediaToolSource(string[] Paths,WebMediaPayload? Web,strin
         if(address.Length>32768||kind is not ("image" or "video" or "audio")||!Uri.TryCreate(address,UriKind.Absolute,out var uri))return null;
         if(uri.IsFile)return Local([uri.LocalPath]);
         if(uri.Scheme is not ("http" or "https")||!string.IsNullOrEmpty(uri.UserInfo))return null;
-        // Keep an image's actual address (including YouTube thumbnails). Page-link
-        // canonicalization belongs to video downloaders, not image editing.
         return FromWeb(new(uri.AbsoluteUri,kind),kind);
     }
     internal static MediaToolSource? FromDrop(IDataObject data,string? hint=null)

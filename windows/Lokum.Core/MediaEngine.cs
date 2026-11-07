@@ -47,8 +47,6 @@ public sealed record MediaOptions
     public Dictionary<string,string> Metadata { get; init; } = [];
 }
 
-/// File-only FFmpeg operations. The UI and CLI call the same transaction and
-/// argument-building paths; no filename, option or metadata value enters a shell.
 public sealed class MediaEngine(string ffmpeg, string ffprobe)
 {
     public static readonly HashSet<string> AudioFormats = new(StringComparer.OrdinalIgnoreCase)
@@ -71,8 +69,6 @@ public sealed class MediaEngine(string ffmpeg, string ffprobe)
             if(stream.TryGetProperty("side_data_list",out var sideData)&&sideData.ValueKind==JsonValueKind.Array)
                 foreach(var entry in sideData.EnumerateArray())if(entry.TryGetProperty("rotation",out var angle)&&angle.TryGetDouble(out var value))rotation=value;
             if(rotation==0&&stream.TryGetProperty("tags",out var tags)&&tags.TryGetProperty("rotate",out var tag))double.TryParse(tag.ToString(),CultureInfo.InvariantCulture,out rotation);
-            // FFmpeg auto-rotates decoded frames before crop/scale filters. The
-            // editor and validation use those same displayed dimensions.
             if(double.IsFinite(rotation)&&Math.Abs(Math.Abs(rotation)%180-90)<.001)(width,height)=(height,width);
             streams.Add(new(stream.GetProperty("index").GetInt32(), GetString(stream,"codec_type"), GetString(stream,"codec_name"), width, height, attached,GetInt(stream,"bits_per_raw_sample")??GetInt(stream,"bits_per_sample")??0,GetString(stream,"sample_fmt"),ParseFrameRate(GetString(stream,"avg_frame_rate"))));
         }
@@ -219,7 +215,6 @@ public sealed class MediaEngine(string ffmpeg, string ffprobe)
                 RequireAudio(info);if(options.AudioRedactions.Length==0)throw new ArgumentException("Add a bleep or silence range.");
                 var ranges=options.AudioRedactions.Select(r=>TimeRange(r.Start,r.End,info.Duration)).ToList();
                 var expression=string.Join('+',ranges.Select(r=>$"between(t,{Number(r.Start)},{Number(r.End)})"));
-                // aeval's channel-independent expression is expanded to the input layout.
                 var replacement=options.RedactionMode=="mute"?"0":"0.18*sin(2*PI*1000*t)";
                 args.AddRange(["-map","0:a:0","-af",$"aeval=exprs='if({expression},{replacement},val(ch))'",..AudioEncoding(ext,options)]);break;
             case "redactVideo":
@@ -290,8 +285,6 @@ public sealed class MediaEngine(string ffmpeg, string ffprobe)
     private async Task<IReadOnlyList<string>> CutClipsAsync(string input,MediaInfo info,string directory,MediaOptions options,Action<OperationProgress> progress,CancellationToken token)
     {
         if(options.VideoClips.Length>1000)throw new ArgumentException("Choose at most 1,000 clips.");
-        // Each interval belongs to one clip. Gaps, overlaps and source-time order
-        // are intentional; output order is the order of the user's clip list.
         var ranges=options.VideoClips.Select(r=>TimeRange(r.Start,r.End,info.Duration)).ToArray();
         var folder=Path.Combine(directory,"clips-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(folder);
         var clips=new List<string>();var ext=Path.GetExtension(input).TrimStart('.').ToLowerInvariant();

@@ -308,7 +308,6 @@ struct JobProgressView:View {
     }
 }
 
-/// Keep the complete tile as the button label; NSPopUpButton otherwise flattens it to an icon/title.
 @MainActor private enum HomeActionMenu {
     private final class Action:NSObject {
         let run:()->Void

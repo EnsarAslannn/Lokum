@@ -155,10 +155,6 @@ enum EPUBCodec {
 
     private static func chapterDocument(_ url: URL) throws -> XMLDocument {
         let options: XMLNode.Options = [.nodePreserveWhitespace, .nodeLoadExternalEntitiesNever]
-        // EPUB chapters are XML. Let the XML parser honor their declaration
-        // (or XML's UTF-8 default) before tolerating older HTML markup. The
-        // URL-based HTML parser can otherwise guess a legacy encoding and
-        // silently corrupt ordinary UTF-8 chapter text.
         do { return try XMLDocument(contentsOf: url, options: options) }
         catch {
             return try XMLDocument(xmlString: DocumentText.read(url), options: options.union(.documentTidyHTML))

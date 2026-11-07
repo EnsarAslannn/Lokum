@@ -1,7 +1,5 @@
 import Foundation
 
-/// Rewrites metadata chunks while retaining the original encoded image/animation bytes.
-/// Layout follows https://developers.google.com/speed/webp/docs/riff_container.
 enum WebPMetadataContainer {
     struct Chunk { var name:String; var payload:Data }
 
@@ -65,7 +63,6 @@ enum WebPMetadataContainer {
         throw LokumError.failed("The local encoder could not serialize these Exif tags.")
     }
 
-    /// ImageIO omits some IFD0 text fields when the file lacks an orientation tag.
     static func tiffTextFields(_ exif:Data)->[String:String] {
         var bytes=[UInt8](exif)
         if bytes.starts(with:[69,120,105,102,0,0]) { bytes=Array(bytes.dropFirst(6)) }

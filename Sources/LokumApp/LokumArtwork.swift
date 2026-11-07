@@ -1,9 +1,6 @@
 import AppKit
 
-/// One vector Turkish delight for the app, menu bar and exported brand assets.
-/// Coordinates are normalized so small menu icons and large exports stay crisp.
 enum LokumArtwork {
-    // Existing palette consumers keep their stable API while the accent turns raspberry.
     static let gold=NSColor(srgbRed:0.7137,green:0.2471,blue:0.4078,alpha:1)
     static let ink=NSColor(srgbRed:0.2392,green:0.1529,blue:0.2118,alpha:1)
     static func bodyPath()->CGPath {

@@ -1,6 +1,4 @@
 #!/bin/zsh
-# Source from the repository root. Configuration contains a public certificate
-# fingerprint, never a private key or a Keychain password.
 
 lokum_load_signing_configuration() {
   local configuration=${LOKUM_SIGNING_CONFIG:-"$PWD/Configuration/Signing.plist"}
@@ -45,8 +43,6 @@ lokum_load_signing_configuration() {
 lokum_require_release_signing() {
   local scope=${1:-release}
   if [[ "$lokum_signing_mode" == apple-development || "$lokum_signing_mode" == developer-id ]]; then return 0; fi
-  # The release integration fixture uses an isolated, validated loopback feed.
-  # Publishing never accepts this exception, even when its flag is inherited.
   if [[ "$scope" == local-test && "${LOKUM_ALLOW_AD_HOC_TEST_RELEASE:-}" == 1 ]]; then return 0; fi
   if [[ "$lokum_signing_mode" == local ]]; then
     python3 scripts/build-credential-broker.py || {
@@ -75,8 +71,6 @@ lokum_verify_signing_identity() {
       print -u2 "developer-id mode requires an Apple-issued Developer ID Application certificate."; return 1
     }
   elif [[ "$lokum_signing_mode" == apple-development ]]; then
-    # Apple's securityd development branch: WWDR CA and Mac Development leaf.
-    # https://github.com/apple-oss-distributions/Security/blob/db15acbe6a7f257a859ad9a3bb86097bfe0679d9/securityd/src/clientid.cpp#L207-L211
     codesign --verify --strict --test-requirement '=anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.1] exists and certificate leaf[field.1.2.840.113635.100.6.1.12] exists' "$code" || {
       print -u2 "apple-development mode requires an Apple-issued Mac Development certificate."; return 1
     }

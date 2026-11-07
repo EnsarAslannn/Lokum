@@ -214,7 +214,6 @@ public enum FeatureCatalog {
         guard inputs.allSatisfy({ !isOrdinaryFolder($0) }) else { return [] }
         let dictionary = inputs.count>1 ? multipleTools : singleTools
         var tools=(dictionary[normalizedExtension(first)] ?? []).filter { tool in inputs.allSatisfy { (dictionary[normalizedExtension($0)] ?? []).contains(tool) } }
-        // The native 2.0.2 bundle declares this additional tool beyond the site's 26.
         if inputs.allSatisfy(QRCodeEngine.supports) { tools.append(.readQRCode) }
         return tools
     }

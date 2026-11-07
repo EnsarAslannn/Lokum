@@ -1,7 +1,5 @@
 import Foundation
 
-/// Builds exactly one mark from the active tool and a mouse stroke.
-/// Shapes and straight lines must never inherit the freehand trail.
 public enum AnnotationDrawing {
     public static func draft(style: ImageAnnotation, points: [ImagePoint]) -> ImageAnnotation? {
         guard let first=points.first,let last=points.last,points.count>=2,

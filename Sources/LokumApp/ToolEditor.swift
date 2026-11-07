@@ -691,7 +691,7 @@ struct ToolEditor:View {
             let kind=tool,sources=inputs
             let cg=try await Task.detached { if kind == .createCollage { return try ImageEngine.collageImage(sources.map{try ImageEngine.load($0)},settings:o.collage ?? .init()) };return try ImageEngine.preview(baseImage,tool:kind,options:o) }.value
             try checkGeneration(generation,token:token);image=NSImage(cgImage:cg,size:.zero);previewSize=CGSize(width:cg.width,height:cg.height)
-        } catch { /* A later edit cancels an obsolete preview; Apply reports export errors. */ }
+        } catch {   }
     }
     var annotationStyle:ImageAnnotation {
         var a=ImageAnnotation(kind:annotationKind,rect:.init(x:0,y:0,width:0,height:0));a.text=annotationText;a.color=hex(annotationColor);a.number=options.imageAnnotations.count+1;a.strokeWidth=annotationStroke;a.fontSize=annotationFont;a.fontFamily=annotationFontFamily

@@ -1,7 +1,6 @@
 import AppKit
 import os
 
-/// An isolated, opt-in cache/queue probe. No user's Library or clipboard is read or changed.
 @MainActor enum FileArtworkSmoke {
     static func run(output: URL) async throws -> [String: Any] {
         struct Probe { var loads = 0; var version: UInt64 = 1; var exists = true; var onMain = false; var lags: [Double] = [] }
@@ -19,7 +18,6 @@ import os
             return NSImage(size: NSSize(width: 32, height: 32))
         }
         let url = output.appendingPathComponent("cache-probe.pdf")
-        // Reproduce the former render path with exactly the same slow provider.
         for _ in 0..<8 { _ = slow(url) }
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in DispatchQueue.main.async { continuation.resume() } }
         let baselineLag = probe.withLock { $0.lags.max() ?? 0 }

@@ -1,5 +1,3 @@
-// Generate an empty table-capable donor from a separately acquired MIT fixture.
-// No original Lokum code or document is read by this build step.
 import fs from "node:fs";
 import { PagesDocument } from "../Tools/PagesBuild/cupertino/package/dist/pages/document.js";
 import { ZipReader, buildZip } from "../Tools/PagesBuild/cupertino/package/dist/base/zip.js";

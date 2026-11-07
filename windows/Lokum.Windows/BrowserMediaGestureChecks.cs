@@ -6,8 +6,6 @@ using System.Windows.Input;
 using Lokum.Core;
 namespace Lokum.Windows;
 
-// Real browser regression, used only by the explicit native test command. A
-// disposable Edge profile displays generated fixtures, never a user's tabs.
 internal static class BrowserMediaGestureChecks
 {
     private delegate bool Visitor(nint window,nint argument);

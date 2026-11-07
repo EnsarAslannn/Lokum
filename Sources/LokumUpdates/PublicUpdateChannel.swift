@@ -1,7 +1,5 @@
 import Foundation
 
-/// The official anonymous channel is fixed in the signed bundle. A remote feed
-/// cannot select a repository or ask this app to load a saved GitHub credential.
 public struct PublicUpdateChannel:Equatable {
     public let repository:GitHubRepository
     public init?(info:[String:Any]) {
@@ -11,8 +9,6 @@ public struct PublicUpdateChannel:Equatable {
         self.repository=repository
     }
 
-    /// Switch only this app's saved copy of the same channel to anonymous mode.
-    /// Credentials and preferences belonging to other applications stay untouched.
     public func migrate(_ defaults:UserDefaults) {
         let key="LokumUpdateGitHubRepository"
         guard let saved=defaults.string(forKey:key),

@@ -2,9 +2,6 @@ import Foundation
 import LocalAuthentication
 import Security
 
-/// Standalone swiftc fixture runner. It never queries or changes a Keychain.
-/// Compile with CREDENTIAL_BROKER_TESTS, the shared protocol, helper source, and
-/// a generated CredentialBrokerBuildIdentity fixture.
 @main enum CredentialBrokerFixtures {
     static func main() {
         var assertions = 0

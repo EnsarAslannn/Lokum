@@ -3,8 +3,6 @@ namespace Lokum.Windows;
 
 internal sealed record ConversionRequest(string[] Inputs,string Format,ImageOptions Image,MediaOptions Media,DocumentOptions Document,bool PreserveMetadata);
 
-// Preview and Save share the exact conversion and metadata pipeline. Only their
-// destination differs: disposable preview storage versus the chosen output folder.
 internal sealed class ConversionOperation(Toolchain tools,OfficeRuntime office,MetadataService metadata)
 {
     internal async Task<IReadOnlyList<string>> RunAsync(ConversionRequest request,string destination,IProgress<OperationProgress>? progress,CancellationToken token)

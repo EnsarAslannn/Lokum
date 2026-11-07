@@ -1,7 +1,5 @@
 import PDFKit
 
-/// Keeps displayed PDF pages, their source positions, and selection in one value.
-/// Replacing a document always clears selection before the page collection changes.
 public struct PDFPageEditorState {
     public private(set) var pages:[PDFPage]=[]
     public private(set) var sourceIndexes:[Int]=[]

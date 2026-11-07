@@ -2,7 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<!-- Connect a Lokum release feed and its own public Ed25519 key before enabling. -->
 	<key>Enabled</key>
 	<false/>
 </dict>

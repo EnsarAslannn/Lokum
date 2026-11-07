@@ -55,8 +55,6 @@ public sealed partial class ToolEditor
             string playable;
             if(HasVideoResultPreview)
             {
-                // These video tools encode the saved result themselves. Keep its
-                // quality and size intact; MOV/MKV only need a playback container.
                 playable=rendered;
                 if(!Path.GetExtension(rendered).Equals(".mp4",StringComparison.OrdinalIgnoreCase))
                 {

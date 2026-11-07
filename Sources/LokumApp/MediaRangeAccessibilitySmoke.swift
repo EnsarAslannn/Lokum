@@ -2,8 +2,6 @@ import AppKit
 import SwiftUI
 import LokumCore
 
-/// In-process replay of the production timeline and its native accessibility
-/// actions. It never reads user files, posts global input or requests TCC.
 @MainActor final class MediaRangeAccessibilitySmoke:NSObject,NSApplicationDelegate {
     private let output:URL
     private var window:NSWindow?

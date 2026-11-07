@@ -14,8 +14,6 @@ with TemporaryDirectory(prefix='lokum-secret-scan-') as directory:
         return subprocess.check_output(['git','-C',str(fixture),*args],stderr=subprocess.PIPE,text=True).strip()
     git('init','-q','-b','main');git('config','user.name','Lokum scanner fixture');git('config','user.email','fixture@example.invalid')
     path=fixture/'browser/chrome/manifest.json';path.parent.mkdir(parents=True)
-    # Generated fixture, never a credential for any service. The same filename
-    # as the reviewed finding must not hide a different commit or key.
     value=hashlib.sha256(b'Lokum synthetic credential regression fixture').hexdigest()
     path.write_text(json.dumps({'key':value})+'\n',encoding='utf-8')
     git('add','.');git('commit','-qm','Synthetic finding');introduced=git('rev-parse','HEAD')

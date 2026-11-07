@@ -231,8 +231,6 @@ final class PDFPreservationRegressionTests: XCTestCase {
         for (index, input) in inputs.enumerated() { XCTAssertEqual(try Data(contentsOf: input), originals[index]) }
     }
 
-    /// A hand-written, unencrypted ordinary AcroForm fixture avoids depending on
-    /// the writer under test or any build-directory / third-party test assets.
     private func fixture(_ name: String, prefix: String, fields: Bool = true, attachment: Bool = true, tagged: Bool = false, crossPageReply: Bool = false, pageLabels: Bool = false) throws -> URL {
         func stream(_ content: String, _ attributes: String = "") -> String { "<< /Length \(content.utf8.count) \(attributes) >>\nstream\n\(content)\nendstream" }
         func appearance(_ value: String) -> String { stream("BT /F1 11 Tf 4 8 Td (\(value)) Tj ET", "/Type /XObject /Subtype /Form /BBox [0 0 180 24] /Resources << /Font << /F1 5 0 R >> >>") }
@@ -315,9 +313,6 @@ final class PDFPreservationRegressionTests: XCTestCase {
         return Snapshot(fields: fields, attachments: attachments, graph: graph)
     }
 
-    /// Traverse through CoreGraphics, independently of the preserving writer.
-    /// The page tree count alone misses discarded pages retained by annotation
-    /// replies, field parents, threads, or other ordinary object references.
     private final class Graph {
         var pageCount = 0
         var strings: [String] = []

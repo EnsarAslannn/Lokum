@@ -1,5 +1,3 @@
-// Run with Playwright installed: node scripts/test-web-demo.cjs [base URL]
-// A separate, temporary Chrome profile is used; no signed-in browser is touched.
 const {chromium}=require('playwright');
 const assert=require('node:assert/strict');
 const fs=require('node:fs/promises');

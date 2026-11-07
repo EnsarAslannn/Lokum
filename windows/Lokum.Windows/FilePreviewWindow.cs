@@ -5,7 +5,6 @@ using System.Windows.Media;
 using Lokum.Core;
 namespace Lokum.Windows;
 
-// One preview lifecycle for Library and Float. Each navigation cancels the previous load.
 internal sealed class FilePreviewWindow:Window
 {
     private readonly string[] paths;private int index;
@@ -68,7 +67,6 @@ internal sealed class FilePreviewWindow:Window
             if(FeatureCatalog.IsImage(path))content.Content=new Image{Source=ImageEngine.Load(path),Stretch=Stretch.Uniform};
             else if(FeatureCatalog.Extension(path)=="pdf")
             {
-                // Load pages on demand rather than decoding every page before showing the first.
                 var pdf=await Task.Run(()=>PdfRasterDocument.Open(path),token);if(token.IsCancellationRequested){pdf.Dispose();return;}pdfDocument=pdf;
                 var pageIndex=0;var panel=new DockPanel();var controls=new StackPanel{Orientation=Orientation.Horizontal};DockPanel.SetDock(controls,Dock.Bottom);panel.Children.Add(controls);var image=new Image{Stretch=Stretch.Uniform};panel.Children.Add(image);
                 async Task Page(int delta){try{token.ThrowIfCancellationRequested();pageIndex=Math.Clamp(pageIndex+delta,0,pdf.PageCount-1);var requested=pageIndex;var png=await Task.Run(()=>pdf.RenderPage(requested,144,token),token);if(!token.IsCancellationRequested&&requested==pageIndex)image.Source=ImageEngine.FromPng(png);}catch(Exception error){if(!token.IsCancellationRequested&&ReferenceEquals(pdfDocument,pdf))content.Content=L10n.Label(new TextBlock{Text="Preview unavailable. "+error.Message,TextWrapping=TextWrapping.Wrap});}}

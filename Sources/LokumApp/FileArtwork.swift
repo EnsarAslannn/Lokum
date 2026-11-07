@@ -1,7 +1,6 @@
 import AppKit
 import SwiftUI
 
-/// File identity is checked on the worker, never while SwiftUI evaluates a row.
 struct FileArtworkStamp: Equatable, Sendable {
     let exists: Bool
     let modified: TimeInterval
@@ -18,17 +17,11 @@ struct FileArtworkStamp: Equatable, Sendable {
     }
 }
 
-/// macOS 13 predates AppKit's NSImage Sendable annotation. Ownership crosses the
-/// worker boundary once in this immutable envelope: Lokum never mutates the image,
-/// the cache only stores its reference, and consumers only render it on the UI actor.
-/// This avoids retroactively declaring every NSImage instance safe to share.
 final class FileArtworkImage: @unchecked Sendable {
     let image: NSImage
     init(_ image: NSImage) { self.image = image }
 }
 
-/// One shared flight per path; bounded LRU entries include missing-file icons.
-/// NSWorkspace's returned images are only read after the worker hands them to the UI.
 actor FileArtworkCache {
     static let shared = FileArtworkCache()
     typealias Loader = @Sendable (URL) -> NSImage?
@@ -75,7 +68,6 @@ actor FileArtworkCache {
     var pendingCount: Int { flights.count }
 }
 
-/// Keeps semantic Finder artwork and the existing row geometry while loading off the UI queue.
 struct AsyncFileArtwork: View {
     let url: URL
     @State private var image: NSImage?

@@ -78,8 +78,6 @@ final class ImageCropBoundsRegressionTests: XCTestCase {
         let input = try pattern(width: 400, height: 300)
         var options = OperationOptions()
         options.crop = EditRect(x: 300, y: 200, width: 300, height: 200)
-        // This is the 0.4.3 GUI request: intersecting to100x100 and then stretching
-        // to300x200 must never turn an invalid requested rectangle into success.
         options.width = 300; options.height = 200
         XCTAssertThrowsError(try ImageEngine.preview(input, tool: .cropImage, options: options)) { error in
             guard case LokumError.invalidInput = error else { return XCTFail("Expected invalid crop input, received \(error)") }

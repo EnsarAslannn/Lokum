@@ -82,7 +82,6 @@ enum LokumApplication {
     }
 }
 
-/// An explicit test-only invocation supplies a disposable, resizable cross-process target.
 @MainActor private final class WindowManagementFixtureDelegate:NSObject,NSApplicationDelegate {
     private var window:NSWindow?
     func applicationDidFinishLaunching(_ notification:Notification) {
@@ -321,8 +320,6 @@ enum LokumApplication {
         else { state.inputs=urls;showHome();state.onOpenWheel?() }
     }
     func applicationShouldTerminate(_ sender:NSApplication)->NSApplication.TerminateReply {
-        // Sparkle can resume an earlier install without the postponement callback.
-        // Never terminate a conversion before it has committed its results.
         (state.working || toolSetupWorking) ? .terminateCancel:.terminateNow
     }
     func applicationShouldHandleReopen(_ sender:NSApplication,hasVisibleWindows flag:Bool)->Bool { showHome();return true }
@@ -351,6 +348,5 @@ extension AppDelegate:NSMenuItemValidation {
 final class ToolPanel:NSPanel {
     override var canBecomeKey:Bool { true }
     override var canBecomeMain:Bool { true }
-    // A borderless panel has no standard close button for AppKit to click.
     override func performClose(_ sender:Any?) { close() }
 }

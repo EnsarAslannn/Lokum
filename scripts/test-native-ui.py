@@ -28,7 +28,6 @@ def bundle_for_audit(binary, output):
         info = plistlib.load(stream)
     info.update(CFBundleIdentifier="local.lokum.ui-audit", CFBundleDisplayName="Lokum UI Audit",
                 LokumExternalTools=True)
-    # This candidate is only used by the three explicit own-window QA entrypoints.
     info.pop("CFBundleDocumentTypes", None)
     with (contents / "Info.plist").open("wb") as stream:
         plistlib.dump(info, stream)
@@ -65,7 +64,6 @@ def main():
                                  + result.stdout[-2000:] + result.stderr[-2000:])
         return result
 
-    # The report directory belongs to this test. Guard fixtures are not user data.
     protected = output / "protected-output"
     protected.mkdir(exist_ok=True)
     sentinel = protected / "keep.txt"

@@ -6,9 +6,6 @@ import JavaScriptCore
 import Security
 import UniformTypeIdentifiers
 
-/// Native iWork interoperability. All parsing and writing happens inside a
-/// fresh JavaScriptCore context over the independently acquired MIT library.
-/// No installed office app, subprocess JavaScript runtime or network is used.
 enum PagesCodec {
     static func create(fromDOCX input: URL, at output: URL, token: CancellationToken) throws {
         try token.check()
@@ -159,8 +156,6 @@ enum PagesCodec {
     }
 }
 
-/// Reads the editable OOXML document structure produced by the local office
-/// converter. Images are loaded only from inside the safely extracted package.
 private enum PagesDOCXReader {
     static func read(_ input: URL, token: CancellationToken) throws -> [String: Any] {
         let work = try OutputFiles.temporaryDirectory()
@@ -228,17 +223,12 @@ private enum PagesDOCXReader {
                     } else if ["sdt","sdtContent","ins","smartTag"].contains(item.local) { for child in item.elements(nil) { try visit(child, link:link) } }
                 }
                 for child in element.elements(nil) { try visit(child) }
-                // An empty paragraph has no run from which to recover its font.
-                // Keep the paragraph mark's formatting, including tiny end
-                // paragraphs that prevent a final table from adding a blank page.
                 let paragraphCharacter = runs.isEmpty ? base.0.merging(character(properties?.first("rPr"))) { _,new in new } : base.0
                 return ["type":"paragraph","runs":runs,"character":paragraphCharacter,"paragraph":base.1.merging(paragraph(properties)) { _,new in new }]
             }
             if element.local == "tbl" {
                 var rows: [[[String:Any]]] = [], merges: [[String:Int]] = []
                 var activeVertical: [Int:(Int,Int)] = [:]
-                // A compact OOXML cell can otherwise request billions of empty
-                // cells, or overflow the column index with a negative span.
                 let maximumColumns = 1024
                 for (rowIndex,row) in element.elements("tr").enumerated() {
                     var cells: [[String:Any]] = [], column = 0
@@ -275,8 +265,6 @@ private enum PagesDOCXReader {
                 return ["type":"table","rows":rows,"merges":merges,"columnWidths":widths,"headerRows":element.elements("tr").prefix(while: {$0.first("trPr")?.first("tblHeader") != nil}).count]
             }
             if ["sdt","sdtContent"].contains(element.local) {
-                // Block-level content controls are unwrapped by the caller's
-                // recursive body collection in ordinary office exports.
                 return nil
             }
             return nil

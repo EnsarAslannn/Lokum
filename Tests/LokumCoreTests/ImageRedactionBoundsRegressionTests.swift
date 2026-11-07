@@ -31,7 +31,6 @@ final class ImageRedactionBoundsRegressionTests: XCTestCase {
                 var options = OperationOptions()
                 var settings = ImageRedactionOptions(); settings.style = style
                 options.imageRedaction = settings
-                // A valid first region must not hide an invalid later one.
                 options.redactions = [.init(x: 10, y: 10, width: 20, height: 20), rect]
                 XCTAssertThrowsError(try ImageEngine.preview(source, tool: .redactImage, options: options),
                                      "\(style.rawValue) must reject \(rect)") { error in
@@ -89,8 +88,6 @@ final class ImageRedactionBoundsRegressionTests: XCTestCase {
         XCTAssertThrowsError(try ImageEngine.preview(source, tool: .redactImage, options: options))
         var settings = ImageRedactionOptions(); settings.detectFaces = true
         options.imageRedaction = settings
-        // A uniform synthetic image has no faces. A detector finding nothing
-        // must retain the existing explicit "select an area" error semantics.
         XCTAssertThrowsError(try ImageEngine.preview(source, tool: .redactImage, options: options)) { error in
             XCTAssertTrue(error.localizedDescription.contains("Select an area to redact"))
         }

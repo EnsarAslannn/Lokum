@@ -61,7 +61,6 @@ public static partial class DocumentEngine
             for(var i=0;i<inputs.Count;i++)
             {
                 var input=Path.GetFullPath(inputs[i]).TrimEnd(Path.DirectorySeparatorChar);if(!File.Exists(input)&&!Directory.Exists(input))throw new FileNotFoundException("A selected item is missing.");
-                // A destination inside a selected folder must never pack its own staging directory.
                 if(Directory.Exists(input)&&Path.GetFullPath(destination).StartsWith(input+Path.DirectorySeparatorChar,StringComparison.OrdinalIgnoreCase)||Directory.Exists(input)&&Path.GetFullPath(destination).TrimEnd(Path.DirectorySeparatorChar).Equals(input,StringComparison.OrdinalIgnoreCase))throw new ArgumentException("Save the archive outside the folder being zipped.");
                 var name=Path.GetFileName(input);var n=2;while(!usedNames.Add(name))name=Path.GetFileNameWithoutExtension(input)+$" {n++}"+Path.GetExtension(input);Add(input,name,0);progress?.Report(new((i+1d)/inputs.Count*.98,"Packing files…"));
             }

@@ -34,8 +34,6 @@ class Page(HTMLParser):
 
 class SiteGenerationTests(unittest.TestCase):
     def test_rebuilding_uses_project_links_and_current_product_media(self):
-        # A stale upstream download would replace Lokum instructions with a non-existent
-        # package, and a stale video would falsely present the original app as Lokum.
         with TemporaryDirectory(prefix='lokum-site-generation-') as directory:
             tree = Path(directory)
             shutil.copytree(ROOT / 'docs', tree / 'docs')

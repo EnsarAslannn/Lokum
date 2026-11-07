@@ -14,9 +14,6 @@ struct WheelGeometry {
     }
     func labelCenters(_ index: Int) -> [NSPoint] {
         let angle = (startAngle - CGFloat(index) * 360 / CGFloat(max(1,count))) * .pi / 180
-        // The area center moves inward as petals get wider. A fixed radius
-        // centers eight-item menus but pushes five-item PDF labels outward.
-        // Use the centroid of the annular sector, including its angular gap.
         let sweep = (360 / CGFloat(max(1,count)) - 1.8) * .pi / 180
         let centroid = count > 1
             ? 4 * sin(sweep/2) * (pow(radius,3)-pow(inner,3)) / (3*sweep*(radius*radius-inner*inner))

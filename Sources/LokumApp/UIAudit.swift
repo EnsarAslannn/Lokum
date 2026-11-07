@@ -31,8 +31,6 @@ struct UIAuditOptions {
 }
 struct UIAuditError:LocalizedError { let message:String;init(_ message:String){self.message=message};var errorDescription:String?{message} }
 
-/// An explicit, isolated review mode. It never starts the production delegate,
-/// global hotkeys, window manager, updater or clipboard import path.
 @MainActor final class UIAudit:NSObject,NSApplicationDelegate {
     let options:UIAuditOptions
     private var window:NSWindow?
@@ -103,15 +101,11 @@ struct UIAuditError:LocalizedError { let message:String;init(_ message:String){s
         self.originalArguments=originalArguments
         try makeFixtures()
         for language in options.languages {for appearance in options.appearances {for scene in options.scenes {
-            // Release the previous SwiftUI graph before changing the process-only
-            // overrides. Every cell gets a new AppStorage identity and domain.
             window?.contentView=nil;window?.close();window=nil
             let suite="Lokum.UIAudit."+UUID().uuidString;suites.insert(suite)
             guard let defaults=UserDefaults(suiteName:suite) else{throw UIAuditError("Isolated audit preferences could not be created")}
             var arguments=originalArguments;arguments["appLanguage"]=language;arguments["appAppearance"]=appearance;arguments["reduceAnimations"]=true;arguments["soundsAndHapticsEnabled"]=false;arguments["sound"]=false;arguments["reveal"]=false
             UserDefaults.standard.setVolatileDomain(arguments,forName:UserDefaults.argumentDomain)
-            // Each UserDefaults instance caches its own volatile search domains.
-            // Set both stores so NSArgumentDomain cannot mask this cell's suite.
             defaults.setVolatileDomain(arguments,forName:UserDefaults.argumentDomain)
             defaults.set(language,forKey:"appLanguage");defaults.set(appearance,forKey:"appAppearance");defaults.set(true,forKey:"reduceAnimations")
             NSApp.appearance=NSAppearance(named:appearance=="dark" ? .darkAqua:.aqua)
@@ -206,8 +200,6 @@ struct UIAuditError:LocalizedError { let message:String;init(_ message:String){s
             let native=views.compactMap{$0 as? NSPopUpButton}.map{"native=\(type(of:$0)) title=\($0.titleOfSelectedItem ?? "nil")"}
             values["languagePickerDiagnostics"]=(diagnostic+native).joined(separator:"; ")
         }
-        // AppKit-backed and SwiftUI accessibility-backed segmented pickers are
-        // both queried in-process. No AXUIElement/TCC or input injection is used.
         let expected=[L10n.text("System"),L10n.text("Light"),L10n.text("Dark")]
         if let control=views.compactMap({$0 as? NSSegmentedControl}).first(where:{candidate in
             candidate.segmentCount==3 && (0..<3).map{candidate.label(forSegment:$0) ?? ""}==expected

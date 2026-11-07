@@ -2,9 +2,6 @@ using System.Buffers.Binary;
 using System.Text;
 namespace Lokum.Core;
 
-/// Packages a single independently encoded HEVC still into an ISO BMFF HEIF
-/// item. The HEVC configuration and sample are taken from FFmpeg's real MP4,
-/// so the file is HEIC rather than another codec with a changed extension.
 public static class HeifCodec
 {
     private static byte[] Text(string value)=>Encoding.ASCII.GetBytes(value);

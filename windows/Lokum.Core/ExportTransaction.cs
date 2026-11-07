@@ -1,7 +1,5 @@
 namespace Lokum.Core;
 
-/// Stages beside the destination. A failed/cancelled batch publishes nothing and
-/// removes only files owned by this transaction; originals are never overwritten.
 public sealed class ExportTransaction : IDisposable
 {
     public string StagingDirectory { get; }

@@ -1,4 +1,3 @@
-/* Lokum web playground. All file processing stays in this tab. */
 'use strict';
 (async()=>{
 const root=document.getElementById('playground');if(!root)return;

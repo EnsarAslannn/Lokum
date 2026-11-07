@@ -3,7 +3,6 @@ import SwiftUI
 import ApplicationServices
 import LokumUpdates
 
-/// Explicit opt-in QA. Uses a private pasteboard and isolated defaults, never the user's Library.
 @MainActor final class DesktopParitySmoke:NSObject,NSApplicationDelegate {
     let output:URL;private var window:NSWindow?;private var state:AppState?;private var monitor:Any?
     private let board=NSPasteboard.withUniqueName();private var checks:[String]=[]
@@ -67,7 +66,6 @@ import LokumUpdates
         state.filePreview.show([image,text]);await pause();guard let batch=NSApp.windows.first(where:{$0.isVisible && $0.title.hasSuffix("· Preview · Lokum")}) else{throw NSError(domain:"Lokum Desktop QA",code:4)}
         try await key(124,in:batch);try check(batch.title.hasPrefix(text.lastPathComponent),"Preview Right navigates a batch")
         try await key(53,in:batch);try check(FileManager.default.fileExists(atPath:image.path),"Preview leaves imported originals intact")
-        // The only imported files from this isolated run live outside its bundle; remove its fixtures.
         for record in state.history {for path in record.outputs where path != folder.path && path != image.path {if path.contains("/Lokum/Imports/Clipboard "){try? FileManager.default.removeItem(atPath:path)}}};try? FileManager.default.removeItem(at:image)
     }
     private func finish(_ error:Error?) {

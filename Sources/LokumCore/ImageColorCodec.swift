@@ -1,7 +1,6 @@
 import AppKit
 
 public enum ImageColorCodec {
-    /// Editor backgrounds use RGBA so a color-panel opacity choice survives export.
     public static func backgroundHex(_ color: NSColor) -> String {
         guard let rgb = color.usingColorSpace(.sRGB) else { return "#FFFFFFFF" }
         func byte(_ value: CGFloat) -> Int {

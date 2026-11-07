@@ -1,6 +1,5 @@
 import Foundation
 
-/// Update trust is fixed in the signed bundle, never supplied by the remote feed.
 public struct UpdateConfiguration: Equatable {
     public let feedURL: URL
     public let publicKey: String
