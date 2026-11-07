@@ -665,7 +665,7 @@
     "cropImage": "Crop Image",
     "normalizeAudio": "Normalize Volume",
     "muteVideo": "Remove Audio",
-    "trimVideo": "Trim Video",
+    "trimVideo": "Cut Video",
     "splitPDF": "Split PDF",
     "organizePDF": "Organize PDF",
     "extractArchive": "Extract Archive",
@@ -683,7 +683,8 @@
     "redactImage": "Redact Photo",
     "redactVideo": "Redact Video",
     "redactAudio": "Bleep Audio",
-    "readQRCode": "Read QR Codes"
+    "readQRCode": "Read QR Code",
+    "removeBackground": "Edit Background"
   },
   "fileActions": [
     "share",

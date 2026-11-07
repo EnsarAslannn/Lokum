@@ -47,6 +47,7 @@ struct JobRecord:Codable,Identifiable {
     var onWebDrop:(([URL])->Void)?
     @Published var webShortcutAvailable=false
     var onShowTool:((ToolKind)->Void)?
+    var onShowConversion:((String)->Void)?
     var onEPUBOptions:(()->Void)?
     var onJobStarted:(()->Void)?
     var onSuccess:((SuccessNotice)->Void)?
@@ -67,9 +68,9 @@ struct JobRecord:Codable,Identifiable {
     func select(_ operation:LokumCore.Operation,options:LokumCore.OperationOptions? = nil,immediate:Bool=false) {
         var settings=options ?? OperationOptions()
         if options == nil,case .convert(let format)=operation { settings=FormatPreferences.shared.options(for:format) }
-        if case .convert("epub")=operation,inputs.allSatisfy({FileCategory.detect($0) == .pdf}),!immediate { onEPUBOptions?();return }
+        if case .convert(let format)=operation,!immediate {onShowConversion?(format);return}
         if case .tool(.removeMetadata)=operation,inputs.count>1 { execute(operation,options:settings);return }
-        if case .tool(let kind)=operation,!immediate,!([.muteVideo,.extractArchive,.createPDF,.splitPDF].contains(kind)) {
+        if case .tool(let kind)=operation,!immediate,!([.extractArchive,.createPDF,.splitPDF].contains(kind)) {
             onShowTool?(kind);return
         }
         execute(operation,options:settings)
@@ -92,14 +93,30 @@ struct JobRecord:Codable,Identifiable {
                         }
                     }
                 }.value
-                stopProgressUpdates();outputs=result;progress=1
-                let record=JobRecord(title:operation.title,inputs:selected.map(\.path),outputs:result.map(\.path))
-                history.insert(record,at:0);history=Array(history.prefix(50))
-                if let data=try? JSONEncoder().encode(history) { historyDefaults.set(data,forKey:"history") }
-                onSuccess?(.filesReady(result))
-                if options.revealInFinder { NSWorkspace.shared.activateFileViewerSelecting(result) }
+                completeExport(result,inputs:selected,title:operation.title,reveal:options.revealInFinder)
             } catch { stopProgressUpdates();if !cancel.isCancelled { self.error=error.localizedDescription } }
         }
+    }
+    func publishPrepared(_ files:[URL],inputs:[URL],operation:LokumCore.Operation,to destination:URL,cleanup:URL?) {
+        guard !working else{return}
+        beginJob(operation.title);let cancel=token;activeInputs=inputs
+        if case .tool(let tool)=operation {activeTool=tool}
+        Task { [self] in
+            defer{finishJob();if let cleanup {try? FileManager.default.removeItem(at:cleanup)}}
+            do {
+                let results=try await Task.detached {
+                    try withGrantedFolderAccess([destination]) {try ConversionEngine.publishPrepared(files,to:destination,token:cancel)}
+                }.value
+                completeExport(results,inputs:inputs,title:operation.title,reveal:UserDefaults.standard.bool(forKey:"reveal"))
+            }catch{if !cancel.isCancelled {self.error=error.localizedDescription}}
+        }
+    }
+    private func completeExport(_ results:[URL],inputs:[URL],title:String,reveal:Bool) {
+        stopProgressUpdates();outputs=results;progress=1
+        history.insert(JobRecord(title:title,inputs:inputs.map(\.path),outputs:results.map(\.path)),at:0);history=Array(history.prefix(50))
+        if let data=try? JSONEncoder().encode(history) {historyDefaults.set(data,forKey:"history")}
+        onSuccess?(.filesReady(results))
+        if reveal {NSWorkspace.shared.activateFileViewerSelecting(results)}
     }
     func beginJob(_ label:String) {
         token=CancellationToken();acceptsProgress=true
@@ -115,6 +132,23 @@ struct JobRecord:Codable,Identifiable {
     }
     func stopProgressUpdates() { acceptsProgress=false }
     func finishJob() { stopProgressUpdates();working=false }
+
+    func moveFiles(_ sources:[URL],to destination:URL) {
+        guard !working else{return}
+        beginJob("Move");activeInputs=sources;let cancel=token
+        Task { [self] in
+            defer{finishJob()}
+            do {
+                let result=try await Task.detached(priority:.userInitiated) {
+                    try withGrantedFolderAccess(sources+[destination]) {try FileTransferEngine.move(sources,to:destination,token:cancel)}
+                }.value
+                var moved:[URL:URL]=[:];for (source,target) in zip(sources,result.outputs) {moved[source]=target}
+                inputs=inputs.map{moved[$0] ?? $0}
+                completeExport(result.outputs,inputs:sources,title:"Move",reveal:UserDefaults.standard.bool(forKey:"reveal"))
+                if !result.retainedOriginals.isEmpty {error=L10n.text("The files were copied, but these originals could not be removed:")+"\n"+result.retainedOriginals.map(\.path).joined(separator:"\n")}
+            }catch{if !cancel.isCancelled {self.error=error.localizedDescription}}
+        }
+    }
 
     func perform(_ action:FileAction,urls:[URL]?=nil) {
         let urls=urls ?? inputs
@@ -135,14 +169,7 @@ struct JobRecord:Codable,Identifiable {
             let panel=NSOpenPanel();panel.canChooseFiles=false;panel.canChooseDirectories=true;panel.canCreateDirectories=true;panel.prompt="Move Here"
             NSApp.activate(ignoringOtherApps:true)
             if panel.runModal() == .OK,let directory=panel.url {
-                var moved:[URL:URL]=[:]
-                do { for source in urls {
-                    var target=directory.appendingPathComponent(source.lastPathComponent)
-                    if target.standardizedFileURL == source.standardizedFileURL { continue }
-                    if FileManager.default.fileExists(atPath:target.path) { target=OutputFiles.unique(for:source,extension:source.pathExtension,directory:directory) }
-                    try FileManager.default.moveItem(at:source,to:target);moved[source]=target
-                };reportSuccess(.action("Files moved.",files:urls.map{moved[$0] ?? $0})) } catch { self.error=error.localizedDescription }
-                inputs=inputs.map{moved[$0] ?? $0}
+                moveFiles(urls,to:directory)
             }
         case .terminal:
             let directory=((try? urls[0].resourceValues(forKeys:[.isDirectoryKey]).isDirectory) ?? false) ? urls[0] : urls[0].deletingLastPathComponent()
@@ -175,7 +202,7 @@ struct JobRecord:Codable,Identifiable {
     }
 }
 
-private func withGrantedFolderAccess<T>(_ urls:[URL],_ action:() throws -> T) throws -> T {
+func withGrantedFolderAccess<T>(_ urls:[URL],_ action:() throws -> T) throws -> T {
     func acquire(_ index:Int) throws -> T {
         guard index<urls.count else { return try action() }
         return try FolderAccessPreferences.withAccess(to:urls[index]) { try acquire(index+1) }

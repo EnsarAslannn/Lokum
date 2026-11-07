@@ -40,11 +40,7 @@ struct WheelItem {
             if video,media?.imageURL != nil { items.append(WheelItem(title:"Download thumbnail…",symbol:"photo",webAction:.thumbnail)) }
             if !photos,(video || media?.imageURL == nil) { items.append(WheelItem(title:"Audio MP3…",symbol:"waveform",webAction:.audio)) }
             items += [WheelItem(title:"Copy link",symbol:"link",webAction:.copy),WheelItem(title:"Open link",symbol:"safari",webAction:.open)]
-        } else { switch mode {
-        case .convert: items=FeatureCatalog.formats(for:inputs).map{WheelItem(title:$0 == "gz" ? "GZIP":$0.uppercased(),operation:.convert($0))}
-        case .tools: items=FeatureCatalog.tools(for:inputs).map{WheelItem(title:FeatureCatalog.toolNames[$0] ?? $0.title,symbol:FeatureCatalog.toolSymbols[$0],operation:.tool($0))}
-        case .actions: items=FileAction.allCases.map{WheelItem(title:$0.title,symbol:$0.symbol,action:$0)}
-        } }
+        } else {items=Self.localItems(for:inputs,mode:mode)}
         let exists=panel?.isVisible ?? false
         let desiredSize=CGFloat(320*UserDefaults.standard.double(forKey:"wheelScale"))
         if let panel,!exists,abs(panel.frame.width-desiredSize)>0.5 { panel.setContentSize(NSSize(width:desiredSize,height:desiredSize));panel.contentView?.layer?.cornerRadius=desiredSize/2 }
@@ -95,6 +91,17 @@ struct WheelItem {
             };return
         }
         state.inputs=inputs;if let action=item.action { state.perform(action) };if let op=item.operation { state.select(op) }
+    }
+    static func localItems(for inputs:[URL],mode:WheelMode)->[WheelItem] {
+        switch mode {
+        case .convert:return FeatureCatalog.formats(for:inputs).map{WheelItem(title:$0 == "gz" ? "GZIP":$0.uppercased(),operation:.convert($0))}
+        case .tools:
+            var items:[WheelItem]=[]
+            if !FeatureCatalog.formats(for:inputs).isEmpty {items.append(WheelItem(title:"Convert",symbol:"arrow.triangle.2.circlepath",operation:.convert("")))}
+            items += FeatureCatalog.tools(for:inputs).map{WheelItem(title:FeatureCatalog.toolNames[$0] ?? $0.title,symbol:FeatureCatalog.toolSymbols[$0],operation:.tool($0))}
+            return items
+        case .actions:return FileAction.allCases.map{WheelItem(title:$0.title,symbol:$0.symbol,action:$0)}
+        }
     }
     func hide() { keyboardMode=false;panel?.orderOut(nil);if let monitor=keyMonitor { NSEvent.removeMonitor(monitor);keyMonitor=nil } }
     func endDrag() { if !keyboardMode { hide() } }

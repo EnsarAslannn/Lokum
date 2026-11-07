@@ -393,6 +393,7 @@
     "redactImage",
     "redactVideo",
     "redactAudio",
-    "readQRCode"
+    "readQRCode",
+    "removeBackground"
   ]
 }

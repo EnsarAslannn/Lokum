@@ -31,9 +31,9 @@ Windows Library and preferences are stored under `%LOCALAPPDATA%/Lokum`.
 
 ## Features
 
-- **45 input formats, 27 shared tools and 275 conversion routes**, with single-file and batch selection.
+- **45 input formats, 28 shared tools and 275 conversion routes**, with single-file and batch selection.
 - **Images:** conversion, compression, resizing, rotation/mirroring, cropping, annotations, frames, collages, metadata, redaction and QR reading.
-- **Background editing on Windows:** manually select areas to keep or use local automatic selection; export a transparent PNG or replace the background with a palette color or another image. Single images and batches are supported.
+- **Background editing:** manually select areas to keep or use local automatic selection; export a transparent PNG or replace the background with a palette color or another image. Single images and batches are supported.
 - **Video and audio:** conversion, compression, spatial cropping, independent clip ranges, joining, speed changes, normalization and channel controls. Mute an entire video or a selected time range and preview the result. Video redaction shows the selected blur/pixelation style in the processed preview.
 - **Documents and archives:** create, merge, split and edit PDFs; convert Office files, Pages, EPUBs, tables, presentations and subtitles; work with archives.
 - **Everyday tasks:** tool wheels, drag shortcuts, clipboard import, Float shelf, Library, folder automation and window layouts.

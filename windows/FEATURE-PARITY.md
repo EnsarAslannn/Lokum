@@ -2,7 +2,7 @@
 
 Feature availability depends on the current source, installed tools and platform. The native adaptations and verification boundaries below apply.
 
-`Resources/FeatureCatalog.json` is the shared availability contract: 45 input formats, 27 tools, single/multiple-selection rules and conversion intersections. `scripts/check-feature-parity.py` compares it with the Swift catalog on every source check. The catalog check establishes matching choices; engine and native desktop checks establish behavior.
+`Resources/FeatureCatalog.json` is the shared availability contract: 45 input formats, 28 tools, single/multiple-selection rules and conversion intersections. `scripts/check-feature-parity.py` compares it with the Swift catalog on every source check. The catalog check establishes matching choices; engine and native desktop checks establish behavior.
 
 Windows adds a **Convert** entry to the tools wheel when a common output format is
 available, without duplicating it in the Fine-tune menu. Conversion previews generate
