@@ -49,7 +49,7 @@ import LokumCore
             check(true,"The tools wheel offers conversion before the editing tools")
         }else{check(false,"The tools wheel offers conversion before the editing tools")}
         controller.hide()
-        let original=try Data(contentsOf:source)
+        let originalBytes=try Data(contentsOf:source)
         let conversion=ConversionWorkspaceModel(inputs:[source],format:"jpg")
         await conversion.prepare()
         check(conversion.error==nil && conversion.outputs.count==1 && conversion.totalBytes>0,"Show Result generates a real target file and reports its size")
@@ -70,7 +70,7 @@ import LokumCore
             }
         }
         conversion.invalidate()
-        check(try Data(contentsOf:source)==original,"Conversion preview and save preserve the original input")
+        check(try Data(contentsOf:source)==originalBytes,"Conversion preview and save preserve the original input")
         let report:[String:Any]=["passed":failures.isEmpty,"checks":checks,"failures":failures]
         try JSONSerialization.data(withJSONObject:report,options:[.prettyPrinted,.sortedKeys]).write(to:output.appendingPathComponent("verification.json"))
         if !failures.isEmpty {throw NSError(domain:"Lokum desktop feature parity",code:1,userInfo:[NSLocalizedDescriptionKey:failures.joined(separator:"\n")])}
