@@ -46,6 +46,7 @@ jobs:
           scripts/build-app.sh release
           codesign --verify --deep --strict build/Lokum.app
           build/Lokum.app/Contents/MacOS/Lokum --desktop-feature-smoke build/mac-engines/packaged-ui
+          ditto -c -k --sequesterRsrc --keepParent build/Lokum.app build/mac-engines/Lokum-macOS.zip
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         if: always()
         with:
