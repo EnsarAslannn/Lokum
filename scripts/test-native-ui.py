@@ -42,6 +42,7 @@ def bundle_for_audit(binary, output):
     if core_resources.is_dir():
         shutil.copytree(core_resources, resources / core_resources.name)
     framework = repository / ".build/artifacts/sparkle/Sparkle/Sparkle.xcframework/macos-arm64_x86_64/Sparkle.framework"
+    shutil.copy2(framework.parents[2] / "LICENSE", resources / "licenses/Sparkle-LICENSE.txt")
     shutil.copytree(framework, contents / "Frameworks/Sparkle.framework", symlinks=True)
     subprocess.run(["python3", str(repository / "scripts/configure-updates.py"),
                     str(contents / "Info.plist"), str(repository / "Configuration/Updates.public.plist")],

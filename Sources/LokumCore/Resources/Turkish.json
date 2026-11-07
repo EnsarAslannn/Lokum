@@ -1,5 +1,5 @@
 {
-  "Download Media": "Medyay? indir",
+  "Download Media": "Medyayı indir",
   "Web media": "Web medyası",
   "Saves to your configured Downloads folder.": "Ayarlardaki İndirilenler klasörüne kaydeder.",
   "Paste a media link to download.": "İndirmek için bir medya bağlantısı yapıştır.",
@@ -1225,6 +1225,24 @@
   "The files were copied, but these originals could not be removed:": "Dosyalar kopyalandı ancak şu özgün dosyalar kaldırılamadı:",
   "The archive is empty.": "Arşiv boş.",
   "Loading…": "Yükleniyor…",
-  "Allow Accessibility to read the selected media address.": "Se?ili medya adresini okumak i?in Eri?ilebilirlik izni ver.",
-  "Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission.": "Finder dosyalar?na Control ile t?klayarak ara?lar?n? a?abilir, taray?c?daki medyay? bu ?ekilde indirebilirsin. Ba?ka uygulaman?n men?s?n? okumak i?in Eri?ilebilirlik izni de gerekir."
+  "Allow Accessibility to read the selected media address.": "Seçili medya adresini okumak için Erişilebilirlik izni ver.",
+  "Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission.": "Finder dosyalarına Control ile tıklayarak araçlarını açabilir, tarayıcıdaki medyayı bu şekilde indirebilirsin. Başka uygulamanın menüsünü okumak için Erişilebilirlik izni de gerekir.",
+  "This image exceeds 100 MP or 30,000 pixels.": "Bu görsel 100 MP veya 30.000 piksel sınırını aşıyor.",
+  "Use at most 256 selection areas.": "En fazla 256 seçim alanı kullan.",
+  "Choose a supported background type.": "Desteklenen bir arka plan türü seç.",
+  "The background image could not be fitted.": "Arka plan görseli boyuta sığdırılamadı.",
+  "Could not read image pixels.": "Görsel pikselleri okunamadı.",
+  "Could not create the background result.": "Arka plan sonucu oluşturulamadı.",
+  "Bundled background removal model": "Uygulamaya dahil arka plan kaldırma modeli",
+  "The bundled background removal model failed its integrity check.": "Arka plan kaldırma modelinin bütünlük denetimi başarısız oldu.",
+  "The background removal model has no image input or output.": "Arka plan kaldırma modelinin görsel girdisi veya çıktısı bulunmuyor.",
+  "The model returned no foreground mask.": "Model korunacak alan maskesi döndürmedi.",
+  "The model returned an invalid foreground mask.": "Model geçersiz bir korunacak alan maskesi döndürdü.",
+  "The model returned non-finite mask pixels.": "Model geçersiz maske piksel değerleri döndürdü.",
+  "Choose files and a local destination folder.": "Dosyaları ve bu bilgisayarda bir hedef klasör seç.",
+  "Choose a destination folder.": "Bir hedef klasör seç.",
+  "A staged file could not be validated.": "Hazırlanan dosya doğrulanamadı.",
+  "An export could not be staged safely. Your originals were not changed.": "Çıktı güvenli şekilde hazırlanamadı. Özgün dosyaların değiştirilmedi.",
+  "A completed export could not be located.": "Tamamlanan çıktı bulunamadı.",
+  "The crop reference dimensions must be positive.": "Kırpma referans ölçüleri sıfırdan büyük olmalı."
 }

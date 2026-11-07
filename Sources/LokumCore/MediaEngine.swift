@@ -538,14 +538,14 @@ public enum MediaEngine {
     private static func render(_ arguments: [String], to output: URL, token: CancellationToken, duration: Double? = nil, progress: @escaping ProgressHandler = {_,_ in}) throws {
         guard !FileManager.default.fileExists(atPath: output.path) else { throw LokumError.failed("An output with this name already exists.") }
         let temporary = output.deletingLastPathComponent().appendingPathComponent(".lokum-\(UUID().uuidString)").appendingPathExtension(output.pathExtension)
-        defer { try? FileManager.default.removeItem(at: temporary) }
+        defer { if FileManager.default.fileExists(atPath:temporary.path) {try? FileManager.default.removeItem(at:temporary)} }
         do {
             do {
                 try ffmpeg(arguments + [temporary.path], token: token, duration: duration, progress: progress)
             } catch LokumError.failed(let diagnostic) {
                 guard diagnostic.contains("libvorbis"), diagnostic.contains("encoder setup failed"), let fallback = vorbisQualityFallback(arguments) else { throw LokumError.failed(diagnostic) }
                 try token.check()
-                try? FileManager.default.removeItem(at: temporary)
+                if FileManager.default.fileExists(atPath:temporary.path) {try? FileManager.default.removeItem(at:temporary)}
                 try ffmpeg(fallback + [temporary.path], token: token, duration: duration, progress: progress)
             }
             try token.check()

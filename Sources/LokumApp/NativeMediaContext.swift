@@ -24,7 +24,7 @@ import LokumCore
     func stop() {if let monitor {NSEvent.removeMonitor(monitor)};monitor=nil;task?.cancel();click=nil;hide()}
     private func hide() {panel?.orderOut(nil);panel=nil;selectedURL=nil}
     private func receive(_ event:NSEvent) {
-        if event.type == .keyDown {task?.cancel();revision=UUID();click=nil;return}
+        if event.type == .keyDown {task?.cancel();revision=UUID();click=nil;hide();return}
         let point=NSEvent.mouseLocation
         if event.type == .leftMouseDragged || event.type == .rightMouseDragged {
             if let click,hypot(point.x-click.point.x,point.y-click.point.y)>6 {self.click=nil;task?.cancel()}
@@ -61,6 +61,7 @@ import LokumCore
     }
     private static func children(_ element:AXUIElement)->[AXUIElement] {attribute(element,kAXChildrenAttribute) as? [AXUIElement] ?? []}
     private static func contextMenus(_ app:AXUIElement,at point:NSPoint)->[AXUIElement] {
+        var owner:pid_t=0;guard AXUIElementGetPid(app,&owner) == .success else{return []}
         var seeds=[app]
         if let focus=element(attribute(app,kAXFocusedUIElementAttribute)) {seeds.append(focus)}
         let system=AXUIElementCreateSystemWide(),p=WindowManagementController.accessibilityPoint(point)
@@ -74,6 +75,7 @@ import LokumCore
         while !queue.isEmpty,nodes<600,Date()<deadline {
             let (node,depth)=queue.removeFirst();nodes+=1
             guard depth<=10,visited.insert(CFHash(node)).inserted else{continue}
+            var pid:pid_t=0;guard AXUIElementGetPid(node,&pid) == .success,pid==owner else{continue}
             let role=attribute(node,kAXRoleAttribute) as? String ?? ""
             if role==kAXMenuBarRole || [kAXTextFieldRole,kAXTextAreaRole,"AXSecureTextField","AXWebArea"].contains(role) {continue}
             if role==kAXMenuRole {menus.append(node);continue}

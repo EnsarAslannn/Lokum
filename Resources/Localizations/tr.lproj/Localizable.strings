@@ -45,6 +45,7 @@
 "32-BIT INTEGER" = "32 BİT TAM SAYI";
 "32-bit float" = "32 bit kayan nokta";
 "32-bit integer" = "32 bit tam sayı";
+"A COMPLETED EXPORT COULD NOT BE LOCATED." = "TAMAMLANAN ÇIKTI BULUNAMADI.";
 "A DISCARDED CLIP IS OUTSIDE THE RANGE." = "ÇIKARILAN BİR KLİP ARALIĞIN DIŞINDA.";
 "A FEW SMALL PREFERENCES. A SMOOTHER EVERYDAY." = "BİRKAÇ KÜÇÜK TERCİH. DAHA AKICI BİR GÜN.";
 "A FEW TOOLS. MORE POSSIBILITIES." = "BİRKAÇ ARAÇ. DAHA FAZLA OLANAK.";
@@ -68,8 +69,10 @@
 "A SELECTED ITEM IS MISSING." = "SEÇİLEN ÖĞELERDEN BİRİ BULUNAMIYOR.";
 "A SPLIT POINT LIES OUTSIDE THE SELECTED RANGE." = "BİR KESİM NOKTASI SEÇİLİ ZAMAN ARALIĞININ DIŞINDA.";
 "A SPLIT POINT LIES OUTSIDE THE VIDEO." = "BİR BÖLME NOKTASI VİDEONUN DIŞINDA KALIYOR.";
+"A STAGED FILE COULD NOT BE VALIDATED." = "HAZIRLANAN DOSYA DOĞRULANAMADI.";
 "A SUBTITLE CUE ENDS BEFORE IT STARTS." = "BİR ALTYAZI SATIRI BAŞLAMADAN BİTİYOR.";
 "A TABLE CELL SPAN IS INVALID OR EXCEEDS 1,024 COLUMNS." = "BİR TABLO HÜCRESİNİN GENİŞLİĞİ GEÇERSİZ VEYA 1.024 SÜTUNU AŞIYOR.";
+"A completed export could not be located." = "Tamamlanan çıktı bulunamadı.";
 "A discarded clip is outside the range." = "Çıkarılan bir klip aralığın dışında.";
 "A few small preferences. A smoother everyday." = "Birkaç küçük tercih. Daha akıcı bir gün.";
 "A few tools. More possibilities." = "Birkaç araç. Daha fazla olanak.";
@@ -92,6 +95,7 @@
 "A selected item is missing." = "Seçilen öğelerden biri bulunamıyor.";
 "A split point lies outside the selected range." = "Bir kesim noktası seçili zaman aralığının dışında.";
 "A split point lies outside the video." = "Bir bölme noktası videonun dışında kalıyor.";
+"A staged file could not be validated." = "Hazırlanan dosya doğrulanamadı.";
 "A subtitle cue ends before it starts." = "Bir altyazı satırı başlamadan bitiyor.";
 "A table cell span is invalid or exceeds 1,024 columns." = "Bir tablo hücresinin genişliği geçersiz veya 1.024 sütunu aşıyor.";
 "ABOUT" = "HAKKINDA";
@@ -118,13 +122,14 @@
 "ALL" = "TÜMÜ";
 "ALL METADATA" = "TÜM META VERİLER";
 "ALL SET. YOU’RE READY TO GO." = "HER ŞEY HAZIR.";
-"ALLOW ACCESSIBILITY TO READ THE SELECTED MEDIA ADDRESS." = "SE?İLİ MEDYA ADRESİNİ OKUMAK İ?İN ERİ?İLEBİLİRLİK İZNİ VER.";
+"ALLOW ACCESSIBILITY TO READ THE SELECTED MEDIA ADDRESS." = "SEÇİLİ MEDYA ADRESİNİ OKUMAK İÇİN ERİŞİLEBİLİRLİK İZNİ VER.";
 "ALLOW FOLDER…" = "KLASÖRE İZİN VER…";
 "ALLOW HOME FOLDER ACCESS…" = "ANA KLASÖRE ERİŞİM İZNİ VER…";
 "ALLOW LOKUM IN MACOS LOGIN ITEMS." = "MACOS GİRİŞ ÖĞELERİ BÖLÜMÜNDEN LOKUM'YE İZİN VER.";
 "ALREADY AVAILABLE ON YOUR COMPUTER" = "BİLGİSAYARINDA ZATEN HAZIR";
 "AN EMBEDDED IMAGE IS MISSING OR TOO LARGE." = "GÖMÜLÜ BİR GÖRSEL EKSİK VEYA ÇOK BÜYÜK.";
 "AN EMPTY OUTPUT WAS PRODUCED." = "BOŞ BİR ÇIKTI OLUŞTU.";
+"AN EXPORT COULD NOT BE STAGED SAFELY. YOUR ORIGINALS WERE NOT CHANGED." = "ÇIKTI GÜVENLİ ŞEKİLDE HAZIRLANAMADI. ÖZGÜN DOSYALARIN DEĞİŞTİRİLMEDİ.";
 "AN HTTPS DOWNLOAD IS REQUIRED." = "İNDİRME HTTPS ÜZERİNDEN YAPILMALI.";
 "AN OUTPUT CANNOT BE A SYMBOLIC LINK." = "ÇIKTI SEMBOLİK BAĞLANTI OLAMAZ.";
 "AN OUTPUT IS OUTSIDE ITS STAGING DIRECTORY." = "BİR ÇIKTI GEÇİCİ KLASÖRÜNÜN DIŞINDA KALDI.";
@@ -194,7 +199,7 @@
 "All set. You’re ready to go." = "Her şey hazır.";
 "Allow %@ once to move and resize other apps’ windows." = "Diğer uygulamaların pencerelerini taşımak ve boyutlandırmak için bir kez %@ izni ver.";
 "Allow %lld once to move and resize other apps’ windows." = "Diğer uygulamaların pencerelerini taşımak ve boyutlandırmak için bir kez %lld izni ver.";
-"Allow Accessibility to read the selected media address." = "Se?ili medya adresini okumak i?in Eri?ilebilirlik izni ver.";
+"Allow Accessibility to read the selected media address." = "Seçili medya adresini okumak için Erişilebilirlik izni ver.";
 "Allow Folder…" = "Klasöre İzin Ver…";
 "Allow Home Folder Access…" = "Ana Klasöre Erişim İzni Ver…";
 "Allow Lokum in macOS Login Items." = "macOS Giriş Öğeleri bölümünden Lokum'ye izin ver.";
@@ -204,6 +209,7 @@
 "An RTFD attachment is missing or too large: %lld" = "Bir RTFD eki eksik veya çok büyük: %lld";
 "An embedded image is missing or too large." = "Gömülü bir görsel eksik veya çok büyük.";
 "An empty output was produced." = "Boş bir çıktı oluştu.";
+"An export could not be staged safely. Your originals were not changed." = "Çıktı güvenli şekilde hazırlanamadı. Özgün dosyaların değiştirilmedi.";
 "An output cannot be a symbolic link." = "Çıktı sembolik bağlantı olamaz.";
 "An output is outside its staging directory." = "Bir çıktı geçici klasörünün dışında kaldı.";
 "Annotate" = "İşaretle";
@@ -271,6 +277,7 @@
 "BOTTOM" = "ALT";
 "BRIGHTNESS" = "PARLAKLIK";
 "BUILT FOR YOUR FILES. MADE FOR YOUR MAC." = "DOSYALARIN İÇİN GELİŞTİRİLDİ. MAC'İN İÇİN TASARLANDI.";
+"BUNDLED BACKGROUND REMOVAL MODEL" = "UYGULAMAYA DAHİL ARKA PLAN KALDIRMA MODELİ";
 "Back" = "Geri";
 "Background" = "Arka plan";
 "Background Image…" = "Arka Plan Görseli…";
@@ -294,6 +301,7 @@
 "Bottom" = "Alt";
 "Brightness" = "Parlaklık";
 "Built for your files. Made for your Mac." = "Dosyaların için geliştirildi. Mac'in için tasarlandı.";
+"Bundled background removal model" = "Uygulamaya dahil arka plan kaldırma modeli";
 "CALLOUT" = "AÇIKLAMA";
 "CAMERA MANUFACTURER" = "KAMERA ÜRETİCİSİ";
 "CAMERA MODEL" = "KAMERA MODELİ";
@@ -330,6 +338,7 @@
 "CHOOSE A COLOR IN #RRGGBB FORMAT." = "#RRGGBB BİÇİMİNDE BİR RENK GİR.";
 "CHOOSE A COMPLETE RTFD FOLDER CONTAINING TXT.RTF." = "TXT.RTF İÇEREN EKSİKSİZ BİR RTFD KLASÖRÜ SEÇ.";
 "CHOOSE A CROP RECTANGLE INSIDE THE IMAGE." = "GÖRSELİN İÇİNDE BİR KIRPMA ALANI SEÇ.";
+"CHOOSE A DESTINATION FOLDER." = "BİR HEDEF KLASÖR SEÇ.";
 "CHOOSE A DESTINATION OUTSIDE THE FOLDER BEING MOVED." = "TAŞINAN KLASÖRÜN DIŞINDA BİR HEDEF SEÇ.";
 "CHOOSE A FILE TO PREVIEW." = "ÖNİZLEMEK İÇİN BİR DOSYA SEÇ.";
 "CHOOSE A FINISHED VIDEO INSTEAD OF A LIVE OR UPCOMING STREAM." = "CANLI VEYA HENÜZ BAŞLAMAMIŞ BİR YAYIN YERİNE TAMAMLANMIŞ BİR VİDEO SEÇ.";
@@ -342,6 +351,7 @@
 "CHOOSE A POSITIVE SIZE OR A REDUCTION BELOW 100%. ZERO USES AUTOMATIC COMPRESSION." = "POZİTİF BİR BOYUT VEYA %100'ÜN ALTINDA BİR KÜÇÜLTME SEÇ. SIFIR, OTOMATİK SIKIŞTIRMA KULLANIR.";
 "CHOOSE A POSITIVE TARGET SIZE OR A REDUCTION BETWEEN 0 AND 100%." = "POZİTİF BİR HEDEF BOYUT VEYA %0 İLE %100 ARASINDA BİR KÜÇÜLTME SEÇ.";
 "CHOOSE A RECTANGLE INSIDE THE VIDEO." = "VİDEONUN İÇİNDE KALAN BİR DİKDÖRTGEN SEÇ.";
+"CHOOSE A SUPPORTED BACKGROUND TYPE." = "DESTEKLENEN BİR ARKA PLAN TÜRÜ SEÇ.";
 "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT." = "DESTEKLENEN BİR MAKSİMUM VİDEO YÜKSEKLİĞİ SEÇ.";
 "CHOOSE A SUPPORTED OUTPUT FORMAT." = "DESTEKLENEN BİR ÇIKTI BİÇİMİ SEÇ.";
 "CHOOSE A TARGET OF AT LEAST 2 KB." = "EN AZ 2 KB'LIK BİR HEDEF SEÇ.";
@@ -366,6 +376,7 @@
 "CHOOSE DOWNLOADS FOLDER…" = "İNDİRME KLASÖRÜNÜ SEÇ…";
 "CHOOSE FEWER FILES TO OPEN." = "AÇMAK İÇİN DAHA AZ DOSYA SEÇ.";
 "CHOOSE FILES" = "DOSYA SEÇ";
+"CHOOSE FILES AND A LOCAL DESTINATION FOLDER." = "DOSYALARI VE BU BİLGİSAYARDA BİR HEDEF KLASÖR SEÇ.";
 "CHOOSE FILES AND A SUPPORTED MEDIA FORMAT." = "DOSYALARI VE DESTEKLENEN BİR MEDYA BİÇİMİNİ SEÇ.";
 "CHOOSE FILES TO ZIP." = "SIKIŞTIRMAK İÇİN DOSYA SEÇ.";
 "CHOOSE FILES…" = "DOSYA SEÇ…";
@@ -430,7 +441,7 @@
 "COMPRESSION STRENGTH" = "SIKIŞTIRMA GÜCÜ";
 "CONTINUE TO LOKUM" = "LOKUM’YE DEVAM ET";
 "CONTRAST" = "KONTRAST";
-"CONTROL-CLICK FILES IN FINDER TO OPEN THEIR TOOLS, OR MEDIA IN A BROWSER TO DOWNLOAD IT. READING ANOTHER APP'S CONTEXT MENU ALSO NEEDS ACCESSIBILITY PERMISSION." = "FINDER DOSYALAR?NA CONTROL İLE T?KLAYARAK ARA?LAR?N? A?ABİLİR, TARAY?C?DAKİ MEDYAY? BU ?EKİLDE İNDİREBİLİRSİN. BA?KA UYGULAMAN?N MEN?S?N? OKUMAK İ?İN ERİ?İLEBİLİRLİK İZNİ DE GEREKİR.";
+"CONTROL-CLICK FILES IN FINDER TO OPEN THEIR TOOLS, OR MEDIA IN A BROWSER TO DOWNLOAD IT. READING ANOTHER APP'S CONTEXT MENU ALSO NEEDS ACCESSIBILITY PERMISSION." = "FINDER DOSYALARINA CONTROL İLE TIKLAYARAK ARAÇLARINI AÇABİLİR, TARAYICIDAKİ MEDYAYI BU ŞEKİLDE İNDİREBİLİRSİN. BAŞKA UYGULAMANIN MENÜSÜNÜ OKUMAK İÇİN ERİŞİLEBİLİRLİK İZNİ DE GEREKİR.";
 "CONVERSION SETTINGS" = "DÖNÜŞTÜRME AYARLARI";
 "CONVERSION WHEEL" = "DÖNÜŞTÜRME ÇARKI";
 "CONVERSIONS" = "DÖNÜŞTÜRMELER";
@@ -450,6 +461,8 @@
 "COPYRIGHT" = "TELİF HAKKI";
 "CORNER RADIUS" = "KÖŞE YUVARLAKLIĞI";
 "CORNERS" = "KÖŞELER";
+"COULD NOT CREATE THE BACKGROUND RESULT." = "ARKA PLAN SONUCU OLUŞTURULAMADI.";
+"COULD NOT READ IMAGE PIXELS." = "GÖRSEL PİKSELLERİ OKUNAMADI.";
 "COULDN’T CHECK FOR UPDATES" = "GÜNCELLEMELER DENETLENEMEDİ";
 "COULDN’T FINISH" = "İŞLEM TAMAMLANAMADI";
 "COULDN’T OPEN THIS TOOL" = "BU ARAÇ AÇILAMADI";
@@ -524,6 +537,7 @@
 "Choose a color in #RRGGBB format." = "#RRGGBB biçiminde bir renk gir.";
 "Choose a complete RTFD folder containing TXT.rtf." = "TXT.rtf içeren eksiksiz bir RTFD klasörü seç.";
 "Choose a crop rectangle inside the image." = "Görselin içinde bir kırpma alanı seç.";
+"Choose a destination folder." = "Bir hedef klasör seç.";
 "Choose a destination outside the folder being moved." = "Taşınan klasörün dışında bir hedef seç.";
 "Choose a file to preview." = "Önizlemek için bir dosya seç.";
 "Choose a finished video instead of a live or upcoming stream." = "Canlı veya henüz başlamamış bir yayın yerine tamamlanmış bir video seç.";
@@ -534,6 +548,7 @@
 "Choose a positive size or a reduction below 100%. Zero uses automatic compression." = "Pozitif bir boyut veya %100'ün altında bir küçültme seç. Sıfır, otomatik sıkıştırma kullanır.";
 "Choose a positive target size or a reduction between 0 and 100%." = "Pozitif bir hedef boyut veya %0 ile %100 arasında bir küçültme seç.";
 "Choose a rectangle inside the video." = "Videonun içinde kalan bir dikdörtgen seç.";
+"Choose a supported background type." = "Desteklenen bir arka plan türü seç.";
 "Choose a supported maximum video height." = "Desteklenen bir maksimum video yüksekliği seç.";
 "Choose a supported output format." = "Desteklenen bir çıktı biçimi seç.";
 "Choose a target of at least 2 KB." = "En az 2 KB'lık bir hedef seç.";
@@ -558,6 +573,7 @@
 "Choose downloads folder…" = "İndirme klasörünü seç…";
 "Choose fewer files to open." = "Açmak için daha az dosya seç.";
 "Choose files" = "Dosya seç";
+"Choose files and a local destination folder." = "Dosyaları ve bu bilgisayarda bir hedef klasör seç.";
 "Choose files and a supported media format." = "Dosyaları ve desteklenen bir medya biçimini seç.";
 "Choose files to zip." = "Sıkıştırmak için dosya seç.";
 "Choose files…" = "Dosya seç…";
@@ -616,7 +632,7 @@
 "Compression strength" = "Sıkıştırma gücü";
 "Continue to Lokum" = "Lokum’ye devam et";
 "Contrast" = "Kontrast";
-"Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission." = "Finder dosyalar?na Control ile t?klayarak ara?lar?n? a?abilir, taray?c?daki medyay? bu ?ekilde indirebilirsin. Ba?ka uygulaman?n men?s?n? okumak i?in Eri?ilebilirlik izni de gerekir.";
+"Control-click files in Finder to open their tools, or media in a browser to download it. Reading another app's context menu also needs Accessibility permission." = "Finder dosyalarına Control ile tıklayarak araçlarını açabilir, tarayıcıdaki medyayı bu şekilde indirebilirsin. Başka uygulamanın menüsünü okumak için Erişilebilirlik izni de gerekir.";
 "Conversion Settings" = "Dönüştürme Ayarları";
 "Conversion wheel" = "Dönüştürme çarkı";
 "Conversions" = "Dönüştürmeler";
@@ -649,6 +665,8 @@
 "Copyright" = "Telif hakkı";
 "Corner radius" = "Köşe yuvarlaklığı";
 "Corners" = "Köşeler";
+"Could not create the background result." = "Arka plan sonucu oluşturulamadı.";
+"Could not read image pixels." = "Görsel pikselleri okunamadı.";
 "Couldn’t check for updates" = "Güncellemeler denetlenemedi";
 "Couldn’t finish" = "İşlem tamamlanamadı";
 "Couldn’t open this tool" = "Bu araç açılamadı";
@@ -709,7 +727,7 @@
 "DOWNLOAD IS LARGER THAN THE SUPPORTED LIMIT." = "İNDİRİLECEK DOSYA DESTEKLENEN SINIRDAN BÜYÜK.";
 "DOWNLOAD LIBREOFFICE 26.8.1 (~360 MB) FROM THE DOCUMENT FOUNDATION? ITS SHA-256 IS CHECKED, THEN THE PACKAGE IS EXTRACTED INTO LOKUM’S USER TOOLS FOLDER. NO ADMINISTRATOR PASSWORD OR OFFICE SUBSCRIPTION IS NEEDED. LIBREOFFICE RETAINS ITS UPSTREAM LICENSES." = "LIBREOFFICE 26.8.1 (~360 MB) THE DOCUMENT FOUNDATİON'DAN İNDİRİLSİN Mİ? SHA-256 ÖZETİ KONTROL EDİLİR, ARDINDAN PAKET LOKUM'NİN ARAÇ KLASÖRÜNE AÇILIR. YÖNETİCİ PAROLASI VEYA OFFICE ABONELİĞİ GEREKMEZ. LIBREOFFICE KENDİ LİSANSLARINI KORUR.";
 "DOWNLOAD LINK…" = "BAĞLANTIDAN İNDİR…";
-"DOWNLOAD MEDIA" = "MEDYAY? İNDİR";
+"DOWNLOAD MEDIA" = "MEDYAYI İNDİR";
 "DOWNLOAD MEDIA TOOLS" = "MEDYA ARAÇLARINI İNDİR";
 "DOWNLOAD MISSING TOOLS" = "EKSİK ARAÇLARI İNDİR";
 "DOWNLOAD OFFICE TOOLS" = "OFFICE ARAÇLARINI İNDİR";
@@ -771,7 +789,7 @@
 "Download FFmpeg (~180 MB), yt-dlp and Deno directly from their official GitHub releases? SHA-256 hashes are verified before use. FFmpeg is GPL; the other upstream licenses and source links are listed on our Features page. No administrator password is needed." = "FFmpeg (~180 MB), yt-dlp ve Deno resmi GitHub sürümlerinden indirilsin mi? SHA-256 özetleri kullanılmadan önce doğrulanır. FFmpeg GPL lisanslıdır; diğer lisanslar ve kaynak bağlantıları Özellikler sayfamızda yer alır. Yönetici parolası gerekmez.";
 "Download LibreOffice 26.8.1 (~360 MB) from The Document Foundation? Its SHA-256 is checked, then the package is extracted into Lokum’s user tools folder. No administrator password or Office subscription is needed. LibreOffice retains its upstream licenses." = "LibreOffice 26.8.1 (~360 MB) The Document Foundation'dan indirilsin mi? SHA-256 özeti kontrol edilir, ardından paket Lokum'nin araç klasörüne açılır. Yönetici parolası veya Office aboneliği gerekmez. LibreOffice kendi lisanslarını korur.";
 "Download Link…" = "Bağlantıdan İndir…";
-"Download Media" = "Medyay? indir";
+"Download Media" = "Medyayı indir";
 "Download a link" = "Bağlantıdan indir";
 "Download audio" = "Sesi indir";
 "Download cancelled. No partial files were kept." = "İndirme iptal edildi. Yarım kalan dosyalar silindi.";
@@ -2090,9 +2108,13 @@
 "THE ARCHIVE CONTAINS AN UNSAFE PATH." = "ARŞİVDE GÜVENLİ OLMAYAN BİR YOL VAR.";
 "THE ARCHIVE ENTRY LEAVES ITS DESTINATION." = "ARŞİVDEKİ BİR ÖĞE HEDEF KLASÖRÜN DIŞINA ÇIKIYOR.";
 "THE ARCHIVE IS EMPTY." = "ARŞİV BOŞ.";
+"THE BACKGROUND IMAGE COULD NOT BE FITTED." = "ARKA PLAN GÖRSELİ BOYUTA SIĞDIRILAMADI.";
 "THE BACKGROUND IMAGE FILLS THE ORIGINAL CANVAS AND IS CENTERED." = "ARKA PLAN GÖRSELİ TUVALİ DOLDURACAK ŞEKİLDE ORTALANIR.";
+"THE BACKGROUND REMOVAL MODEL HAS NO IMAGE INPUT OR OUTPUT." = "ARKA PLAN KALDIRMA MODELİNİN GÖRSEL GİRDİSİ VEYA ÇIKTISI BULUNMUYOR.";
+"THE BUNDLED BACKGROUND REMOVAL MODEL FAILED ITS INTEGRITY CHECK." = "ARKA PLAN KALDIRMA MODELİNİN BÜTÜNLÜK DENETİMİ BAŞARISIZ OLDU.";
 "THE CLIPPING EXCEEDS 200 MB." = "METİN KIRPINTISI 200 MB'I AŞIYOR.";
 "THE CLIPPING HAS NO READABLE TEXT. INCLUDE ITS ORIGINAL RESOURCE FORK/APPLEDOUBLE SIDECAR, OR PASTE ITS TEXT INTO LOKUM." = "METİN KIRPINTISINDA OKUNABİLİR METİN YOK. ORİJİNAL RESOURCE FORK/APPLEDOUBLE DOSYASINI DA EKLE VEYA METNİNİ LOKUM'YE YAPIŞTIR.";
+"THE CROP REFERENCE DIMENSIONS MUST BE POSITIVE." = "KIRPMA REFERANS ÖLÇÜLERİ SIFIRDAN BÜYÜK OLMALI.";
 "THE DOCUMENT HAS NO EDITABLE BODY." = "BELGEDE DÜZENLENEBİLİR BİR İÇERİK YOK.";
 "THE DOCUMENT PACKAGE IS TOO LARGE OR CONTAINS DUPLICATE ENTRIES." = "BELGE PAKETİ ÇOK BÜYÜK VEYA YİNELENEN ÖĞELER İÇERİYOR.";
 "THE DOWNLOAD CONNECTION WAS INTERRUPTED." = "İNDİRME BAĞLANTISI KESİLDİ.";
@@ -2105,6 +2127,9 @@
 "THE IMAGE DOWNLOAD ENDED EARLY." = "GÖRSEL İNDİRMESİ ERKEN SONA ERDİ.";
 "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE." = "GÖRSEL SIRASINDA HER GÖRSEL BİR KEZ YER ALMALI.";
 "THE MEDIA SERVER REDIRECTED TO AN INSECURE URL." = "MEDYA SUNUCUSU GÜVENLİ OLMAYAN BİR ADRESE YÖNLENDİRDİ.";
+"THE MODEL RETURNED AN INVALID FOREGROUND MASK." = "MODEL GEÇERSİZ BİR KORUNACAK ALAN MASKESİ DÖNDÜRDÜ.";
+"THE MODEL RETURNED NO FOREGROUND MASK." = "MODEL KORUNACAK ALAN MASKESİ DÖNDÜRMEDİ.";
+"THE MODEL RETURNED NON-FINITE MASK PIXELS." = "MODEL GEÇERSİZ MASKE PİKSEL DEĞERLERİ DÖNDÜRDÜ.";
 "THE PROCESSING TOOL COULD NOT START." = "İŞLEME ARACI BAŞLATILAMADI.";
 "THE REQUESTED IMAGE SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET." = "İSTENEN GÖRSEL BOYUTUNA İNİLEMEDİ. DAHA BÜYÜK BİR HEDEF SEÇ.";
 "THE REQUESTED PDF SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET." = "İSTENEN PDF BOYUTUNA İNİLEMEDİ. DAHA BÜYÜK BİR HEDEF SEÇ.";
@@ -2120,6 +2145,7 @@
 "THIS FILE HAS NO VIDEO STREAM." = "BU DOSYADA GÖRÜNTÜ YOK.";
 "THIS FORMAT CAN BE IMPORTED. CHOOSE AN OUTPUT FORMAT IN THE SIDEBAR TO CONFIGURE ITS DEFAULTS." = "BU BİÇİM İÇE AKTARILABİLİR. VARSAYILANLARI AYARLAMAK İÇİN KENAR ÇUBUĞUNDAN BİR ÇIKTI BİÇİMİ SEÇ.";
 "THIS FORMAT USES ITS ORIGINAL DOCUMENT STRUCTURE. NO EXPORT DEFAULTS ARE NEEDED." = "BU BİÇİM ORİJİNAL BELGE YAPISINI KULLANIR. DIŞA AKTARMA TERCİHİ GEREKMEZ.";
+"THIS IMAGE EXCEEDS 100 MP OR 30,000 PIXELS." = "BU GÖRSEL 100 MP VEYA 30.000 PİKSEL SINIRINI AŞIYOR.";
 "THIS IMAGE EXCEEDS 100 MP." = "BU GÖRSEL 100 MP'Yİ AŞIYOR.";
 "THIS IMAGE EXCEEDS 200 MB." = "BU GÖRSEL 200 MB'I AŞIYOR.";
 "THIS IMAGE IS TOO LARGE (100 MP LIMIT)." = "BU GÖRSEL ÇOK BÜYÜK (SINIR 100 MP).";
@@ -2182,9 +2208,13 @@
 "The archive contains an unsafe path." = "Arşivde güvenli olmayan bir yol var.";
 "The archive entry leaves its destination." = "Arşivdeki bir öğe hedef klasörün dışına çıkıyor.";
 "The archive is empty." = "Arşiv boş.";
+"The background image could not be fitted." = "Arka plan görseli boyuta sığdırılamadı.";
 "The background image fills the original canvas and is centered." = "Arka plan görseli tuvali dolduracak şekilde ortalanır.";
+"The background removal model has no image input or output." = "Arka plan kaldırma modelinin görsel girdisi veya çıktısı bulunmuyor.";
+"The bundled background removal model failed its integrity check." = "Arka plan kaldırma modelinin bütünlük denetimi başarısız oldu.";
 "The clipping exceeds 200 MB." = "Metin kırpıntısı 200 MB'ı aşıyor.";
 "The clipping has no readable text. Include its original resource fork/AppleDouble sidecar, or paste its text into Lokum." = "Metin kırpıntısında okunabilir metin yok. Orijinal resource fork/AppleDouble dosyasını da ekle veya metnini Lokum'ye yapıştır.";
+"The crop reference dimensions must be positive." = "Kırpma referans ölçüleri sıfırdan büyük olmalı.";
 "The document has no editable body." = "Belgede düzenlenebilir bir içerik yok.";
 "The document is missing %@" = "Belgede şu öğe eksik: %@";
 "The document is missing %lld" = "Belgede şu öğe eksik: %lld";
@@ -2199,6 +2229,9 @@
 "The image download ended early." = "Görsel indirmesi erken sona erdi.";
 "The image order must include every image once." = "Görsel sırasında her görsel bir kez yer almalı.";
 "The media server redirected to an insecure URL." = "Medya sunucusu güvenli olmayan bir adrese yönlendirdi.";
+"The model returned an invalid foreground mask." = "Model geçersiz bir korunacak alan maskesi döndürdü.";
+"The model returned no foreground mask." = "Model korunacak alan maskesi döndürmedi.";
+"The model returned non-finite mask pixels." = "Model geçersiz maske piksel değerleri döndürdü.";
 "The processing tool could not start." = "İşleme aracı başlatılamadı.";
 "The requested PDF size could not be reached. Choose a larger target." = "İstenen PDF boyutuna inilemedi. Daha büyük bir hedef seç.";
 "The requested image size could not be reached. Choose a larger target." = "İstenen görsel boyutuna inilemedi. Daha büyük bir hedef seç.";
@@ -2220,6 +2253,7 @@
 "This file has no video stream." = "Bu dosyada görüntü yok.";
 "This format can be imported. Choose an output format in the sidebar to configure its defaults." = "Bu biçim içe aktarılabilir. Varsayılanları ayarlamak için kenar çubuğundan bir çıktı biçimi seç.";
 "This format uses its original document structure. No export defaults are needed." = "Bu biçim orijinal belge yapısını kullanır. Dışa aktarma tercihi gerekmez.";
+"This image exceeds 100 MP or 30,000 pixels." = "Bu görsel 100 MP veya 30.000 piksel sınırını aşıyor.";
 "This image exceeds 100 MP." = "Bu görsel 100 MP'yi aşıyor.";
 "This image exceeds 200 MB." = "Bu görsel 200 MB'ı aşıyor.";
 "This image is too large (100 MP limit)." = "Bu görsel çok büyük (sınır 100 MP).";
@@ -2289,6 +2323,7 @@
 "UPSTREAM VERSIONS, LICENSES AND SOURCE LINKS" = "ARAÇ SÜRÜMLERİ, LİSANSLAR VE KAYNAK BAĞLANTILARI";
 "USE A REGULAR WRITABLE FOLDER FOR PORTABLE UPDATES." = "TAŞINABİLİR GÜNCELLEMELER İÇİN YAZILABİLİR, NORMAL BİR KLASÖR KULLAN.";
 "USE A STATIC SVG WITHOUT EMBEDDED SCRIPTS OR HTML." = "GÖMÜLÜ BETİK VEYA HTML İÇERMEYEN STATİK BİR SVG KULLAN.";
+"USE AT MOST 256 SELECTION AREAS." = "EN FAZLA 256 SEÇİM ALANI KULLAN.";
 "USE IN LOKUM" = "LOKUM'DE KULLAN";
 "USE ONCE IF MACOS NEEDS PERMISSION FOR YOUR SAVED UPDATE CONNECTION." = "MACOS KAYITLI GÜNCELLEME BAĞLANTISI İÇİN İZİN İSTERSE BİR KEZ KULLAN.";
 "USE OPEN TO PREVIEW THIS DOCUMENT IN ITS DEFAULT APP." = "BU BELGEYİ VARSAYILAN UYGULAMASINDA ÖNİZLEMEK İÇİN AÇ'I KULLAN.";
@@ -2327,6 +2362,7 @@
 "Use Open to preview this document in its default app." = "Bu belgeyi varsayılan uygulamasında önizlemek için Aç'ı kullan.";
 "Use a regular writable folder for portable updates." = "Taşınabilir güncellemeler için yazılabilir, normal bir klasör kullan.";
 "Use a static SVG without embedded scripts or HTML." = "Gömülü betik veya HTML içermeyen statik bir SVG kullan.";
+"Use at most 256 selection areas." = "En fazla 256 seçim alanı kullan.";
 "Use in Lokum" = "Lokum'de kullan";
 "Use once if macOS needs permission for your saved update connection." = "macOS kayıtlı güncelleme bağlantısı için izin isterse bir kez kullan.";
 "VALUE" = "DEĞER";

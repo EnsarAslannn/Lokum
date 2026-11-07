@@ -14,20 +14,38 @@ jobs:
   mac-engines:
     runs-on: macos-15
     timeout-minutes: 30
+    env:
+      LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
+      LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
+      LOKUM_DENO: ${{ github.workspace }}/Tools/deno
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
-      - name: Install media and Office test runtimes
+      - name: Install verified application runtimes and Office
         run: |
-          brew install ffmpeg
           if [ ! -d /Applications/LibreOffice.app ]; then brew install --cask libreoffice; fi
+          scripts/setup-tools.sh
+          python3 scripts/setup-web-download-tools.py
           scripts/setup-exiftool.sh
+          mkdir -p build/mac-engines
+          Tools/ffmpeg -hide_banner -encoders > build/mac-engines/encoders.txt
+          grep -qE '[[:space:]]libwebp[[:space:]]' build/mac-engines/encoders.txt
+          grep -qE '[[:space:]]libvorbis[[:space:]]' build/mac-engines/encoders.txt
       - name: All macOS engine and update regressions
         run: |
           mkdir -p build/mac-engines
           set -o pipefail
           swift test 2>&1 | tee build/mac-engines/tests.log
+      - name: Build and verify the portable macOS app
+        env:
+          LOKUM_SIGNING_MODE: ad-hoc
+          LOKUM_EXTERNAL_TOOLS: 'true'
+          LOKUM_UPDATE_CONFIG: Configuration/Updates.public.plist
+        run: |
+          scripts/build-app.sh release
+          codesign --verify --deep --strict build/Lokum.app
+          build/Lokum.app/Contents/MacOS/Lokum --desktop-feature-smoke build/mac-engines/packaged-ui
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         if: always()
         with:

@@ -45,6 +45,7 @@
 "32-BIT INTEGER" = "32-BIT INTEGER";
 "32-bit float" = "32-bit float";
 "32-bit integer" = "32-bit integer";
+"A COMPLETED EXPORT COULD NOT BE LOCATED." = "A COMPLETED EXPORT COULD NOT BE LOCATED.";
 "A DISCARDED CLIP IS OUTSIDE THE RANGE." = "A DISCARDED CLIP IS OUTSIDE THE RANGE.";
 "A FEW SMALL PREFERENCES. A SMOOTHER EVERYDAY." = "A FEW SMALL PREFERENCES. A SMOOTHER EVERYDAY.";
 "A FEW TOOLS. MORE POSSIBILITIES." = "A FEW TOOLS. MORE POSSIBILITIES.";
@@ -68,8 +69,10 @@
 "A SELECTED ITEM IS MISSING." = "A SELECTED ITEM IS MISSING.";
 "A SPLIT POINT LIES OUTSIDE THE SELECTED RANGE." = "A SPLIT POINT LIES OUTSIDE THE SELECTED RANGE.";
 "A SPLIT POINT LIES OUTSIDE THE VIDEO." = "A SPLIT POINT LIES OUTSIDE THE VIDEO.";
+"A STAGED FILE COULD NOT BE VALIDATED." = "A STAGED FILE COULD NOT BE VALIDATED.";
 "A SUBTITLE CUE ENDS BEFORE IT STARTS." = "A SUBTITLE CUE ENDS BEFORE IT STARTS.";
 "A TABLE CELL SPAN IS INVALID OR EXCEEDS 1,024 COLUMNS." = "A TABLE CELL SPAN IS INVALID OR EXCEEDS 1,024 COLUMNS.";
+"A completed export could not be located." = "A completed export could not be located.";
 "A discarded clip is outside the range." = "A discarded clip is outside the range.";
 "A few small preferences. A smoother everyday." = "A few small preferences. A smoother everyday.";
 "A few tools. More possibilities." = "A few tools. More possibilities.";
@@ -92,6 +95,7 @@
 "A selected item is missing." = "A selected item is missing.";
 "A split point lies outside the selected range." = "A split point lies outside the selected range.";
 "A split point lies outside the video." = "A split point lies outside the video.";
+"A staged file could not be validated." = "A staged file could not be validated.";
 "A subtitle cue ends before it starts." = "A subtitle cue ends before it starts.";
 "A table cell span is invalid or exceeds 1,024 columns." = "A table cell span is invalid or exceeds 1,024 columns.";
 "ABOUT" = "ABOUT";
@@ -125,6 +129,7 @@
 "ALREADY AVAILABLE ON YOUR COMPUTER" = "ALREADY AVAILABLE ON YOUR COMPUTER";
 "AN EMBEDDED IMAGE IS MISSING OR TOO LARGE." = "AN EMBEDDED IMAGE IS MISSING OR TOO LARGE.";
 "AN EMPTY OUTPUT WAS PRODUCED." = "AN EMPTY OUTPUT WAS PRODUCED.";
+"AN EXPORT COULD NOT BE STAGED SAFELY. YOUR ORIGINALS WERE NOT CHANGED." = "AN EXPORT COULD NOT BE STAGED SAFELY. YOUR ORIGINALS WERE NOT CHANGED.";
 "AN HTTPS DOWNLOAD IS REQUIRED." = "AN HTTPS DOWNLOAD IS REQUIRED.";
 "AN OUTPUT CANNOT BE A SYMBOLIC LINK." = "AN OUTPUT CANNOT BE A SYMBOLIC LINK.";
 "AN OUTPUT IS OUTSIDE ITS STAGING DIRECTORY." = "AN OUTPUT IS OUTSIDE ITS STAGING DIRECTORY.";
@@ -204,6 +209,7 @@
 "An RTFD attachment is missing or too large: %lld" = "An RTFD attachment is missing or too large: %lld";
 "An embedded image is missing or too large." = "An embedded image is missing or too large.";
 "An empty output was produced." = "An empty output was produced.";
+"An export could not be staged safely. Your originals were not changed." = "An export could not be staged safely. Your originals were not changed.";
 "An output cannot be a symbolic link." = "An output cannot be a symbolic link.";
 "An output is outside its staging directory." = "An output is outside its staging directory.";
 "Annotate" = "Annotate";
@@ -271,6 +277,7 @@
 "BOTTOM" = "BOTTOM";
 "BRIGHTNESS" = "BRIGHTNESS";
 "BUILT FOR YOUR FILES. MADE FOR YOUR MAC." = "BUILT FOR YOUR FILES. MADE FOR YOUR MAC.";
+"BUNDLED BACKGROUND REMOVAL MODEL" = "BUNDLED BACKGROUND REMOVAL MODEL";
 "Back" = "Back";
 "Background" = "Background";
 "Background Image…" = "Background Image…";
@@ -294,6 +301,7 @@
 "Bottom" = "Bottom";
 "Brightness" = "Brightness";
 "Built for your files. Made for your Mac." = "Built for your files. Made for your Mac.";
+"Bundled background removal model" = "Bundled background removal model";
 "CALLOUT" = "CALLOUT";
 "CAMERA MANUFACTURER" = "CAMERA MANUFACTURER";
 "CAMERA MODEL" = "CAMERA MODEL";
@@ -330,6 +338,7 @@
 "CHOOSE A COLOR IN #RRGGBB FORMAT." = "CHOOSE A COLOR IN #RRGGBB FORMAT.";
 "CHOOSE A COMPLETE RTFD FOLDER CONTAINING TXT.RTF." = "CHOOSE A COMPLETE RTFD FOLDER CONTAINING TXT.RTF.";
 "CHOOSE A CROP RECTANGLE INSIDE THE IMAGE." = "CHOOSE A CROP RECTANGLE INSIDE THE IMAGE.";
+"CHOOSE A DESTINATION FOLDER." = "CHOOSE A DESTINATION FOLDER.";
 "CHOOSE A DESTINATION OUTSIDE THE FOLDER BEING MOVED." = "CHOOSE A DESTINATION OUTSIDE THE FOLDER BEING MOVED.";
 "CHOOSE A FILE TO PREVIEW." = "CHOOSE A FILE TO PREVIEW.";
 "CHOOSE A FINISHED VIDEO INSTEAD OF A LIVE OR UPCOMING STREAM." = "CHOOSE A FINISHED VIDEO INSTEAD OF A LIVE OR UPCOMING STREAM.";
@@ -342,6 +351,7 @@
 "CHOOSE A POSITIVE SIZE OR A REDUCTION BELOW 100%. ZERO USES AUTOMATIC COMPRESSION." = "CHOOSE A POSITIVE SIZE OR A REDUCTION BELOW 100%. ZERO USES AUTOMATIC COMPRESSION.";
 "CHOOSE A POSITIVE TARGET SIZE OR A REDUCTION BETWEEN 0 AND 100%." = "CHOOSE A POSITIVE TARGET SIZE OR A REDUCTION BETWEEN 0 AND 100%.";
 "CHOOSE A RECTANGLE INSIDE THE VIDEO." = "CHOOSE A RECTANGLE INSIDE THE VIDEO.";
+"CHOOSE A SUPPORTED BACKGROUND TYPE." = "CHOOSE A SUPPORTED BACKGROUND TYPE.";
 "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT." = "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT.";
 "CHOOSE A SUPPORTED OUTPUT FORMAT." = "CHOOSE A SUPPORTED OUTPUT FORMAT.";
 "CHOOSE A TARGET OF AT LEAST 2 KB." = "CHOOSE A TARGET OF AT LEAST 2 KB.";
@@ -366,6 +376,7 @@
 "CHOOSE DOWNLOADS FOLDER…" = "CHOOSE DOWNLOADS FOLDER…";
 "CHOOSE FEWER FILES TO OPEN." = "CHOOSE FEWER FILES TO OPEN.";
 "CHOOSE FILES" = "CHOOSE FILES";
+"CHOOSE FILES AND A LOCAL DESTINATION FOLDER." = "CHOOSE FILES AND A LOCAL DESTINATION FOLDER.";
 "CHOOSE FILES AND A SUPPORTED MEDIA FORMAT." = "CHOOSE FILES AND A SUPPORTED MEDIA FORMAT.";
 "CHOOSE FILES TO ZIP." = "CHOOSE FILES TO ZIP.";
 "CHOOSE FILES…" = "CHOOSE FILES…";
@@ -450,6 +461,8 @@
 "COPYRIGHT" = "COPYRIGHT";
 "CORNER RADIUS" = "CORNER RADIUS";
 "CORNERS" = "CORNERS";
+"COULD NOT CREATE THE BACKGROUND RESULT." = "COULD NOT CREATE THE BACKGROUND RESULT.";
+"COULD NOT READ IMAGE PIXELS." = "COULD NOT READ IMAGE PIXELS.";
 "COULDN’T CHECK FOR UPDATES" = "COULDN’T CHECK FOR UPDATES";
 "COULDN’T FINISH" = "COULDN’T FINISH";
 "COULDN’T OPEN THIS TOOL" = "COULDN’T OPEN THIS TOOL";
@@ -524,6 +537,7 @@
 "Choose a color in #RRGGBB format." = "Choose a color in #RRGGBB format.";
 "Choose a complete RTFD folder containing TXT.rtf." = "Choose a complete RTFD folder containing TXT.rtf.";
 "Choose a crop rectangle inside the image." = "Choose a crop rectangle inside the image.";
+"Choose a destination folder." = "Choose a destination folder.";
 "Choose a destination outside the folder being moved." = "Choose a destination outside the folder being moved.";
 "Choose a file to preview." = "Choose a file to preview.";
 "Choose a finished video instead of a live or upcoming stream." = "Choose a finished video instead of a live or upcoming stream.";
@@ -534,6 +548,7 @@
 "Choose a positive size or a reduction below 100%. Zero uses automatic compression." = "Choose a positive size or a reduction below 100%. Zero uses automatic compression.";
 "Choose a positive target size or a reduction between 0 and 100%." = "Choose a positive target size or a reduction between 0 and 100%.";
 "Choose a rectangle inside the video." = "Choose a rectangle inside the video.";
+"Choose a supported background type." = "Choose a supported background type.";
 "Choose a supported maximum video height." = "Choose a supported maximum video height.";
 "Choose a supported output format." = "Choose a supported output format.";
 "Choose a target of at least 2 KB." = "Choose a target of at least 2 KB.";
@@ -558,6 +573,7 @@
 "Choose downloads folder…" = "Choose downloads folder…";
 "Choose fewer files to open." = "Choose fewer files to open.";
 "Choose files" = "Choose files";
+"Choose files and a local destination folder." = "Choose files and a local destination folder.";
 "Choose files and a supported media format." = "Choose files and a supported media format.";
 "Choose files to zip." = "Choose files to zip.";
 "Choose files…" = "Choose files…";
@@ -649,6 +665,8 @@
 "Copyright" = "Copyright";
 "Corner radius" = "Corner radius";
 "Corners" = "Corners";
+"Could not create the background result." = "Could not create the background result.";
+"Could not read image pixels." = "Could not read image pixels.";
 "Couldn’t check for updates" = "Couldn’t check for updates";
 "Couldn’t finish" = "Couldn’t finish";
 "Couldn’t open this tool" = "Couldn’t open this tool";
@@ -2090,9 +2108,13 @@
 "THE ARCHIVE CONTAINS AN UNSAFE PATH." = "THE ARCHIVE CONTAINS AN UNSAFE PATH.";
 "THE ARCHIVE ENTRY LEAVES ITS DESTINATION." = "THE ARCHIVE ENTRY LEAVES ITS DESTINATION.";
 "THE ARCHIVE IS EMPTY." = "THE ARCHIVE IS EMPTY.";
+"THE BACKGROUND IMAGE COULD NOT BE FITTED." = "THE BACKGROUND IMAGE COULD NOT BE FITTED.";
 "THE BACKGROUND IMAGE FILLS THE ORIGINAL CANVAS AND IS CENTERED." = "THE BACKGROUND IMAGE FILLS THE ORIGINAL CANVAS AND IS CENTERED.";
+"THE BACKGROUND REMOVAL MODEL HAS NO IMAGE INPUT OR OUTPUT." = "THE BACKGROUND REMOVAL MODEL HAS NO IMAGE INPUT OR OUTPUT.";
+"THE BUNDLED BACKGROUND REMOVAL MODEL FAILED ITS INTEGRITY CHECK." = "THE BUNDLED BACKGROUND REMOVAL MODEL FAILED ITS INTEGRITY CHECK.";
 "THE CLIPPING EXCEEDS 200 MB." = "THE CLIPPING EXCEEDS 200 MB.";
 "THE CLIPPING HAS NO READABLE TEXT. INCLUDE ITS ORIGINAL RESOURCE FORK/APPLEDOUBLE SIDECAR, OR PASTE ITS TEXT INTO LOKUM." = "THE CLIPPING HAS NO READABLE TEXT. INCLUDE ITS ORIGINAL RESOURCE FORK/APPLEDOUBLE SIDECAR, OR PASTE ITS TEXT INTO LOKUM.";
+"THE CROP REFERENCE DIMENSIONS MUST BE POSITIVE." = "THE CROP REFERENCE DIMENSIONS MUST BE POSITIVE.";
 "THE DOCUMENT HAS NO EDITABLE BODY." = "THE DOCUMENT HAS NO EDITABLE BODY.";
 "THE DOCUMENT PACKAGE IS TOO LARGE OR CONTAINS DUPLICATE ENTRIES." = "THE DOCUMENT PACKAGE IS TOO LARGE OR CONTAINS DUPLICATE ENTRIES.";
 "THE DOWNLOAD CONNECTION WAS INTERRUPTED." = "THE DOWNLOAD CONNECTION WAS INTERRUPTED.";
@@ -2105,6 +2127,9 @@
 "THE IMAGE DOWNLOAD ENDED EARLY." = "THE IMAGE DOWNLOAD ENDED EARLY.";
 "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE." = "THE IMAGE ORDER MUST INCLUDE EVERY IMAGE ONCE.";
 "THE MEDIA SERVER REDIRECTED TO AN INSECURE URL." = "THE MEDIA SERVER REDIRECTED TO AN INSECURE URL.";
+"THE MODEL RETURNED AN INVALID FOREGROUND MASK." = "THE MODEL RETURNED AN INVALID FOREGROUND MASK.";
+"THE MODEL RETURNED NO FOREGROUND MASK." = "THE MODEL RETURNED NO FOREGROUND MASK.";
+"THE MODEL RETURNED NON-FINITE MASK PIXELS." = "THE MODEL RETURNED NON-FINITE MASK PIXELS.";
 "THE PROCESSING TOOL COULD NOT START." = "THE PROCESSING TOOL COULD NOT START.";
 "THE REQUESTED IMAGE SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET." = "THE REQUESTED IMAGE SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET.";
 "THE REQUESTED PDF SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET." = "THE REQUESTED PDF SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET.";
@@ -2120,6 +2145,7 @@
 "THIS FILE HAS NO VIDEO STREAM." = "THIS FILE HAS NO VIDEO STREAM.";
 "THIS FORMAT CAN BE IMPORTED. CHOOSE AN OUTPUT FORMAT IN THE SIDEBAR TO CONFIGURE ITS DEFAULTS." = "THIS FORMAT CAN BE IMPORTED. CHOOSE AN OUTPUT FORMAT IN THE SIDEBAR TO CONFIGURE ITS DEFAULTS.";
 "THIS FORMAT USES ITS ORIGINAL DOCUMENT STRUCTURE. NO EXPORT DEFAULTS ARE NEEDED." = "THIS FORMAT USES ITS ORIGINAL DOCUMENT STRUCTURE. NO EXPORT DEFAULTS ARE NEEDED.";
+"THIS IMAGE EXCEEDS 100 MP OR 30,000 PIXELS." = "THIS IMAGE EXCEEDS 100 MP OR 30,000 PIXELS.";
 "THIS IMAGE EXCEEDS 100 MP." = "THIS IMAGE EXCEEDS 100 MP.";
 "THIS IMAGE EXCEEDS 200 MB." = "THIS IMAGE EXCEEDS 200 MB.";
 "THIS IMAGE IS TOO LARGE (100 MP LIMIT)." = "THIS IMAGE IS TOO LARGE (100 MP LIMIT).";
@@ -2182,9 +2208,13 @@
 "The archive contains an unsafe path." = "The archive contains an unsafe path.";
 "The archive entry leaves its destination." = "The archive entry leaves its destination.";
 "The archive is empty." = "The archive is empty.";
+"The background image could not be fitted." = "The background image could not be fitted.";
 "The background image fills the original canvas and is centered." = "The background image fills the original canvas and is centered.";
+"The background removal model has no image input or output." = "The background removal model has no image input or output.";
+"The bundled background removal model failed its integrity check." = "The bundled background removal model failed its integrity check.";
 "The clipping exceeds 200 MB." = "The clipping exceeds 200 MB.";
 "The clipping has no readable text. Include its original resource fork/AppleDouble sidecar, or paste its text into Lokum." = "The clipping has no readable text. Include its original resource fork/AppleDouble sidecar, or paste its text into Lokum.";
+"The crop reference dimensions must be positive." = "The crop reference dimensions must be positive.";
 "The document has no editable body." = "The document has no editable body.";
 "The document is missing %@" = "The document is missing %@";
 "The document is missing %lld" = "The document is missing %lld";
@@ -2199,6 +2229,9 @@
 "The image download ended early." = "The image download ended early.";
 "The image order must include every image once." = "The image order must include every image once.";
 "The media server redirected to an insecure URL." = "The media server redirected to an insecure URL.";
+"The model returned an invalid foreground mask." = "The model returned an invalid foreground mask.";
+"The model returned no foreground mask." = "The model returned no foreground mask.";
+"The model returned non-finite mask pixels." = "The model returned non-finite mask pixels.";
 "The processing tool could not start." = "The processing tool could not start.";
 "The requested PDF size could not be reached. Choose a larger target." = "The requested PDF size could not be reached. Choose a larger target.";
 "The requested image size could not be reached. Choose a larger target." = "The requested image size could not be reached. Choose a larger target.";
@@ -2220,6 +2253,7 @@
 "This file has no video stream." = "This file has no video stream.";
 "This format can be imported. Choose an output format in the sidebar to configure its defaults." = "This format can be imported. Choose an output format in the sidebar to configure its defaults.";
 "This format uses its original document structure. No export defaults are needed." = "This format uses its original document structure. No export defaults are needed.";
+"This image exceeds 100 MP or 30,000 pixels." = "This image exceeds 100 MP or 30,000 pixels.";
 "This image exceeds 100 MP." = "This image exceeds 100 MP.";
 "This image exceeds 200 MB." = "This image exceeds 200 MB.";
 "This image is too large (100 MP limit)." = "This image is too large (100 MP limit).";
@@ -2289,6 +2323,7 @@
 "UPSTREAM VERSIONS, LICENSES AND SOURCE LINKS" = "UPSTREAM VERSIONS, LICENSES AND SOURCE LINKS";
 "USE A REGULAR WRITABLE FOLDER FOR PORTABLE UPDATES." = "USE A REGULAR WRITABLE FOLDER FOR PORTABLE UPDATES.";
 "USE A STATIC SVG WITHOUT EMBEDDED SCRIPTS OR HTML." = "USE A STATIC SVG WITHOUT EMBEDDED SCRIPTS OR HTML.";
+"USE AT MOST 256 SELECTION AREAS." = "USE AT MOST 256 SELECTION AREAS.";
 "USE IN LOKUM" = "USE IN LOKUM";
 "USE ONCE IF MACOS NEEDS PERMISSION FOR YOUR SAVED UPDATE CONNECTION." = "USE ONCE IF MACOS NEEDS PERMISSION FOR YOUR SAVED UPDATE CONNECTION.";
 "USE OPEN TO PREVIEW THIS DOCUMENT IN ITS DEFAULT APP." = "USE OPEN TO PREVIEW THIS DOCUMENT IN ITS DEFAULT APP.";
@@ -2327,6 +2362,7 @@
 "Use Open to preview this document in its default app." = "Use Open to preview this document in its default app.";
 "Use a regular writable folder for portable updates." = "Use a regular writable folder for portable updates.";
 "Use a static SVG without embedded scripts or HTML." = "Use a static SVG without embedded scripts or HTML.";
+"Use at most 256 selection areas." = "Use at most 256 selection areas.";
 "Use in Lokum" = "Use in Lokum";
 "Use once if macOS needs permission for your saved update connection." = "Use once if macOS needs permission for your saved update connection.";
 "VALUE" = "VALUE";
