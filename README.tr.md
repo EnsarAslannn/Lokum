@@ -34,6 +34,7 @@ Dışa aktarımlar kaynak dosyanın üzerine yazmaz; mevcut çıktı adları da 
 
 ## Sık kullanılan akışlar
 
+- **Otomatik altyazı:** video veya sesi seçip çarktan **Altyazı Oluştur** seçeneğini aç. Konuşma dilini seç, altyazıyı oluştur ve metin/zamanları düzenle. **Sonucu göster** ile önizle; SRT/TXT/VTT veya altyazıları kalıcı olarak içeren yeni bir MP4 kaydet. Ücretsiz çok dilli model ilk kullanımda indirilir (148 MB); sonrasında işlem yerelde yapılır. Paylaşmadan önce metni kontrol et.
 - **Dönüştürme ve sonuç önizleme:** çarktaki **Dönüştür** girişinden veya ana ekrandaki dönüştürme menüsünden biçimi seç. **Sonucu göster**, seçilen biçimde gerçek bir geçici dosya üretir. Video/sesi oynatabilir, görselleri ve PDF sayfalarını görebilir, belge/metin içeriklerini veya arşiv dosya listesini inceleyebilirsin. Çoklu dosyada önizlemedeki oklarla gez. Önizlemeyi kapatıp ayarları değiştirirsen yeniden **Sonucu göster** düğmesine bas. Sonuç biçimi, toplam KB ve dosya sayısı editörde görünür kalır. **Yeni kopya kaydet** ayrı adımdır; önizleme dosyaları Kütüphane'ye veya çıktı klasörüne eklenmez. Belge önizlemeleri için Office araçlarının, medya için medya araçlarının kurulu olması gerekir.
 - **Video sıkıştırma sonucu (Windows):** hedef boyut ve küçültme yüzdesini boş/0 bıraktığında da **Sonucu göster** sonrasında **Sonuç: … KB · Orijinal: … KB** bilgisi görünür. Gösterilen boyut gerçek sıkıştırılmış dosyanın boyutudur.
 
@@ -64,4 +65,3 @@ Lokum için ayrı bir yayın deposu ve imza anahtarı tanımlanana kadar güncel
 ## Lisans
 
 [MIT lisansı](LICENSE) ile üçüncü taraf lisans ve telif bildirimleri korunur. Proje sorumlusu: [EnsarAslannn](https://github.com/EnsarAslannn).
-- **Otomatik altyazı:** video veya sesi Whisper ile bilgisayarında yazıya çevir. Metni ve zamanları düzenle, önizle; SRT/TXT/VTT veya altyazılı yeni bir MP4 kaydet. API anahtarı veya ücretli servis gerekmez; çok dilli temel model (148 MB) bir kez indirilir. Konuşma tanıma hata yapabilir.

@@ -102,7 +102,7 @@ struct SubtitleEditorView:View {
                 HStack {
                     Button("Cancel") {if model.busy {model.stop()}else{model.close();NSApp.keyWindow?.close()}}
                     Spacer()
-                    Picker("Output format",selection:$model.format) {Text("SRT").tag("srt");Text("TXT").tag("txt");Text("VTT").tag("vtt");if FileCategory.detect(model.input) == .video {Text("MP4").tag("mp4")}}.frame(width:180).disabled(model.busy)
+                    Picker("Output format",selection:$model.format) {Text("SRT").tag("srt");Text("TXT").tag("txt");Text("VTT").tag("vtt");if FileCategory.detect(model.input) == .video {Text("MP4").tag("mp4")}}.frame(width:180).disabled(model.busy).help(L10n.text("MP4 embeds subtitles permanently in a new video copy."))
                     Button("Show Result",action:model.showResult).disabled(model.busy || model.document == nil)
                     Button("Save new copy  ↗") {
                         let panel=NSOpenPanel();panel.canChooseFiles=false;panel.canChooseDirectories=true;panel.canCreateDirectories=true;panel.directoryURL=model.input.deletingLastPathComponent();if panel.runModal() == .OK,let url=panel.url {model.save(url,state:state)}
