@@ -58,8 +58,14 @@ internal static class SubtitleEditorChecks
             try
             {
                 audioEditor.Show();audioEditor.UpdateLayout();var audio=Find<MediaElement>(audioEditor).Single();
-                await Until(()=>audio.HasAudio,"Compressed audio playback");
-                Check(audio.HasAudio,"Compressed speech audio opens in the subtitle preview, using a local playback copy when needed.");
+                await Until(()=>audio.Source is {} url&&url.LocalPath!=opus&&File.Exists(url.LocalPath),"Compressed audio preview preparation");
+                var decoded=await new MediaEngine(tools.Executable("ffmpeg"),tools.Executable("ffprobe")).InspectAsync(audio.Source.LocalPath);
+                Check(decoded.HasAudio&&decoded.Streams.Any(s=>s.Codec=="pcm_s16le")&&Math.Abs(decoded.Duration-audioInfo.Duration)<.1,"Compressed speech is decoded into a complete PCM playback copy without truncation.");
+                if(Environment.GetEnvironmentVariable("LOKUM_TEST_AUDIO_DEVICE")=="1")
+                {
+                    await Until(()=>audio.HasAudio,"Native playback with a physical audio device");
+                    Check(audio.HasAudio,"The prepared speech preview opens on the machine's audio device.");
+                }
                 Check(!Find<ComboBox>(audioEditor).Any(c=>c.Items.Cast<object>().Any(i=>i as string=="MP4")),"Audio subtitles offer text formats without an unsupported MP4 export.");
             }
             finally{audioEditor.Close();}
