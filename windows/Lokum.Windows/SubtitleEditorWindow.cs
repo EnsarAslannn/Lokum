@@ -64,7 +64,7 @@ internal sealed class SubtitleEditorWindow:Window
         try{transcript=SubtitleTranscript.FromSrt(text.Text,info.Duration);Status("Subtitles are ready. Review the text and timing.");}catch(Exception error)when(error is ArgumentException or InvalidDataException or FormatException or OverflowException){transcript=null;if(text.Text.Length>0)Status(error.Message);}
         UpdateButtons();
     }
-    private void Import(){var dialog=new OpenFileDialog{Filter="SubRip (*.srt)|*.srt"};if(dialog.ShowDialog(this)==true){try{text.Text=File.ReadAllText(dialog.FileName);}catch(Exception error){Status(error.Message);}}}
+    private void Import(){var dialog=new OpenFileDialog{Filter="SubRip (*.srt)|*.srt"};if(dialog.ShowDialog(this)==true){try{if(new FileInfo(dialog.FileName).Length>10*1024*1024)throw new InvalidDataException("The subtitle file is too large.");text.Text=File.ReadAllText(dialog.FileName);}catch(Exception error){Status(error.Message);}}}
     private void Original(){resultPlaying=false;player.Pause();playing=false;player.Source=new Uri(input);player.Position=TimeSpan.Zero;}
     private async Task Generate()
     {

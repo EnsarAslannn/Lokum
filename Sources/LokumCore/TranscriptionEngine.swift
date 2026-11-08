@@ -8,13 +8,13 @@ public enum TranscriptionEngine {
         let info=try MediaEngine.inspect(input,token:token);guard info.audio != nil else {throw LokumError.invalidInput("This media has no audio track to transcribe.")}
         let fm=FileManager.default,directory=fm.temporaryDirectory.appendingPathComponent("Lokum-Subtitles-\(UUID().uuidString)",isDirectory:true)
         try fm.createDirectory(at:directory,withIntermediateDirectories:false);defer{try? fm.removeItem(at:directory)}
-        let pcm=directory.appendingPathComponent("speech.f32");progress(.indeterminate,"Preparing audio…")
+        let pcm=directory.appendingPathComponent("speech.f32");progress(OperationProgress.indeterminate,"Preparing audio…")
         try ProcessRunner.run(Dependencies.executable("ffmpeg"),["-nostdin","-v","error","-i",input.path,"-map","0:a:0","-vn","-ar","16000","-ac","1","-f","f32le",pcm.path],token:token)
         guard (try pcm.resourceValues(forKeys:[.fileSizeKey]).fileSize ?? 0)<=256*1024*1024 else {throw LokumError.invalidInput("This recording is too long. Cut it into shorter clips before generating subtitles.")}
         let data=try Data(contentsOf:pcm,options:.mappedIfSafe)
         let samples:[Float]=data.withUnsafeBytes {bytes in stride(from:0,to:bytes.count-3,by:4).map{Float(bitPattern:UInt32(littleEndian:bytes.loadUnaligned(fromByteOffset:$0,as:UInt32.self)))}}
         guard !samples.isEmpty else {throw LokumError.invalidInput("No speech was detected. Try choosing the spoken language.")}
-        try token.check();progress(.indeterminate,"Transcribing speech on your computer…")
+        try token.check();progress(OperationProgress.indeterminate,"Transcribing speech on your computer…")
         var contextOptions=whisper_context_default_params();contextOptions.use_gpu=false
         guard let context=model.path.withCString({whisper_init_from_file_with_params($0,contextOptions)}) else {throw LokumError.failed("The speech model could not be opened. Download it again.")}
         defer{whisper_free(context)}

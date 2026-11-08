@@ -6,14 +6,14 @@ import LokumCore
 @MainActor final class SubtitleEditorModel:ObservableObject {
     let input:URL
     let player:AVPlayer
-    @Published var text="" {didSet{document=try? SubtitleTranscript(srt:text,duration:duration)}}
+    @Published var text="" {didSet{validate()}}
     @Published var language="auto"
     @Published var format="srt"
     @Published var busy=false
     @Published var label="Free and local. First use downloads a speech model (148 MB). Your media stays on your computer."
     @Published var fraction:Double?
     @Published var document:SubtitleTranscript?
-    @Published var duration=0.0
+    @Published var duration=0.0 {didSet{validate()}}
     @Published var error:String?
     @Published var resultPlaying=false
     private var token=CancellationToken()
@@ -21,6 +21,10 @@ import LokumCore
     private var previewDirectory:URL?
     private var closed=false
     init(input:URL) {self.input=input;player=AVPlayer(url:input)}
+    private func validate() {
+        guard !text.isEmpty else {document=nil;error=nil;return}
+        do {document=try SubtitleTranscript(srt:text,duration:duration);error=nil}catch{document=nil;self.error=error.localizedDescription}
+    }
     func inspect() {
         let input=input
         Task {do{duration=try await Task.detached {try MediaEngine.inspect(input).duration}.value}catch{self.error=error.localizedDescription}}
