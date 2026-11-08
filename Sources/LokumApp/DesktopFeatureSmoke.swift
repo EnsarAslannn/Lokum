@@ -144,8 +144,8 @@ import LokumCore
         subtitles.text="1\n00:00:00,000 --> 00:00:02,000\nDeneme altyazısı.\n"
         subtitles.format="mp4";subtitles.showResult()
         try await wait{!subtitles.busy}
-        check(subtitles.error==nil && subtitles.resultPlaying,"The native subtitle editor prepares an actual burned-subtitle video")
-        if let asset=subtitles.player.currentItem?.asset as? AVURLAsset {
+        check(subtitles.error==nil && subtitles.resultPlaying,"The native subtitle editor prepares an actual burned-subtitle video; "+(subtitles.error ?? "ready"))
+        if let asset=subtitles.player.currentItem?.asset as? AVURLAsset,asset.url != video {
             let file=asset.url;let info=try MediaEngine.inspect(file)
             check(info.video != nil && info.audio != nil,"The native subtitle result retains both video and audio")
             subtitles.close()

@@ -111,6 +111,9 @@ jobs:
   mac-source:
     runs-on: macos-15
     timeout-minutes: 20
+    env:
+      LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
+      LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
@@ -136,7 +139,9 @@ jobs:
         run: swift test --filter 'LokumUpdatesTests|WebMediaDragPayloadTests|InstagramPhotosTests|YouTubeThumbnailTests|WindowPlacementTests|AppLocalizationTests|ToolSetupTests'
       - name: Install FFmpeg for redaction regressions
         if: ${{ !cancelled() && steps.mac-build.outcome == 'success' }}
-        run: brew install ffmpeg
+        run: |
+          scripts/setup-tools.sh --media-only
+          Tools/ffmpeg -hide_banner -filters 2>&1 | grep -qE '[[:space:]]subtitles[[:space:]]'
       - name: Redaction coverage and image opacity regressions
         run: swift test --filter 'SolidRedactionCoverageTests|ImageRedactionBoundsRegressionTests|ImageColorOpacityRegressionTests|MediaEngineTests/testVideoRedactionStylesAndTemporalBounds'
       - name: Desktop feature parity regressions
