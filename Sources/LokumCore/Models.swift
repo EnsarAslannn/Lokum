@@ -38,7 +38,7 @@ public enum ToolKind: String, Codable, CaseIterable, Sendable {
     case normalizeAudio, muteVideo, trimVideo, splitPDF, organizePDF, extractArchive
     case createPDF, mergePDF, cropVideo, changeVideoSpeed, joinVideos, videoSnapshots
     case splitVideo, audioToVideo, trimAudio, audioChannels, createCollage
-    case redactImage, redactVideo, redactAudio, readQRCode, removeBackground
+    case redactImage, redactVideo, redactAudio, readQRCode, removeBackground, generateSubtitles
     public var title: String {
         switch self {
         case .compress: return "Compress"
@@ -69,6 +69,7 @@ public enum ToolKind: String, Codable, CaseIterable, Sendable {
         case .redactAudio: return "Redact Audio"
         case .readQRCode: return "Read QR Code"
         case .removeBackground: return "Edit Background"
+        case .generateSubtitles: return "Generate Subtitles"
         }
     }
 }

@@ -64,3 +64,4 @@ Lokum için ayrı bir yayın deposu ve imza anahtarı tanımlanana kadar güncel
 ## Lisans
 
 [MIT lisansı](LICENSE) ile üçüncü taraf lisans ve telif bildirimleri korunur. Proje sorumlusu: [EnsarAslannn](https://github.com/EnsarAslannn).
+- **Otomatik altyazı:** video veya sesi Whisper ile bilgisayarında yazıya çevir. Metni ve zamanları düzenle, önizle; SRT/TXT/VTT veya altyazılı yeni bir MP4 kaydet. API anahtarı veya ücretli servis gerekmez; çok dilli temel model (148 MB) bir kez indirilir. Konuşma tanıma hata yapabilir.

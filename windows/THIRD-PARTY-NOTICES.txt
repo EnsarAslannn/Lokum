@@ -34,3 +34,9 @@ Additional Windows interoperability libraries:
 - PdfPig 0.1.16: Apache-2.0, Eliot Jones and contributors, https://github.com/UglyToad/PdfPig.
 - Cupertino Files Pages interoperability: MIT with its BSD/LZFSE and PicoDocs notices, shared with macOS; see licenses/cupertino-files.
 Optional runtimes are downloaded directly from upstream after choosing setup, with pinned SHA-256 checks. LibreOffice 26.8.1 (MPL-2.0 and upstream notices) is extracted from https://download.documentfoundation.org/libreoffice/stable/26.8.1/win/x86_64/LibreOffice_26.8.1_Win_x86-64.msi. ExifTool 13.59 / Strawberry Perl retain their Artistic/GPL and included upstream notices from https://sourceforge.net/projects/exiftool/files/exiftool-13.59_64.zip/. Their full license files remain in the user tools directories. HEIC exports use the already disclosed FFmpeg/libx265 runtime; no external server receives image content.
+
+whisper.cpp v1.9.2, Copyright (c) 2023-2026 The ggml authors. MIT.
+https://github.com/ggml-org/whisper.cpp/tree/v1.9.2
+Multilingual Whisper base model, OpenAI, MIT. Runs locally; downloaded on first use.
+https://huggingface.co/ggerganov/whisper.cpp/tree/5359861c739e955e79d9a303bcbc70fb988958b1
+Full licenses: licenses/whisper.cpp-LICENSE.txt and licenses/Whisper-model-LICENSE.txt.

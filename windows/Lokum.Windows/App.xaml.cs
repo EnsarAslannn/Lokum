@@ -15,6 +15,11 @@ public partial class App:Application
         }
         DispatcherUnhandledException+=(_,error)=>{var folder=Environment.GetEnvironmentVariable("LOKUM_SMOKE_DIRECTORY");if(folder is not null){Directory.CreateDirectory(folder);File.WriteAllText(Path.Combine(folder,"dispatcher-error.txt"),error.Exception.ToString());error.Handled=true;Shutdown(1);}};
         base.OnStartup(e);
+        if(e.Args.Length==5&&e.Args[0]=="--subtitle-editor-checks")
+        {
+            IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;
+            Dispatcher.BeginInvoke(async()=>{try{await SubtitleEditorChecks.Run(e.Args[1],e.Args[2],e.Args[3],e.Args[4]);Shutdown(0);}catch(Exception error){Directory.CreateDirectory(e.Args[1]);File.WriteAllText(Path.Combine(e.Args[1],"error.txt"),error.ToString());Shutdown(1);}});return;
+        }
         if(e.Args.Length==2&&e.Args[0]=="--browser-download-checks")
         {
             IsSmokeTest=true;ShutdownMode=ShutdownMode.OnExplicitShutdown;

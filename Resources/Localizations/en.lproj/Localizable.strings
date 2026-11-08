@@ -143,6 +143,7 @@
 "APPEARANCE" = "APPEARANCE";
 "APPEARANCE COULD NOT BE SAVED" = "APPEARANCE COULD NOT BE SAVED";
 "APPLY CLIP COUNT" = "APPLY CLIP COUNT";
+"ARABIC" = "ARABIC";
 "ARCHIVE CONTAINS A LINK." = "ARCHIVE CONTAINS A LINK.";
 "ARCHIVE CONTAINS DUPLICATE NAMES." = "ARCHIVE CONTAINS DUPLICATE NAMES.";
 "ARCHIVE CONTAINS DUPLICATE PATHS OR LINKS." = "ARCHIVE CONTAINS DUPLICATE PATHS OR LINKS.";
@@ -222,6 +223,7 @@
 "Appearance" = "Appearance";
 "Appearance could not be saved" = "Appearance could not be saved";
 "Apply clip count" = "Apply clip count";
+"Arabic" = "Arabic";
 "Archive contains a link." = "Archive contains a link.";
 "Archive contains duplicate names." = "Archive contains duplicate names.";
 "Archive contains duplicate paths or links." = "Archive contains duplicate paths or links.";
@@ -331,6 +333,7 @@
 "CHECK YOUR SETTINGS" = "CHECK YOUR SETTINGS";
 "CHECKING FOR UPDATES…" = "CHECKING FOR UPDATES…";
 "CHECKING THE CONNECTION…" = "CHECKING THE CONNECTION…";
+"CHINESE" = "CHINESE";
 "CHOOSE 2–100 IMAGES FOR A COLLAGE." = "CHOOSE 2–100 IMAGES FOR A COLLAGE.";
 "CHOOSE A BACKGROUND IMAGE." = "CHOOSE A BACKGROUND IMAGE.";
 "CHOOSE A CANVAS WITHIN 100 MP AND 30,000 PIXELS." = "CHOOSE A CANVAS WITHIN 100 MP AND 30,000 PIXELS.";
@@ -354,10 +357,12 @@
 "CHOOSE A SUPPORTED BACKGROUND TYPE." = "CHOOSE A SUPPORTED BACKGROUND TYPE.";
 "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT." = "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT.";
 "CHOOSE A SUPPORTED OUTPUT FORMAT." = "CHOOSE A SUPPORTED OUTPUT FORMAT.";
+"CHOOSE A SUPPORTED SPOKEN LANGUAGE." = "CHOOSE A SUPPORTED SPOKEN LANGUAGE.";
 "CHOOSE A TARGET OF AT LEAST 2 KB." = "CHOOSE A TARGET OF AT LEAST 2 KB.";
 "CHOOSE A VALID RANGE FIRST." = "CHOOSE A VALID RANGE FIRST.";
 "CHOOSE A VALID RANGE." = "CHOOSE A VALID RANGE.";
 "CHOOSE A VALID TIME RANGE." = "CHOOSE A VALID TIME RANGE.";
+"CHOOSE A VIDEO TO EMBED SUBTITLES." = "CHOOSE A VIDEO TO EMBED SUBTITLES.";
 "CHOOSE A WHOLE CLIP COUNT WITH AT LEAST 0.05 SECONDS PER CLIP." = "CHOOSE A WHOLE CLIP COUNT WITH AT LEAST 0.05 SECONDS PER CLIP.";
 "CHOOSE AN EXISTING MEDIA FILE." = "CHOOSE AN EXISTING MEDIA FILE.";
 "CHOOSE AN IMAGE." = "CHOOSE AN IMAGE.";
@@ -383,6 +388,7 @@
 "CHOOSE FIND MEDIA TO INSPECT THIS LINK." = "CHOOSE FIND MEDIA TO INSPECT THIS LINK.";
 "CHOOSE FINITE PHOTO ADJUSTMENTS WITHIN THEIR RANGES." = "CHOOSE FINITE PHOTO ADJUSTMENTS WITHIN THEIR RANGES.";
 "CHOOSE MEDIA AND A SUPPORTED TOOL." = "CHOOSE MEDIA AND A SUPPORTED TOOL.";
+"CHOOSE MEDIA WITH A VALID DURATION." = "CHOOSE MEDIA WITH A VALID DURATION.";
 "CHOOSE ONE INSTAGRAM POST WITH UP TO 50 ITEMS." = "CHOOSE ONE INSTAGRAM POST WITH UP TO 50 ITEMS.";
 "CHOOSE ONE OF THE EDITABLE METADATA FIELDS." = "CHOOSE ONE OF THE EDITABLE METADATA FIELDS.";
 "CHOOSE ONE OR MORE IMAGES TO REMOVE THEIR BACKGROUNDS." = "CHOOSE ONE OR MORE IMAGES TO REMOVE THEIR BACKGROUNDS.";
@@ -393,11 +399,13 @@
 "CHOOSE SET UP MEDIA TOOLS ONCE TO ENABLE WEB DOWNLOADS." = "CHOOSE SET UP MEDIA TOOLS ONCE TO ENABLE WEB DOWNLOADS.";
 "CHOOSE SET UP MEDIA TOOLS ONCE TO INSPECT AND EDIT MEDIA TAGS." = "CHOOSE SET UP MEDIA TOOLS ONCE TO INSPECT AND EDIT MEDIA TAGS.";
 "CHOOSE SET UP OFFICE TOOLS ONCE TO ENABLE DOCUMENT, SLIDE AND SPREADSHEET CONVERSIONS." = "CHOOSE SET UP OFFICE TOOLS ONCE TO ENABLE DOCUMENT, SLIDE AND SPREADSHEET CONVERSIONS.";
+"CHOOSE SRT, TXT, VTT OR MP4." = "CHOOSE SRT, TXT, VTT OR MP4.";
 "CHOOSE SRT, VTT OR TXT." = "CHOOSE SRT, VTT OR TXT.";
 "CHOOSE STILL IMAGE…" = "CHOOSE STILL IMAGE…";
 "CHOOSE SUPPORTED EXPORT DEFAULTS." = "CHOOSE SUPPORTED EXPORT DEFAULTS.";
 "CHOOSE SUPPORTED GIF AND AUDIO SAMPLE SETTINGS." = "CHOOSE SUPPORTED GIF AND AUDIO SAMPLE SETTINGS.";
 "CHOOSE SUPPORTED LOUDNESS TARGETS." = "CHOOSE SUPPORTED LOUDNESS TARGETS.";
+"CHOOSE THE SPOKEN LANGUAGE, THEN GENERATE SUBTITLES." = "CHOOSE THE SPOKEN LANGUAGE, THEN GENERATE SUBTITLES.";
 "CHOOSE UP TO 10,000 OUTPUT PAGES." = "CHOOSE UP TO 10,000 OUTPUT PAGES.";
 "CHOOSE UP TO 4 GB OF FILES." = "CHOOSE UP TO 4 GB OF FILES.";
 "CHOOSE VALID BACKGROUND AND IMAGE DIMENSIONS." = "CHOOSE VALID BACKGROUND AND IMAGE DIMENSIONS.";
@@ -517,10 +525,12 @@
 "Check your settings" = "Check your settings";
 "Checking for updates…" = "Checking for updates…";
 "Checking the connection…" = "Checking the connection…";
+"Chinese" = "Chinese";
 "Choose 2–100 images for a collage." = "Choose 2–100 images for a collage.";
 "Choose Background Image…" = "Choose Background Image…";
 "Choose Files…" = "Choose Files…";
 "Choose Find media to inspect this link." = "Choose Find media to inspect this link.";
+"Choose SRT, TXT, VTT or MP4." = "Choose SRT, TXT, VTT or MP4.";
 "Choose SRT, VTT or TXT." = "Choose SRT, VTT or TXT.";
 "Choose Set up media tools first." = "Choose Set up media tools first.";
 "Choose Set up media tools once to enable media editing." = "Choose Set up media tools once to enable media editing.";
@@ -551,10 +561,12 @@
 "Choose a supported background type." = "Choose a supported background type.";
 "Choose a supported maximum video height." = "Choose a supported maximum video height.";
 "Choose a supported output format." = "Choose a supported output format.";
+"Choose a supported spoken language." = "Choose a supported spoken language.";
 "Choose a target of at least 2 KB." = "Choose a target of at least 2 KB.";
 "Choose a valid range first." = "Choose a valid range first.";
 "Choose a valid range." = "Choose a valid range.";
 "Choose a valid time range." = "Choose a valid time range.";
+"Choose a video to embed subtitles." = "Choose a video to embed subtitles.";
 "Choose a whole clip count with at least 0.05 seconds per clip." = "Choose a whole clip count with at least 0.05 seconds per clip.";
 "Choose an Instagram photo post link." = "Choose an Instagram photo post link.";
 "Choose an existing media file." = "Choose an existing media file.";
@@ -579,6 +591,7 @@
 "Choose files…" = "Choose files…";
 "Choose finite photo adjustments within their ranges." = "Choose finite photo adjustments within their ranges.";
 "Choose media and a supported tool." = "Choose media and a supported tool.";
+"Choose media with a valid duration." = "Choose media with a valid duration.";
 "Choose one Instagram post with up to 50 items." = "Choose one Instagram post with up to 50 items.";
 "Choose one of the editable metadata fields." = "Choose one of the editable metadata fields.";
 "Choose one or more images to remove their backgrounds." = "Choose one or more images to remove their backgrounds.";
@@ -587,6 +600,7 @@
 "Choose supported GIF and audio sample settings." = "Choose supported GIF and audio sample settings.";
 "Choose supported export defaults." = "Choose supported export defaults.";
 "Choose supported loudness targets." = "Choose supported loudness targets.";
+"Choose the spoken language, then generate subtitles." = "Choose the spoken language, then generate subtitles.";
 "Choose up to 10,000 output pages." = "Choose up to 10,000 output pages.";
 "Choose up to 4 GB of files." = "Choose up to 4 GB of files.";
 "Choose valid PDF pages." = "Choose valid PDF pages.";
@@ -704,6 +718,7 @@
 "DESCRIPTION" = "DESCRIPTION";
 "DETACH" = "DETACH";
 "DETAIL" = "DETAIL";
+"DETECT AUTOMATICALLY" = "DETECT AUTOMATICALLY";
 "DETECT FACES" = "DETECT FACES";
 "DETECT TEXT" = "DETECT TEXT";
 "DETECTION UNAVAILABLE" = "DETECTION UNAVAILABLE";
@@ -736,6 +751,8 @@
 "DOWNLOAD THUMBNAIL" = "DOWNLOAD THUMBNAIL";
 "DOWNLOAD VIDEO" = "DOWNLOAD VIDEO";
 "DOWNLOAD ↗" = "DOWNLOAD ↗";
+"DOWNLOADING THE SPEECH ENGINE…" = "DOWNLOADING THE SPEECH ENGINE…";
+"DOWNLOADING THE SPEECH MODEL (148 MB)…" = "DOWNLOADING THE SPEECH MODEL (148 MB)…";
 "DOWNLOADING…" = "DOWNLOADING…";
 "DPI: %@" = "DPI: %@";
 "DPI: %lld" = "DPI: %lld";
@@ -774,6 +791,7 @@
 "Detail" = "Detail";
 "Detect Faces" = "Detect Faces";
 "Detect Text" = "Detect Text";
+"Detect automatically" = "Detect automatically";
 "Detect faces" = "Detect faces";
 "Detect text" = "Detect text";
 "Detection unavailable" = "Detection unavailable";
@@ -808,6 +826,8 @@
 "Download ↗" = "Download ↗";
 "Download, verify and install Lokum %@? The app will restart. No account or token is needed." = "Download, verify and install Lokum %@? The app will restart. No account or token is needed.";
 "Download, verify and install Lokum %lld? The app will restart. No account or token is needed." = "Download, verify and install Lokum %lld? The app will restart. No account or token is needed.";
+"Downloading the speech engine…" = "Downloading the speech engine…";
+"Downloading the speech model (148 MB)…" = "Downloading the speech model (148 MB)…";
 "Downloading…" = "Downloading…";
 "Drag a crop inside the image." = "Drag a crop inside the image.";
 "Drag a range to move it; drag its edges to resize. Drag empty space to add." = "Drag a range to move it; drag its edges to resize. Drag empty space to add.";
@@ -834,12 +854,14 @@
 "Duplicate" = "Duplicate";
 "EACH CLIP HAS ITS OWN RANGE. GAPS, OVERLAPS AND A DIFFERENT SOURCE ORDER ARE ALLOWED." = "EACH CLIP HAS ITS OWN RANGE. GAPS, OVERLAPS AND A DIFFERENT SOURCE ORDER ARE ALLOWED.";
 "EACH CLIP MUST BE AT LEAST 0.05 SECONDS LONG." = "EACH CLIP MUST BE AT LEAST 0.05 SECONDS LONG.";
+"EACH SUBTITLE NEEDS TEXT AND A VALID START AND END WITHIN THE MEDIA DURATION." = "EACH SUBTITLE NEEDS TEXT AND A VALID START AND END WITHIN THE MEDIA DURATION.";
 "EDIT" = "EDIT";
 "EDIT BACKGROUND" = "EDIT BACKGROUND";
 "EDIT IMAGE" = "EDIT IMAGE";
 "EDIT IMAGE · LOKUM" = "EDIT IMAGE · LOKUM";
 "EDIT PHOTO" = "EDIT PHOTO";
 "EDIT PHOTO · LOKUM" = "EDIT PHOTO · LOKUM";
+"EDIT THE TEXT AND TIMESTAMPS BELOW. REVIEW AUTOMATIC SUBTITLES BEFORE SHARING." = "EDIT THE TEXT AND TIMESTAMPS BELOW. REVIEW AUTOMATIC SUBTITLES BEFORE SHARING.";
 "EDITABLE CONTENT" = "EDITABLE CONTENT";
 "EDITABLE PARAGRAPHS" = "EDITABLE PARAGRAPHS";
 "EDITABLE PARAGRAPHS AND TABLES" = "EDITABLE PARAGRAPHS AND TABLES";
@@ -851,6 +873,7 @@
 "ENABLE LOKUM SHORTCUTS IN SETTINGS FIRST." = "ENABLE LOKUM SHORTCUTS IN SETTINGS FIRST.";
 "ENCODED PIXELS, COLOR PROFILE AND DISPLAY ORIENTATION ARE PRESERVED." = "ENCODED PIXELS, COLOR PROFILE AND DISPLAY ORIENTATION ARE PRESERVED.";
 "END" = "END";
+"ENGLISH" = "ENGLISH";
 "ENTER A FINITE NUMBER." = "ENTER A FINITE NUMBER.";
 "ENTER PAGE NUMBERS WITHIN THIS PDF, IN THE DESIRED ORDER." = "ENTER PAGE NUMBERS WITHIN THIS PDF, IN THE DESIRED ORDER.";
 "EPUB LAYOUT" = "EPUB LAYOUT";
@@ -866,12 +889,14 @@
 "EXTRACT LOKUM INTO ITS OWN WRITABLE FOLDER FIRST." = "EXTRACT LOKUM INTO ITS OWN WRITABLE FOLDER FIRST.";
 "Each clip has its own range. Gaps, overlaps and a different source order are allowed." = "Each clip has its own range. Gaps, overlaps and a different source order are allowed.";
 "Each clip must be at least 0.05 seconds long." = "Each clip must be at least 0.05 seconds long.";
+"Each subtitle needs text and a valid start and end within the media duration." = "Each subtitle needs text and a valid start and end within the media duration.";
 "Edit" = "Edit";
 "Edit Background" = "Edit Background";
 "Edit Image" = "Edit Image";
 "Edit Image · Lokum" = "Edit Image · Lokum";
 "Edit Photo" = "Edit Photo";
 "Edit Photo · Lokum" = "Edit Photo · Lokum";
+"Edit the text and timestamps below. Review automatic subtitles before sharing." = "Edit the text and timestamps below. Review automatic subtitles before sharing.";
 "Editable content" = "Editable content";
 "Editable paragraphs" = "Editable paragraphs";
 "Editable paragraphs and tables" = "Editable paragraphs and tables";
@@ -883,6 +908,7 @@
 "Enable Lokum shortcuts in Settings first." = "Enable Lokum shortcuts in Settings first.";
 "Encoded pixels, color profile and display orientation are preserved." = "Encoded pixels, color profile and display orientation are preserved.";
 "End" = "End";
+"English" = "English";
 "Enter a finite number." = "Enter a finite number.";
 "Enter a valid number for %@." = "Enter a valid number for %@.";
 "Enter a valid number for %lld." = "Enter a valid number for %lld.";
@@ -960,7 +986,9 @@
 "FRAME RATE" = "FRAME RATE";
 "FRAME TIMING AND REPEAT COUNT ARE PRESERVED." = "FRAME TIMING AND REPEAT COUNT ARE PRESERVED.";
 "FREE" = "FREE";
+"FREE AND LOCAL. FIRST USE DOWNLOADS A SPEECH MODEL (148 MB). YOUR MEDIA STAYS ON YOUR COMPUTER." = "FREE AND LOCAL. FIRST USE DOWNLOADS A SPEECH MODEL (148 MB). YOUR MEDIA STAYS ON YOUR COMPUTER.";
 "FREEHAND SELECTION" = "FREEHAND SELECTION";
+"FRENCH" = "FRENCH";
 "FRESH THINGS, ON THEIR WAY." = "FRESH THINGS, ON THEIR WAY.";
 "FRESHLY MADE" = "FRESHLY MADE";
 "FRESHLY MADE, PASTED, AND READY FOR ANOTHER ROUND." = "FRESHLY MADE, PASTED, AND READY FOR ANOTHER ROUND.";
@@ -1032,14 +1060,18 @@
 "Frame rate: %lld" = "Frame rate: %lld";
 "Frame timing and repeat count are preserved." = "Frame timing and repeat count are preserved.";
 "Free" = "Free";
+"Free and local. First use downloads a speech model (148 MB). Your media stays on your computer." = "Free and local. First use downloads a speech model (148 MB). Your media stays on your computer.";
 "Freehand selection" = "Freehand selection";
+"French" = "French";
 "Fresh things, on their way." = "Fresh things, on their way.";
 "Freshly made" = "Freshly made";
 "Freshly made, pasted, and ready for another round." = "Freshly made, pasted, and ready for another round.";
 "GAMMA" = "GAMMA";
 "GAMMA MUST BE POSITIVE; CONTRAST AND SATURATION CANNOT BE NEGATIVE." = "GAMMA MUST BE POSITIVE; CONTRAST AND SATURATION CANNOT BE NEGATIVE.";
 "GENERAL" = "GENERAL";
+"GENERATE SUBTITLES" = "GENERATE SUBTITLES";
 "GENRE" = "GENRE";
+"GERMAN" = "GERMAN";
 "GET STARTED" = "GET STARTED";
 "GIF FRAME RATE" = "GIF FRAME RATE";
 "GIF FRAMES PER SECOND" = "GIF FRAMES PER SECOND";
@@ -1061,7 +1093,10 @@
 "Gamma" = "Gamma";
 "Gamma must be positive; contrast and saturation cannot be negative." = "Gamma must be positive; contrast and saturation cannot be negative.";
 "General" = "General";
+"Generate Subtitles" = "Generate Subtitles";
+"Generate subtitles" = "Generate subtitles";
 "Genre" = "Genre";
+"German" = "German";
 "Get started" = "Get started";
 "GitHub repository" = "GitHub repository";
 "Give it a little breathing room." = "Give it a little breathing room.";
@@ -1114,6 +1149,7 @@
 "INVALID UPDATE SIGNATURE LENGTH." = "INVALID UPDATE SIGNATURE LENGTH.";
 "INVALID UPDATE SIGNATURE." = "INVALID UPDATE SIGNATURE.";
 "INVALID YOUTUBE VIDEO ID." = "INVALID YOUTUBE VIDEO ID.";
+"ITALIAN" = "ITALIAN";
 "Icons" = "Icons";
 "Image" = "Image";
 "Image Compression" = "Image Compression";
@@ -1145,9 +1181,12 @@
 "Invalid update manifest." = "Invalid update manifest.";
 "Invalid update signature length." = "Invalid update signature length.";
 "Invalid update signature." = "Invalid update signature.";
+"Italian" = "Italian";
+"JAPANESE" = "JAPANESE";
 "JOIN CLIPS INTO ONE VIDEO" = "JOIN CLIPS INTO ONE VIDEO";
 "JOIN RETAINED CLIPS INTO ONE VIDEO" = "JOIN RETAINED CLIPS INTO ONE VIDEO";
 "JOIN VIDEOS" = "JOIN VIDEOS";
+"Japanese" = "Japanese";
 "Join Videos" = "Join Videos";
 "Join clips into one video" = "Join clips into one video";
 "Join retained clips into one video" = "Join retained clips into one video";
@@ -1165,6 +1204,7 @@
 "KEEP THINGS\nMOVING." = "KEEP THINGS\nMOVING.";
 "KEEP WHAT YOU SELECT. SAVE IT TRANSPARENT, OR ADD A NEW BACKGROUND." = "KEEP WHAT YOU SELECT. SAVE IT TRANSPARENT, OR ADD A NEW BACKGROUND.";
 "KEYWORDS" = "KEYWORDS";
+"KOREAN" = "KOREAN";
 "Keep at least one clip." = "Keep at least one clip.";
 "Keep at least one page." = "Keep at least one page.";
 "Keep clip edges ordered and at least 0.05 seconds apart." = "Keep clip edges ordered and at least 0.05 seconds apart.";
@@ -1179,6 +1219,7 @@
 "Keep things\nmoving." = "Keep things\nmoving.";
 "Keep what you select. Save it transparent, or add a new background." = "Keep what you select. Save it transparent, or add a new background.";
 "Keywords" = "Keywords";
+"Korean" = "Korean";
 "LANDSCAPE" = "LANDSCAPE";
 "LANDSCAPE · 16:9" = "LANDSCAPE · 16:9";
 "LANGUAGE" = "LANGUAGE";
@@ -1302,6 +1343,8 @@
 "MOVE RIGHT" = "MOVE RIGHT";
 "MOVE UP" = "MOVE UP";
 "MOVED OR REMOVED" = "MOVED OR REMOVED";
+"MP4 EMBEDS SUBTITLES PERMANENTLY IN A NEW VIDEO COPY." = "MP4 EMBEDS SUBTITLES PERMANENTLY IN A NEW VIDEO COPY.";
+"MP4 embeds subtitles permanently in a new video copy." = "MP4 embeds subtitles permanently in a new video copy.";
 "MUTE" = "MUTE";
 "MUTE ONLY THE SELECTED RANGE" = "MUTE ONLY THE SELECTED RANGE";
 "MUTE SELECTED RANGE ONLY" = "MUTE SELECTED RANGE ONLY";
@@ -1368,6 +1411,7 @@
 "NO OUTPUT WAS PRODUCED." = "NO OUTPUT WAS PRODUCED.";
 "NO PUBLIC DOWNLOADABLE MEDIA FOUND. SOME SITES REQUIRE SIGN-IN OR DO NOT EXPOSE DOWNLOADABLE MEDIA." = "NO PUBLIC DOWNLOADABLE MEDIA FOUND. SOME SITES REQUIRE SIGN-IN OR DO NOT EXPOSE DOWNLOADABLE MEDIA.";
 "NO QR CODES THIS TIME." = "NO QR CODES THIS TIME.";
+"NO SPEECH WAS DETECTED. TRY CHOOSING THE SPOKEN LANGUAGE." = "NO SPEECH WAS DETECTED. TRY CHOOSING THE SPOKEN LANGUAGE.";
 "NO TEXT COULD BE EXTRACTED OR RECOGNIZED IN THIS PDF." = "NO TEXT COULD BE EXTRACTED OR RECOGNIZED IN THIS PDF.";
 "NO TIMED SUBTITLE CUES WERE FOUND." = "NO TIMED SUBTITLE CUES WERE FOUND.";
 "NO UNPROTECTED DOWNLOADABLE FORMAT IS AVAILABLE." = "NO UNPROTECTED DOWNLOADABLE FORMAT IS AVAILABLE.";
@@ -1398,6 +1442,7 @@
 "No media output was produced." = "No media output was produced.";
 "No output was produced." = "No output was produced.";
 "No public downloadable media found. Some sites require sign-in or do not expose downloadable media." = "No public downloadable media found. Some sites require sign-in or do not expose downloadable media.";
+"No speech was detected. Try choosing the spoken language." = "No speech was detected. Try choosing the spoken language.";
 "No text could be extracted or recognized in this PDF." = "No text could be extracted or recognized in this PDF.";
 "No timed subtitle cues were found." = "No timed subtitle cues were found.";
 "No unprotected downloadable format is available." = "No unprotected downloadable format is available.";
@@ -1432,6 +1477,7 @@
 "OPEN LOKUM" = "OPEN LOKUM";
 "OPEN PERMISSION SETTINGS…" = "OPEN PERMISSION SETTINGS…";
 "OPEN PREVIEW" = "OPEN PREVIEW";
+"OPEN SRT…" = "OPEN SRT…";
 "OPEN WHEEL" = "OPEN WHEEL";
 "OPTIONAL. YOU CAN CHANGE THIS IN SETTINGS." = "OPTIONAL. YOU CAN CHANGE THIS IN SETTINGS.";
 "ORGANIZE PDF" = "ORGANIZE PDF";
@@ -1467,6 +1513,7 @@
 "Open Login Items" = "Open Login Items";
 "Open Lokum" = "Open Lokum";
 "Open Preview" = "Open Preview";
+"Open SRT…" = "Open SRT…";
 "Open a specific YouTube video or Short, then try again." = "Open a specific YouTube video or Short, then try again.";
 "Open in Terminal" = "Open in Terminal";
 "Open link" = "Open link";
@@ -1534,6 +1581,7 @@
 "PREPARE A RESULT BEFORE SAVING." = "PREPARE A RESULT BEFORE SAVING.";
 "PREPARE CHROME CONNECTION" = "PREPARE CHROME CONNECTION";
 "PREPARING A LOCAL PREVIEW…" = "PREPARING A LOCAL PREVIEW…";
+"PREPARING AUDIO…" = "PREPARING AUDIO…";
 "PREPARING CONVERTED RESULT…" = "PREPARING CONVERTED RESULT…";
 "PREPARING PREVIEW…" = "PREPARING PREVIEW…";
 "PREPARING PROCESSED PREVIEW…" = "PREPARING PROCESSED PREVIEW…";
@@ -1598,6 +1646,7 @@
 "Prepare Chrome connection" = "Prepare Chrome connection";
 "Prepare a result before saving." = "Prepare a result before saving.";
 "Preparing a local preview…" = "Preparing a local preview…";
+"Preparing audio…" = "Preparing audio…";
 "Preparing converted result…" = "Preparing converted result…";
 "Preparing preview…" = "Preparing preview…";
 "Preparing processed preview…" = "Preparing processed preview…";
@@ -1709,6 +1758,7 @@
 "ROUNDED" = "ROUNDED";
 "ROW" = "ROW";
 "RUNS ON YOUR PC. NO IMAGE UPLOADS." = "RUNS ON YOUR PC. NO IMAGE UPLOADS.";
+"RUSSIAN" = "RUSSIAN";
 "Read QR Code" = "Read QR Code";
 "Read QR Code · Lokum" = "Read QR Code · Lokum";
 "Read QR Codes" = "Read QR Codes";
@@ -1788,6 +1838,7 @@
 "Rounded" = "Rounded";
 "Row" = "Row";
 "Runs on your PC. No image uploads." = "Runs on your PC. No image uploads.";
+"Russian" = "Russian";
 "SAMPLE DEPTH" = "SAMPLE DEPTH";
 "SATURATION" = "SATURATION";
 "SAVE" = "SAVE";
@@ -1869,6 +1920,7 @@
 "SET UP METADATA TOOLS ONCE." = "SET UP METADATA TOOLS ONCE.";
 "SET UP OFFICE AND MEDIA TOOLS ONCE TO ENABLE NATIVE PAGES INTEROPERABILITY." = "SET UP OFFICE AND MEDIA TOOLS ONCE TO ENABLE NATIVE PAGES INTEROPERABILITY.";
 "SET UP OFFICE TOOLS" = "SET UP OFFICE TOOLS";
+"SET UP THE SPEECH MODEL FIRST." = "SET UP THE SPEECH MODEL FIRST.";
 "SET UP TOOLS" = "SET UP TOOLS";
 "SETTINGS" = "SETTINGS";
 "SETTINGS COULD NOT BE SAVED" = "SETTINGS COULD NOT BE SAVED";
@@ -1910,12 +1962,15 @@
 "SPACE PLAY/PAUSE · ←/→ 1S · ⇧←/→ 1 FRAME · I/O SET RANGE · ⇧SPACE PLAY RANGE" = "SPACE PLAY/PAUSE · ←/→ 1S · ⇧←/→ 1 FRAME · I/O SET RANGE · ⇧SPACE PLAY RANGE";
 "SPACE · PREVIEW" = "SPACE · PREVIEW";
 "SPACING" = "SPACING";
+"SPANISH" = "SPANISH";
 "SPECTRUM" = "SPECTRUM";
+"SPEECH RECOGNITION FAILED. TRY A SHORTER RECORDING OR CHOOSE THE SPOKEN LANGUAGE." = "SPEECH RECOGNITION FAILED. TRY A SHORTER RECORDING OR CHOOSE THE SPOKEN LANGUAGE.";
 "SPEED" = "SPEED";
 "SPLIT PDF" = "SPLIT PDF";
 "SPLIT POINTS (SECONDS; SEPARATED BY SEMICOLONS)" = "SPLIT POINTS (SECONDS; SEPARATED BY SEMICOLONS)";
 "SPLIT VIDEO" = "SPLIT VIDEO";
 "SPLITTING REQUIRES A KNOWN DURATION." = "SPLITTING REQUIRES A KNOWN DURATION.";
+"SPOKEN LANGUAGE" = "SPOKEN LANGUAGE";
 "SPREADSHEETS" = "SPREADSHEETS";
 "SQUARE" = "SQUARE";
 "SQUARE · 1:1" = "SQUARE · 1:1";
@@ -1932,6 +1987,7 @@
 "STYLE" = "STYLE";
 "SUBJECT" = "SUBJECT";
 "SUBTITLES" = "SUBTITLES";
+"SUBTITLES ARE READY. REVIEW THE TEXT AND TIMING." = "SUBTITLES ARE READY. REVIEW THE TEXT AND TIMING.";
 "SUBTLE ANIMATIONS" = "SUBTLE ANIMATIONS";
 "SUBTRACT FROM SELECTION" = "SUBTRACT FROM SELECTION";
 "SVG EXTERNAL RESOURCES ARE NOT LOADED. EMBED THE RASTER IMAGE FIRST." = "SVG EXTERNAL RESOURCES ARE NOT LOADED. EMBED THE RASTER IMAGE FIRST.";
@@ -2027,6 +2083,7 @@
 "Set up metadata tools once." = "Set up metadata tools once.";
 "Set up office and media tools once to enable native Pages interoperability." = "Set up office and media tools once to enable native Pages interoperability.";
 "Set up office tools" = "Set up office tools";
+"Set up the speech model first." = "Set up the speech model first.";
 "Set up tools" = "Set up tools";
 "Settings" = "Settings";
 "Settings could not be saved" = "Settings could not be saved";
@@ -2069,12 +2126,15 @@
 "Space play/pause · ←/→ 1s · ⇧←/→ 1 frame · I/O set range · ⇧Space play range" = "Space play/pause · ←/→ 1s · ⇧←/→ 1 frame · I/O set range · ⇧Space play range";
 "Space · Preview" = "Space · Preview";
 "Spacing" = "Spacing";
+"Spanish" = "Spanish";
 "Spectrum" = "Spectrum";
+"Speech recognition failed. Try a shorter recording or choose the spoken language." = "Speech recognition failed. Try a shorter recording or choose the spoken language.";
 "Speed" = "Speed";
 "Split PDF" = "Split PDF";
 "Split Video" = "Split Video";
 "Split points (seconds; separated by semicolons)" = "Split points (seconds; separated by semicolons)";
 "Splitting requires a known duration." = "Splitting requires a known duration.";
+"Spoken language" = "Spoken language";
 "Spreadsheets" = "Spreadsheets";
 "Square" = "Square";
 "Square · 1:1" = "Square · 1:1";
@@ -2090,6 +2150,7 @@
 "Style" = "Style";
 "Subject" = "Subject";
 "Subtitles" = "Subtitles";
+"Subtitles are ready. Review the text and timing." = "Subtitles are ready. Review the text and timing.";
 "Subtle animations" = "Subtle animations";
 "Subtract from selection" = "Subtract from selection";
 "System" = "System";
@@ -2136,6 +2197,8 @@
 "THE REQUESTED PDF SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET." = "THE REQUESTED PDF SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET.";
 "THE SAME CONVERSION AND TOOL CATALOG AS MACOS." = "THE SAME CONVERSION AND TOOL CATALOG AS MACOS.";
 "THE SIGNED PACKAGE VERSION DOES NOT MATCH THIS UPDATE." = "THE SIGNED PACKAGE VERSION DOES NOT MATCH THIS UPDATE.";
+"THE SPEECH MODEL COULD NOT BE OPENED. DOWNLOAD IT AGAIN." = "THE SPEECH MODEL COULD NOT BE OPENED. DOWNLOAD IT AGAIN.";
+"THE SUBTITLE FILE IS TOO LARGE." = "THE SUBTITLE FILE IS TOO LARGE.";
 "THE UPDATE DOES NOT CONTAIN LOKUM." = "THE UPDATE DOES NOT CONTAIN LOKUM.";
 "THE UPDATE SIGNATURE IS INVALID. YOUR EXISTING APP WAS KEPT." = "THE UPDATE SIGNATURE IS INVALID. YOUR EXISTING APP WAS KEPT.";
 "THESE FILES HAVE MOVED OR WERE DELETED." = "THESE FILES HAVE MOVED OR WERE DELETED.";
@@ -2153,10 +2216,12 @@
 "THIS IMAGE IS TOO LARGE TO PASTE. CHOOSE THE IMAGE FILE INSTEAD." = "THIS IMAGE IS TOO LARGE TO PASTE. CHOOSE THE IMAGE FILE INSTEAD.";
 "THIS LINK DID NOT RETURN A DOWNLOADABLE IMAGE." = "THIS LINK DID NOT RETURN A DOWNLOADABLE IMAGE.";
 "THIS MEDIA ADDRESS IS UNAVAILABLE. SAVE THE FILE, THEN OPEN ITS TOOLS IN LOKUM." = "THIS MEDIA ADDRESS IS UNAVAILABLE. SAVE THE FILE, THEN OPEN ITS TOOLS IN LOKUM.";
+"THIS MEDIA HAS NO AUDIO TRACK TO TRANSCRIBE." = "THIS MEDIA HAS NO AUDIO TRACK TO TRANSCRIBE.";
 "THIS OUTPUT FORMAT HAS NO ADJUSTABLE CONVERSION DEFAULTS." = "THIS OUTPUT FORMAT HAS NO ADJUSTABLE CONVERSION DEFAULTS.";
 "THIS PDF CONTAINS NO PAGES." = "THIS PDF CONTAINS NO PAGES.";
 "THIS PDF PAGE COULD NOT BE READ." = "THIS PDF PAGE COULD NOT BE READ.";
 "THIS POST CONTAINS VIDEOS. USE ITS REEL LINK TO DOWNLOAD VIDEO." = "THIS POST CONTAINS VIDEOS. USE ITS REEL LINK TO DOWNLOAD VIDEO.";
+"THIS RECORDING IS TOO LONG. CUT IT INTO SHORTER CLIPS BEFORE GENERATING SUBTITLES." = "THIS RECORDING IS TOO LONG. CUT IT INTO SHORTER CLIPS BEFORE GENERATING SUBTITLES.";
 "THIS REPOSITORY IS PRIVATE" = "THIS REPOSITORY IS PRIVATE";
 "THIS RTFD ATTACHMENT SYNTAX COULD NOT BE PRESERVED." = "THIS RTFD ATTACHMENT SYNTAX COULD NOT BE PRESERVED.";
 "THIS SIZE CANNOT BE REACHED. CHOOSE A LARGER TARGET OR SMALLER DIMENSIONS." = "THIS SIZE CANNOT BE REACHED. CHOOSE A LARGER TARGET OR SMALLER DIMENSIONS.";
@@ -2179,6 +2244,7 @@
 "TOOLS READY" = "TOOLS READY";
 "TOOLS · WHILE DRAGGING" = "TOOLS · WHILE DRAGGING";
 "TOP" = "TOP";
+"TRANSCRIBING SPEECH ON YOUR COMPUTER…" = "TRANSCRIBING SPEECH ON YOUR COMPUTER…";
 "TRANSPARENT" = "TRANSPARENT";
 "TRANSPARENT BACKGROUNDS SAVE AS PNG TO KEEP THEIR TRANSPARENCY." = "TRANSPARENT BACKGROUNDS SAVE AS PNG TO KEEP THEIR TRANSPARENCY.";
 "TRANSPARENT PNG" = "TRANSPARENT PNG";
@@ -2192,6 +2258,7 @@
 "TRY A CLEARER IMAGE OR ANOTHER PDF." = "TRY A CLEARER IMAGE OR ANOTHER PDF.";
 "TRY AGAIN" = "TRY AGAIN";
 "TRY FEEDBACK" = "TRY FEEDBACK";
+"TURKISH" = "TURKISH";
 "TURN OFF UNIFORM WIDTH TO PRESERVE THIS PDF’S FORM FIELDS, ATTACHMENTS, LINKS OR NAVIGATION." = "TURN OFF UNIFORM WIDTH TO PRESERVE THIS PDF’S FORM FIELDS, ATTACHMENTS, LINKS OR NAVIGATION.";
 "Tap the chosen modifier combination while dragging files." = "Tap the chosen modifier combination while dragging files.";
 "Target" = "Target";
@@ -2238,6 +2305,8 @@
 "The requested image size could not be reached. Choose a larger target." = "The requested image size could not be reached. Choose a larger target.";
 "The same conversion and tool catalog as macOS." = "The same conversion and tool catalog as macOS.";
 "The signed package version does not match this update." = "The signed package version does not match this update.";
+"The speech model could not be opened. Download it again." = "The speech model could not be opened. Download it again.";
+"The subtitle file is too large." = "The subtitle file is too large.";
 "The update does not contain Lokum." = "The update does not contain Lokum.";
 "The update signature is invalid. Your existing app was kept." = "The update signature is invalid. Your existing app was kept.";
 "These files have moved or were deleted." = "These files have moved or were deleted.";
@@ -2261,8 +2330,10 @@
 "This image is too large to paste. Choose the image file instead." = "This image is too large to paste. Choose the image file instead.";
 "This link did not return a downloadable image." = "This link did not return a downloadable image.";
 "This media address is unavailable. Save the file, then open its tools in Lokum." = "This media address is unavailable. Save the file, then open its tools in Lokum.";
+"This media has no audio track to transcribe." = "This media has no audio track to transcribe.";
 "This output format has no adjustable conversion defaults." = "This output format has no adjustable conversion defaults.";
 "This post contains videos. Use its Reel link to download video." = "This post contains videos. Use its Reel link to download video.";
+"This recording is too long. Cut it into shorter clips before generating subtitles." = "This recording is too long. Cut it into shorter clips before generating subtitles.";
 "This repository is private" = "This repository is private";
 "This size cannot be reached. Choose a larger target or smaller dimensions." = "This size cannot be reached. Choose a larger target or smaller dimensions.";
 "This text is too large to paste. Choose a text file instead." = "This text is too large to paste. Choose a text file instead.";
@@ -2283,6 +2354,7 @@
 "Tools ready" = "Tools ready";
 "Tools · while dragging" = "Tools · while dragging";
 "Top" = "Top";
+"Transcribing speech on your computer…" = "Transcribing speech on your computer…";
 "Transparent" = "Transparent";
 "Transparent PNG" = "Transparent PNG";
 "Transparent backgrounds save as PNG to keep their transparency." = "Transparent backgrounds save as PNG to keep their transparency.";
@@ -2296,6 +2368,7 @@
 "Try a clearer image or another PDF." = "Try a clearer image or another PDF.";
 "Try again" = "Try again";
 "Try feedback" = "Try feedback";
+"Turkish" = "Turkish";
 "Turn off uniform width to preserve this PDF’s form fields, attachments, links or navigation." = "Turn off uniform width to preserve this PDF’s form fields, attachments, links or navigation.";
 "UNDO" = "UNDO";
 "UNDO AREA" = "UNDO AREA";

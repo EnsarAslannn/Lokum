@@ -10,7 +10,7 @@ public sealed record ProcessResult(string Output, string Error);
 public static class ProcessRunner
 {
     public static async Task<ProcessResult> RunAsync(string executable, IEnumerable<string> arguments,
-        CancellationToken token = default, Action<string>? outputLine = null, string? standardInput = null)
+        CancellationToken token = default, Action<string>? outputLine = null, string? standardInput = null,string? workingDirectory=null)
     {
         token.ThrowIfCancellationRequested();
         if (!Path.IsPathFullyQualified(executable)) throw new ArgumentException("A fully qualified tool path is required.");
@@ -21,6 +21,7 @@ public static class ProcessRunner
             StandardOutputEncoding = Encoding.UTF8, StandardErrorEncoding = Encoding.UTF8,
             StandardInputEncoding = new UTF8Encoding(false)
         };
+        if(workingDirectory is not null)start.WorkingDirectory=Path.GetFullPath(workingDirectory);
         var values = arguments.ToList();
         if (Path.GetFileNameWithoutExtension(executable).ToLowerInvariant() is "ffmpeg" or "ffprobe" && !values.Contains("-protocol_whitelist"))
         { start.ArgumentList.Add("-protocol_whitelist"); start.ArgumentList.Add("file,pipe,crypto,data"); }

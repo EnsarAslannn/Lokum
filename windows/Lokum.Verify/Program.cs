@@ -5,6 +5,19 @@ if(args.Contains("--runner-only")){Environment.ExitCode=await VerificationRunner
 
 Environment.ExitCode=await VerificationRunner.RunAsync(async()=>
 {
+if(args.Contains("--transcription-only"))
+{
+    var count=0;TranscriptionChecks.Catalog((ok,message)=>{if(!ok)throw new Exception(message);count++;});
+    TranscriptionChecks.Documents((ok,message)=>{if(!ok)throw new Exception(message);count++;});
+    if(Environment.GetEnvironmentVariable("LOKUM_VERIFY_INSTALL_SPEECH") is {} speechDirectory)
+    {
+        var setup=new SpeechModelSetup(speechDirectory);await setup.InstallAsync();if(!setup.Ready)throw new Exception("Speech setup did not publish a complete installation.");
+        Environment.SetEnvironmentVariable("LOKUM_VERIFY_WHISPER",setup.Executable);Environment.SetEnvironmentVariable("LOKUM_VERIFY_SPEECH_MODEL",setup.Model);
+    }
+    if(Environment.GetEnvironmentVariable("LOKUM_VERIFY_WHISPER") is {} whisper)
+        await TranscriptionChecks.Integration((ok,message)=>{if(!ok)throw new Exception(message);count++;},Path.GetFullPath("build/transcription-tests"),whisper,Environment.GetEnvironmentVariable("LOKUM_VERIFY_SPEECH_MODEL")!,Environment.GetEnvironmentVariable("LOKUM_VERIFY_SPEECH_SAMPLE")!,Environment.GetEnvironmentVariable("LOKUM_VERIFY_FFMPEG")!,Environment.GetEnvironmentVariable("LOKUM_VERIFY_FFPROBE")!);
+    Console.WriteLine("PASS subtitles: "+count);return;
+}
 
 if(args.Contains("--video-workspace-only"))
 {

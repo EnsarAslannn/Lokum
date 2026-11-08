@@ -143,6 +143,7 @@
 "APPEARANCE" = "GÖRÜNÜM";
 "APPEARANCE COULD NOT BE SAVED" = "GÖRÜNÜM KAYDEDİLEMEDİ";
 "APPLY CLIP COUNT" = "KLİP SAYISINI UYGULA";
+"ARABIC" = "ARAPÇA";
 "ARCHIVE CONTAINS A LINK." = "ARŞİVDE BİR BAĞLANTI VAR.";
 "ARCHIVE CONTAINS DUPLICATE NAMES." = "ARŞİVDE AYNI ADA SAHİP ÖĞELER VAR.";
 "ARCHIVE CONTAINS DUPLICATE PATHS OR LINKS." = "ARŞİVDE YİNELENEN YOLLAR VEYA BAĞLANTILAR VAR.";
@@ -222,6 +223,7 @@
 "Appearance" = "Görünüm";
 "Appearance could not be saved" = "Görünüm kaydedilemedi";
 "Apply clip count" = "Klip sayısını uygula";
+"Arabic" = "Arapça";
 "Archive contains a link." = "Arşivde bir bağlantı var.";
 "Archive contains duplicate names." = "Arşivde aynı ada sahip öğeler var.";
 "Archive contains duplicate paths or links." = "Arşivde yinelenen yollar veya bağlantılar var.";
@@ -331,6 +333,7 @@
 "CHECK YOUR SETTINGS" = "AYARLARINI KONTROL ET";
 "CHECKING FOR UPDATES…" = "GÜNCELLEMELER DENETLENİYOR…";
 "CHECKING THE CONNECTION…" = "BAĞLANTI KONTROL EDİLİYOR…";
+"CHINESE" = "ÇİNCE";
 "CHOOSE 2–100 IMAGES FOR A COLLAGE." = "KOLAJ İÇİN 2–100 ARASI GÖRSEL SEÇ.";
 "CHOOSE A BACKGROUND IMAGE." = "BİR ARKA PLAN GÖRSELİ SEÇ.";
 "CHOOSE A CANVAS WITHIN 100 MP AND 30,000 PIXELS." = "100 MP VE 30.000 PİKSELİ AŞMAYAN BİR TUVAL SEÇ.";
@@ -354,10 +357,12 @@
 "CHOOSE A SUPPORTED BACKGROUND TYPE." = "DESTEKLENEN BİR ARKA PLAN TÜRÜ SEÇ.";
 "CHOOSE A SUPPORTED MAXIMUM VIDEO HEIGHT." = "DESTEKLENEN BİR MAKSİMUM VİDEO YÜKSEKLİĞİ SEÇ.";
 "CHOOSE A SUPPORTED OUTPUT FORMAT." = "DESTEKLENEN BİR ÇIKTI BİÇİMİ SEÇ.";
+"CHOOSE A SUPPORTED SPOKEN LANGUAGE." = "DESTEKLENEN BİR KONUŞMA DİLİ SEÇ.";
 "CHOOSE A TARGET OF AT LEAST 2 KB." = "EN AZ 2 KB'LIK BİR HEDEF SEÇ.";
 "CHOOSE A VALID RANGE FIRST." = "ÖNCE GEÇERLİ BİR ARALIK SEÇ.";
 "CHOOSE A VALID RANGE." = "GEÇERLİ BİR ARALIK SEÇ.";
 "CHOOSE A VALID TIME RANGE." = "GEÇERLİ BİR ZAMAN ARALIĞI SEÇ.";
+"CHOOSE A VIDEO TO EMBED SUBTITLES." = "ALTYAZI EKLEMEK İÇİN BİR VİDEO SEÇ.";
 "CHOOSE A WHOLE CLIP COUNT WITH AT LEAST 0.05 SECONDS PER CLIP." = "KLİP BAŞINA EN AZ 0,05 SANİYE KALACAK ŞEKİLDE TAM BİR KLİP SAYISI GİR.";
 "CHOOSE AN EXISTING MEDIA FILE." = "VAR OLAN BİR MEDYA DOSYASI SEÇ.";
 "CHOOSE AN IMAGE." = "BİR GÖRSEL SEÇ.";
@@ -383,6 +388,7 @@
 "CHOOSE FIND MEDIA TO INSPECT THIS LINK." = "BU BAĞLANTIYI İNCELEMEK İÇİN MEDYAYI BUL'U SEÇ.";
 "CHOOSE FINITE PHOTO ADJUSTMENTS WITHIN THEIR RANGES." = "FOTOĞRAF AYARLARINI İZİN VERİLEN ARALIKLARDA SEÇ.";
 "CHOOSE MEDIA AND A SUPPORTED TOOL." = "MEDYA DOSYASINI VE DESTEKLENEN BİR ARACI SEÇ.";
+"CHOOSE MEDIA WITH A VALID DURATION." = "GEÇERLİ SÜRESİ OLAN BİR MEDYA DOSYASI SEÇ.";
 "CHOOSE ONE INSTAGRAM POST WITH UP TO 50 ITEMS." = "EN FAZLA 50 ÖĞE İÇEREN TEK BİR INSTAGRAM GÖNDERİSİ SEÇ.";
 "CHOOSE ONE OF THE EDITABLE METADATA FIELDS." = "DÜZENLENEBİLİR META VERİ ALANLARINDAN BİRİNİ SEÇ.";
 "CHOOSE ONE OR MORE IMAGES TO REMOVE THEIR BACKGROUNDS." = "ARKA PLANLARINI KALDIRMAK İÇİN BİR VEYA DAHA FAZLA GÖRSEL SEÇ.";
@@ -393,11 +399,13 @@
 "CHOOSE SET UP MEDIA TOOLS ONCE TO ENABLE WEB DOWNLOADS." = "WEB'DEN İNDİRMEYİ AÇMAK İÇİN BİR KEZ MEDYA ARAÇLARINI KUR'U SEÇ.";
 "CHOOSE SET UP MEDIA TOOLS ONCE TO INSPECT AND EDIT MEDIA TAGS." = "MEDYA ETİKETLERİNİ GÖRÜNTÜLEYİP DÜZENLEMEK İÇİN BİR KEZ MEDYA ARAÇLARINI KUR'U SEÇ.";
 "CHOOSE SET UP OFFICE TOOLS ONCE TO ENABLE DOCUMENT, SLIDE AND SPREADSHEET CONVERSIONS." = "BELGE, SUNUM VE TABLO DÖNÜŞTÜRMELERİNİ AÇMAK İÇİN BİR KEZ OFİS ARAÇLARINI KUR'U SEÇ.";
+"CHOOSE SRT, TXT, VTT OR MP4." = "SRT, TXT, VTT VEYA MP4 SEÇ.";
 "CHOOSE SRT, VTT OR TXT." = "SRT, VTT VEYA TXT SEÇ.";
 "CHOOSE STILL IMAGE…" = "SABİT GÖRSEL SEÇ…";
 "CHOOSE SUPPORTED EXPORT DEFAULTS." = "DESTEKLENEN DIŞA AKTARMA VARSAYILANLARINI SEÇ.";
 "CHOOSE SUPPORTED GIF AND AUDIO SAMPLE SETTINGS." = "DESTEKLENEN GIF VE SES ÖRNEKLEME AYARLARINI SEÇ.";
 "CHOOSE SUPPORTED LOUDNESS TARGETS." = "DESTEKLENEN SES DÜZEYİ HEDEFLERİNİ SEÇ.";
+"CHOOSE THE SPOKEN LANGUAGE, THEN GENERATE SUBTITLES." = "KONUŞMA DİLİNİ SEÇİP ALTYAZI OLUŞTUR.";
 "CHOOSE UP TO 10,000 OUTPUT PAGES." = "EN FAZLA 10.000 ÇIKTI SAYFASI SEÇ.";
 "CHOOSE UP TO 4 GB OF FILES." = "TOPLAMI EN FAZLA 4 GB OLAN DOSYALAR SEÇ.";
 "CHOOSE VALID BACKGROUND AND IMAGE DIMENSIONS." = "GEÇERLİ ARKA PLAN VE GÖRSEL BOYUTLARI SEÇ.";
@@ -517,10 +525,12 @@
 "Check your settings" = "Ayarlarını kontrol et";
 "Checking for updates…" = "Güncellemeler denetleniyor…";
 "Checking the connection…" = "Bağlantı kontrol ediliyor…";
+"Chinese" = "Çince";
 "Choose 2–100 images for a collage." = "Kolaj için 2–100 arası görsel seç.";
 "Choose Background Image…" = "Arka Plan Görseli Seç…";
 "Choose Files…" = "Dosya Seç…";
 "Choose Find media to inspect this link." = "Bu bağlantıyı incelemek için Medyayı bul'u seç.";
+"Choose SRT, TXT, VTT or MP4." = "SRT, TXT, VTT veya MP4 seç.";
 "Choose SRT, VTT or TXT." = "SRT, VTT veya TXT seç.";
 "Choose Set up media tools first." = "Önce Medya araçlarını kur'u seç.";
 "Choose Set up media tools once to enable media editing." = "Medya düzenlemeyi açmak için bir kez Medya araçlarını kur'u seç.";
@@ -551,10 +561,12 @@
 "Choose a supported background type." = "Desteklenen bir arka plan türü seç.";
 "Choose a supported maximum video height." = "Desteklenen bir maksimum video yüksekliği seç.";
 "Choose a supported output format." = "Desteklenen bir çıktı biçimi seç.";
+"Choose a supported spoken language." = "Desteklenen bir konuşma dili seç.";
 "Choose a target of at least 2 KB." = "En az 2 KB'lık bir hedef seç.";
 "Choose a valid range first." = "Önce geçerli bir aralık seç.";
 "Choose a valid range." = "Geçerli bir aralık seç.";
 "Choose a valid time range." = "Geçerli bir zaman aralığı seç.";
+"Choose a video to embed subtitles." = "Altyazı eklemek için bir video seç.";
 "Choose a whole clip count with at least 0.05 seconds per clip." = "Klip başına en az 0,05 saniye kalacak şekilde tam bir klip sayısı gir.";
 "Choose an Instagram photo post link." = "Bir Instagram fotoğraf gönderisi bağlantısı seç.";
 "Choose an existing media file." = "Var olan bir medya dosyası seç.";
@@ -579,6 +591,7 @@
 "Choose files…" = "Dosya seç…";
 "Choose finite photo adjustments within their ranges." = "Fotoğraf ayarlarını izin verilen aralıklarda seç.";
 "Choose media and a supported tool." = "Medya dosyasını ve desteklenen bir aracı seç.";
+"Choose media with a valid duration." = "Geçerli süresi olan bir medya dosyası seç.";
 "Choose one Instagram post with up to 50 items." = "En fazla 50 öğe içeren tek bir Instagram gönderisi seç.";
 "Choose one of the editable metadata fields." = "Düzenlenebilir meta veri alanlarından birini seç.";
 "Choose one or more images to remove their backgrounds." = "Arka planlarını kaldırmak için bir veya daha fazla görsel seç.";
@@ -587,6 +600,7 @@
 "Choose supported GIF and audio sample settings." = "Desteklenen GIF ve ses örnekleme ayarlarını seç.";
 "Choose supported export defaults." = "Desteklenen dışa aktarma varsayılanlarını seç.";
 "Choose supported loudness targets." = "Desteklenen ses düzeyi hedeflerini seç.";
+"Choose the spoken language, then generate subtitles." = "Konuşma dilini seçip altyazı oluştur.";
 "Choose up to 10,000 output pages." = "En fazla 10.000 çıktı sayfası seç.";
 "Choose up to 4 GB of files." = "Toplamı en fazla 4 GB olan dosyalar seç.";
 "Choose valid PDF pages." = "Geçerli PDF sayfaları seç.";
@@ -704,6 +718,7 @@
 "DESCRIPTION" = "AÇIKLAMA";
 "DETACH" = "AYIR";
 "DETAIL" = "AYRINTI";
+"DETECT AUTOMATICALLY" = "OTOMATİK ALGILA";
 "DETECT FACES" = "YÜZLERİ ALGILA";
 "DETECT TEXT" = "METNİ ALGILA";
 "DETECTION UNAVAILABLE" = "ALGILAMA KULLANILAMIYOR";
@@ -736,6 +751,8 @@
 "DOWNLOAD THUMBNAIL" = "KÜÇÜK RESMİ İNDİR";
 "DOWNLOAD VIDEO" = "VİDEOYU İNDİR";
 "DOWNLOAD ↗" = "İNDİR ↗";
+"DOWNLOADING THE SPEECH ENGINE…" = "KONUŞMA MOTORU İNDİRİLİYOR…";
+"DOWNLOADING THE SPEECH MODEL (148 MB)…" = "KONUŞMA MODELİ İNDİRİLİYOR (148 MB)…";
 "DOWNLOADING…" = "İNDİRİLİYOR…";
 "DPI: %@" = "DPI: %@";
 "DPI: %lld" = "DPI: %lld";
@@ -774,6 +791,7 @@
 "Detail" = "Ayrıntı";
 "Detect Faces" = "Yüzleri Algıla";
 "Detect Text" = "Metni Algıla";
+"Detect automatically" = "Otomatik algıla";
 "Detect faces" = "Yüzleri algıla";
 "Detect text" = "Metni algıla";
 "Detection unavailable" = "Algılama kullanılamıyor";
@@ -808,6 +826,8 @@
 "Download ↗" = "İndir ↗";
 "Download, verify and install Lokum %@? The app will restart. No account or token is needed." = "Lokum %@ indirilip doğrulansın ve kurulsun mu? Uygulama yeniden başlayacak. Hesap veya token gerekmez.";
 "Download, verify and install Lokum %lld? The app will restart. No account or token is needed." = "Lokum %lld indirilip doğrulansın ve kurulsun mu? Uygulama yeniden başlayacak. Hesap veya token gerekmez.";
+"Downloading the speech engine…" = "Konuşma motoru indiriliyor…";
+"Downloading the speech model (148 MB)…" = "Konuşma modeli indiriliyor (148 MB)…";
 "Downloading…" = "İndiriliyor…";
 "Drag a crop inside the image." = "Kırpma alanını görselin içinde sürükle.";
 "Drag a range to move it; drag its edges to resize. Drag empty space to add." = "Aralığı taşımak için içini, boyutlandırmak için kenarlarını sürükle. Yeni aralık için boş bir alanı sürükle.";
@@ -834,12 +854,14 @@
 "Duplicate" = "Çoğalt";
 "EACH CLIP HAS ITS OWN RANGE. GAPS, OVERLAPS AND A DIFFERENT SOURCE ORDER ARE ALLOWED." = "HER KLİBİN ARALIĞI BAĞIMSIZDIR. ARALARDA BOŞLUK BIRAKABİLİR, ARALIKLARI ÖRTÜŞTÜREBİLİR VE KAYNAK SIRASINI DEĞİŞTİREBİLİRSİN.";
 "EACH CLIP MUST BE AT LEAST 0.05 SECONDS LONG." = "HER KLİP EN AZ 0,05 SANİYE UZUNLUĞUNDA OLMALI.";
+"EACH SUBTITLE NEEDS TEXT AND A VALID START AND END WITHIN THE MEDIA DURATION." = "HER ALTYAZI İÇİN METİN VE MEDYA SÜRESİ İÇİNDE GEÇERLİ BAŞLANGIÇ/BİTİŞ ZAMANLARI GEREKİR.";
 "EDIT" = "DÜZENLE";
 "EDIT BACKGROUND" = "ARKA PLAN DÜZENLE";
 "EDIT IMAGE" = "GÖRSEL DÜZENLE";
 "EDIT IMAGE · LOKUM" = "GÖRSEL DÜZENLE · LOKUM";
 "EDIT PHOTO" = "GÖRSEL DÜZENLE";
 "EDIT PHOTO · LOKUM" = "GÖRSEL DÜZENLE · LOKUM";
+"EDIT THE TEXT AND TIMESTAMPS BELOW. REVIEW AUTOMATIC SUBTITLES BEFORE SHARING." = "METNİ VE ZAMANLARI DÜZENLEYEBİLİRSİN. PAYLAŞMADAN ÖNCE OTOMATİK ALTYAZILARI KONTROL ET.";
 "EDITABLE CONTENT" = "DÜZENLENEBİLİR İÇERİK";
 "EDITABLE PARAGRAPHS" = "DÜZENLENEBİLİR PARAGRAFLAR";
 "EDITABLE PARAGRAPHS AND TABLES" = "DÜZENLENEBİLİR PARAGRAF VE TABLOLAR";
@@ -851,6 +873,7 @@
 "ENABLE LOKUM SHORTCUTS IN SETTINGS FIRST." = "ÖNCE AYARLAR’DAN LOKUM KISAYOLLARINI ETKİNLEŞTİR.";
 "ENCODED PIXELS, COLOR PROFILE AND DISPLAY ORIENTATION ARE PRESERVED." = "KODLANMIŞ PİKSELLER, RENK PROFİLİ VE GÖRÜNTÜ YÖNÜ KORUNUR.";
 "END" = "BİTİŞ";
+"ENGLISH" = "İNGİLİZCE";
 "ENTER A FINITE NUMBER." = "GEÇERLİ BİR SAYI GİR.";
 "ENTER PAGE NUMBERS WITHIN THIS PDF, IN THE DESIRED ORDER." = "BU PDF'DEKİ SAYFA NUMARALARINI İSTEDİĞİN SIRAYLA GİR.";
 "EPUB LAYOUT" = "EPUB DÜZENİ";
@@ -866,12 +889,14 @@
 "EXTRACT LOKUM INTO ITS OWN WRITABLE FOLDER FIRST." = "ÖNCE LOKUM'Yİ YAZILABİLİR, KENDİNE AİT BİR KLASÖRE ÇIKAR.";
 "Each clip has its own range. Gaps, overlaps and a different source order are allowed." = "Her klibin aralığı bağımsızdır. Aralarda boşluk bırakabilir, aralıkları örtüştürebilir ve kaynak sırasını değiştirebilirsin.";
 "Each clip must be at least 0.05 seconds long." = "Her klip en az 0,05 saniye uzunluğunda olmalı.";
+"Each subtitle needs text and a valid start and end within the media duration." = "Her altyazı için metin ve medya süresi içinde geçerli başlangıç/bitiş zamanları gerekir.";
 "Edit" = "Düzenle";
 "Edit Background" = "Arka Plan Düzenle";
 "Edit Image" = "Görsel Düzenle";
 "Edit Image · Lokum" = "Görsel Düzenle · Lokum";
 "Edit Photo" = "Görsel Düzenle";
 "Edit Photo · Lokum" = "Görsel Düzenle · Lokum";
+"Edit the text and timestamps below. Review automatic subtitles before sharing." = "Metni ve zamanları düzenleyebilirsin. Paylaşmadan önce otomatik altyazıları kontrol et.";
 "Editable content" = "Düzenlenebilir içerik";
 "Editable paragraphs" = "Düzenlenebilir paragraflar";
 "Editable paragraphs and tables" = "Düzenlenebilir paragraf ve tablolar";
@@ -883,6 +908,7 @@
 "Enable Lokum shortcuts in Settings first." = "Önce Ayarlar’dan Lokum kısayollarını etkinleştir.";
 "Encoded pixels, color profile and display orientation are preserved." = "Kodlanmış pikseller, renk profili ve görüntü yönü korunur.";
 "End" = "Bitiş";
+"English" = "İngilizce";
 "Enter a finite number." = "Geçerli bir sayı gir.";
 "Enter a valid number for %@." = "%@ için geçerli bir sayı gir.";
 "Enter a valid number for %lld." = "%lld için geçerli bir sayı gir.";
@@ -960,7 +986,9 @@
 "FRAME RATE" = "KARE HIZI";
 "FRAME TIMING AND REPEAT COUNT ARE PRESERVED." = "KARE SÜRELERİ VE TEKRAR SAYISI KORUNUR.";
 "FREE" = "SERBEST";
+"FREE AND LOCAL. FIRST USE DOWNLOADS A SPEECH MODEL (148 MB). YOUR MEDIA STAYS ON YOUR COMPUTER." = "ÜCRETSİZ VE YEREL. İLK KULLANIMDA KONUŞMA MODELİ İNDİRİLİR (148 MB). MEDYAN BİLGİSAYARINDA KALIR.";
 "FREEHAND SELECTION" = "SERBEST SEÇİM";
+"FRENCH" = "FRANSIZCA";
 "FRESH THINGS, ON THEIR WAY." = "YENİ ŞEYLER YOLDA.";
 "FRESHLY MADE" = "YENİ HAZIRLANANLAR";
 "FRESHLY MADE, PASTED, AND READY FOR ANOTHER ROUND." = "YENİ HAZIRLANAN, YAPIŞTIRILAN VE YENİDEN KULLANIMA HAZIR DOSYALARIN.";
@@ -1032,14 +1060,18 @@
 "Frame rate: %lld" = "Kare hızı: %lld";
 "Frame timing and repeat count are preserved." = "Kare süreleri ve tekrar sayısı korunur.";
 "Free" = "Serbest";
+"Free and local. First use downloads a speech model (148 MB). Your media stays on your computer." = "Ücretsiz ve yerel. İlk kullanımda konuşma modeli indirilir (148 MB). Medyan bilgisayarında kalır.";
 "Freehand selection" = "Serbest seçim";
+"French" = "Fransızca";
 "Fresh things, on their way." = "Yeni şeyler yolda.";
 "Freshly made" = "Yeni hazırlananlar";
 "Freshly made, pasted, and ready for another round." = "Yeni hazırlanan, yapıştırılan ve yeniden kullanıma hazır dosyaların.";
 "GAMMA" = "GAMA";
 "GAMMA MUST BE POSITIVE; CONTRAST AND SATURATION CANNOT BE NEGATIVE." = "GAMA POZİTİF OLMALI; KONTRAST VE DOYGUNLUK NEGATİF OLAMAZ.";
 "GENERAL" = "GENEL";
+"GENERATE SUBTITLES" = "ALTYAZI OLUŞTUR";
 "GENRE" = "TÜR";
+"GERMAN" = "ALMANCA";
 "GET STARTED" = "BAŞLA";
 "GIF FRAME RATE" = "GIF KARE HIZI";
 "GIF FRAMES PER SECOND" = "GIF SANİYEDEKİ KARE SAYISI";
@@ -1061,7 +1093,10 @@
 "Gamma" = "Gama";
 "Gamma must be positive; contrast and saturation cannot be negative." = "Gama pozitif olmalı; kontrast ve doygunluk negatif olamaz.";
 "General" = "Genel";
+"Generate Subtitles" = "Altyazı Oluştur";
+"Generate subtitles" = "Altyazı oluştur";
 "Genre" = "Tür";
+"German" = "Almanca";
 "Get started" = "Başla";
 "GitHub repository" = "GitHub deposu";
 "Give it a little breathing room." = "Biraz nefes alacak alan aç.";
@@ -1114,6 +1149,7 @@
 "INVALID UPDATE SIGNATURE LENGTH." = "GÜNCELLEME İMZASININ UZUNLUĞU GEÇERSİZ.";
 "INVALID UPDATE SIGNATURE." = "GÜNCELLEME İMZASI GEÇERSİZ.";
 "INVALID YOUTUBE VIDEO ID." = "YOUTUBE VİDEO KİMLİĞİ GEÇERSİZ.";
+"ITALIAN" = "İTALYANCA";
 "Icons" = "Simgeler";
 "Image" = "Görsel";
 "Image Compression" = "Görsel Sıkıştırma";
@@ -1145,9 +1181,12 @@
 "Invalid update manifest." = "Güncelleme bilgisi geçersiz.";
 "Invalid update signature length." = "Güncelleme imzasının uzunluğu geçersiz.";
 "Invalid update signature." = "Güncelleme imzası geçersiz.";
+"Italian" = "İtalyanca";
+"JAPANESE" = "JAPONCA";
 "JOIN CLIPS INTO ONE VIDEO" = "KLİPLERİ TEK VİDEODA BİRLEŞTİR";
 "JOIN RETAINED CLIPS INTO ONE VIDEO" = "KALAN KLİPLERİ TEK VİDEODA BİRLEŞTİR";
 "JOIN VIDEOS" = "VİDEOLARI BİRLEŞTİR";
+"Japanese" = "Japonca";
 "Join Videos" = "Videoları Birleştir";
 "Join clips into one video" = "Klipleri tek videoda birleştir";
 "Join retained clips into one video" = "Kalan klipleri tek videoda birleştir";
@@ -1165,6 +1204,7 @@
 "KEEP THINGS\nMOVING." = "AKIŞINI\nKORU.";
 "KEEP WHAT YOU SELECT. SAVE IT TRANSPARENT, OR ADD A NEW BACKGROUND." = "SEÇTİĞİN ALAN KALSIN. ŞEFFAF KAYDET VEYA YENİ BİR ARKA PLAN EKLE.";
 "KEYWORDS" = "ANAHTAR KELİMELER";
+"KOREAN" = "KORECE";
 "Keep at least one clip." = "En az bir klip bırak.";
 "Keep at least one page." = "En az bir sayfa bırak.";
 "Keep clip edges ordered and at least 0.05 seconds apart." = "Klip sınırlarını sıralı tut ve aralarında en az 0,05 saniye bırak.";
@@ -1179,6 +1219,7 @@
 "Keep things\nmoving." = "Akışını\nkoru.";
 "Keep what you select. Save it transparent, or add a new background." = "Seçtiğin alan kalsın. Şeffaf kaydet veya yeni bir arka plan ekle.";
 "Keywords" = "Anahtar kelimeler";
+"Korean" = "Korece";
 "LANDSCAPE" = "YATAY";
 "LANDSCAPE · 16:9" = "YATAY · 16:9";
 "LANGUAGE" = "DİL";
@@ -1302,6 +1343,8 @@
 "MOVE RIGHT" = "SAĞA TAŞI";
 "MOVE UP" = "YUKARI TAŞI";
 "MOVED OR REMOVED" = "TAŞINMIŞ VEYA SİLİNMİŞ";
+"MP4 EMBEDS SUBTITLES PERMANENTLY IN A NEW VIDEO COPY." = "MP4, ALTYAZILARI YENİ BİR VİDEO KOPYASININ GÖRÜNTÜSÜNE KALICI OLARAK EKLER.";
+"MP4 embeds subtitles permanently in a new video copy." = "MP4, altyazıları yeni bir video kopyasının görüntüsüne kalıcı olarak ekler.";
 "MUTE" = "SESSİZE AL";
 "MUTE ONLY THE SELECTED RANGE" = "YALNIZCA SEÇİLİ ARALIĞIN SESİNİ KALDIR";
 "MUTE SELECTED RANGE ONLY" = "YALNIZCA SEÇİLİ ARALIĞIN SESİNİ KALDIR";
@@ -1368,6 +1411,7 @@
 "NO OUTPUT WAS PRODUCED." = "ÇIKTI OLUŞMADI.";
 "NO PUBLIC DOWNLOADABLE MEDIA FOUND. SOME SITES REQUIRE SIGN-IN OR DO NOT EXPOSE DOWNLOADABLE MEDIA." = "HERKESE AÇIK, İNDİRİLEBİLİR MEDYA BULUNAMADI. BAZI SİTELER GİRİŞ GEREKTİRİR VEYA MEDYAYI İNDİRMEYE AÇMAZ.";
 "NO QR CODES THIS TIME." = "QR KODU BULUNAMADI.";
+"NO SPEECH WAS DETECTED. TRY CHOOSING THE SPOKEN LANGUAGE." = "KONUŞMA ALGILANAMADI. KONUŞMA DİLİNİ SEÇEREK TEKRAR DENE.";
 "NO TEXT COULD BE EXTRACTED OR RECOGNIZED IN THIS PDF." = "BU PDF'DEN METİN ÇIKARILAMADI VEYA TANINAMADI.";
 "NO TIMED SUBTITLE CUES WERE FOUND." = "ZAMANLANMIŞ ALTYAZI SATIRI BULUNAMADI.";
 "NO UNPROTECTED DOWNLOADABLE FORMAT IS AVAILABLE." = "KORUMASIZ, İNDİRİLEBİLİR BİR BİÇİM YOK.";
@@ -1398,6 +1442,7 @@
 "No media output was produced." = "Medya çıktısı oluşmadı.";
 "No output was produced." = "Çıktı oluşmadı.";
 "No public downloadable media found. Some sites require sign-in or do not expose downloadable media." = "Herkese açık, indirilebilir medya bulunamadı. Bazı siteler giriş gerektirir veya medyayı indirmeye açmaz.";
+"No speech was detected. Try choosing the spoken language." = "Konuşma algılanamadı. Konuşma dilini seçerek tekrar dene.";
 "No text could be extracted or recognized in this PDF." = "Bu PDF'den metin çıkarılamadı veya tanınamadı.";
 "No timed subtitle cues were found." = "Zamanlanmış altyazı satırı bulunamadı.";
 "No unprotected downloadable format is available." = "Korumasız, indirilebilir bir biçim yok.";
@@ -1432,6 +1477,7 @@
 "OPEN LOKUM" = "LOKUM'Yİ AÇ";
 "OPEN PERMISSION SETTINGS…" = "İZİN AYARLARINI AÇ…";
 "OPEN PREVIEW" = "ÖNİZLEMEYİ AÇ";
+"OPEN SRT…" = "SRT AÇ…";
 "OPEN WHEEL" = "ÇARKI AÇ";
 "OPTIONAL. YOU CAN CHANGE THIS IN SETTINGS." = "İSTEĞE BAĞLI. AYARLARDAN DEĞİŞTİREBİLİRSİN.";
 "ORGANIZE PDF" = "PDF'Yİ DÜZENLE";
@@ -1467,6 +1513,7 @@
 "Open Login Items" = "Giriş Öğelerini Aç";
 "Open Lokum" = "Lokum'yi Aç";
 "Open Preview" = "Önizlemeyi aç";
+"Open SRT…" = "SRT aç…";
 "Open a specific YouTube video or Short, then try again." = "Belirli bir YouTube videosunu veya Shorts’u açıp tekrar dene.";
 "Open in Terminal" = "Terminal'de Aç";
 "Open link" = "Bağlantıyı aç";
@@ -1534,6 +1581,7 @@
 "PREPARE A RESULT BEFORE SAVING." = "KAYDETMEDEN ÖNCE SONUCU HAZIRLA.";
 "PREPARE CHROME CONNECTION" = "CHROME BAĞLANTISINI HAZIRLA";
 "PREPARING A LOCAL PREVIEW…" = "YEREL ÖNİZLEME HAZIRLANIYOR…";
+"PREPARING AUDIO…" = "SES HAZIRLANIYOR…";
 "PREPARING CONVERTED RESULT…" = "DÖNÜŞTÜRÜLMÜŞ SONUÇ HAZIRLANIYOR…";
 "PREPARING PREVIEW…" = "ÖNİZLEME HAZIRLANIYOR…";
 "PREPARING PROCESSED PREVIEW…" = "İŞLENMİŞ ÖNİZLEME HAZIRLANIYOR…";
@@ -1598,6 +1646,7 @@
 "Prepare Chrome connection" = "Chrome bağlantısını hazırla";
 "Prepare a result before saving." = "Kaydetmeden önce sonucu hazırla.";
 "Preparing a local preview…" = "Yerel önizleme hazırlanıyor…";
+"Preparing audio…" = "Ses hazırlanıyor…";
 "Preparing converted result…" = "Dönüştürülmüş sonuç hazırlanıyor…";
 "Preparing preview…" = "Önizleme hazırlanıyor…";
 "Preparing processed preview…" = "İşlenmiş önizleme hazırlanıyor…";
@@ -1709,6 +1758,7 @@
 "ROUNDED" = "YUVARLAK";
 "ROW" = "SATIR";
 "RUNS ON YOUR PC. NO IMAGE UPLOADS." = "BİLGİSAYARINDA ÇALIŞIR. GÖRSELLERİN YÜKLENMEZ.";
+"RUSSIAN" = "RUSÇA";
 "Read QR Code" = "QR Kod Oku";
 "Read QR Code · Lokum" = "QR Kod Oku · Lokum";
 "Read QR Codes" = "QR Kod Oku";
@@ -1788,6 +1838,7 @@
 "Rounded" = "Yuvarlak";
 "Row" = "Satır";
 "Runs on your PC. No image uploads." = "Bilgisayarında çalışır. Görsellerin yüklenmez.";
+"Russian" = "Rusça";
 "SAMPLE DEPTH" = "ÖRNEK DERİNLİĞİ";
 "SATURATION" = "DOYGUNLUK";
 "SAVE" = "KAYDET";
@@ -1869,6 +1920,7 @@
 "SET UP METADATA TOOLS ONCE." = "BİR KEZ META VERİ ARAÇLARINI KUR.";
 "SET UP OFFICE AND MEDIA TOOLS ONCE TO ENABLE NATIVE PAGES INTEROPERABILITY." = "PAGES DOSYALARIYLA DOĞRUDAN ÇALIŞMAK İÇİN BİR KEZ OFİS VE MEDYA ARAÇLARINI KUR.";
 "SET UP OFFICE TOOLS" = "OFİS ARAÇLARINI KUR";
+"SET UP THE SPEECH MODEL FIRST." = "ÖNCE KONUŞMA MODELİNİ KUR.";
 "SET UP TOOLS" = "ARAÇLARI KUR";
 "SETTINGS" = "AYARLAR";
 "SETTINGS COULD NOT BE SAVED" = "AYARLAR KAYDEDİLEMEDİ";
@@ -1910,12 +1962,15 @@
 "SPACE PLAY/PAUSE · ←/→ 1S · ⇧←/→ 1 FRAME · I/O SET RANGE · ⇧SPACE PLAY RANGE" = "SPACE OYNAT/DURAKLAT · ←/→ 1 SN · ⇧←/→ 1 KARE · I/O ARALIĞI AYARLA · ⇧SPACE ARALIĞI OYNAT";
 "SPACE · PREVIEW" = "BOŞLUK · ÖNİZLEME";
 "SPACING" = "BOŞLUK";
+"SPANISH" = "İSPANYOLCA";
 "SPECTRUM" = "SPEKTRUM";
+"SPEECH RECOGNITION FAILED. TRY A SHORTER RECORDING OR CHOOSE THE SPOKEN LANGUAGE." = "KONUŞMA TANINAMADI. DAHA KISA BİR KAYIT DENE VEYA KONUŞMA DİLİNİ SEÇ.";
 "SPEED" = "HIZ";
 "SPLIT PDF" = "PDF'Yİ BÖL";
 "SPLIT POINTS (SECONDS; SEPARATED BY SEMICOLONS)" = "BÖLME NOKTALARI (SANİYE; NOKTALI VİRGÜLLE AYIR)";
 "SPLIT VIDEO" = "VİDEOYU BÖL";
 "SPLITTING REQUIRES A KNOWN DURATION." = "BÖLMEK İÇİN SÜRENİN BİLİNMESİ GEREKİYOR.";
+"SPOKEN LANGUAGE" = "KONUŞMA DİLİ";
 "SPREADSHEETS" = "ELEKTRONİK TABLOLAR";
 "SQUARE" = "KARE";
 "SQUARE · 1:1" = "KARE · 1:1";
@@ -1932,6 +1987,7 @@
 "STYLE" = "STİL";
 "SUBJECT" = "KONU";
 "SUBTITLES" = "ALTYAZILAR";
+"SUBTITLES ARE READY. REVIEW THE TEXT AND TIMING." = "ALTYAZILAR HAZIR. METNİ VE ZAMANLAMAYI KONTROL ET.";
 "SUBTLE ANIMATIONS" = "HAFİF ANİMASYONLAR";
 "SUBTRACT FROM SELECTION" = "SEÇİMDEN ÇIKAR";
 "SVG EXTERNAL RESOURCES ARE NOT LOADED. EMBED THE RASTER IMAGE FIRST." = "SVG DIŞ KAYNAKLARI YÜKLENMEZ. ÖNCE GÖRSELİ SVG DOSYASINA GÖM.";
@@ -2027,6 +2083,7 @@
 "Set up metadata tools once." = "Bir kez meta veri araçlarını kur.";
 "Set up office and media tools once to enable native Pages interoperability." = "Pages dosyalarıyla doğrudan çalışmak için bir kez ofis ve medya araçlarını kur.";
 "Set up office tools" = "Ofis araçlarını kur";
+"Set up the speech model first." = "Önce konuşma modelini kur.";
 "Set up tools" = "Araçları kur";
 "Settings" = "Ayarlar";
 "Settings could not be saved" = "Ayarlar kaydedilemedi";
@@ -2069,12 +2126,15 @@
 "Space play/pause · ←/→ 1s · ⇧←/→ 1 frame · I/O set range · ⇧Space play range" = "Space oynat/duraklat · ←/→ 1 sn · ⇧←/→ 1 kare · I/O aralığı ayarla · ⇧Space aralığı oynat";
 "Space · Preview" = "Boşluk · Önizleme";
 "Spacing" = "Boşluk";
+"Spanish" = "İspanyolca";
 "Spectrum" = "Spektrum";
+"Speech recognition failed. Try a shorter recording or choose the spoken language." = "Konuşma tanınamadı. Daha kısa bir kayıt dene veya konuşma dilini seç.";
 "Speed" = "Hız";
 "Split PDF" = "PDF'yi Böl";
 "Split Video" = "Videoyu Böl";
 "Split points (seconds; separated by semicolons)" = "Bölme noktaları (saniye; noktalı virgülle ayır)";
 "Splitting requires a known duration." = "Bölmek için sürenin bilinmesi gerekiyor.";
+"Spoken language" = "Konuşma dili";
 "Spreadsheets" = "Elektronik tablolar";
 "Square" = "Kare";
 "Square · 1:1" = "Kare · 1:1";
@@ -2090,6 +2150,7 @@
 "Style" = "Stil";
 "Subject" = "Konu";
 "Subtitles" = "Altyazılar";
+"Subtitles are ready. Review the text and timing." = "Altyazılar hazır. Metni ve zamanlamayı kontrol et.";
 "Subtle animations" = "Hafif animasyonlar";
 "Subtract from selection" = "Seçimden çıkar";
 "System" = "Sistem";
@@ -2136,6 +2197,8 @@
 "THE REQUESTED PDF SIZE COULD NOT BE REACHED. CHOOSE A LARGER TARGET." = "İSTENEN PDF BOYUTUNA İNİLEMEDİ. DAHA BÜYÜK BİR HEDEF SEÇ.";
 "THE SAME CONVERSION AND TOOL CATALOG AS MACOS." = "MACOS İLE AYNI DÖNÜŞTÜRME VE ARAÇ SEÇENEKLERİ.";
 "THE SIGNED PACKAGE VERSION DOES NOT MATCH THIS UPDATE." = "İMZALI PAKETİN SÜRÜMÜ BU GÜNCELLEMEYLE EŞLEŞMİYOR.";
+"THE SPEECH MODEL COULD NOT BE OPENED. DOWNLOAD IT AGAIN." = "KONUŞMA MODELİ AÇILAMADI. MODELİ TEKRAR İNDİR.";
+"THE SUBTITLE FILE IS TOO LARGE." = "ALTYAZI DOSYASI ÇOK BÜYÜK.";
 "THE UPDATE DOES NOT CONTAIN LOKUM." = "GÜNCELLEME LOKUM'Yİ İÇERMİYOR.";
 "THE UPDATE SIGNATURE IS INVALID. YOUR EXISTING APP WAS KEPT." = "GÜNCELLEME İMZASI GEÇERSİZ. MEVCUT UYGULAMAN KORUNDU.";
 "THESE FILES HAVE MOVED OR WERE DELETED." = "BU DOSYALAR TAŞINMIŞ VEYA SİLİNMİŞ.";
@@ -2153,10 +2216,12 @@
 "THIS IMAGE IS TOO LARGE TO PASTE. CHOOSE THE IMAGE FILE INSTEAD." = "BU GÖRSEL YAPIŞTIRMAK İÇİN ÇOK BÜYÜK. BUNUN YERİNE GÖRSEL DOSYASINI SEÇ.";
 "THIS LINK DID NOT RETURN A DOWNLOADABLE IMAGE." = "BU BAĞLANTIDAN İNDİRİLEBİLİR BİR GÖRSEL GELMEDİ.";
 "THIS MEDIA ADDRESS IS UNAVAILABLE. SAVE THE FILE, THEN OPEN ITS TOOLS IN LOKUM." = "BU MEDYANIN BAĞLANTISI KULLANILAMIYOR. DOSYAYI KAYDEDİP LOKUM’DA ARAÇLARINI AÇ.";
+"THIS MEDIA HAS NO AUDIO TRACK TO TRANSCRIBE." = "BU MEDYADA ALTYAZIYA DÖNÜŞTÜRÜLEBİLECEK SES KANALI YOK.";
 "THIS OUTPUT FORMAT HAS NO ADJUSTABLE CONVERSION DEFAULTS." = "BU ÇIKTI BİÇİMİNİN AYARLANABİLİR DÖNÜŞTÜRME TERCİHİ YOK.";
 "THIS PDF CONTAINS NO PAGES." = "BU PDF'DE SAYFA YOK.";
 "THIS PDF PAGE COULD NOT BE READ." = "BU PDF SAYFASI OKUNAMADI.";
 "THIS POST CONTAINS VIDEOS. USE ITS REEL LINK TO DOWNLOAD VIDEO." = "BU GÖNDERİDE VİDEO VAR. VİDEOYU İNDİRMEK İÇİN REEL BAĞLANTISINI KULLAN.";
+"THIS RECORDING IS TOO LONG. CUT IT INTO SHORTER CLIPS BEFORE GENERATING SUBTITLES." = "BU KAYIT ÇOK UZUN. ALTYAZI OLUŞTURMADAN ÖNCE DAHA KISA KLİPLERE BÖL.";
 "THIS REPOSITORY IS PRIVATE" = "BU DEPO GİZLİ";
 "THIS RTFD ATTACHMENT SYNTAX COULD NOT BE PRESERVED." = "BU RTFD EKİNİN YAPISI KORUNAMADI.";
 "THIS SIZE CANNOT BE REACHED. CHOOSE A LARGER TARGET OR SMALLER DIMENSIONS." = "BU BOYUTA İNİLEMİYOR. DAHA BÜYÜK BİR HEDEF VEYA DAHA KÜÇÜK BOYUTLAR SEÇ.";
@@ -2179,6 +2244,7 @@
 "TOOLS READY" = "ARAÇLAR HAZIR";
 "TOOLS · WHILE DRAGGING" = "ARAÇLAR · SÜRÜKLERKEN";
 "TOP" = "ÜST";
+"TRANSCRIBING SPEECH ON YOUR COMPUTER…" = "KONUŞMA BİLGİSAYARINDA YAZIYA DÖNÜŞTÜRÜLÜYOR…";
 "TRANSPARENT" = "ŞEFFAF";
 "TRANSPARENT BACKGROUNDS SAVE AS PNG TO KEEP THEIR TRANSPARENCY." = "ŞEFFAF ARKA PLANLAR, ŞEFFAFLIĞI KORUMAK İÇİN PNG OLARAK KAYDEDİLİR.";
 "TRANSPARENT PNG" = "ŞEFFAF PNG";
@@ -2192,6 +2258,7 @@
 "TRY A CLEARER IMAGE OR ANOTHER PDF." = "DAHA NET BİR GÖRSEL VEYA BAŞKA BİR PDF DENE.";
 "TRY AGAIN" = "TEKRAR DENE";
 "TRY FEEDBACK" = "GERİ BİLDİRİMİ DENE";
+"TURKISH" = "TÜRKÇE";
 "TURN OFF UNIFORM WIDTH TO PRESERVE THIS PDF’S FORM FIELDS, ATTACHMENTS, LINKS OR NAVIGATION." = "BU PDF'NİN FORM ALANLARINI, EKLERİNİ, BAĞLANTILARINI VEYA GEZİNMESİNİ KORUMAK İÇİN EŞİT GENİŞLİĞİ KAPAT.";
 "Tap the chosen modifier combination while dragging files." = "Dosyaları sürüklerken seçtiğin tuş birleşimine bas.";
 "Target" = "Hedef";
@@ -2238,6 +2305,8 @@
 "The requested image size could not be reached. Choose a larger target." = "İstenen görsel boyutuna inilemedi. Daha büyük bir hedef seç.";
 "The same conversion and tool catalog as macOS." = "macOS ile aynı dönüştürme ve araç seçenekleri.";
 "The signed package version does not match this update." = "İmzalı paketin sürümü bu güncellemeyle eşleşmiyor.";
+"The speech model could not be opened. Download it again." = "Konuşma modeli açılamadı. Modeli tekrar indir.";
+"The subtitle file is too large." = "Altyazı dosyası çok büyük.";
 "The update does not contain Lokum." = "Güncelleme Lokum'yi içermiyor.";
 "The update signature is invalid. Your existing app was kept." = "Güncelleme imzası geçersiz. Mevcut uygulaman korundu.";
 "These files have moved or were deleted." = "Bu dosyalar taşınmış veya silinmiş.";
@@ -2261,8 +2330,10 @@
 "This image is too large to paste. Choose the image file instead." = "Bu görsel yapıştırmak için çok büyük. Bunun yerine görsel dosyasını seç.";
 "This link did not return a downloadable image." = "Bu bağlantıdan indirilebilir bir görsel gelmedi.";
 "This media address is unavailable. Save the file, then open its tools in Lokum." = "Bu medyanın bağlantısı kullanılamıyor. Dosyayı kaydedip Lokum’da araçlarını aç.";
+"This media has no audio track to transcribe." = "Bu medyada altyazıya dönüştürülebilecek ses kanalı yok.";
 "This output format has no adjustable conversion defaults." = "Bu çıktı biçiminin ayarlanabilir dönüştürme tercihi yok.";
 "This post contains videos. Use its Reel link to download video." = "Bu gönderide video var. Videoyu indirmek için Reel bağlantısını kullan.";
+"This recording is too long. Cut it into shorter clips before generating subtitles." = "Bu kayıt çok uzun. Altyazı oluşturmadan önce daha kısa kliplere böl.";
 "This repository is private" = "Bu depo gizli";
 "This size cannot be reached. Choose a larger target or smaller dimensions." = "Bu boyuta inilemiyor. Daha büyük bir hedef veya daha küçük boyutlar seç.";
 "This text is too large to paste. Choose a text file instead." = "Bu metin yapıştırmak için çok büyük. Bunun yerine bir metin dosyası seç.";
@@ -2283,6 +2354,7 @@
 "Tools ready" = "Araçlar hazır";
 "Tools · while dragging" = "Araçlar · sürüklerken";
 "Top" = "Üst";
+"Transcribing speech on your computer…" = "Konuşma bilgisayarında yazıya dönüştürülüyor…";
 "Transparent" = "Şeffaf";
 "Transparent PNG" = "Şeffaf PNG";
 "Transparent backgrounds save as PNG to keep their transparency." = "Şeffaf arka planlar, şeffaflığı korumak için PNG olarak kaydedilir.";
@@ -2296,6 +2368,7 @@
 "Try a clearer image or another PDF." = "Daha net bir görsel veya başka bir PDF dene.";
 "Try again" = "Tekrar dene";
 "Try feedback" = "Geri bildirimi dene";
+"Turkish" = "Türkçe";
 "Turn off uniform width to preserve this PDF’s form fields, attachments, links or navigation." = "Bu PDF'nin form alanlarını, eklerini, bağlantılarını veya gezinmesini korumak için eşit genişliği kapat.";
 "UNDO" = "GERİ AL";
 "UNDO AREA" = "ALANI GERİ AL";

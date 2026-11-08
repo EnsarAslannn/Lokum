@@ -72,3 +72,9 @@ https://github.com/denoland/deno/archive/refs/tags/v2.9.7.tar.gz
 Runtime license, dependency notices and upstream source references:
 licenses/web-download/Deno-*.txt and V8-LICENSE.txt.
 No browser cookies or login credentials are imported by this feature.
+
+whisper.cpp v1.9.2, Copyright (c) 2023-2026 The ggml authors. MIT.
+https://github.com/ggml-org/whisper.cpp/tree/v1.9.2
+Multilingual Whisper base model, OpenAI, MIT. Runs locally; downloaded on first use.
+https://huggingface.co/ggerganov/whisper.cpp/tree/5359861c739e955e79d9a303bcbc70fb988958b1
+Full licenses: licenses/whisper.cpp-LICENSE.txt and licenses/Whisper-model-LICENSE.txt.

@@ -36,6 +36,9 @@ fi
 mkdir -p "$application/Contents/Frameworks"
 if [[ -d "$application/Contents/Frameworks/Sparkle.framework" ]]; then rm -rf "$application/Contents/Frameworks/Sparkle.framework"; fi
 ditto "$sparkle_framework" "$application/Contents/Frameworks/Sparkle.framework"
+whisper_framework=$(find .build/artifacts -path '*/macos-arm64_x86_64/whisper.framework' -type d -print -quit)
+if [[ -z "$whisper_framework" ]]; then print -u2 'Missing speech recognition framework; run swift package resolve'; exit 1; fi
+ditto "$whisper_framework" "$application/Contents/Frameworks/whisper.framework"
 if [[ "$lokum_public_build" == true ]]; then
   if [[ -e "$application/Contents/Resources/Tools/ffmpeg" || -d "$application/Contents/Resources/Tools/LibreOffice.app" ]]; then
     print -u2 'Public packages require a fresh output directory without bundled third-party runtimes.'; exit 1
@@ -76,6 +79,7 @@ codesign "${lokum_signing_flags[@]}" --preserve-metadata=entitlements "$sparkle_
 codesign "${lokum_signing_flags[@]}" "$sparkle_embedded/Autoupdate"
 codesign "${lokum_signing_flags[@]}" "$sparkle_embedded/Updater.app"
 codesign "${lokum_signing_flags[@]}" "$application/Contents/Frameworks/Sparkle.framework"
+codesign "${lokum_signing_flags[@]}" "$application/Contents/Frameworks/whisper.framework"
 if [[ "$lokum_public_build" == false ]]; then
 codesign "${lokum_signing_flags[@]}" "$application/Contents/Resources/Tools/ffmpeg"
 codesign "${lokum_signing_flags[@]}" "$application/Contents/Resources/Tools/ffprobe"

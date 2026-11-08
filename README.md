@@ -33,10 +33,11 @@ Kütüphane ve ayarlar `%LOCALAPPDATA%/Lokum` altında saklanır.
 
 ## Özellikler
 
-- **45 girdi formatı, 28 araç, 275 dönüşüm yolu:** ortak katalog ve seçim kuralları korunur.
+- **45 girdi formatı, 29 araç, 275 dönüşüm yolu:** ortak katalog ve seçim kuralları korunur.
 - **Görseller:** dönüştürme, sıkıştırma, boyutlandırma, döndürme/yansıtma, kırpma, işaretleme, çerçeve, kolaj, metadata, gizleme ve QR okuma.
 - **Arka plan düzenleme:** serbest veya dikdörtgen seçimle korunacak alanı belirleme, isteğe bağlı yerel otomatik kesim, şeffaf PNG, düz renk veya görsel arka plan. Tek görsel ve toplu seçim desteklenir.
 - **Video ve ses:** dönüştürme, sıkıştırma, görüntü kırpma, bağımsız başlangıç/bitiş aralıklarıyla klip kesme, birleştirme, hız değiştirme, normalizasyon ve kanal ayarları. Videonun tamamını veya yalnızca seçili zaman aralığını sessize alıp sonucu önizleyebilirsin. Video sansürü, seçilen kaplama stilini gerçek işlenmiş önizlemede gösterir. [Kullanım](README.tr.md#sık-kullanılan-akışlar).
+- **Otomatik altyazı:** video veya sesi Whisper ile bilgisayarında yazıya çevir. Metni ve zamanları düzenle, önizle; SRT/TXT/VTT veya altyazılı yeni bir MP4 kaydet. API anahtarı veya ücretli servis gerekmez; çok dilli temel model (148 MB) bir kez indirilir. Konuşma tanıma hata yapabilir.
 - **Belgeler ve arşivler:** PDF oluşturma/birleştirme/bölme/düzenleme, Office/Pages/EPUB/tablo/sunum/altyazı dönüşümleri ve arşiv işlemleri.
 - **Günlük akış:** araç çarkı, sürükleme kısayolları, pano içe aktarma, Float rafı, kütüphane, klasör otomasyonu ve pencere düzenleri.
 - **Web:** desteklenen herkese açık medya bağlantılarından video, ses ve görsel indirme.
@@ -55,6 +56,7 @@ cd Lokum
 Windows için .NET 10 SDK gerekir. PowerShell'de:
 
 ```powershell
+python scripts/setup-speech-engine.py
 dotnet restore windows/Lokum.Windows --locked-mode
 dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lokum
 .\build\windows\Lokum\Lokum.exe
@@ -62,7 +64,7 @@ dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lo
 
 Windows çıktısı `build/windows/Lokum` klasörüne yazılır. Tüm klasör birlikte dağıtılmalıdır.
 
-macOS için macOS 13+, Apple Silicon ve Xcode/Swift 6 gerekir:
+macOS için macOS 13.3+, Apple Silicon ve Xcode/Swift 6 gerekir:
 
 ```sh
 scripts/setup-exiftool.sh

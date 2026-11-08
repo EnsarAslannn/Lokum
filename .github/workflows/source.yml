@@ -35,6 +35,8 @@ jobs:
       - name: All macOS engine and update regressions
         run: |
           mkdir -p build/mac-engines
+          python3 scripts/setup-speech-tests.py build/speech-fixtures
+          export LOKUM_TEST_SPEECH_FIXTURES="$PWD/build/speech-fixtures"
           set -o pipefail
           swift test 2>&1 | tee build/mac-engines/tests.log
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f

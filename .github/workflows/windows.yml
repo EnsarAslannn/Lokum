@@ -21,6 +21,10 @@ jobs:
       - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
         with:
           dotnet-version: '10.0.x'
+      - name: Prepare verified speech runtime
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: python scripts/setup-speech-engine.py
       - name: Audit and publish Windows x64
         shell: pwsh
         run: |
@@ -91,6 +95,23 @@ jobs:
         run: |
           dotnet run --project windows/Lokum.Verify -c Release
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+      - name: Local automatic subtitles and editor preview
+        shell: pwsh
+        run: |
+          python scripts/setup-speech-tests.py build/speech-fixtures --sample-only
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $env:LOKUM_VERIFY_INSTALL_SPEECH = Join-Path $env:RUNNER_TEMP 'Lokum-Speech-Tests'
+          $env:LOKUM_VERIFY_SPEECH_SAMPLE = (Resolve-Path 'build/speech-fixtures/jfk.wav').Path
+          $tools = Join-Path $env:RUNNER_TEMP 'Lokum-Test-Tools'
+          $env:LOKUM_VERIFY_FFMPEG = Join-Path $tools 'ffmpeg.exe'
+          $env:LOKUM_VERIFY_FFPROBE = Join-Path $tools 'ffprobe.exe'
+          dotnet run --project windows/Lokum.Verify -c Release -- --transcription-only
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $app = Join-Path $PWD 'build/windows/Lokum/Lokum.exe'
+          $proof = Join-Path $PWD 'build/subtitle-editor-ui'
+          $source = (Get-ChildItem build/transcription-tests -Filter '*.mp4' | Select-Object -First 1).FullName
+          $process = Start-Process -FilePath $app -ArgumentList @('--subtitle-editor-checks', ('"' + $proof + '"'), ('"' + $source + '"'), ('"' + $tools + '"'), ('"' + $env:LOKUM_VERIFY_INSTALL_SPEECH + '"')) -WindowStyle Hidden -Wait -PassThru
+          if ($process.ExitCode -ne 0) { Get-Content (Join-Path $proof 'error.txt'); throw 'Subtitle editor checks failed' }
       - name: Video cut range mute and processed preview regression
         shell: pwsh
         run: |
@@ -209,6 +230,7 @@ jobs:
             build/video-workspace-tests
             build/video-workspace-ui
             build/conversion-workspace-ui
+            build/subtitle-editor-ui
             build/context-media-checks
             build/context-media-native
             build/browser-download-checks

@@ -77,6 +77,7 @@ public enum FeatureCatalog {
         .redactAudio: "waveform.badge.minus",
         .readQRCode: "qrcode.viewfinder",
         .removeBackground: "person.crop.rectangle",
+        .generateSubtitles: "captions.bubble",
     ]
     public static let toolNames: [ToolKind: String] = [
         .compress: "Compress",
@@ -107,6 +108,7 @@ public enum FeatureCatalog {
         .redactAudio: "Bleep Audio",
         .readQRCode: "Read QR Code",
         .removeBackground: "Edit Background",
+        .generateSubtitles: "Generate Subtitles",
     ]
     public static let singleTools: [String: [ToolKind]] = [
         "jpg": [.compress, .removeMetadata, .editImage, .annotateImage, .frameImage, .cropImage, .redactImage],
@@ -217,6 +219,7 @@ public enum FeatureCatalog {
         let dictionary = inputs.count>1 ? multipleTools : singleTools
         var tools=(dictionary[normalizedExtension(first)] ?? []).filter { tool in inputs.allSatisfy { (dictionary[normalizedExtension($0)] ?? []).contains(tool) } }
         if inputs.allSatisfy(QRCodeEngine.supports) { tools.append(.readQRCode) }
+        if inputs.count == 1, [.video,.audio].contains(FileCategory.detect(first)), normalizedExtension(first) != "gif" { tools.append(.generateSubtitles) }
         if inputs.allSatisfy({FileCategory.detect($0) == .video}) {tools.removeAll{[.splitVideo,.videoSnapshots].contains($0)}}
         if inputs.allSatisfy({FileCategory.detect($0) == .image}) {
             tools=tools.filter{$0 != .frameImage}.map{$0 == .cropImage ? .editImage:$0}

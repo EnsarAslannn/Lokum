@@ -44,6 +44,9 @@ def bundle_for_audit(binary, output):
     framework = repository / ".build/artifacts/sparkle/Sparkle/Sparkle.xcframework/macos-arm64_x86_64/Sparkle.framework"
     shutil.copy2(framework.parents[2] / "LICENSE", resources / "licenses/Sparkle-LICENSE.txt")
     shutil.copytree(framework, contents / "Frameworks/Sparkle.framework", symlinks=True)
+    speech = next((repository / ".build/artifacts").rglob("macos-arm64_x86_64/whisper.framework"))
+    shutil.copytree(speech, contents / "Frameworks/whisper.framework", symlinks=True)
+    subprocess.run(["codesign", "--force", "--sign", "-", "--timestamp=none", str(contents / "Frameworks/whisper.framework")],check=True,capture_output=True)
     subprocess.run(["python3", str(repository / "scripts/configure-updates.py"),
                     str(contents / "Info.plist"), str(repository / "Configuration/Updates.public.plist")],
                    check=True, capture_output=True)

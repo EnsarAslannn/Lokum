@@ -15,4 +15,5 @@
   <ItemGroup><EmbeddedResource Include="../../Sources/LokumCore/Resources/Turkish.json" LogicalName="Lokum.Turkish.json" /></ItemGroup>
   <ItemGroup><EmbeddedResource Include="../../Sources/LokumCore/Resources/LatinWords.json" LogicalName="Lokum.LatinWords.json" /></ItemGroup>
   <ItemGroup><InternalsVisibleTo Include="Lokum.Verify" /></ItemGroup>
+  <ItemGroup><Content Include="../../Tools/Speech/*" Link="Tools/Speech/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
 </Project>
