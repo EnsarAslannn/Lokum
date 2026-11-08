@@ -19,6 +19,8 @@ import LokumCore
     private var token=CancellationToken()
     private var task:Task<Void,Never>?
     private var previewDirectory:URL?
+    private let playbackToken=CancellationToken()
+    private var originalPreview:MediaPreviewResult?
     private var closed=false
     init(input:URL) {self.input=input;player=AVPlayer(url:input)}
     private func validate() {
@@ -27,7 +29,13 @@ import LokumCore
     }
     func inspect() {
         let input=input
-        Task {do{duration=try await Task.detached {try MediaEngine.inspect(input).duration}.value}catch{self.error=error.localizedDescription}}
+        Task {
+            do {
+                duration=try await Task.detached {try MediaEngine.inspect(input).duration}.value
+                let result=try await MediaPreviewEngine.prepare(input,token:playbackToken)
+                if closed {result.removeTemporaryFiles()}else{originalPreview=result;if !resultPlaying {player.replaceCurrentItem(with:AVPlayerItem(url:result.playbackURL))}}
+            }catch{if !closed {self.error=error.localizedDescription}}
+        }
     }
     func generate() {
         guard !busy else{return};busy=true;error=nil;token=CancellationToken();let cancel=token,input=input,chosen=language
@@ -43,7 +51,7 @@ import LokumCore
             busy=false
         }
     }
-    func original() {player.pause();resultPlaying=false;player.replaceCurrentItem(with:AVPlayerItem(url:input))}
+    func original() {player.pause();resultPlaying=false;player.replaceCurrentItem(with:AVPlayerItem(url:originalPreview?.playbackURL ?? input))}
     func showResult() {
         guard !busy,let document else{return}
         if format != "mp4" {original();player.play();return}
@@ -65,7 +73,7 @@ import LokumCore
         }
     }
     func stop() {token.cancel();task?.cancel()}
-    func close() {closed=true;stop();player.pause();player.replaceCurrentItem(with:nil);cleanPreview()}
+    func close() {closed=true;stop();playbackToken.cancel();player.pause();player.replaceCurrentItem(with:nil);cleanPreview();originalPreview?.removeTemporaryFiles();originalPreview=nil}
     private func cleanPreview() {if let previewDirectory {try? FileManager.default.removeItem(at:previewDirectory);self.previewDirectory=nil}}
 }
 

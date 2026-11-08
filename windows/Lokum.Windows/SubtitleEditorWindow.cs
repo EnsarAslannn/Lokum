@@ -26,6 +26,8 @@ internal sealed class SubtitleEditorWindow:Window
     private readonly CancellationTokenSource lifetime=new();
     private CancellationTokenSource? active;
     private string? previewDirectory;
+    private string? proxyDirectory,originalProxy;
+    private bool preparingProxy;
     private SubtitleTranscript? transcript;
     private bool busy,closed,resultPlaying,playing;
     public SubtitleTranscript Transcript=>SubtitleTranscript.FromSrt(text.Text,info.Duration);
@@ -54,8 +56,8 @@ internal sealed class SubtitleEditorWindow:Window
         Status(speech.Ready?"Choose the spoken language, then generate subtitles.":"Free and local. First use downloads a speech model (148 MB). Your media stays on your computer.");UpdateButtons();
         System.Windows.Automation.AutomationProperties.SetAutomationId(text,"subtitles.editor");System.Windows.Automation.AutomationProperties.SetAutomationId(generate,"subtitles.generate");System.Windows.Automation.AutomationProperties.SetAutomationId(preview,"subtitles.preview");System.Windows.Automation.AutomationProperties.SetAutomationId(save,"subtitles.save");
         clock.Tick+=(_,_)=>{if(!seek.IsMouseCaptureWithin&&!seek.IsKeyboardFocusWithin)seek.Value=Math.Clamp(player.Position.TotalSeconds,0,info.Duration);caption.Text=resultPlaying?"":transcript?.At(player.Position.TotalSeconds)??"";caption.Visibility=caption.Text.Length==0?Visibility.Collapsed:Visibility.Visible;};clock.Start();
-        player.MediaEnded+=(_,_)=>{playing=false;player.Pause();};player.MediaFailed+=(_,e)=>Status(e.ErrorException.Message);
-        Closed+=(_,_)=>{closed=true;clock.Stop();lifetime.Cancel();active?.Cancel();player.Close();if(!busy)CleanPreview();};
+        player.MediaEnded+=(_,_)=>{playing=false;player.Pause();};player.MediaFailed+=async(_,e)=>{if(!closed&&!resultPlaying&&originalProxy is null&&!preparingProxy)await PrepareOriginalProxy();else if(!closed)Status(e.ErrorException.Message);};
+        Closed+=(_,_)=>{closed=true;clock.Stop();lifetime.Cancel();active?.Cancel();player.Close();if(!busy)CleanPreview();if(!preparingProxy)CleanProxy();};
     }
     private void Status(string value)=>status.Text=L10n.Text(value);
     private void UpdateButtons(){generate.IsEnabled=import.IsEnabled=!busy;preview.IsEnabled=save.IsEnabled=!busy&&transcript is not null;text.IsReadOnly=busy;language.IsEnabled=format.IsEnabled=!busy;progress.Visibility=busy?Visibility.Visible:Visibility.Collapsed;}
@@ -66,7 +68,22 @@ internal sealed class SubtitleEditorWindow:Window
         UpdateButtons();
     }
     private void Import(){var dialog=new OpenFileDialog{Filter="SubRip (*.srt)|*.srt"};if(dialog.ShowDialog(this)==true){try{if(new FileInfo(dialog.FileName).Length>10*1024*1024)throw new InvalidDataException("The subtitle file is too large.");text.Text=File.ReadAllText(dialog.FileName);}catch(Exception error){Status(error.Message);}}}
-    private void Original(){resultPlaying=false;player.Pause();playing=false;player.Source=new Uri(input);player.Position=TimeSpan.Zero;}
+    private void Original(){resultPlaying=false;player.Pause();playing=false;player.Source=new Uri(originalProxy??input);player.Position=TimeSpan.Zero;}
+    private async Task PrepareOriginalProxy()
+    {
+        preparingProxy=true;proxyDirectory=Path.Combine(Path.GetTempPath(),"Lokum-SubtitleSource-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(proxyDirectory);Status("Preparing a local preview…");
+        try
+        {
+            var path=Path.Combine(proxyDirectory,info.Video is null?"source.wav":"source.mp4");var arguments=new List<string>{"-nostdin","-v","error","-i",input};
+            if(info.Video is null)arguments.AddRange(["-vn","-c:a","pcm_s16le"]);
+            else arguments.AddRange(["-vf","scale=w='min(1280,iw)':h=-2","-c:v","libx264","-preset","veryfast","-crf","23","-pix_fmt","yuv420p","-c:a","aac","-movflags","+faststart"]);
+            arguments.Add(path);await ProcessRunner.RunAsync(tools.Executable("ffmpeg"),arguments,lifetime.Token);
+            if(!closed){originalProxy=path;if(!resultPlaying){Original();player.Play();player.Pause();}Status("Preview ready · export uses your original file.");}
+        }
+        catch(OperationCanceledException){}catch(Exception error){if(!closed)Status(error.Message);}
+        finally{preparingProxy=false;if(closed)CleanProxy();}
+    }
+    private void CleanProxy(){if(proxyDirectory is {} path){try{if(Directory.Exists(path))Directory.Delete(path,true);}catch(IOException){}proxyDirectory=null;}}
     private async Task Generate()
     {
         if(busy)return;busy=true;UpdateButtons();active=CancellationTokenSource.CreateLinkedTokenSource(lifetime.Token);var token=active.Token;var chosen=TranscriptionEngine.Languages.Keys.ElementAt(Math.Max(0,language.SelectedIndex));

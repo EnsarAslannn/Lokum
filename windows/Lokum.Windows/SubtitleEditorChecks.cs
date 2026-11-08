@@ -51,6 +51,18 @@ internal static class SubtitleEditorChecks
             var image=new RenderTargetBitmap((int)editor.ActualWidth,(int)editor.ActualHeight,96,96,PixelFormats.Pbgra32);image.Render(editor);ImageEngine.Save(image,Path.Combine(output,"subtitles-tr-light.png"),"png");
             textbox.Text="1\n00:00:00,000 --> 00:00:02,000\nYeni metin.\n";
             Check(player.Source?.LocalPath==source&&editor.Transcript.Text=="Yeni metin.\n","Editing invalidates the rendered preview and restores the original media.");
+            var opus=Path.Combine(output,"speech.opus");
+            await ProcessRunner.RunAsync(tools.Executable("ffmpeg"),["-y","-v","error","-i",source,"-vn","-c:a","libopus",opus]);
+            var audioInfo=await new MediaEngine(tools.Executable("ffmpeg"),tools.Executable("ffprobe")).InspectAsync(opus);
+            var audioEditor=new SubtitleEditorWindow(owner,opus,audioInfo,tools,new SpeechModelSetup(speechDirectory));
+            try
+            {
+                audioEditor.Show();audioEditor.UpdateLayout();var audio=Find<MediaElement>(audioEditor).Single();
+                await Until(()=>audio.HasAudio);
+                Check(audio.HasAudio,"Compressed speech audio opens in the subtitle preview, using a local playback copy when needed.");
+                Check(!Find<ComboBox>(audioEditor).Any(c=>c.Items.Cast<object>().Any(i=>i as string=="MP4")),"Audio subtitles offer text formats without an unsupported MP4 export.");
+            }
+            finally{audioEditor.Close();}
             File.WriteAllText(Path.Combine(output,"verification.json"),JsonSerializer.Serialize(new{passed=true,checks=checks.Count,details=checks},new JsonSerializerOptions{WriteIndented=true}));
         }
         finally{editor.Close();owner.Close();}
