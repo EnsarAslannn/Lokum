@@ -52,5 +52,7 @@ internal static class TranscriptionChecks
         check(FeatureCatalog.WheelTools(["speech.wav"]).Contains("generateSubtitles"),"Audio wheel must offer automatic subtitles.");
         check(!FeatureCatalog.WheelTools(["picture.png"]).Contains("generateSubtitles"),"Images cannot be transcribed.");
         check(!FeatureCatalog.WheelTools(["a.mp4","b.mp4"]).Contains("generateSubtitles"),"The subtitle editor accepts one media file.");
+        var directory=Path.Combine(Path.GetTempPath(),"Lokum-Folder-"+Guid.NewGuid().ToString("N")+".mp4");Directory.CreateDirectory(directory);
+        try{check(!FeatureCatalog.WheelTools([directory]).Contains("generateSubtitles"),"A folder with a video extension cannot be transcribed.");}finally{Directory.Delete(directory);}
     }
 }

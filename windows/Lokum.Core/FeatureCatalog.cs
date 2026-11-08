@@ -19,7 +19,7 @@ public static class FeatureCatalog
     public static string[] Tools(IReadOnlyList<string> inputs)
     {
         var result=Intersect(inputs,inputs.Count>1?Data.MultipleTools:Data.SingleTools).ToList();
-        if(inputs.Count==1&&(IsVideo(inputs[0])||IsAudio(inputs[0]))&&Extension(inputs[0])!="gif")result.Add("generateSubtitles");
+        if(inputs.Count==1&&!Directory.Exists(inputs[0])&&(IsVideo(inputs[0])||IsAudio(inputs[0]))&&Extension(inputs[0])!="gif")result.Add("generateSubtitles");
         if(inputs.Count>0&&inputs.All(IsVideo))result.RemoveAll(id=>id is "splitVideo" or "videoSnapshots");
         if(inputs.Count>0&&inputs.All(p=>IsImage(p)||Extension(p)=="pdf"))result.Add("readQRCode");
         if(inputs.Count>0&&inputs.All(p=>IsImage(p)&&!Directory.Exists(p)))
