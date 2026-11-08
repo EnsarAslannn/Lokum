@@ -13,7 +13,7 @@ concurrency:
 jobs:
   windows:
     runs-on: windows-2025
-    timeout-minutes: 25
+    timeout-minutes: 40
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
@@ -21,10 +21,15 @@ jobs:
       - uses: actions/setup-dotnet@26b0ec14cb23fa6904739307f278c14f94c95bf1
         with:
           dotnet-version: '10.0.x'
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
       - name: Prepare verified speech runtime
         env:
           GH_TOKEN: ${{ github.token }}
-        run: python scripts/setup-speech-engine.py
+        run: |
+          python scripts/setup-speech-engine.py
+          python scripts/setup-translation-runtime.py
       - name: Audit and publish Windows x64
         shell: pwsh
         run: |
@@ -100,6 +105,9 @@ jobs:
         run: |
           python scripts/setup-speech-tests.py build/speech-fixtures --sample-only
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python scripts/setup-translation-tests.py build/translation-fixtures
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          $env:LOKUM_TEST_TRANSLATION_MODEL = (Resolve-Path 'build/translation-fixtures').Path
           $env:LOKUM_VERIFY_INSTALL_SPEECH = Join-Path $env:RUNNER_TEMP 'Lokum-Speech-Tests'
           $env:LOKUM_VERIFY_SPEECH_SAMPLE = (Resolve-Path 'build/speech-fixtures/jfk.wav').Path
           $tools = Join-Path $env:RUNNER_TEMP 'Lokum-Test-Tools'

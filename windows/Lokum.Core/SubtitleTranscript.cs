@@ -35,4 +35,5 @@ public sealed class SubtitleTranscript
         return new(cues,duration);
     }
     public static SubtitleTranscript FromSrt(string text,double duration)=>new(SubtitleCodec.Parse(text),duration);
+    public static SubtitleTranscript FromCues(IEnumerable<SubtitleCodec.Cue> cues,double duration)=>new(cues,duration);
 }

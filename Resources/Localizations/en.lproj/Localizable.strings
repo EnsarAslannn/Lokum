@@ -21,6 +21,8 @@
 "1 item" = "1 item";
 "1 · SELECT WHAT TO KEEP" = "1 · SELECT WHAT TO KEEP";
 "1 · Select what to keep" = "1 · Select what to keep";
+"1 · VIDEO'S ORIGINAL LANGUAGE" = "1 · VIDEO'S ORIGINAL LANGUAGE";
+"1 · Video's original language" = "1 · Video's original language";
 "1. PREPARE THE CONNECTION ON THIS PC." = "1. PREPARE THE CONNECTION ON THIS PC.";
 "1. Prepare the connection on this PC." = "1. Prepare the connection on this PC.";
 "1/3 LEFT · MIDDLE · RIGHT   /   1/2 LEFT · RIGHT   /   2/3 LEFT · RIGHT" = "1/3 LEFT · MIDDLE · RIGHT   /   1/2 LEFT · RIGHT   /   2/3 LEFT · RIGHT";
@@ -33,6 +35,8 @@
 "1920 px longest edge" = "1920 px longest edge";
 "2 · CHOOSE A BACKGROUND" = "2 · CHOOSE A BACKGROUND";
 "2 · Choose a background" = "2 · Choose a background";
+"2 · SUBTITLE LANGUAGE" = "2 · SUBTITLE LANGUAGE";
+"2 · Subtitle language" = "2 · Subtitle language";
 "2. IN CHROME EXTENSIONS, TURN ON DEVELOPER MODE AND CHOOSE LOAD UNPACKED." = "2. IN CHROME EXTENSIONS, TURN ON DEVELOPER MODE AND CHOOSE LOAD UNPACKED.";
 "2. In Chrome extensions, turn on Developer mode and choose Load unpacked." = "2. In Chrome extensions, turn on Developer mode and choose Load unpacked.";
 "24-BIT INTEGER" = "24-BIT INTEGER";
@@ -72,6 +76,7 @@
 "A STAGED FILE COULD NOT BE VALIDATED." = "A STAGED FILE COULD NOT BE VALIDATED.";
 "A SUBTITLE CUE ENDS BEFORE IT STARTS." = "A SUBTITLE CUE ENDS BEFORE IT STARTS.";
 "A TABLE CELL SPAN IS INVALID OR EXCEEDS 1,024 COLUMNS." = "A TABLE CELL SPAN IS INVALID OR EXCEEDS 1,024 COLUMNS.";
+"A TRANSCRIPT PARAGRAPH IS TOO LONG. SPLIT IT INTO SHORTER SUBTITLES." = "A TRANSCRIPT PARAGRAPH IS TOO LONG. SPLIT IT INTO SHORTER SUBTITLES.";
 "A completed export could not be located." = "A completed export could not be located.";
 "A discarded clip is outside the range." = "A discarded clip is outside the range.";
 "A few small preferences. A smoother everyday." = "A few small preferences. A smoother everyday.";
@@ -98,6 +103,7 @@
 "A staged file could not be validated." = "A staged file could not be validated.";
 "A subtitle cue ends before it starts." = "A subtitle cue ends before it starts.";
 "A table cell span is invalid or exceeds 1,024 columns." = "A table cell span is invalid or exceeds 1,024 columns.";
+"A transcript paragraph is too long. Split it into shorter subtitles." = "A transcript paragraph is too long. Split it into shorter subtitles.";
 "ABOUT" = "ABOUT";
 "ACCESSIBILITY" = "ACCESSIBILITY";
 "ACTIONS" = "ACTIONS";
@@ -346,6 +352,7 @@
 "CHOOSE A FILE TO PREVIEW." = "CHOOSE A FILE TO PREVIEW.";
 "CHOOSE A FINISHED VIDEO INSTEAD OF A LIVE OR UPCOMING STREAM." = "CHOOSE A FINISHED VIDEO INSTEAD OF A LIVE OR UPCOMING STREAM.";
 "CHOOSE A HEX BACKGROUND COLOR, SUCH AS #FFFFFF OR #00FFFFFF." = "CHOOSE A HEX BACKGROUND COLOR, SUCH AS #FFFFFF OR #00FFFFFF.";
+"CHOOSE A LANGUAGE…" = "CHOOSE A LANGUAGE…";
 "CHOOSE A LARGER TARGET SIZE." = "CHOOSE A LARGER TARGET SIZE.";
 "CHOOSE A NONEMPTY IMAGE." = "CHOOSE A NONEMPTY IMAGE.";
 "CHOOSE A PDF SMALLER THAN 200 MB." = "CHOOSE A PDF SMALLER THAN 200 MB.";
@@ -406,6 +413,8 @@
 "CHOOSE SUPPORTED GIF AND AUDIO SAMPLE SETTINGS." = "CHOOSE SUPPORTED GIF AND AUDIO SAMPLE SETTINGS.";
 "CHOOSE SUPPORTED LOUDNESS TARGETS." = "CHOOSE SUPPORTED LOUDNESS TARGETS.";
 "CHOOSE THE SPOKEN LANGUAGE, THEN GENERATE SUBTITLES." = "CHOOSE THE SPOKEN LANGUAGE, THEN GENERATE SUBTITLES.";
+"CHOOSE THE VIDEO'S ORIGINAL LANGUAGE, THEN CREATE AND REVIEW ITS TRANSCRIPT." = "CHOOSE THE VIDEO'S ORIGINAL LANGUAGE, THEN CREATE AND REVIEW ITS TRANSCRIPT.";
+"CHOOSE THE VIDEO'S SOURCE LANGUAGE AND THE SUBTITLE LANGUAGE." = "CHOOSE THE VIDEO'S SOURCE LANGUAGE AND THE SUBTITLE LANGUAGE.";
 "CHOOSE UP TO 10,000 OUTPUT PAGES." = "CHOOSE UP TO 10,000 OUTPUT PAGES.";
 "CHOOSE UP TO 4 GB OF FILES." = "CHOOSE UP TO 4 GB OF FILES.";
 "CHOOSE VALID BACKGROUND AND IMAGE DIMENSIONS." = "CHOOSE VALID BACKGROUND AND IMAGE DIMENSIONS.";
@@ -477,8 +486,11 @@
 "COULDN’T REMOVE THE BACKGROUND." = "COULDN’T REMOVE THE BACKGROUND.";
 "COVER STYLE" = "COVER STYLE";
 "CREATE A NEW FLOAT" = "CREATE A NEW FLOAT";
+"CREATE A NEW TRANSCRIPT FOR THE SELECTED SOURCE LANGUAGE." = "CREATE A NEW TRANSCRIPT FOR THE SELECTED SOURCE LANGUAGE.";
+"CREATE AND REVIEW THE SOURCE TRANSCRIPT FIRST." = "CREATE AND REVIEW THE SOURCE TRANSCRIPT FIRST.";
 "CREATE COLLAGE" = "CREATE COLLAGE";
 "CREATE PDF" = "CREATE PDF";
+"CREATE TRANSCRIPT" = "CREATE TRANSCRIPT";
 "CREATE VISUALIZATION" = "CREATE VISUALIZATION";
 "CREATED" = "CREATED";
 "CREATOR" = "CREATOR";
@@ -552,6 +564,7 @@
 "Choose a file to preview." = "Choose a file to preview.";
 "Choose a finished video instead of a live or upcoming stream." = "Choose a finished video instead of a live or upcoming stream.";
 "Choose a hex background color, such as #FFFFFF or #00FFFFFF." = "Choose a hex background color, such as #FFFFFF or #00FFFFFF.";
+"Choose a language…" = "Choose a language…";
 "Choose a larger target size." = "Choose a larger target size.";
 "Choose a nonempty image." = "Choose a nonempty image.";
 "Choose a plain output filename." = "Choose a plain output filename.";
@@ -601,6 +614,8 @@
 "Choose supported export defaults." = "Choose supported export defaults.";
 "Choose supported loudness targets." = "Choose supported loudness targets.";
 "Choose the spoken language, then generate subtitles." = "Choose the spoken language, then generate subtitles.";
+"Choose the video's original language, then create and review its transcript." = "Choose the video's original language, then create and review its transcript.";
+"Choose the video's source language and the subtitle language." = "Choose the video's source language and the subtitle language.";
 "Choose up to 10,000 output pages." = "Choose up to 10,000 output pages.";
 "Choose up to 4 GB of files." = "Choose up to 4 GB of files.";
 "Choose valid PDF pages." = "Choose valid PDF pages.";
@@ -690,6 +705,9 @@
 "Create PDF" = "Create PDF";
 "Create a New Float" = "Create a New Float";
 "Create a new Float" = "Create a new Float";
+"Create a new transcript for the selected source language." = "Create a new transcript for the selected source language.";
+"Create and review the source transcript first." = "Create and review the source transcript first.";
+"Create transcript" = "Create transcript";
 "Create visualization" = "Create visualization";
 "Created" = "Created";
 "Creator" = "Creator";
@@ -753,6 +771,7 @@
 "DOWNLOAD ↗" = "DOWNLOAD ↗";
 "DOWNLOADING THE SPEECH ENGINE…" = "DOWNLOADING THE SPEECH ENGINE…";
 "DOWNLOADING THE SPEECH MODEL (148 MB)…" = "DOWNLOADING THE SPEECH MODEL (148 MB)…";
+"DOWNLOADING THE TRANSLATION MODEL (459 MB)…" = "DOWNLOADING THE TRANSLATION MODEL (459 MB)…";
 "DOWNLOADING…" = "DOWNLOADING…";
 "DPI: %@" = "DPI: %@";
 "DPI: %lld" = "DPI: %lld";
@@ -828,6 +847,7 @@
 "Download, verify and install Lokum %lld? The app will restart. No account or token is needed." = "Download, verify and install Lokum %lld? The app will restart. No account or token is needed.";
 "Downloading the speech engine…" = "Downloading the speech engine…";
 "Downloading the speech model (148 MB)…" = "Downloading the speech model (148 MB)…";
+"Downloading the translation model (459 MB)…" = "Downloading the translation model (459 MB)…";
 "Downloading…" = "Downloading…";
 "Drag a crop inside the image." = "Drag a crop inside the image.";
 "Drag a range to move it; drag its edges to resize. Drag empty space to add." = "Drag a range to move it; drag its edges to resize. Drag empty space to add.";
@@ -1070,6 +1090,8 @@
 "GAMMA MUST BE POSITIVE; CONTRAST AND SATURATION CANNOT BE NEGATIVE." = "GAMMA MUST BE POSITIVE; CONTRAST AND SATURATION CANNOT BE NEGATIVE.";
 "GENERAL" = "GENERAL";
 "GENERATE SUBTITLES" = "GENERATE SUBTITLES";
+"GENERATE SUBTITLES FROM THE REVIEWED TRANSCRIPT FIRST." = "GENERATE SUBTITLES FROM THE REVIEWED TRANSCRIPT FIRST.";
+"GENERATE SUBTITLES FROM TRANSCRIPT" = "GENERATE SUBTITLES FROM TRANSCRIPT";
 "GENRE" = "GENRE";
 "GERMAN" = "GERMAN";
 "GET STARTED" = "GET STARTED";
@@ -1095,6 +1117,8 @@
 "General" = "General";
 "Generate Subtitles" = "Generate Subtitles";
 "Generate subtitles" = "Generate subtitles";
+"Generate subtitles from the reviewed transcript first." = "Generate subtitles from the reviewed transcript first.";
+"Generate subtitles from transcript" = "Generate subtitles from transcript";
 "Genre" = "Genre";
 "German" = "German";
 "Get started" = "Get started";
@@ -1744,6 +1768,7 @@
 "RETURN TO CHROME AND TRY CTRL + LEFT-CLICK AGAIN." = "RETURN TO CHROME AND TRY CTRL + LEFT-CLICK AGAIN.";
 "REVEAL FINISHED FILES IN EXPLORER" = "REVEAL FINISHED FILES IN EXPLORER";
 "REVEAL FINISHED FILES IN FINDER" = "REVEAL FINISHED FILES IN FINDER";
+"REVIEW THE SOURCE TRANSCRIPT FIRST. TRANSLATIONS KEEP ITS TIMING; EDIT THE RESULTING SUBTITLES BEFORE SHARING." = "REVIEW THE SOURCE TRANSCRIPT FIRST. TRANSLATIONS KEEP ITS TIMING; EDIT THE RESULTING SUBTITLES BEFORE SHARING.";
 "RIGHT" = "RIGHT";
 "RIGHT HALF" = "RIGHT HALF";
 "RIGHT THIRD" = "RIGHT THIRD";
@@ -1824,6 +1849,7 @@
 "Return to Chrome and try Ctrl + left-click again." = "Return to Chrome and try Ctrl + left-click again.";
 "Reveal finished files in Explorer" = "Reveal finished files in Explorer";
 "Reveal finished files in Finder" = "Reveal finished files in Finder";
+"Review the source transcript first. Translations keep its timing; edit the resulting subtitles before sharing." = "Review the source transcript first. Translations keep its timing; edit the resulting subtitles before sharing.";
 "Right" = "Right";
 "Right half" = "Right half";
 "Right third" = "Right third";
@@ -1958,6 +1984,8 @@
 "SOUND FEEDBACK" = "SOUND FEEDBACK";
 "SOUND FOLLOWS YOUR MAC’S VOLUME. HAPTICS NEED A COMPATIBLE FORCE TOUCH TRACKPAD." = "SOUND FOLLOWS YOUR MAC’S VOLUME. HAPTICS NEED A COMPATIBLE FORCE TOUCH TRACKPAD.";
 "SOURCE & THIRD-PARTY NOTICES" = "SOURCE & THIRD-PARTY NOTICES";
+"SOURCE TRANSCRIPT" = "SOURCE TRANSCRIPT";
+"SOURCE TRANSCRIPT READY. REVIEW IT, THEN CHOOSE THE SUBTITLE LANGUAGE." = "SOURCE TRANSCRIPT READY. REVIEW IT, THEN CHOOSE THE SUBTITLE LANGUAGE.";
 "SPACE PLAY/PAUSE · ←/→ 1S · SHIFT+←/→ 1 FRAME (VIDEO), 0.1S (AUDIO) · I/O SET RANGE · ENTER SAVE" = "SPACE PLAY/PAUSE · ←/→ 1S · SHIFT+←/→ 1 FRAME (VIDEO), 0.1S (AUDIO) · I/O SET RANGE · ENTER SAVE";
 "SPACE PLAY/PAUSE · ←/→ 1S · ⇧←/→ 1 FRAME · I/O SET RANGE · ⇧SPACE PLAY RANGE" = "SPACE PLAY/PAUSE · ←/→ 1S · ⇧←/→ 1 FRAME · I/O SET RANGE · ⇧SPACE PLAY RANGE";
 "SPACE · PREVIEW" = "SPACE · PREVIEW";
@@ -1986,6 +2014,7 @@
 "STRONG" = "STRONG";
 "STYLE" = "STYLE";
 "SUBJECT" = "SUBJECT";
+"SUBTITLE LANGUAGE" = "SUBTITLE LANGUAGE";
 "SUBTITLES" = "SUBTITLES";
 "SUBTITLES ARE READY. REVIEW THE TEXT AND TIMING." = "SUBTITLES ARE READY. REVIEW THE TEXT AND TIMING.";
 "SUBTLE ANIMATIONS" = "SUBTLE ANIMATIONS";
@@ -2122,6 +2151,8 @@
 "Sound feedback" = "Sound feedback";
 "Sound follows your Mac’s volume. Haptics need a compatible Force Touch trackpad." = "Sound follows your Mac’s volume. Haptics need a compatible Force Touch trackpad.";
 "Source & third-party notices" = "Source & third-party notices";
+"Source transcript" = "Source transcript";
+"Source transcript ready. Review it, then choose the subtitle language." = "Source transcript ready. Review it, then choose the subtitle language.";
 "Space play/pause · ←/→ 1s · Shift+←/→ 1 frame (video), 0.1s (audio) · I/O set range · Enter save" = "Space play/pause · ←/→ 1s · Shift+←/→ 1 frame (video), 0.1s (audio) · I/O set range · Enter save";
 "Space play/pause · ←/→ 1s · ⇧←/→ 1 frame · I/O set range · ⇧Space play range" = "Space play/pause · ←/→ 1s · ⇧←/→ 1 frame · I/O set range · ⇧Space play range";
 "Space · Preview" = "Space · Preview";
@@ -2149,6 +2180,7 @@
 "Strong" = "Strong";
 "Style" = "Style";
 "Subject" = "Subject";
+"Subtitle language" = "Subtitle language";
 "Subtitles" = "Subtitles";
 "Subtitles are ready. Review the text and timing." = "Subtitles are ready. Review the text and timing.";
 "Subtle animations" = "Subtle animations";
@@ -2199,6 +2231,9 @@
 "THE SIGNED PACKAGE VERSION DOES NOT MATCH THIS UPDATE." = "THE SIGNED PACKAGE VERSION DOES NOT MATCH THIS UPDATE.";
 "THE SPEECH MODEL COULD NOT BE OPENED. DOWNLOAD IT AGAIN." = "THE SPEECH MODEL COULD NOT BE OPENED. DOWNLOAD IT AGAIN.";
 "THE SUBTITLE FILE IS TOO LARGE." = "THE SUBTITLE FILE IS TOO LARGE.";
+"THE TRANSLATION ENGINE IS MISSING. EXTRACT THE COMPLETE LOKUM PACKAGE AGAIN." = "THE TRANSLATION ENGINE IS MISSING. EXTRACT THE COMPLETE LOKUM PACKAGE AGAIN.";
+"THE TRANSLATION LANGUAGE DOES NOT MATCH YOUR SELECTION." = "THE TRANSLATION LANGUAGE DOES NOT MATCH YOUR SELECTION.";
+"THE TRANSLATION WAS INCOMPLETE. NO SUBTITLES WERE SAVED." = "THE TRANSLATION WAS INCOMPLETE. NO SUBTITLES WERE SAVED.";
 "THE UPDATE DOES NOT CONTAIN LOKUM." = "THE UPDATE DOES NOT CONTAIN LOKUM.";
 "THE UPDATE SIGNATURE IS INVALID. YOUR EXISTING APP WAS KEPT." = "THE UPDATE SIGNATURE IS INVALID. YOUR EXISTING APP WAS KEPT.";
 "THESE FILES HAVE MOVED OR WERE DELETED." = "THESE FILES HAVE MOVED OR WERE DELETED.";
@@ -2245,6 +2280,7 @@
 "TOOLS · WHILE DRAGGING" = "TOOLS · WHILE DRAGGING";
 "TOP" = "TOP";
 "TRANSCRIBING SPEECH ON YOUR COMPUTER…" = "TRANSCRIBING SPEECH ON YOUR COMPUTER…";
+"TRANSLATING THE REVIEWED TRANSCRIPT ON YOUR COMPUTER…" = "TRANSLATING THE REVIEWED TRANSCRIPT ON YOUR COMPUTER…";
 "TRANSPARENT" = "TRANSPARENT";
 "TRANSPARENT BACKGROUNDS SAVE AS PNG TO KEEP THEIR TRANSPARENCY." = "TRANSPARENT BACKGROUNDS SAVE AS PNG TO KEEP THEIR TRANSPARENCY.";
 "TRANSPARENT PNG" = "TRANSPARENT PNG";
@@ -2307,6 +2343,9 @@
 "The signed package version does not match this update." = "The signed package version does not match this update.";
 "The speech model could not be opened. Download it again." = "The speech model could not be opened. Download it again.";
 "The subtitle file is too large." = "The subtitle file is too large.";
+"The translation engine is missing. Extract the complete Lokum package again." = "The translation engine is missing. Extract the complete Lokum package again.";
+"The translation language does not match your selection." = "The translation language does not match your selection.";
+"The translation was incomplete. No subtitles were saved." = "The translation was incomplete. No subtitles were saved.";
 "The update does not contain Lokum." = "The update does not contain Lokum.";
 "The update signature is invalid. Your existing app was kept." = "The update signature is invalid. Your existing app was kept.";
 "These files have moved or were deleted." = "These files have moved or were deleted.";
@@ -2355,6 +2394,7 @@
 "Tools · while dragging" = "Tools · while dragging";
 "Top" = "Top";
 "Transcribing speech on your computer…" = "Transcribing speech on your computer…";
+"Translating the reviewed transcript on your computer…" = "Translating the reviewed transcript on your computer…";
 "Transparent" = "Transparent";
 "Transparent PNG" = "Transparent PNG";
 "Transparent backgrounds save as PNG to keep their transparency." = "Transparent backgrounds save as PNG to keep their transparency.";
@@ -2446,6 +2486,7 @@
 "VIDEO QUALITY" = "VIDEO QUALITY";
 "VIDEO SIZE" = "VIDEO SIZE";
 "VIDEO SNAPSHOTS" = "VIDEO SNAPSHOTS";
+"VIDEO'S ORIGINAL LANGUAGE" = "VIDEO'S ORIGINAL LANGUAGE";
 "VIDEO, AUDIO, OR AN IMAGE. STRAIGHT INTO YOUR TOOLS." = "VIDEO, AUDIO, OR AN IMAGE. STRAIGHT INTO YOUR TOOLS.";
 "VIGNETTE" = "VIGNETTE";
 "VISUALIZATION" = "VISUALIZATION";
@@ -2457,6 +2498,7 @@
 "Video compression" = "Video compression";
 "Video quality" = "Video quality";
 "Video size" = "Video size";
+"Video's original language" = "Video's original language";
 "Video, audio, or an image. Straight into your tools." = "Video, audio, or an image. Straight into your tools.";
 "Vignette" = "Vignette";
 "Visualization" = "Visualization";

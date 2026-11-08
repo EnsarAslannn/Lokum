@@ -6,26 +6,39 @@ import LokumCore
 @MainActor final class SubtitleEditorModel:ObservableObject {
     let input:URL
     let player:AVPlayer
+    @Published var sourceText="" {didSet{sourceEdited()}}
     @Published var text="" {didSet{validate()}}
-    @Published var language="auto"
+    @Published var language="" {didSet{if language != oldValue {sourceText="";workflow.invalidateSource();sourceReady=false;resetResult()}}}
+    @Published var targetLanguage="" {didSet{if targetLanguage != oldValue {if !targetLanguage.isEmpty {try? workflow.chooseTarget(targetLanguage)};resetResult()}}}
     @Published var format="srt"
     @Published var busy=false
-    @Published var label="Free and local. First use downloads a speech model (148 MB). Your media stays on your computer."
+    @Published var label="Choose the video's original language, then create and review its transcript."
     @Published var fraction:Double?
     @Published var document:SubtitleTranscript?
-    @Published var duration=0.0 {didSet{validate()}}
+    @Published var sourceReady=false
+    @Published var hasTargetDraft=false
+    @Published var selectedTab=0
+    @Published var duration=0.0 {didSet{workflow.duration=duration;if duration != oldValue,!sourceText.isEmpty {sourceEdited()}}}
     @Published var error:String?
     @Published var resultPlaying=false
+    private var workflow=SubtitleWorkflow(duration:0)
     private var token=CancellationToken()
     private var task:Task<Void,Never>?
     private var previewDirectory:URL?
     private let playbackToken=CancellationToken()
     private var originalPreview:MediaPreviewResult?
     private var closed=false
+    var canTranslate:Bool {!busy && workflow.canTranslate && !targetLanguage.isEmpty}
     init(input:URL) {self.input=input;player=AVPlayer(url:input)}
+    private func resetResult() {hasTargetDraft=false;document=nil;text="";if resultPlaying {original()}}
+    private func sourceEdited() {
+        resetResult()
+        do {try workflow.setSource(sourceText,language:language);sourceReady=true;error=nil;label="Source transcript ready. Review it, then choose the subtitle language."}
+        catch{workflow.invalidateSource();sourceReady=false;if !sourceText.isEmpty {self.error=error.localizedDescription}}
+    }
     private func validate() {
-        guard !text.isEmpty else {document=nil;error=nil;return}
-        do {document=try SubtitleTranscript(srt:text,duration:duration);error=nil}catch{document=nil;self.error=error.localizedDescription}
+        guard hasTargetDraft else{return}
+        do {try workflow.updateSubtitles(text);document=workflow.subtitles;error=nil}catch{document=nil;self.error=error.localizedDescription}
     }
     func inspect() {
         let input=input
@@ -38,7 +51,7 @@ import LokumCore
         }
     }
     func generate() {
-        guard !busy else{return};busy=true;error=nil;token=CancellationToken();let cancel=token,input=input,chosen=language
+        guard !busy,!language.isEmpty else{return};busy=true;error=nil;token=CancellationToken();let cancel=token,input=input,chosen=language
         task=Task {
             do {
                 let info=try await Task.detached {try MediaEngine.inspect(input,token:cancel)}.value
@@ -46,17 +59,30 @@ import LokumCore
                 duration=info.duration
                 try await SpeechModelSetup.install(token:cancel) {amount,message in Task{@MainActor in if !self.closed {self.fraction=amount;self.label=message}}}
                 let transcript=try await Task.detached(priority:.userInitiated) {try TranscriptionEngine.transcribe(input,language:chosen,token:cancel) {_,message in Task{@MainActor in if !self.closed {self.fraction=nil;self.label=message}}}}.value
-                if !closed {text=transcript.srt;label="Subtitles are ready. Review the text and timing."}
+                if !closed {sourceText=transcript.srt;selectedTab=0}
+            }catch{if !closed {self.error=cancel.isCancelled ? L10n.text("Cancelled. Originals kept."):error.localizedDescription}}
+            busy=false
+        }
+    }
+    func translate() {
+        guard canTranslate,let source=workflow.source,let from=workflow.sourceLanguage else{return}
+        let target=targetLanguage,revision=workflow.revision,cancel=CancellationToken();token=cancel;busy=true;error=nil
+        task=Task {
+            do {
+                let result:SubtitleTranscript
+                if from==target {result=source}
+                else {
+                    try await TranslationModelSetup.install(token:cancel) {amount,message in Task{@MainActor in if !self.closed {self.fraction=amount;self.label=message}}}
+                    let seconds=duration
+                    result=try await Task.detached(priority:.userInitiated) {try SubtitleTranslationEngine.translate(source,duration:seconds,sourceLanguage:from,targetLanguage:target,token:cancel)}.value
+                }
+                if !closed,try workflow.acceptTranslation(result.srt,revision:revision,target:target) {hasTargetDraft=true;text=result.srt;document=workflow.subtitles;selectedTab=1;label="Subtitles are ready. Review the text and timing."}
             }catch{if !closed {self.error=cancel.isCancelled ? L10n.text("Cancelled. Originals kept."):error.localizedDescription}}
             busy=false
         }
     }
     func original() {player.pause();resultPlaying=false;player.replaceCurrentItem(with:AVPlayerItem(url:originalPreview?.playbackURL ?? input))}
-    func showResult() {
-        guard !busy,let document else{return}
-        if format != "mp4" {original();player.play();return}
-        prepare(document,save:nil)
-    }
+    func showResult() {guard !busy,let document else{return};if format != "mp4" {original();player.play();return};prepare(document,save:nil)}
     func save(_ destination:URL,state:AppState) {guard !busy,let document else{return};prepare(document,save:(destination,state))}
     private func prepare(_ document:SubtitleTranscript,save:(URL,AppState)?) {
         busy=true;error=nil;original();token=CancellationToken();let cancel=token,input=input,format=save == nil ? "mp4":self.format
@@ -83,6 +109,7 @@ struct SubtitleEditorView:View {
     @State private var position=0.0
     @State private var ownerWindowID:ObjectIdentifier?
     private let clock=Timer.publish(every:0.1,on:.main,in:.common).autoconnect()
+    private var languages:[(String,String)] {TranscriptionEngine.languages.filter{$0.0 != "auto"}}
     init(state:AppState,input:URL) {self.state=state;_model=StateObject(wrappedValue:SubtitleEditorModel(input:input))}
     var body:some View {
         VStack(spacing:0) {
@@ -95,13 +122,19 @@ struct SubtitleEditorView:View {
                     }.frame(minHeight:260).cornerRadius(12)
                     Button("Original") {model.original()}
                 }
-                VStack(alignment:.leading,spacing:12) {
-                    LText("Spoken language").font(.headline)
-                    Picker("Spoken language",selection:$model.language) {ForEach(TranscriptionEngine.languages,id:\.0) {item in Text(L10n.text(item.1)).tag(item.0)}}.labelsHidden().disabled(model.busy)
-                    HStack {Button("Generate subtitles",action:model.generate).disabled(model.busy);Button("Open SRT…") {let panel=NSOpenPanel();panel.allowedFileTypes=["srt"];panel.allowsMultipleSelection=false;if panel.runModal() == .OK,let url=panel.url {do{model.text=try String(contentsOf:url,encoding:.utf8)}catch{model.error=error.localizedDescription}}}.disabled(model.busy)}
-                    TextEditor(text:$model.text).font(.system(.body,design:.monospaced)).frame(minHeight:250).disabled(model.busy).accessibilityIdentifier("subtitles.editor")
-                    LText("Edit the text and timestamps below. Review automatic subtitles before sharing.").font(.caption).foregroundStyle(.secondary)
-                }.frame(minWidth:300,maxWidth:420)
+                VStack(alignment:.leading,spacing:10) {
+                    LText("1 · Video's original language").font(.headline)
+                    Picker("Video's original language",selection:$model.language) {Text(L10n.text("Choose a language…")).tag("");ForEach(languages,id:\.0) {Text(L10n.text($0.1)).tag($0.0)}}.labelsHidden().disabled(model.busy)
+                    HStack {Button("Create transcript",action:model.generate).disabled(model.busy || model.language.isEmpty);Button("Open SRT…") {let panel=NSOpenPanel();panel.allowedFileTypes=["srt"];if panel.runModal() == .OK,let url=panel.url {do{model.sourceText=try String(contentsOf:url,encoding:.utf8);model.selectedTab=0}catch{model.error=error.localizedDescription}}}.disabled(model.busy || model.language.isEmpty)}
+                    LText("2 · Subtitle language").font(.headline)
+                    Picker("Subtitle language",selection:$model.targetLanguage) {Text(L10n.text("Choose a language…")).tag("");ForEach(languages,id:\.0) {Text(L10n.text($0.1)).tag($0.0)}}.labelsHidden().disabled(model.busy || !model.sourceReady)
+                    Button("Generate subtitles from transcript",action:model.translate).disabled(!model.canTranslate)
+                    TabView(selection:$model.selectedTab) {
+                        TextEditor(text:$model.sourceText).font(.system(.body,design:.monospaced)).disabled(model.busy || model.language.isEmpty).accessibilityIdentifier("subtitles.source").tabItem{LText("Source transcript")}.tag(0)
+                        TextEditor(text:$model.text).font(.system(.body,design:.monospaced)).disabled(model.busy || !model.hasTargetDraft).accessibilityIdentifier("subtitles.editor").tabItem{LText("Subtitles")}.tag(1)
+                    }.frame(minHeight:200)
+                    LText("Review the source transcript first. Translations keep its timing; edit the resulting subtitles before sharing.").font(.caption).foregroundStyle(.secondary)
+                }.frame(minWidth:320,maxWidth:440)
             }.padding(22)
             Spacer(minLength:0)
             VStack(alignment:.leading,spacing:10) {
@@ -112,9 +145,7 @@ struct SubtitleEditorView:View {
                     Spacer()
                     Picker("Output format",selection:$model.format) {Text("SRT").tag("srt");Text("TXT").tag("txt");Text("VTT").tag("vtt");if FileCategory.detect(model.input) == .video {Text("MP4").tag("mp4")}}.frame(width:180).disabled(model.busy).help(L10n.text("MP4 embeds subtitles permanently in a new video copy."))
                     Button("Show Result",action:model.showResult).disabled(model.busy || model.document == nil)
-                    Button("Save new copy  ↗") {
-                        let panel=NSOpenPanel();panel.canChooseFiles=false;panel.canChooseDirectories=true;panel.canCreateDirectories=true;panel.directoryURL=model.input.deletingLastPathComponent();if panel.runModal() == .OK,let url=panel.url {model.save(url,state:state)}
-                    }.buttonStyle(LokumButtonStyle(.primary)).disabled(model.busy || model.document == nil || state.working)
+                    Button("Save new copy  ↗") {let panel=NSOpenPanel();panel.canChooseFiles=false;panel.canChooseDirectories=true;panel.canCreateDirectories=true;panel.directoryURL=model.input.deletingLastPathComponent();if panel.runModal() == .OK,let url=panel.url {model.save(url,state:state)}}.buttonStyle(LokumButtonStyle(.primary)).disabled(model.busy || model.document == nil || state.working)
                 }
             }.padding(22)
         }.background(LokumPalette.canvas).tint(.lokum).buttonStyle(LokumButtonStyle(.secondary,compact:true))

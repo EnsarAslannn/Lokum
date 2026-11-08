@@ -20,6 +20,8 @@ if [[ -f "$application/Contents/Info.plist" ]]; then
   if [[ "$existing_identifier" != "$expected_identifier" ]]; then print -u2 "Refusing to overwrite a different application at $application"; exit 1; fi
 fi
 mkdir -p "$application/Contents/MacOS" "$application/Contents/Resources/Tools"
+if [[ ! -x Tools/Translate/translate ]]; then python3 scripts/setup-translation-runtime.py; fi
+ditto Tools/Translate "$application/Contents/Resources/Tools/Translate"
 cp "$binary_dir/Lokum" "$application/Contents/MacOS/Lokum"
 if [[ "$configuration" == release ]]; then /usr/bin/strip -S "$application/Contents/MacOS/Lokum"; fi
 cp Resources/Info.plist "$application/Contents/Info.plist"
@@ -80,6 +82,7 @@ codesign "${lokum_signing_flags[@]}" "$sparkle_embedded/Autoupdate"
 codesign "${lokum_signing_flags[@]}" "$sparkle_embedded/Updater.app"
 codesign "${lokum_signing_flags[@]}" "$application/Contents/Frameworks/Sparkle.framework"
 codesign "${lokum_signing_flags[@]}" "$application/Contents/Frameworks/whisper.framework"
+python3 scripts/sign-translation-runtime.py "$application/Contents/Resources/Tools/Translate" "${lokum_signing_flags[@]}"
 if [[ "$lokum_public_build" == false ]]; then
 codesign "${lokum_signing_flags[@]}" "$application/Contents/Resources/Tools/ffmpeg"
 codesign "${lokum_signing_flags[@]}" "$application/Contents/Resources/Tools/ffprobe"

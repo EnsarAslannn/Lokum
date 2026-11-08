@@ -21,6 +21,8 @@
 "1 item" = "1 öğe";
 "1 · SELECT WHAT TO KEEP" = "1 · KORUNACAK ALANI SEÇ";
 "1 · Select what to keep" = "1 · Korunacak alanı seç";
+"1 · VIDEO'S ORIGINAL LANGUAGE" = "1 · VİDEONUN ANA DİLİ";
+"1 · Video's original language" = "1 · Videonun ana dili";
 "1. PREPARE THE CONNECTION ON THIS PC." = "1. BU BİLGİSAYARDA BAĞLANTIYI HAZIRLA.";
 "1. Prepare the connection on this PC." = "1. Bu bilgisayarda bağlantıyı hazırla.";
 "1/3 LEFT · MIDDLE · RIGHT   /   1/2 LEFT · RIGHT   /   2/3 LEFT · RIGHT" = "1/3 SOL · ORTA · SAĞ   /   1/2 SOL · SAĞ   /   2/3 SOL · SAĞ";
@@ -33,6 +35,8 @@
 "1920 px longest edge" = "Uzun kenar 1920 px";
 "2 · CHOOSE A BACKGROUND" = "2 · ARKA PLAN SEÇ";
 "2 · Choose a background" = "2 · Arka plan seç";
+"2 · SUBTITLE LANGUAGE" = "2 · ALTYAZI DİLİ";
+"2 · Subtitle language" = "2 · Altyazı dili";
 "2. IN CHROME EXTENSIONS, TURN ON DEVELOPER MODE AND CHOOSE LOAD UNPACKED." = "2. CHROME UZANTILARINDA GELİŞTİRİCİ MODU’NU AÇIP PAKETLENMEMİŞ ÖĞE YÜKLE’Yİ SEÇ.";
 "2. In Chrome extensions, turn on Developer mode and choose Load unpacked." = "2. Chrome uzantılarında Geliştirici modu’nu açıp Paketlenmemiş öğe yükle’yi seç.";
 "24-BIT INTEGER" = "24 BİT TAM SAYI";
@@ -72,6 +76,7 @@
 "A STAGED FILE COULD NOT BE VALIDATED." = "HAZIRLANAN DOSYA DOĞRULANAMADI.";
 "A SUBTITLE CUE ENDS BEFORE IT STARTS." = "BİR ALTYAZI SATIRI BAŞLAMADAN BİTİYOR.";
 "A TABLE CELL SPAN IS INVALID OR EXCEEDS 1,024 COLUMNS." = "BİR TABLO HÜCRESİNİN GENİŞLİĞİ GEÇERSİZ VEYA 1.024 SÜTUNU AŞIYOR.";
+"A TRANSCRIPT PARAGRAPH IS TOO LONG. SPLIT IT INTO SHORTER SUBTITLES." = "BİR TRANSKRİPT PARAGRAFI ÇOK UZUN. DAHA KISA ALTYAZILARA BÖL.";
 "A completed export could not be located." = "Tamamlanan çıktı bulunamadı.";
 "A discarded clip is outside the range." = "Çıkarılan bir klip aralığın dışında.";
 "A few small preferences. A smoother everyday." = "Birkaç küçük tercih. Daha akıcı bir gün.";
@@ -98,6 +103,7 @@
 "A staged file could not be validated." = "Hazırlanan dosya doğrulanamadı.";
 "A subtitle cue ends before it starts." = "Bir altyazı satırı başlamadan bitiyor.";
 "A table cell span is invalid or exceeds 1,024 columns." = "Bir tablo hücresinin genişliği geçersiz veya 1.024 sütunu aşıyor.";
+"A transcript paragraph is too long. Split it into shorter subtitles." = "Bir transkript paragrafı çok uzun. Daha kısa altyazılara böl.";
 "ABOUT" = "HAKKINDA";
 "ACCESSIBILITY" = "ERİŞİLEBİLİRLİK";
 "ACTIONS" = "İŞLEMLER";
@@ -346,6 +352,7 @@
 "CHOOSE A FILE TO PREVIEW." = "ÖNİZLEMEK İÇİN BİR DOSYA SEÇ.";
 "CHOOSE A FINISHED VIDEO INSTEAD OF A LIVE OR UPCOMING STREAM." = "CANLI VEYA HENÜZ BAŞLAMAMIŞ BİR YAYIN YERİNE TAMAMLANMIŞ BİR VİDEO SEÇ.";
 "CHOOSE A HEX BACKGROUND COLOR, SUCH AS #FFFFFF OR #00FFFFFF." = "#FFFFFF VEYA #00FFFFFF GİBİ ONALTILIK BİR ARKA PLAN RENGİ SEÇ.";
+"CHOOSE A LANGUAGE…" = "DİL SEÇ…";
 "CHOOSE A LARGER TARGET SIZE." = "DAHA BÜYÜK BİR HEDEF BOYUT SEÇ.";
 "CHOOSE A NONEMPTY IMAGE." = "BOŞ OLMAYAN BİR GÖRSEL SEÇ.";
 "CHOOSE A PDF SMALLER THAN 200 MB." = "200 MB'TAN KÜÇÜK BİR PDF SEÇ.";
@@ -406,6 +413,8 @@
 "CHOOSE SUPPORTED GIF AND AUDIO SAMPLE SETTINGS." = "DESTEKLENEN GIF VE SES ÖRNEKLEME AYARLARINI SEÇ.";
 "CHOOSE SUPPORTED LOUDNESS TARGETS." = "DESTEKLENEN SES DÜZEYİ HEDEFLERİNİ SEÇ.";
 "CHOOSE THE SPOKEN LANGUAGE, THEN GENERATE SUBTITLES." = "KONUŞMA DİLİNİ SEÇİP ALTYAZI OLUŞTUR.";
+"CHOOSE THE VIDEO'S ORIGINAL LANGUAGE, THEN CREATE AND REVIEW ITS TRANSCRIPT." = "VİDEONUN ANA DİLİNİ SEÇ, ARDINDAN TRANSKRİPTİNİ OLUŞTURUP KONTROL ET.";
+"CHOOSE THE VIDEO'S SOURCE LANGUAGE AND THE SUBTITLE LANGUAGE." = "VİDEONUN ANA DİLİNİ VE ALTYAZI DİLİNİ SEÇ.";
 "CHOOSE UP TO 10,000 OUTPUT PAGES." = "EN FAZLA 10.000 ÇIKTI SAYFASI SEÇ.";
 "CHOOSE UP TO 4 GB OF FILES." = "TOPLAMI EN FAZLA 4 GB OLAN DOSYALAR SEÇ.";
 "CHOOSE VALID BACKGROUND AND IMAGE DIMENSIONS." = "GEÇERLİ ARKA PLAN VE GÖRSEL BOYUTLARI SEÇ.";
@@ -477,8 +486,11 @@
 "COULDN’T REMOVE THE BACKGROUND." = "ARKA PLAN KALDIRILAMADI.";
 "COVER STYLE" = "KAPLAMA STİLİ";
 "CREATE A NEW FLOAT" = "YENİ YÜZEN PENCERE OLUŞTUR";
+"CREATE A NEW TRANSCRIPT FOR THE SELECTED SOURCE LANGUAGE." = "SEÇTİĞİN ANA DİL İÇİN YENİ BİR TRANSKRİPT OLUŞTUR.";
+"CREATE AND REVIEW THE SOURCE TRANSCRIPT FIRST." = "ÖNCE KAYNAK TRANSKRİPTİ OLUŞTUR VE KONTROL ET.";
 "CREATE COLLAGE" = "KOLAJ OLUŞTUR";
 "CREATE PDF" = "PDF OLUŞTUR";
+"CREATE TRANSCRIPT" = "TRANSKRİPT OLUŞTUR";
 "CREATE VISUALIZATION" = "GÖRSELLEŞTİRME OLUŞTUR";
 "CREATED" = "OLUŞTURULMA TARİHİ";
 "CREATOR" = "OLUŞTURAN";
@@ -552,6 +564,7 @@
 "Choose a file to preview." = "Önizlemek için bir dosya seç.";
 "Choose a finished video instead of a live or upcoming stream." = "Canlı veya henüz başlamamış bir yayın yerine tamamlanmış bir video seç.";
 "Choose a hex background color, such as #FFFFFF or #00FFFFFF." = "#FFFFFF veya #00FFFFFF gibi onaltılık bir arka plan rengi seç.";
+"Choose a language…" = "Dil seç…";
 "Choose a larger target size." = "Daha büyük bir hedef boyut seç.";
 "Choose a nonempty image." = "Boş olmayan bir görsel seç.";
 "Choose a plain output filename." = "Sade bir çıktı dosya adı seç.";
@@ -601,6 +614,8 @@
 "Choose supported export defaults." = "Desteklenen dışa aktarma varsayılanlarını seç.";
 "Choose supported loudness targets." = "Desteklenen ses düzeyi hedeflerini seç.";
 "Choose the spoken language, then generate subtitles." = "Konuşma dilini seçip altyazı oluştur.";
+"Choose the video's original language, then create and review its transcript." = "Videonun ana dilini seç, ardından transkriptini oluşturup kontrol et.";
+"Choose the video's source language and the subtitle language." = "Videonun ana dilini ve altyazı dilini seç.";
 "Choose up to 10,000 output pages." = "En fazla 10.000 çıktı sayfası seç.";
 "Choose up to 4 GB of files." = "Toplamı en fazla 4 GB olan dosyalar seç.";
 "Choose valid PDF pages." = "Geçerli PDF sayfaları seç.";
@@ -690,6 +705,9 @@
 "Create PDF" = "PDF Oluştur";
 "Create a New Float" = "Yeni Yüzen Pencere Oluştur";
 "Create a new Float" = "Yeni yüzen pencere oluştur";
+"Create a new transcript for the selected source language." = "Seçtiğin ana dil için yeni bir transkript oluştur.";
+"Create and review the source transcript first." = "Önce kaynak transkripti oluştur ve kontrol et.";
+"Create transcript" = "Transkript oluştur";
 "Create visualization" = "Görselleştirme oluştur";
 "Created" = "Oluşturulma tarihi";
 "Creator" = "Oluşturan";
@@ -753,6 +771,7 @@
 "DOWNLOAD ↗" = "İNDİR ↗";
 "DOWNLOADING THE SPEECH ENGINE…" = "KONUŞMA MOTORU İNDİRİLİYOR…";
 "DOWNLOADING THE SPEECH MODEL (148 MB)…" = "KONUŞMA MODELİ İNDİRİLİYOR (148 MB)…";
+"DOWNLOADING THE TRANSLATION MODEL (459 MB)…" = "ÇEVİRİ MODELİ İNDİRİLİYOR (459 MB)…";
 "DOWNLOADING…" = "İNDİRİLİYOR…";
 "DPI: %@" = "DPI: %@";
 "DPI: %lld" = "DPI: %lld";
@@ -828,6 +847,7 @@
 "Download, verify and install Lokum %lld? The app will restart. No account or token is needed." = "Lokum %lld indirilip doğrulansın ve kurulsun mu? Uygulama yeniden başlayacak. Hesap veya token gerekmez.";
 "Downloading the speech engine…" = "Konuşma motoru indiriliyor…";
 "Downloading the speech model (148 MB)…" = "Konuşma modeli indiriliyor (148 MB)…";
+"Downloading the translation model (459 MB)…" = "Çeviri modeli indiriliyor (459 MB)…";
 "Downloading…" = "İndiriliyor…";
 "Drag a crop inside the image." = "Kırpma alanını görselin içinde sürükle.";
 "Drag a range to move it; drag its edges to resize. Drag empty space to add." = "Aralığı taşımak için içini, boyutlandırmak için kenarlarını sürükle. Yeni aralık için boş bir alanı sürükle.";
@@ -1070,6 +1090,8 @@
 "GAMMA MUST BE POSITIVE; CONTRAST AND SATURATION CANNOT BE NEGATIVE." = "GAMA POZİTİF OLMALI; KONTRAST VE DOYGUNLUK NEGATİF OLAMAZ.";
 "GENERAL" = "GENEL";
 "GENERATE SUBTITLES" = "ALTYAZI OLUŞTUR";
+"GENERATE SUBTITLES FROM THE REVIEWED TRANSCRIPT FIRST." = "ÖNCE KONTROL ETTİĞİN TRANSKRİPTTEN ALTYAZI OLUŞTUR.";
+"GENERATE SUBTITLES FROM TRANSCRIPT" = "TRANSKRİPTTEN ALTYAZI OLUŞTUR";
 "GENRE" = "TÜR";
 "GERMAN" = "ALMANCA";
 "GET STARTED" = "BAŞLA";
@@ -1095,6 +1117,8 @@
 "General" = "Genel";
 "Generate Subtitles" = "Altyazı Oluştur";
 "Generate subtitles" = "Altyazı oluştur";
+"Generate subtitles from the reviewed transcript first." = "Önce kontrol ettiğin transkriptten altyazı oluştur.";
+"Generate subtitles from transcript" = "Transkriptten altyazı oluştur";
 "Genre" = "Tür";
 "German" = "Almanca";
 "Get started" = "Başla";
@@ -1744,6 +1768,7 @@
 "RETURN TO CHROME AND TRY CTRL + LEFT-CLICK AGAIN." = "CHROME’A DÖNÜP CTRL + SOL TIK İLE TEKRAR DENE.";
 "REVEAL FINISHED FILES IN EXPLORER" = "TAMAMLANAN DOSYALARI DOSYA GEZGİNİ'NDE GÖSTER";
 "REVEAL FINISHED FILES IN FINDER" = "TAMAMLANAN DOSYALARI FINDER'DA GÖSTER";
+"REVIEW THE SOURCE TRANSCRIPT FIRST. TRANSLATIONS KEEP ITS TIMING; EDIT THE RESULTING SUBTITLES BEFORE SHARING." = "ÖNCE KAYNAK TRANSKRİPTİ KONTROL ET. ÇEVİRİ ZAMANLAMAYI KORUR; PAYLAŞMADAN ÖNCE ALTYAZILARI DÜZENLEYEBİLİRSİN.";
 "RIGHT" = "SAĞ";
 "RIGHT HALF" = "SAĞ YARI";
 "RIGHT THIRD" = "SAĞ ÜÇTE BİR";
@@ -1824,6 +1849,7 @@
 "Return to Chrome and try Ctrl + left-click again." = "Chrome’a dönüp Ctrl + sol tık ile tekrar dene.";
 "Reveal finished files in Explorer" = "Tamamlanan dosyaları Dosya Gezgini'nde göster";
 "Reveal finished files in Finder" = "Tamamlanan dosyaları Finder'da göster";
+"Review the source transcript first. Translations keep its timing; edit the resulting subtitles before sharing." = "Önce kaynak transkripti kontrol et. Çeviri zamanlamayı korur; paylaşmadan önce altyazıları düzenleyebilirsin.";
 "Right" = "Sağ";
 "Right half" = "Sağ yarı";
 "Right third" = "Sağ üçte bir";
@@ -1958,6 +1984,8 @@
 "SOUND FEEDBACK" = "SESLİ GERİ BİLDİRİM";
 "SOUND FOLLOWS YOUR MAC’S VOLUME. HAPTICS NEED A COMPATIBLE FORCE TOUCH TRACKPAD." = "SES, MAC'İNİN SES DÜZEYİNİ KULLANIR. TİTREŞİM İÇİN UYUMLU BİR FORCE TOUCH TRACKPAD GEREKİR.";
 "SOURCE & THIRD-PARTY NOTICES" = "KAYNAK KODU VE ÜÇÜNCÜ TARAF BİLDİRİMLERİ";
+"SOURCE TRANSCRIPT" = "KAYNAK TRANSKRİPT";
+"SOURCE TRANSCRIPT READY. REVIEW IT, THEN CHOOSE THE SUBTITLE LANGUAGE." = "KAYNAK TRANSKRİPT HAZIR. KONTROL ETTİKTEN SONRA ALTYAZI DİLİNİ SEÇ.";
 "SPACE PLAY/PAUSE · ←/→ 1S · SHIFT+←/→ 1 FRAME (VIDEO), 0.1S (AUDIO) · I/O SET RANGE · ENTER SAVE" = "SPACE OYNAT/DURAKLAT · ←/→ 1 SN · SHIFT+←/→ 1 KARE (VİDEO), 0,1 SN (SES) · I/O ARALIĞI AYARLA · ENTER KAYDET";
 "SPACE PLAY/PAUSE · ←/→ 1S · ⇧←/→ 1 FRAME · I/O SET RANGE · ⇧SPACE PLAY RANGE" = "SPACE OYNAT/DURAKLAT · ←/→ 1 SN · ⇧←/→ 1 KARE · I/O ARALIĞI AYARLA · ⇧SPACE ARALIĞI OYNAT";
 "SPACE · PREVIEW" = "BOŞLUK · ÖNİZLEME";
@@ -1986,6 +2014,7 @@
 "STRONG" = "GÜÇLÜ";
 "STYLE" = "STİL";
 "SUBJECT" = "KONU";
+"SUBTITLE LANGUAGE" = "ALTYAZI DİLİ";
 "SUBTITLES" = "ALTYAZILAR";
 "SUBTITLES ARE READY. REVIEW THE TEXT AND TIMING." = "ALTYAZILAR HAZIR. METNİ VE ZAMANLAMAYI KONTROL ET.";
 "SUBTLE ANIMATIONS" = "HAFİF ANİMASYONLAR";
@@ -2122,6 +2151,8 @@
 "Sound feedback" = "Sesli geri bildirim";
 "Sound follows your Mac’s volume. Haptics need a compatible Force Touch trackpad." = "Ses, Mac'inin ses düzeyini kullanır. Titreşim için uyumlu bir Force Touch trackpad gerekir.";
 "Source & third-party notices" = "Kaynak kodu ve üçüncü taraf bildirimleri";
+"Source transcript" = "Kaynak transkript";
+"Source transcript ready. Review it, then choose the subtitle language." = "Kaynak transkript hazır. Kontrol ettikten sonra altyazı dilini seç.";
 "Space play/pause · ←/→ 1s · Shift+←/→ 1 frame (video), 0.1s (audio) · I/O set range · Enter save" = "Space oynat/duraklat · ←/→ 1 sn · Shift+←/→ 1 kare (video), 0,1 sn (ses) · I/O aralığı ayarla · Enter kaydet";
 "Space play/pause · ←/→ 1s · ⇧←/→ 1 frame · I/O set range · ⇧Space play range" = "Space oynat/duraklat · ←/→ 1 sn · ⇧←/→ 1 kare · I/O aralığı ayarla · ⇧Space aralığı oynat";
 "Space · Preview" = "Boşluk · Önizleme";
@@ -2149,6 +2180,7 @@
 "Strong" = "Güçlü";
 "Style" = "Stil";
 "Subject" = "Konu";
+"Subtitle language" = "Altyazı dili";
 "Subtitles" = "Altyazılar";
 "Subtitles are ready. Review the text and timing." = "Altyazılar hazır. Metni ve zamanlamayı kontrol et.";
 "Subtle animations" = "Hafif animasyonlar";
@@ -2199,6 +2231,9 @@
 "THE SIGNED PACKAGE VERSION DOES NOT MATCH THIS UPDATE." = "İMZALI PAKETİN SÜRÜMÜ BU GÜNCELLEMEYLE EŞLEŞMİYOR.";
 "THE SPEECH MODEL COULD NOT BE OPENED. DOWNLOAD IT AGAIN." = "KONUŞMA MODELİ AÇILAMADI. MODELİ TEKRAR İNDİR.";
 "THE SUBTITLE FILE IS TOO LARGE." = "ALTYAZI DOSYASI ÇOK BÜYÜK.";
+"THE TRANSLATION ENGINE IS MISSING. EXTRACT THE COMPLETE LOKUM PACKAGE AGAIN." = "ÇEVİRİ MOTORU EKSİK. LOKUM PAKETİNİN TAMAMINI YENİDEN ÇIKAR.";
+"THE TRANSLATION LANGUAGE DOES NOT MATCH YOUR SELECTION." = "ÇEVİRİ DİLİ SEÇİMİNLE EŞLEŞMİYOR.";
+"THE TRANSLATION WAS INCOMPLETE. NO SUBTITLES WERE SAVED." = "ÇEVİRİ TAMAMLANAMADI. ALTYAZI KAYDEDİLMEDİ.";
 "THE UPDATE DOES NOT CONTAIN LOKUM." = "GÜNCELLEME LOKUM'Yİ İÇERMİYOR.";
 "THE UPDATE SIGNATURE IS INVALID. YOUR EXISTING APP WAS KEPT." = "GÜNCELLEME İMZASI GEÇERSİZ. MEVCUT UYGULAMAN KORUNDU.";
 "THESE FILES HAVE MOVED OR WERE DELETED." = "BU DOSYALAR TAŞINMIŞ VEYA SİLİNMİŞ.";
@@ -2245,6 +2280,7 @@
 "TOOLS · WHILE DRAGGING" = "ARAÇLAR · SÜRÜKLERKEN";
 "TOP" = "ÜST";
 "TRANSCRIBING SPEECH ON YOUR COMPUTER…" = "KONUŞMA BİLGİSAYARINDA YAZIYA DÖNÜŞTÜRÜLÜYOR…";
+"TRANSLATING THE REVIEWED TRANSCRIPT ON YOUR COMPUTER…" = "KONTROL ETTİĞİN TRANSKRİPT BİLGİSAYARINDA ÇEVRİLİYOR…";
 "TRANSPARENT" = "ŞEFFAF";
 "TRANSPARENT BACKGROUNDS SAVE AS PNG TO KEEP THEIR TRANSPARENCY." = "ŞEFFAF ARKA PLANLAR, ŞEFFAFLIĞI KORUMAK İÇİN PNG OLARAK KAYDEDİLİR.";
 "TRANSPARENT PNG" = "ŞEFFAF PNG";
@@ -2307,6 +2343,9 @@
 "The signed package version does not match this update." = "İmzalı paketin sürümü bu güncellemeyle eşleşmiyor.";
 "The speech model could not be opened. Download it again." = "Konuşma modeli açılamadı. Modeli tekrar indir.";
 "The subtitle file is too large." = "Altyazı dosyası çok büyük.";
+"The translation engine is missing. Extract the complete Lokum package again." = "Çeviri motoru eksik. Lokum paketinin tamamını yeniden çıkar.";
+"The translation language does not match your selection." = "Çeviri dili seçiminle eşleşmiyor.";
+"The translation was incomplete. No subtitles were saved." = "Çeviri tamamlanamadı. Altyazı kaydedilmedi.";
 "The update does not contain Lokum." = "Güncelleme Lokum'yi içermiyor.";
 "The update signature is invalid. Your existing app was kept." = "Güncelleme imzası geçersiz. Mevcut uygulaman korundu.";
 "These files have moved or were deleted." = "Bu dosyalar taşınmış veya silinmiş.";
@@ -2355,6 +2394,7 @@
 "Tools · while dragging" = "Araçlar · sürüklerken";
 "Top" = "Üst";
 "Transcribing speech on your computer…" = "Konuşma bilgisayarında yazıya dönüştürülüyor…";
+"Translating the reviewed transcript on your computer…" = "Kontrol ettiğin transkript bilgisayarında çevriliyor…";
 "Transparent" = "Şeffaf";
 "Transparent PNG" = "Şeffaf PNG";
 "Transparent backgrounds save as PNG to keep their transparency." = "Şeffaf arka planlar, şeffaflığı korumak için PNG olarak kaydedilir.";
@@ -2446,6 +2486,7 @@
 "VIDEO QUALITY" = "VİDEO KALİTESİ";
 "VIDEO SIZE" = "VİDEO BOYUTU";
 "VIDEO SNAPSHOTS" = "VİDEODAN KARE AL";
+"VIDEO'S ORIGINAL LANGUAGE" = "VİDEONUN ANA DİLİ";
 "VIDEO, AUDIO, OR AN IMAGE. STRAIGHT INTO YOUR TOOLS." = "VİDEO, SES VEYA GÖRSEL. DOĞRUDAN ARAÇLARINA AKTAR.";
 "VIGNETTE" = "VİNYET";
 "VISUALIZATION" = "GÖRSELLEŞTİRME";
@@ -2457,6 +2498,7 @@
 "Video compression" = "Video sıkıştırma";
 "Video quality" = "Video kalitesi";
 "Video size" = "Video boyutu";
+"Video's original language" = "Videonun ana dili";
 "Video, audio, or an image. Straight into your tools." = "Video, ses veya görsel. Doğrudan araçlarına aktar.";
 "Vignette" = "Vinyet";
 "Visualization" = "Görselleştirme";

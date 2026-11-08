@@ -13,7 +13,7 @@ concurrency:
 jobs:
   mac-engines:
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
       LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
@@ -22,6 +22,9 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
       - name: Install verified application runtimes and Office
         run: |
           if [ ! -d /Applications/LibreOffice.app ]; then brew install --cask libreoffice; fi
@@ -35,6 +38,10 @@ jobs:
       - name: All macOS engine and update regressions
         run: |
           mkdir -p build/mac-engines
+          python3 scripts/setup-translation-runtime.py
+          python3 scripts/setup-translation-tests.py build/translation-fixtures
+          export LOKUM_TEST_TRANSLATION_MODEL="$PWD/build/translation-fixtures"
+          export LOKUM_TRANSLATE="$PWD/Tools/Translate/translate"
           python3 scripts/setup-speech-tests.py build/speech-fixtures
           export LOKUM_TEST_SPEECH_FIXTURES="$PWD/build/speech-fixtures"
           set -o pipefail
@@ -48,7 +55,7 @@ jobs:
           if-no-files-found: warn
   mac-package:
     runs-on: macos-15
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
       LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
@@ -60,6 +67,9 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
       - name: Install verified package test runtimes
         run: |
           if [ ! -d /Applications/LibreOffice.app ]; then brew install --cask libreoffice; fi

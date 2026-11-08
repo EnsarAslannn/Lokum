@@ -78,3 +78,11 @@ https://github.com/ggml-org/whisper.cpp/tree/v1.9.2
 Multilingual Whisper base model, OpenAI, MIT. Runs locally; downloaded on first use.
 https://huggingface.co/ggerganov/whisper.cpp/tree/5359861c739e955e79d9a303bcbc70fb988958b1
 Full licenses: licenses/whisper.cpp-LICENSE.txt and licenses/Whisper-model-LICENSE.txt.
+
+M2M-100 418M, Meta/Facebook AI Research, MIT.
+https://github.com/facebookresearch/fairseq/tree/main/examples/m2m_100
+Verified CTranslate2 conversion: https://data.argosopentech.com/argospm/v2/translate-fairseq_m2m_100_418M.argosmodel
+License: licenses/M2M100-LICENSE.txt. This model downloads separately on first translation.
+Offline translation helper: CTranslate2 4.8.4 (MIT), SentencePiece 0.2.1 (Apache-2.0), NumPy 2.2.6 (BSD-3-Clause), PyYAML 6.0.3 (MIT), Python (PSF).
+The helper distribution retains dependency license metadata and Python license under Tools/Translate.
+PyInstaller 6.16.0 uses GPL with the bootloader distribution exception.

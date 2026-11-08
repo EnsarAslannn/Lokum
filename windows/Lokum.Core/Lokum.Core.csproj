@@ -16,4 +16,5 @@
   <ItemGroup><EmbeddedResource Include="../../Sources/LokumCore/Resources/LatinWords.json" LogicalName="Lokum.LatinWords.json" /></ItemGroup>
   <ItemGroup><InternalsVisibleTo Include="Lokum.Verify" /></ItemGroup>
   <ItemGroup><Content Include="../../Tools/Speech/*" Link="Tools/Speech/%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
+  <ItemGroup><Content Include="../../Tools/Translate/**" Link="Tools/Translate/%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" /></ItemGroup>
 </Project>

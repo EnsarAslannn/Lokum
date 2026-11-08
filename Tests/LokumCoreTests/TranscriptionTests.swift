@@ -2,6 +2,35 @@ import XCTest
 @testable import LokumCore
 
 final class TranscriptionTests:XCTestCase {
+    func testRealTranslationUsesChosenLanguagesAndEditedTranscript()throws {
+        guard let model=ProcessInfo.processInfo.environment["LOKUM_TEST_TRANSLATION_MODEL"] else {throw XCTSkip("Translation fixtures are installed by engine CI.")}
+        let source=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:04,000\nHello, how are you?\n\n2\n00:00:06,000 --> 00:00:09,000\nPlease close the door.\n",duration:10)
+        for (target,word) in [("tr","kapı"),("de","Tür"),("fr","porte")] {
+            let translated=try SubtitleTranslationEngine.translate(source,duration:10,sourceLanguage:"en",targetLanguage:target,model:URL(fileURLWithPath:model))
+            XCTAssertTrue(translated.text.contains(word),translated.text)
+            XCTAssertEqual(translated.cues.first?.start,1000);XCTAssertEqual(translated.cues.last?.end,9000)
+            XCTAssertFalse(translated.cues.contains{$0.start<6000 && $0.end>4000})
+        }
+        let edited=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:04,000\nPlease close the window.\n",duration:10)
+        XCTAssertTrue(try SubtitleTranslationEngine.translate(edited,duration:10,sourceLanguage:"en",targetLanguage:"tr",model:URL(fileURLWithPath:model)).text.contains("pencere"))
+        XCTAssertTrue(source.text.contains("door"))
+        XCTAssertEqual(try SubtitleTranslationEngine.translate(source,duration:10,sourceLanguage:"en",targetLanguage:"en").srt,source.srt)
+    }
+    func testSubtitleWorkflowSeparatesSourceAndTargetAndInvalidatesStaleTranslations()throws {
+        let english="1\n00:00:01,000 --> 00:00:03,000\nPlease close the door.\n"
+        let turkish="1\n00:00:01,000 --> 00:00:03,000\nLütfen kapıyı kapatın.\n"
+        var flow=SubtitleWorkflow(duration:4)
+        XCTAssertFalse(flow.canSave);XCTAssertFalse(flow.canTranslate)
+        XCTAssertThrowsError(try flow.setSource(english,language:"auto"))
+        try flow.setSource(english,language:"en");try flow.chooseTarget("tr");let revision=flow.revision
+        XCTAssertTrue(flow.canTranslate);XCTAssertFalse(flow.canSave)
+        XCTAssertTrue(try flow.acceptTranslation(turkish,revision:revision,target:"tr"))
+        XCTAssertEqual(flow.source?.at(2),"Please close the door.");XCTAssertEqual(flow.subtitles?.at(2),"Lütfen kapıyı kapatın.")
+        try flow.setSource(english.replacingOccurrences(of:"door",with:"window"),language:"en")
+        XCTAssertFalse(flow.canSave);XCTAssertFalse(try flow.acceptTranslation(turkish,revision:revision,target:"tr"))
+        try flow.chooseTarget("en");XCTAssertTrue(flow.useSourceLanguage());XCTAssertTrue(flow.subtitles?.text.contains("window") == true)
+        flow.invalidateSource();XCTAssertFalse(flow.canSave)
+    }
     func testRealSpeechInferenceAndSubtitledVideoExport()throws {
         guard let root=ProcessInfo.processInfo.environment["LOKUM_TEST_SPEECH_FIXTURES"] else {throw XCTSkip("Speech fixtures are installed by the engine CI job.")}
         let fixtures=URL(fileURLWithPath:root),directory=FileManager.default.temporaryDirectory.appendingPathComponent("Lokum-SpeechTests-\(UUID().uuidString)",isDirectory:true)

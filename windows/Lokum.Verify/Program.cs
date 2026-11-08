@@ -9,6 +9,8 @@ if(args.Contains("--transcription-only"))
 {
     var count=0;TranscriptionChecks.Catalog((ok,message)=>{if(!ok)throw new Exception(message);count++;});
     TranscriptionChecks.Documents((ok,message)=>{if(!ok)throw new Exception(message);count++;});
+    SubtitleWorkflowChecks.Run((ok,message)=>{if(!ok)throw new Exception(message);count++;});
+    if(Environment.GetEnvironmentVariable("LOKUM_TEST_TRANSLATION_MODEL") is {} translationModel)await SubtitleWorkflowChecks.Integration((ok,message)=>{if(!ok)throw new Exception(message);count++;},translationModel);
     if(Environment.GetEnvironmentVariable("LOKUM_VERIFY_INSTALL_SPEECH") is {} speechDirectory)
     {
         var setup=new SpeechModelSetup(speechDirectory);await setup.InstallAsync();if(!setup.Ready)throw new Exception("Speech setup did not publish a complete installation.");

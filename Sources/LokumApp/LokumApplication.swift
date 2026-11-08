@@ -318,7 +318,7 @@ enum LokumApplication {
     func showTool(_ kind:ToolKind) {
         progressToast.dismiss()
         if kind == .generateSubtitles,let input=state.inputs.first {
-            let window=makeToolWindow(title:kind.title,size:NSSize(width:1120,height:780),view:SubtitleEditorView(state:state,input:input))
+            let window=makeToolWindow(title:kind.title,size:NSSize(width:1180,height:850),view:SubtitleEditorView(state:state,input:input))
             state.retainToolWindow(window);window.makeKeyAndOrderFront(nil);NSApp.activate(ignoringOtherApps:true);return
         }
         if kind == .removeBackground {

@@ -137,11 +137,11 @@ import LokumCore
         }
         let subtitles=SubtitleEditorModel(input:video)
         subtitles.duration=try MediaEngine.inspect(video).duration
-        subtitles.text="1\n00:00:00,000 --> 00:00:02,000\nDeneme altyazısı.\n"
+        subtitles.language="tr";subtitles.sourceText="1\n00:00:00,000 --> 00:00:02,000\nDeneme altyazısı.\n";subtitles.targetLanguage="tr";subtitles.translate();try await wait{!subtitles.busy}
         check(subtitles.document?.at(1)=="Deneme altyazısı.","Native subtitle edits reach the synchronized preview document")
         subtitles.text="1\n00:00:02,000 --> 00:00:01,000\nInvalid\n"
         check(subtitles.document==nil && subtitles.error != nil,"Invalid native subtitle timing blocks result preview and export with an explanation")
-        subtitles.text="1\n00:00:00,000 --> 00:00:02,000\nDeneme altyazısı.\n"
+        subtitles.sourceText="1\n00:00:00,000 --> 00:00:02,000\nDeneme altyazısı.\n";check(subtitles.document==nil,"Editing a source transcript invalidates its previous translation");subtitles.translate();try await wait{!subtitles.busy}
         subtitles.format="mp4";subtitles.showResult()
         try await wait{!subtitles.busy}
         check(subtitles.error==nil && subtitles.resultPlaying,"The native subtitle editor prepares an actual burned-subtitle video; "+(subtitles.error ?? "ready"))
