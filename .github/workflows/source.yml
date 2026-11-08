@@ -141,7 +141,8 @@ jobs:
         if: ${{ !cancelled() && steps.mac-build.outcome == 'success' }}
         run: |
           scripts/setup-tools.sh --media-only
-          Tools/ffmpeg -hide_banner -filters 2>&1 | grep -qE '[[:space:]]subtitles[[:space:]]'
+          Tools/ffmpeg -hide_banner -filters > build/ffmpeg-filters.txt 2>&1
+          grep -qE '[[:space:]]subtitles[[:space:]]' build/ffmpeg-filters.txt
       - name: Redaction coverage and image opacity regressions
         run: swift test --filter 'SolidRedactionCoverageTests|ImageRedactionBoundsRegressionTests|ImageColorOpacityRegressionTests|MediaEngineTests/testVideoRedactionStylesAndTemporalBounds'
       - name: Desktop feature parity regressions

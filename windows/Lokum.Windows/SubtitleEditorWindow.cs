@@ -27,11 +27,12 @@ internal sealed class SubtitleEditorWindow:Window
     private CancellationTokenSource? active;
     private string? previewDirectory;
     private string? proxyDirectory,originalProxy;
-    private bool preparingProxy;
+    private bool preparingProxy,attemptedProxy;
     private SubtitleTranscript? transcript;
     private bool busy,closed,resultPlaying,playing;
     public SubtitleTranscript Transcript=>SubtitleTranscript.FromSrt(text.Text,info.Duration);
     public string Format=>(format.SelectedItem as string??"SRT").ToLowerInvariant();
+    private bool NeedsOriginalProxy=>info.Video is {} video?video.Codec!="h264"||video.Bits>8||FeatureCatalog.Extension(input) is not ("mp4" or "mov" or "m4v"):FeatureCatalog.Extension(input) is not ("wav" or "mp3" or "m4a" or "aac" or "wma");
     public SubtitleEditorWindow(Window owner,string input,MediaInfo info,Toolchain tools,SpeechModelSetup speech)
     {
         Theme.Attach(this);Owner=owner;this.input=input;this.info=info;this.tools=tools;this.speech=speech;
@@ -40,7 +41,7 @@ internal sealed class SubtitleEditorWindow:Window
         var header=new StackPanel{Margin=new(0,0,0,20)};header.Children.Add(L10n.Label(new TextBlock{Text="Generate Subtitles",FontSize=30,FontWeight=FontWeights.Bold}));header.Children.Add(new TextBlock{Text=Path.GetFileName(input),Foreground=Theme.Brush("Muted"),Margin=new(0,5,0,0)});root.Children.Add(header);
         var body=new Grid();body.ColumnDefinitions.Add(new(){Width=new(1,GridUnitType.Star)});body.ColumnDefinitions.Add(new(){Width=new(1,GridUnitType.Star)});Grid.SetRow(body,1);root.Children.Add(body);
         var left=new Grid{Margin=new(0,0,20,0)};left.RowDefinitions.Add(new(){Height=new(1,GridUnitType.Star)});left.RowDefinitions.Add(new(){Height=GridLength.Auto});left.RowDefinitions.Add(new(){Height=GridLength.Auto});body.Children.Add(left);
-        var screen=new Grid{Background=Brushes.Black,MinHeight=220};screen.Children.Add(player);screen.Children.Add(caption);left.Children.Add(screen);player.Source=new Uri(input);player.Pause();
+        var screen=new Grid{Background=Brushes.Black,MinHeight=220};screen.Children.Add(player);screen.Children.Add(caption);left.Children.Add(screen);if(!NeedsOriginalProxy){player.Source=new Uri(input);player.Pause();}
         seek.Maximum=info.Duration;Grid.SetRow(seek,1);left.Children.Add(seek);seek.ValueChanged+=(_,_)=>{if(seek.IsMouseCaptureWithin||seek.IsKeyboardFocusWithin)player.Position=TimeSpan.FromSeconds(seek.Value);};
         var playback=new WrapPanel();Grid.SetRow(playback,2);left.Children.Add(playback);playback.Children.Add(MainWindow.Button("Play / pause",()=>{if(playing)player.Pause();else player.Play();playing=!playing;}));playback.Children.Add(MainWindow.Button("Original",Original));
         var right=new Grid();Grid.SetColumn(right,1);body.Children.Add(right);foreach(var _ in Enumerable.Range(0,3))right.RowDefinitions.Add(new(){Height=GridLength.Auto});right.RowDefinitions.Add(new(){Height=new(1,GridUnitType.Star)});right.RowDefinitions.Add(new(){Height=GridLength.Auto});
@@ -58,6 +59,10 @@ internal sealed class SubtitleEditorWindow:Window
         clock.Tick+=(_,_)=>{if(!seek.IsMouseCaptureWithin&&!seek.IsKeyboardFocusWithin)seek.Value=Math.Clamp(player.Position.TotalSeconds,0,info.Duration);caption.Text=resultPlaying?"":transcript?.At(player.Position.TotalSeconds)??"";caption.Visibility=caption.Text.Length==0?Visibility.Collapsed:Visibility.Visible;};clock.Start();
         player.MediaEnded+=(_,_)=>{playing=false;player.Pause();};player.MediaFailed+=async(_,e)=>{if(!closed&&!resultPlaying&&originalProxy is null&&!preparingProxy)await PrepareOriginalProxy();else if(!closed)Status(e.ErrorException.Message);};
         Closed+=(_,_)=>{closed=true;clock.Stop();lifetime.Cancel();active?.Cancel();player.Close();if(!busy)CleanPreview();if(!preparingProxy)CleanProxy();};
+        Loaded+=async(_,_)=>
+        {
+            if(NeedsOriginalProxy)await PrepareOriginalProxy();
+        };
     }
     private void Status(string value)=>status.Text=L10n.Text(value);
     private void UpdateButtons(){generate.IsEnabled=import.IsEnabled=!busy;preview.IsEnabled=save.IsEnabled=!busy&&transcript is not null;text.IsReadOnly=busy;language.IsEnabled=format.IsEnabled=!busy;progress.Visibility=busy?Visibility.Visible:Visibility.Collapsed;}
@@ -68,15 +73,16 @@ internal sealed class SubtitleEditorWindow:Window
         UpdateButtons();
     }
     private void Import(){var dialog=new OpenFileDialog{Filter="SubRip (*.srt)|*.srt"};if(dialog.ShowDialog(this)==true){try{if(new FileInfo(dialog.FileName).Length>10*1024*1024)throw new InvalidDataException("The subtitle file is too large.");text.Text=File.ReadAllText(dialog.FileName);}catch(Exception error){Status(error.Message);}}}
-    private void Original(){resultPlaying=false;player.Pause();playing=false;player.Source=new Uri(originalProxy??input);player.Position=TimeSpan.Zero;}
+    private void Original(){resultPlaying=false;player.Pause();playing=false;player.Source=originalProxy is not null?new Uri(originalProxy):NeedsOriginalProxy?null:new Uri(input);player.Position=TimeSpan.Zero;}
     private async Task PrepareOriginalProxy()
     {
+        if(closed||attemptedProxy)return;attemptedProxy=true;
         preparingProxy=true;proxyDirectory=Path.Combine(Path.GetTempPath(),"Lokum-SubtitleSource-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(proxyDirectory);Status("Preparing a local preview…");
         try
         {
             var path=Path.Combine(proxyDirectory,info.Video is null?"source.wav":"source.mp4");var arguments=new List<string>{"-nostdin","-v","error","-i",input};
-            if(info.Video is null)arguments.AddRange(["-vn","-c:a","pcm_s16le"]);
-            else arguments.AddRange(["-vf","scale=w='min(1280,iw)':h=-2","-c:v","libx264","-preset","veryfast","-crf","23","-pix_fmt","yuv420p","-c:a","aac","-movflags","+faststart"]);
+            if(info.Video is null)arguments.AddRange(["-vn","-c:a","pcm_s16le","-ar","48000","-ac","2"]);
+            else arguments.AddRange(["-vf","scale=w='max(2,trunc(min(1280,iw)/2)*2)':h=-2","-c:v","libx264","-preset","veryfast","-crf","23","-pix_fmt","yuv420p","-c:a","aac","-movflags","+faststart"]);
             arguments.Add(path);await ProcessRunner.RunAsync(tools.Executable("ffmpeg"),arguments,lifetime.Token);
             if(!closed){originalProxy=path;if(!resultPlaying){Original();player.Play();player.Pause();}Status("Preview ready · export uses your original file.");}
         }

@@ -15,10 +15,10 @@ internal static class SubtitleEditorChecks
         if(root is T item)yield return item;
         for(var n=0;n<VisualTreeHelper.GetChildrenCount(root);n++)foreach(var child in Find<T>(VisualTreeHelper.GetChild(root,n)))yield return child;
     }
-    private static async Task Until(Func<bool> ready)
+    private static async Task Until(Func<bool> ready,string step="Subtitle editor")
     {
         var deadline=DateTime.UtcNow.AddSeconds(120);
-        while(!ready()){if(DateTime.UtcNow>deadline)throw new TimeoutException("Subtitle editor did not finish processing.");await Task.Delay(50);}
+        while(!ready()){if(DateTime.UtcNow>deadline)throw new TimeoutException(step+" did not finish processing.");await Task.Delay(50);}
     }
     internal static async Task Run(string output,string source,string toolDirectory,string speechDirectory)
     {
@@ -44,7 +44,7 @@ internal static class SubtitleEditorChecks
             var formats=Find<ComboBox>(editor).Single(c=>c.Items.Cast<object>().Any(i=>i as string=="MP4"));formats.SelectedItem="MP4";
             preview.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));await Until(()=>preview.IsEnabled);
             var player=Find<MediaElement>(editor).Single();
-            await Until(()=>player.NaturalVideoWidth>0);
+            await Until(()=>player.NaturalVideoWidth>0,"Subtitled MP4 playback");
             Check(player.NaturalVideoWidth==640&&player.HasAudio,"The rendered subtitle preview opens in the native media player.");
             Check(player.Source is not null&&player.Source.LocalPath!=source&&File.Exists(player.Source.LocalPath),"Show result plays an actual subtitled MP4 before saving.");
             Check(editor.Transcript.Text.Contains("country",StringComparison.OrdinalIgnoreCase),"Video preview preserves editable recognized text.");
@@ -58,7 +58,7 @@ internal static class SubtitleEditorChecks
             try
             {
                 audioEditor.Show();audioEditor.UpdateLayout();var audio=Find<MediaElement>(audioEditor).Single();
-                await Until(()=>audio.HasAudio);
+                await Until(()=>audio.HasAudio,"Compressed audio playback");
                 Check(audio.HasAudio,"Compressed speech audio opens in the subtitle preview, using a local playback copy when needed.");
                 Check(!Find<ComboBox>(audioEditor).Any(c=>c.Items.Cast<object>().Any(i=>i as string=="MP4")),"Audio subtitles offer text formats without an unsupported MP4 export.");
             }
