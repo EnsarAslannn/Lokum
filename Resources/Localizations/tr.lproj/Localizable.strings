@@ -415,6 +415,7 @@
 "CHOOSE THE SPOKEN LANGUAGE, THEN GENERATE SUBTITLES." = "KONUŞMA DİLİNİ SEÇİP ALTYAZI OLUŞTUR.";
 "CHOOSE THE VIDEO'S ORIGINAL LANGUAGE, THEN CREATE AND REVIEW ITS TRANSCRIPT." = "VİDEONUN ANA DİLİNİ SEÇ, ARDINDAN TRANSKRİPTİNİ OLUŞTURUP KONTROL ET.";
 "CHOOSE THE VIDEO'S SOURCE LANGUAGE AND THE SUBTITLE LANGUAGE." = "VİDEONUN ANA DİLİNİ VE ALTYAZI DİLİNİ SEÇ.";
+"CHOOSE TURKISH OR ENGLISH FOR THE SUBTITLES." = "ALTYAZI İÇİN TÜRKÇE VEYA İNGİLİZCE SEÇ.";
 "CHOOSE UP TO 10,000 OUTPUT PAGES." = "EN FAZLA 10.000 ÇIKTI SAYFASI SEÇ.";
 "CHOOSE UP TO 4 GB OF FILES." = "TOPLAMI EN FAZLA 4 GB OLAN DOSYALAR SEÇ.";
 "CHOOSE VALID BACKGROUND AND IMAGE DIMENSIONS." = "GEÇERLİ ARKA PLAN VE GÖRSEL BOYUTLARI SEÇ.";
@@ -478,6 +479,7 @@
 "COPYRIGHT" = "TELİF HAKKI";
 "CORNER RADIUS" = "KÖŞE YUVARLAKLIĞI";
 "CORNERS" = "KÖŞELER";
+"CORRECT MISHEARD WORDS AND NAMES IN THE SOURCE TRANSCRIPT BEFORE TRANSLATING IT INTO TURKISH OR ENGLISH. TRANSLATION USES THIS TEXT, NOT THE AUDIO." = "TÜRKÇE VEYA İNGİLİZCEYE ÇEVİRMEDEN ÖNCE KAYNAK TRANSKRİPTTEKİ YANLIŞ SÖZCÜKLERİ VE İSİMLERİ DÜZELT. ÇEVİRİ, SES KAYDI YERİNE BU METNİ KULLANIR.";
 "COULD NOT CREATE THE BACKGROUND RESULT." = "ARKA PLAN SONUCU OLUŞTURULAMADI.";
 "COULD NOT READ IMAGE PIXELS." = "GÖRSEL PİKSELLERİ OKUNAMADI.";
 "COULDN’T CHECK FOR UPDATES" = "GÜNCELLEMELER DENETLENEMEDİ";
@@ -550,6 +552,7 @@
 "Choose Set up media tools once to inspect and edit media tags." = "Medya etiketlerini görüntüleyip düzenlemek için bir kez Medya araçlarını kur'u seç.";
 "Choose Set up office tools once to enable document, slide and spreadsheet conversions." = "Belge, sunum ve tablo dönüştürmelerini açmak için bir kez Ofis araçlarını kur'u seç.";
 "Choose Still Image…" = "Sabit Görsel Seç…";
+"Choose Turkish or English for the subtitles." = "Altyazı için Türkçe veya İngilizce seç.";
 "Choose ZIP, TAR or GZIP." = "ZIP, TAR veya GZIP seç.";
 "Choose a PDF smaller than 200 MB." = "200 MB'tan küçük bir PDF seç.";
 "Choose a PDF with 1 to 1,000 pages." = "1 ile 1.000 sayfa arasında bir PDF seç.";
@@ -694,6 +697,7 @@
 "Copyright" = "Telif hakkı";
 "Corner radius" = "Köşe yuvarlaklığı";
 "Corners" = "Köşeler";
+"Correct misheard words and names in the source transcript before translating it into Turkish or English. Translation uses this text, not the audio." = "Türkçe veya İngilizceye çevirmeden önce kaynak transkriptteki yanlış sözcükleri ve isimleri düzelt. Çeviri, ses kaydı yerine bu metni kullanır.";
 "Could not create the background result." = "Arka plan sonucu oluşturulamadı.";
 "Could not read image pixels." = "Görsel pikselleri okunamadı.";
 "Couldn’t check for updates" = "Güncellemeler denetlenemedi";
@@ -769,9 +773,9 @@
 "DOWNLOAD THUMBNAIL" = "KÜÇÜK RESMİ İNDİR";
 "DOWNLOAD VIDEO" = "VİDEOYU İNDİR";
 "DOWNLOAD ↗" = "İNDİR ↗";
+"DOWNLOADING THE LANGUAGE-SPECIFIC TRANSLATION MODEL…" = "SEÇİLEN DİL İÇİN ÇEVİRİ MODELİ İNDİRİLİYOR…";
 "DOWNLOADING THE SPEECH ENGINE…" = "KONUŞMA MOTORU İNDİRİLİYOR…";
 "DOWNLOADING THE SPEECH MODEL (148 MB)…" = "KONUŞMA MODELİ İNDİRİLİYOR (148 MB)…";
-"DOWNLOADING THE TRANSLATION MODEL (459 MB)…" = "ÇEVİRİ MODELİ İNDİRİLİYOR (459 MB)…";
 "DOWNLOADING…" = "İNDİRİLİYOR…";
 "DPI: %@" = "DPI: %@";
 "DPI: %lld" = "DPI: %lld";
@@ -845,9 +849,9 @@
 "Download ↗" = "İndir ↗";
 "Download, verify and install Lokum %@? The app will restart. No account or token is needed." = "Lokum %@ indirilip doğrulansın ve kurulsun mu? Uygulama yeniden başlayacak. Hesap veya token gerekmez.";
 "Download, verify and install Lokum %lld? The app will restart. No account or token is needed." = "Lokum %lld indirilip doğrulansın ve kurulsun mu? Uygulama yeniden başlayacak. Hesap veya token gerekmez.";
+"Downloading the language-specific translation model…" = "Seçilen dil için çeviri modeli indiriliyor…";
 "Downloading the speech engine…" = "Konuşma motoru indiriliyor…";
 "Downloading the speech model (148 MB)…" = "Konuşma modeli indiriliyor (148 MB)…";
-"Downloading the translation model (459 MB)…" = "Çeviri modeli indiriliyor (459 MB)…";
 "Downloading…" = "İndiriliyor…";
 "Drag a crop inside the image." = "Kırpma alanını görselin içinde sürükle.";
 "Drag a range to move it; drag its edges to resize. Drag empty space to add." = "Aralığı taşımak için içini, boyutlandırmak için kenarlarını sürükle. Yeni aralık için boş bir alanı sürükle.";

@@ -1,12 +1,54 @@
 import importlib.util
 from pathlib import Path
 import unittest
+import json
+import os
+import subprocess
+import sys
+import tempfile
 
 path=Path(__file__).resolve().parents[1]/"Resources/SubtitleTranslate/worker.py"
 spec=importlib.util.spec_from_file_location("subtitle_worker",path)
 worker=importlib.util.module_from_spec(spec);spec.loader.exec_module(worker)
 
 class SubtitleTranslationTests(unittest.TestCase):
+    @unittest.skipUnless(os.environ.get("LOKUM_TEST_TRANSLATION_MODEL"),"Install real translation models to run inference.")
+    def test_spanish_bpe_source_produces_readable_english(self):
+        result=worker.translate_request({"sourceLanguage":"es","targetLanguage":"en","cues":[{"start":1000,"end":4000,"text":"Por favor, cierra la ventana."}]},worker.local_translator(os.environ["LOKUM_TEST_TRANSLATION_MODEL"]))
+        text=" ".join(c["text"] for c in result["cues"])
+        self.assertIn("window",text.lower());self.assertNotIn("@@",text)
+
+    @unittest.skipUnless(os.environ.get("LOKUM_TEST_TRANSLATION_MODEL"),"Install real translation models to run inference.")
+    def test_french_translation_contains_normal_words_without_tokenizer_markers(self):
+        result=worker.translate_request({"sourceLanguage":"fr","targetLanguage":"en","cues":[{"start":1000,"end":4000,"text":"Veuillez fermer la fenêtre."}]},worker.local_translator(os.environ["LOKUM_TEST_TRANSLATION_MODEL"]))
+        text=" ".join(c["text"] for c in result["cues"])
+        self.assertIn("window",text.lower());self.assertNotIn("▁",text)
+
+    @unittest.skipUnless(os.environ.get("LOKUM_TEST_TRANSLATION_MODEL"),"Install real translation models to run inference.")
+    def test_turkish_birthday_message_keeps_we_instead_of_i(self):
+        request={"sourceLanguage":"tr","targetLanguage":"en","cues":[{"start":7920,"end":10710,"text":"Rabbim aylıyor günler versin. Baba canım"},{"start":10710,"end":12000,"text":"benim seni seviyoruz."}]}
+        result=worker.translate_request(request,worker.local_translator(os.environ["LOKUM_TEST_TRANSLATION_MODEL"]))
+        text=" ".join(c["text"].replace("\n"," ") for c in result["cues"]).lower()
+        self.assertIn("we love you",text)
+        self.assertNotIn("i love",text)
+
+    @unittest.skipUnless(os.environ.get("LOKUM_TEST_TRANSLATION_MODEL"),"Install real translation models to run inference.")
+    def test_real_turkish_translation_preserves_negation_and_does_not_repeat(self):
+        request={"sourceLanguage":"en","targetLanguage":"tr","cues":[{"start":1000,"end":4000,"text":"I did not say that he stole the money."},{"start":6000,"end":9000,"text":"Please close the window."}]}
+        with tempfile.TemporaryDirectory() as folder:
+            root=Path(folder);(root/"request.json").write_text(json.dumps(request),encoding="utf-8")
+            result=subprocess.run([sys.executable,str(path),"--model",os.environ["LOKUM_TEST_TRANSLATION_MODEL"],"--request",str(root/"request.json"),"--response",str(root/"response.json")],capture_output=True,text=True,encoding="utf-8",timeout=120)
+            self.assertEqual(result.returncode,0,result.stderr)
+            translated=json.loads((root/"response.json").read_text(encoding="utf-8"))
+            text=" ".join(c["text"].replace("\n"," ") for c in translated["cues"])
+            self.assertIn("söylemedim",text);self.assertIn("pencere",text)
+            self.assertLess(len(text),160)
+            self.assertEqual(translated["cues"][0]["start"],1000);self.assertEqual(translated["cues"][-1]["end"],9000)
+
+    def test_non_turkish_or_english_output_is_rejected_before_translation(self):
+        request={"sourceLanguage":"en","targetLanguage":"de","cues":[{"start":0,"end":2000,"text":"Hello."}]}
+        with self.assertRaises(ValueError):worker.translate_request(request,lambda *_:["Hallo."])
+
     def test_joined_overlapping_cues_do_not_truncate_the_original_interval(self):
         cues=[{"start":0,"end":5000,"text":"Please close"},{"start":1000,"end":2000,"text":"the door."}]
         self.assertEqual(worker.group_cues(cues),[{"start":0,"end":5000,"text":"Please close the door."}])

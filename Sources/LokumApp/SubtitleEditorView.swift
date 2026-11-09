@@ -72,7 +72,7 @@ import LokumCore
                 let result:SubtitleTranscript
                 if from==target {result=source}
                 else {
-                    try await TranslationModelSetup.install(token:cancel) {amount,message in Task{@MainActor in if !self.closed {self.fraction=amount;self.label=message}}}
+                    try await TranslationModelSetup.install(source:from,target:target,token:cancel) {amount,message in Task{@MainActor in if !self.closed {self.fraction=amount;self.label=message}}}
                     let seconds=duration
                     result=try await Task.detached(priority:.userInitiated) {try SubtitleTranslationEngine.translate(source,duration:seconds,sourceLanguage:from,targetLanguage:target,token:cancel)}.value
                 }
@@ -127,13 +127,13 @@ struct SubtitleEditorView:View {
                     Picker("Video's original language",selection:$model.language) {Text(L10n.text("Choose a language…")).tag("");ForEach(languages,id:\.0) {Text(L10n.text($0.1)).tag($0.0)}}.labelsHidden().disabled(model.busy)
                     HStack {Button("Create transcript",action:model.generate).disabled(model.busy || model.language.isEmpty);Button("Open SRT…") {let panel=NSOpenPanel();panel.allowedFileTypes=["srt"];if panel.runModal() == .OK,let url=panel.url {do{model.sourceText=try String(contentsOf:url,encoding:.utf8);model.selectedTab=0}catch{model.error=error.localizedDescription}}}.disabled(model.busy || model.language.isEmpty)}
                     LText("2 · Subtitle language").font(.headline)
-                    Picker("Subtitle language",selection:$model.targetLanguage) {Text(L10n.text("Choose a language…")).tag("");ForEach(languages,id:\.0) {Text(L10n.text($0.1)).tag($0.0)}}.labelsHidden().disabled(model.busy || !model.sourceReady)
+                    Picker("Subtitle language",selection:$model.targetLanguage) {Text(L10n.text("Choose a language…")).tag("");ForEach(languages.filter{SubtitleWorkflow.targetLanguages.contains($0.0)},id:\.0) {Text(L10n.text($0.1)).tag($0.0)}}.labelsHidden().disabled(model.busy || !model.sourceReady)
                     Button("Generate subtitles from transcript",action:model.translate).disabled(!model.canTranslate)
                     TabView(selection:$model.selectedTab) {
                         TextEditor(text:$model.sourceText).font(.system(.body,design:.monospaced)).disabled(model.busy || model.language.isEmpty).accessibilityIdentifier("subtitles.source").tabItem{LText("Source transcript")}.tag(0)
                         TextEditor(text:$model.text).font(.system(.body,design:.monospaced)).disabled(model.busy || !model.hasTargetDraft).accessibilityIdentifier("subtitles.editor").tabItem{LText("Subtitles")}.tag(1)
                     }.frame(minHeight:200)
-                    LText("Review the source transcript first. Translations keep its timing; edit the resulting subtitles before sharing.").font(.caption).foregroundStyle(.secondary)
+                    LText("Correct misheard words and names in the source transcript before translating it into Turkish or English. Translation uses this text, not the audio.").font(.caption).foregroundStyle(.secondary)
                 }.frame(minWidth:320,maxWidth:440)
             }.padding(22)
             Spacer(minLength:0)

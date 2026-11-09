@@ -14,11 +14,16 @@ public sealed class SubtitleWorkflow(double duration)
     {
         if(language is null or "auto"||!TranscriptionEngine.Languages.ContainsKey(language))throw new ArgumentException("Choose the video's source language and the subtitle language.");
     }
+    public static IReadOnlyList<string> TargetLanguages{get;}=["tr","en"];
+    public static void ValidateTargetLanguage(string? language)
+    {
+        if(language is null||!TargetLanguages.Contains(language))throw new ArgumentException("Choose Turkish or English for the subtitles.");
+    }
     public void SetSource(string srt,string language)
     {
         InvalidateSource();ValidateLanguage(language);Source=SubtitleTranscript.FromSrt(srt,duration);SourceLanguage=language;
     }
-    public void ChooseTarget(string language){ValidateLanguage(language);TargetLanguage=language;Subtitles=null;Revision++;}
+    public void ChooseTarget(string language){ValidateTargetLanguage(language);TargetLanguage=language;Subtitles=null;Revision++;}
     public bool AcceptTranslation(string srt,long revision,string target)
     {
         if(!CanTranslate||Revision!=revision||TargetLanguage!=target)return false;

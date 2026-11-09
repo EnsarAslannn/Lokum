@@ -28,16 +28,25 @@ Manual selections and background replacement use the same image canvas on both p
 
 ## Offline subtitle translation
 
-M2M-100 418M translates the reviewed source transcript directly between selected
-languages. The CPU helper bundles CTranslate2, SentencePiece and Python; users
+Language-specific models translate the reviewed source transcript into Turkish
+or English. Turkish ↔ English uses Helsinki-NLP's OPUS-MT TC-big models.
+Other supported sources use the corresponding Argos source → English model;
+Turkish output then uses the English → Turkish model. The CPU helper bundles CTranslate2, SentencePiece and Python; users
 do not need to install Python or provide an API key. Media and transcripts stay
 on the computer. Speech recognition and translation can both make mistakes.
 
-- Model: https://github.com/facebookresearch/fairseq/tree/main/examples/m2m_100
-- Verified conversion: https://data.argosopentech.com/argospm/v2/translate-fairseq_m2m_100_418M.argosmodel
-- Download: 458,624,432 bytes (about 459 MB), acquired on first translation.
-- SHA-256: `8a63b8e9228f985d081dd166e336acde5f9083f1f4d7b39e14f7f2d57e5405b4`
-- License: MIT, preserved in `Resources/licenses/M2M100-LICENSE.txt` and the Windows licenses directory.
+- Original models: https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-en-tr and https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-tr-en
+- Pinned CTranslate2 float16 conversions: https://huggingface.co/ooeoeo/opus-mt-tc-big-en-tr-ct2-float16/tree/4729dd2c625df6a5782d0a2225a36b14d52925b0 and https://huggingface.co/ooeoeo/opus-mt-tc-big-tr-en-ct2-float16/tree/22e01c5dbf6da0e9ac7f49ec4a25266ff28effe6
+- Turkish/English model download: about 475 MB per direction. CPU inference uses int8 computation; source and target SentencePiece vocabularies are kept separate and Marian input includes its required end token.
+- Other source models: https://github.com/argosopentech/argospm-index ; pinned HTTPS artifacts use the publisher's `data.argosopentech.com` mirror. Downloads are approximately 67–285 MB per source language.
+- Exact URLs, revisions, lengths, SHA-256 hashes and extracted-file allowlists: `Sources/LokumCore/Resources/SubtitleTranslationModels.json`, shared by both applications and verification scripts.
+- OPUS-MT model authors: Jörg Tiedemann and Santhosh Thottingal, University of Helsinki; https://github.com/Helsinki-NLP/Opus-MT . The upstream TC-big model license is CC-BY-4.0; this takes precedence over conversion-repository metadata. Full license: `Resources/licenses/OPUS-MT-CC-BY-4.0.txt` and the Windows licenses directory.
+- Argos Open Technologies packages retain their model README/metadata during installation. MIT license: `Resources/licenses/Argos-Translate-LICENSE.txt`; OPUS-derived models retain their original CC-BY-4.0 attribution. Stanza resources present in upstream archives are neither installed nor loaded.
+
+Only required language pairs download on first use and are cached under
+`Lokum/Translation/language-pairs-v2`. Older M2M-100 caches are never used as a fallback.
+Selecting the same source/target language needs no translation download. For example,
+French → Turkish downloads French → English and English → Turkish, not all models.
 
 Source cues that form one sentence are translated together, then split into
 readable timed captions. Long silent gaps are retained. Changing the source

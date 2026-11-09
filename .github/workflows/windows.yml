@@ -108,7 +108,10 @@ jobs:
           python scripts/setup-translation-tests.py build/translation-fixtures
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $env:LOKUM_TEST_TRANSLATION_MODEL = (Resolve-Path 'build/translation-fixtures').Path
+          & build/translation-env/Scripts/python.exe scripts/test-subtitle-translation.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $env:LOKUM_VERIFY_INSTALL_SPEECH = Join-Path $env:RUNNER_TEMP 'Lokum-Speech-Tests'
+          $env:LOKUM_VERIFY_INSTALL_TRANSLATION = Join-Path $env:RUNNER_TEMP 'Lokum-Translation-Tests'
           $env:LOKUM_VERIFY_SPEECH_SAMPLE = (Resolve-Path 'build/speech-fixtures/jfk.wav').Path
           $tools = Join-Path $env:RUNNER_TEMP 'Lokum-Test-Tools'
           $env:LOKUM_VERIFY_FFMPEG = Join-Path $tools 'ffmpeg.exe'

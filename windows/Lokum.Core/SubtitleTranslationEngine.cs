@@ -6,7 +6,7 @@ public sealed class SubtitleTranslationEngine(string executable,string model)
 {
     public async Task<SubtitleTranscript> TranslateAsync(SubtitleTranscript source,double duration,string sourceLanguage,string targetLanguage,IProgress<OperationProgress>? progress=null,CancellationToken token=default)
     {
-        token.ThrowIfCancellationRequested();SubtitleWorkflow.ValidateLanguage(sourceLanguage);SubtitleWorkflow.ValidateLanguage(targetLanguage);
+        token.ThrowIfCancellationRequested();SubtitleWorkflow.ValidateLanguage(sourceLanguage);SubtitleWorkflow.ValidateTargetLanguage(targetLanguage);
         if(sourceLanguage==targetLanguage)return source;
         var directory=Path.Combine(Path.GetTempPath(),"Lokum-Translation-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(directory);
         try

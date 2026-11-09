@@ -42,8 +42,9 @@ internal sealed class SubtitleEditorWindow:Window
     public SubtitleEditorWindow(Window owner,string input,MediaInfo info,Toolchain tools,SpeechModelSetup speech,TranslationModelSetup? translationSetup=null)
     {
         Theme.Attach(this);Owner=owner;this.input=input;this.info=info;this.tools=tools;this.speech=speech;workflow=new(info.Duration);
-        translation=translationSetup??new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Lokum","Translation","m2m100-v1"));
-        language.ItemsSource=targetLanguage.ItemsSource=languageCodes.Select(c=>TranscriptionEngine.Languages[c]).ToArray();
+        translation=translationSetup??new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Lokum","Translation","language-pairs-v2"));
+        language.ItemsSource=languageCodes.Select(c=>TranscriptionEngine.Languages[c]).ToArray();
+        targetLanguage.ItemsSource=SubtitleWorkflow.TargetLanguages.Select(c=>TranscriptionEngine.Languages[c]).ToArray();
         editors.Template=(ControlTemplate)System.Windows.Markup.XamlReader.Parse("""
             <ControlTemplate xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" TargetType="{x:Type TabControl}"><Grid><Grid.RowDefinitions><RowDefinition Height="Auto"/><RowDefinition Height="*"/></Grid.RowDefinitions><TabPanel IsItemsHost="True" Margin="0,6,0,8"/><Border Grid.Row="1" Background="{DynamicResource Surface}" BorderBrush="{DynamicResource Line}" BorderThickness="1" CornerRadius="12" Padding="4"><ContentPresenter ContentSource="SelectedContent"/></Border></Grid></ControlTemplate>
             """);
@@ -64,7 +65,7 @@ internal sealed class SubtitleEditorWindow:Window
         var targetLabel=L10n.Label(new TextBlock{Text="2 · Subtitle language",FontWeight=FontWeights.SemiBold});Grid.SetRow(targetLabel,3);right.Children.Add(targetLabel);Grid.SetRow(targetLanguage,4);right.Children.Add(targetLanguage);
         translate=MainWindow.Button("Generate subtitles from transcript",async()=>await Translate());Grid.SetRow(translate,5);right.Children.Add(translate);
         editors.Items.Add(new TabItem{Header=L10n.Text("Source transcript"),Content=sourceText});editors.Items.Add(new TabItem{Header=L10n.Text("Subtitles"),Content=text});Grid.SetRow(editors,6);right.Children.Add(editors);sourceText.TextChanged+=(_,_)=>SourceEdited();text.TextChanged+=(_,_)=>Edited();
-        var hint=L10n.Label(new TextBlock{Text="Review the source transcript first. Translations keep its timing; edit the resulting subtitles before sharing.",TextWrapping=TextWrapping.Wrap,Foreground=Theme.Brush("Muted"),Margin=new(0,10,0,0)});Grid.SetRow(hint,7);right.Children.Add(hint);
+        var hint=L10n.Label(new TextBlock{Text="Correct misheard words and names in the source transcript before translating it into Turkish or English. Translation uses this text, not the audio.",TextWrapping=TextWrapping.Wrap,Foreground=Theme.Brush("Muted"),Margin=new(0,10,0,0)});Grid.SetRow(hint,7);right.Children.Add(hint);
         var footer=new StackPanel{Margin=new(0,16,0,0)};Grid.SetRow(footer,2);root.Children.Add(footer);footer.Children.Add(progress);footer.Children.Add(status);
         var bar=new DockPanel{LastChildFill=false};footer.Children.Add(bar);save=MainWindow.Button("Save new copy  ↗",()=>{try{_=Transcript;DialogResult=true;}catch(Exception error){Status(error.Message);}});save.Background=Theme.Primary;save.Foreground=Theme.PrimaryInk;DockPanel.SetDock(save,Dock.Right);bar.Children.Add(save);
         preview=MainWindow.Button("Show Result",async()=>await ShowResult());DockPanel.SetDock(preview,Dock.Right);bar.Children.Add(preview);format.Width=90;DockPanel.SetDock(format,Dock.Right);bar.Children.Add(format);bar.Children.Add(MainWindow.Button("Cancel",()=>{if(busy)active?.Cancel();else Close();}));
@@ -72,7 +73,7 @@ internal sealed class SubtitleEditorWindow:Window
         format.ToolTip="MP4 embeds subtitles permanently in a new video copy.";
         Status("Choose the video's original language, then create and review its transcript.");
         language.SelectionChanged+=(_,_)=>{sourceText.Clear();workflow.InvalidateSource();ResetResult();Status("Create a new transcript for the selected source language.");};
-        targetLanguage.SelectionChanged+=(_,_)=>{if(targetLanguage.SelectedIndex>=0)workflow.ChooseTarget(languageCodes[targetLanguage.SelectedIndex]);ResetResult();};UpdateButtons();
+        targetLanguage.SelectionChanged+=(_,_)=>{if(targetLanguage.SelectedIndex>=0)workflow.ChooseTarget(SubtitleWorkflow.TargetLanguages[targetLanguage.SelectedIndex]);ResetResult();};UpdateButtons();
         System.Windows.Automation.AutomationProperties.SetAutomationId(text,"subtitles.editor");System.Windows.Automation.AutomationProperties.SetAutomationId(generate,"subtitles.generate");System.Windows.Automation.AutomationProperties.SetAutomationId(preview,"subtitles.preview");System.Windows.Automation.AutomationProperties.SetAutomationId(save,"subtitles.save");
         System.Windows.Automation.AutomationProperties.SetAutomationId(sourceText,"subtitles.source");System.Windows.Automation.AutomationProperties.SetAutomationId(language,"subtitles.sourceLanguage");System.Windows.Automation.AutomationProperties.SetAutomationId(targetLanguage,"subtitles.targetLanguage");System.Windows.Automation.AutomationProperties.SetAutomationId(translate,"subtitles.translate");
         clock.Tick+=(_,_)=>{if(!seek.IsMouseCaptureWithin&&!seek.IsKeyboardFocusWithin)seek.Value=Math.Clamp(player.Position.TotalSeconds,0,info.Duration);caption.Text=resultPlaying?"":transcript?.At(player.Position.TotalSeconds)??"";caption.Visibility=caption.Text.Length==0?Visibility.Collapsed:Visibility.Visible;};clock.Start();
@@ -135,7 +136,7 @@ internal sealed class SubtitleEditorWindow:Window
         {
             SubtitleTranscript result;
             if(from==target)result=source;
-            else{await translation.InstallAsync(report,token);result=await new SubtitleTranslationEngine(translation.Executable,translation.DirectoryPath).TranslateAsync(source,info.Duration,from,target,report,token);}
+            else{await translation.InstallAsync(from,target,report,token);result=await new SubtitleTranslationEngine(translation.Executable,translation.DirectoryPath).TranslateAsync(source,info.Duration,from,target,report,token);}
             if(!closed&&workflow.AcceptTranslation(result.Srt,revision,target)){hasTargetDraft=true;text.Text=result.Srt;transcript=workflow.Subtitles;editors.SelectedIndex=1;}
         }
         catch(OperationCanceledException){if(!closed)Status("Cancelled. Originals kept.");}catch(Exception error){if(!closed)Status(error.Message);}

@@ -13,7 +13,7 @@ public enum SubtitleTranslationEngine {
         throw LokumError.missingDependency("The translation engine is missing. Extract the complete Lokum package again.")
     }
     public static func translate(_ source:SubtitleTranscript,duration:Double,sourceLanguage:String,targetLanguage:String,model:URL=TranslationModelSetup.directory,token:CancellationToken = .init(),progress:ProgressHandler={_,_ in})throws -> SubtitleTranscript {
-        try token.check();try SubtitleWorkflow.validateLanguage(sourceLanguage);try SubtitleWorkflow.validateLanguage(targetLanguage)
+        try token.check();try SubtitleWorkflow.validateLanguage(sourceLanguage);try SubtitleWorkflow.validateTargetLanguage(targetLanguage)
         if sourceLanguage==targetLanguage{return source}
         let fm=FileManager.default,folder=fm.temporaryDirectory.appendingPathComponent("Lokum-Translation-\(UUID().uuidString)",isDirectory:true);try fm.createDirectory(at:folder,withIntermediateDirectories:false);defer{try? fm.removeItem(at:folder)}
         let input=folder.appendingPathComponent("request.json"),output=folder.appendingPathComponent("response.json")

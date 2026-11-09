@@ -13,10 +13,14 @@ public struct SubtitleWorkflow:Sendable {
     public static func validateLanguage(_ value:String)throws {
         guard value != "auto",TranscriptionEngine.languages.contains(where:{$0.0==value}) else {throw LokumError.invalidInput("Choose the video's source language and the subtitle language.")}
     }
+    public static let targetLanguages=["tr","en"]
+    public static func validateTargetLanguage(_ value:String)throws {
+        guard targetLanguages.contains(value) else {throw LokumError.invalidInput("Choose Turkish or English for the subtitles.")}
+    }
     public mutating func setSource(_ text:String,language:String)throws {
         invalidateSource();try Self.validateLanguage(language);source=try SubtitleTranscript(srt:text,duration:duration);sourceLanguage=language
     }
-    public mutating func chooseTarget(_ language:String)throws {try Self.validateLanguage(language);targetLanguage=language;subtitles=nil;revision += 1}
+    public mutating func chooseTarget(_ language:String)throws {try Self.validateTargetLanguage(language);targetLanguage=language;subtitles=nil;revision += 1}
     public mutating func acceptTranslation(_ text:String,revision:Int,target:String)throws -> Bool {
         guard canTranslate,revision==self.revision,target==targetLanguage else{return false}
         subtitles=try SubtitleTranscript(srt:text,duration:duration);return true

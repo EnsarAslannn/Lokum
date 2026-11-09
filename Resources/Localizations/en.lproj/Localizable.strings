@@ -415,6 +415,7 @@
 "CHOOSE THE SPOKEN LANGUAGE, THEN GENERATE SUBTITLES." = "CHOOSE THE SPOKEN LANGUAGE, THEN GENERATE SUBTITLES.";
 "CHOOSE THE VIDEO'S ORIGINAL LANGUAGE, THEN CREATE AND REVIEW ITS TRANSCRIPT." = "CHOOSE THE VIDEO'S ORIGINAL LANGUAGE, THEN CREATE AND REVIEW ITS TRANSCRIPT.";
 "CHOOSE THE VIDEO'S SOURCE LANGUAGE AND THE SUBTITLE LANGUAGE." = "CHOOSE THE VIDEO'S SOURCE LANGUAGE AND THE SUBTITLE LANGUAGE.";
+"CHOOSE TURKISH OR ENGLISH FOR THE SUBTITLES." = "CHOOSE TURKISH OR ENGLISH FOR THE SUBTITLES.";
 "CHOOSE UP TO 10,000 OUTPUT PAGES." = "CHOOSE UP TO 10,000 OUTPUT PAGES.";
 "CHOOSE UP TO 4 GB OF FILES." = "CHOOSE UP TO 4 GB OF FILES.";
 "CHOOSE VALID BACKGROUND AND IMAGE DIMENSIONS." = "CHOOSE VALID BACKGROUND AND IMAGE DIMENSIONS.";
@@ -478,6 +479,7 @@
 "COPYRIGHT" = "COPYRIGHT";
 "CORNER RADIUS" = "CORNER RADIUS";
 "CORNERS" = "CORNERS";
+"CORRECT MISHEARD WORDS AND NAMES IN THE SOURCE TRANSCRIPT BEFORE TRANSLATING IT INTO TURKISH OR ENGLISH. TRANSLATION USES THIS TEXT, NOT THE AUDIO." = "CORRECT MISHEARD WORDS AND NAMES IN THE SOURCE TRANSCRIPT BEFORE TRANSLATING IT INTO TURKISH OR ENGLISH. TRANSLATION USES THIS TEXT, NOT THE AUDIO.";
 "COULD NOT CREATE THE BACKGROUND RESULT." = "COULD NOT CREATE THE BACKGROUND RESULT.";
 "COULD NOT READ IMAGE PIXELS." = "COULD NOT READ IMAGE PIXELS.";
 "COULDN’T CHECK FOR UPDATES" = "COULDN’T CHECK FOR UPDATES";
@@ -550,6 +552,7 @@
 "Choose Set up media tools once to inspect and edit media tags." = "Choose Set up media tools once to inspect and edit media tags.";
 "Choose Set up office tools once to enable document, slide and spreadsheet conversions." = "Choose Set up office tools once to enable document, slide and spreadsheet conversions.";
 "Choose Still Image…" = "Choose Still Image…";
+"Choose Turkish or English for the subtitles." = "Choose Turkish or English for the subtitles.";
 "Choose ZIP, TAR or GZIP." = "Choose ZIP, TAR or GZIP.";
 "Choose a PDF smaller than 200 MB." = "Choose a PDF smaller than 200 MB.";
 "Choose a PDF with 1 to 1,000 pages." = "Choose a PDF with 1 to 1,000 pages.";
@@ -694,6 +697,7 @@
 "Copyright" = "Copyright";
 "Corner radius" = "Corner radius";
 "Corners" = "Corners";
+"Correct misheard words and names in the source transcript before translating it into Turkish or English. Translation uses this text, not the audio." = "Correct misheard words and names in the source transcript before translating it into Turkish or English. Translation uses this text, not the audio.";
 "Could not create the background result." = "Could not create the background result.";
 "Could not read image pixels." = "Could not read image pixels.";
 "Couldn’t check for updates" = "Couldn’t check for updates";
@@ -769,9 +773,9 @@
 "DOWNLOAD THUMBNAIL" = "DOWNLOAD THUMBNAIL";
 "DOWNLOAD VIDEO" = "DOWNLOAD VIDEO";
 "DOWNLOAD ↗" = "DOWNLOAD ↗";
+"DOWNLOADING THE LANGUAGE-SPECIFIC TRANSLATION MODEL…" = "DOWNLOADING THE LANGUAGE-SPECIFIC TRANSLATION MODEL…";
 "DOWNLOADING THE SPEECH ENGINE…" = "DOWNLOADING THE SPEECH ENGINE…";
 "DOWNLOADING THE SPEECH MODEL (148 MB)…" = "DOWNLOADING THE SPEECH MODEL (148 MB)…";
-"DOWNLOADING THE TRANSLATION MODEL (459 MB)…" = "DOWNLOADING THE TRANSLATION MODEL (459 MB)…";
 "DOWNLOADING…" = "DOWNLOADING…";
 "DPI: %@" = "DPI: %@";
 "DPI: %lld" = "DPI: %lld";
@@ -845,9 +849,9 @@
 "Download ↗" = "Download ↗";
 "Download, verify and install Lokum %@? The app will restart. No account or token is needed." = "Download, verify and install Lokum %@? The app will restart. No account or token is needed.";
 "Download, verify and install Lokum %lld? The app will restart. No account or token is needed." = "Download, verify and install Lokum %lld? The app will restart. No account or token is needed.";
+"Downloading the language-specific translation model…" = "Downloading the language-specific translation model…";
 "Downloading the speech engine…" = "Downloading the speech engine…";
 "Downloading the speech model (148 MB)…" = "Downloading the speech model (148 MB)…";
-"Downloading the translation model (459 MB)…" = "Downloading the translation model (459 MB)…";
 "Downloading…" = "Downloading…";
 "Drag a crop inside the image." = "Drag a crop inside the image.";
 "Drag a range to move it; drag its edges to resize. Drag empty space to add." = "Drag a range to move it; drag its edges to resize. Drag empty space to add.";

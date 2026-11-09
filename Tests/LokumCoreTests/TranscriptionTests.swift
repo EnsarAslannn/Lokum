@@ -2,17 +2,29 @@ import XCTest
 @testable import LokumCore
 
 final class TranscriptionTests:XCTestCase {
+    func testVerifiedLanguagePairInstallationProducesUsableEnglishSubtitles()async throws {
+        guard ProcessInfo.processInfo.environment["LOKUM_TEST_INSTALL_TRANSLATION"]=="1" else {throw XCTSkip("Fresh model installation is exercised by engine CI.")}
+        try await TranslationModelSetup.install(source:"fr",target:"en",token:CancellationToken()) {_,_ in}
+        let source=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:03,000\nVeuillez fermer la fenêtre.\n",duration:4)
+        let translated=try SubtitleTranslationEngine.translate(source,duration:4,sourceLanguage:"fr",targetLanguage:"en")
+        XCTAssertTrue(translated.text.lowercased().contains("window"));XCTAssertFalse(translated.text.contains("▁"))
+    }
     func testRealTranslationUsesChosenLanguagesAndEditedTranscript()throws {
         guard let model=ProcessInfo.processInfo.environment["LOKUM_TEST_TRANSLATION_MODEL"] else {throw XCTSkip("Translation fixtures are installed by engine CI.")}
         let source=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:04,000\nHello, how are you?\n\n2\n00:00:06,000 --> 00:00:09,000\nPlease close the door.\n",duration:10)
-        for (target,word) in [("tr","kapı"),("de","Tür"),("fr","porte")] {
-            let translated=try SubtitleTranslationEngine.translate(source,duration:10,sourceLanguage:"en",targetLanguage:target,model:URL(fileURLWithPath:model))
+        let turkish=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:04,000\nLütfen kapıyı kapatın.\n\n2\n00:00:06,000 --> 00:00:09,000\nLütfen pencereyi kapatın.\n",duration:10)
+        let german=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:04,000\nBitte schließen Sie die Tür.\n\n2\n00:00:06,000 --> 00:00:09,000\nBitte schließen Sie das Fenster.\n",duration:10)
+        let french=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:04,000\nVeuillez fermer la porte.\n\n2\n00:00:06,000 --> 00:00:09,000\nVeuillez fermer la fenêtre.\n",duration:10)
+        for (from,target,original,word) in [("en","tr",source,"kapı"),("tr","en",turkish,"door"),("de","en",german,"door"),("fr","tr",french,"kapı")] {
+            let translated=try SubtitleTranslationEngine.translate(original,duration:10,sourceLanguage:from,targetLanguage:target,model:URL(fileURLWithPath:model))
             XCTAssertTrue(translated.text.contains(word),translated.text)
             XCTAssertEqual(translated.cues.first?.start,1000);XCTAssertEqual(translated.cues.last?.end,9000)
             XCTAssertFalse(translated.cues.contains{$0.start<6000 && $0.end>4000})
         }
         let edited=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:04,000\nPlease close the window.\n",duration:10)
         XCTAssertTrue(try SubtitleTranslationEngine.translate(edited,duration:10,sourceLanguage:"en",targetLanguage:"tr",model:URL(fileURLWithPath:model)).text.contains("pencere"))
+        let birthday=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:04,000\nBaba canım benim seni seviyoruz.\n",duration:10)
+        XCTAssertTrue(try SubtitleTranslationEngine.translate(birthday,duration:10,sourceLanguage:"tr",targetLanguage:"en",model:URL(fileURLWithPath:model)).text.lowercased().contains("we love you"))
         XCTAssertTrue(source.text.contains("door"))
         XCTAssertEqual(try SubtitleTranslationEngine.translate(source,duration:10,sourceLanguage:"en",targetLanguage:"en").srt,source.srt)
     }
@@ -21,6 +33,8 @@ final class TranscriptionTests:XCTestCase {
         let turkish="1\n00:00:01,000 --> 00:00:03,000\nLütfen kapıyı kapatın.\n"
         var flow=SubtitleWorkflow(duration:4)
         XCTAssertFalse(flow.canSave);XCTAssertFalse(flow.canTranslate)
+        XCTAssertEqual(try TranslationModelSetup.requiredPairs(source:"fr",target:"tr"),["fr-en","en-tr"])
+        XCTAssertEqual(try TranslationModelSetup.requiredPairs(source:"tr",target:"tr"),[])
         XCTAssertThrowsError(try flow.setSource(english,language:"auto"))
         try flow.setSource(english,language:"en");try flow.chooseTarget("tr");let revision=flow.revision
         XCTAssertTrue(flow.canTranslate);XCTAssertFalse(flow.canSave)
@@ -28,6 +42,7 @@ final class TranscriptionTests:XCTestCase {
         XCTAssertEqual(flow.source?.at(2),"Please close the door.");XCTAssertEqual(flow.subtitles?.at(2),"Lütfen kapıyı kapatın.")
         try flow.setSource(english.replacingOccurrences(of:"door",with:"window"),language:"en")
         XCTAssertFalse(flow.canSave);XCTAssertFalse(try flow.acceptTranslation(turkish,revision:revision,target:"tr"))
+        XCTAssertThrowsError(try flow.chooseTarget("de"))
         try flow.chooseTarget("en");XCTAssertTrue(flow.useSourceLanguage());XCTAssertTrue(flow.subtitles?.text.contains("window") == true)
         flow.invalidateSource();XCTAssertFalse(flow.canSave)
     }

@@ -35,7 +35,7 @@ def split_caption(cue,text):
 
 def translate_request(request,translate):
     source,target=request.get("sourceLanguage"),request.get("targetLanguage")
-    if source not in LANGUAGES or target not in LANGUAGES:raise ValueError("Choose the source and subtitle languages.")
+    if source not in LANGUAGES or target not in {"tr","en"}:raise ValueError("Choose a supported source language and Turkish or English for the subtitles.")
     groups=group_cues(request["cues"])
     texts=[c["text"] for c in groups]
     translated=texts if source==target else translate(texts,source,target)
@@ -46,18 +46,37 @@ def translate_request(request,translate):
 def local_translator(model):
     import ctranslate2
     import sentencepiece
-    root=Path(model)
-    sp=sentencepiece.SentencePieceProcessor(model_file=str(root/"sentencepiece.model"))
-    engine=ctranslate2.Translator(str(root/"model"),device="cpu",compute_type="int8",inter_threads=1,intra_threads=min(8,max(1,(os.cpu_count() or 2)//2)))
     def run(texts,source,target):
-        output=[]
-        for offset in range(0,len(texts),8):
-            batch=texts[offset:offset+8];tokens=[["__"+source+"__"]+sp.encode(text,out_type=str) for text in batch]
-            if any(len(t)>512 for t in tokens):raise ValueError("A transcript paragraph is too long. Split it into shorter subtitles.")
-            results=engine.translate_batch(tokens,target_prefix=[["__"+target+"__"] for _ in tokens],beam_size=4,max_decoding_length=512,max_input_length=0,no_repeat_ngram_size=3)
-            output.extend(sp.decode(result.hypotheses[0][1:]) for result in results)
-            print(json.dumps({"fraction":min(1,(offset+len(batch))/len(texts))}),flush=True)
-        return output
+        pairs=([(source,"en")] if source!="en" else [])+([("en","tr")] if target=="tr" else [])
+        for stage,(from_language,to_language) in enumerate(pairs):
+            root=Path(model)/(from_language+"-"+to_language)
+            marian=(root/"source.spm").is_file()
+            if (root/"bpe.model").is_file():
+                from sacremoses import MosesTokenizer,MosesDetokenizer,MosesPunctNormalizer
+                from subword_nmt.apply_bpe import BPE
+                tokenizer=MosesTokenizer(lang=from_language);detokenizer=MosesDetokenizer(lang=to_language);normalizer=MosesPunctNormalizer(lang=from_language)
+                with (root/"bpe.model").open(encoding="utf-8") as file:bpe=BPE(file)
+                encode=lambda text:bpe.segment_tokens(tokenizer.tokenize(normalizer.normalize(text)))
+                decode=lambda tokens:detokenizer.detokenize(" ".join(tokens).replace("@@ ","").split(" "))
+            else:
+                source_sp=sentencepiece.SentencePieceProcessor(model_file=str(root/("source.spm" if marian else "sentencepiece.model")))
+                target_sp=sentencepiece.SentencePieceProcessor(model_file=str(root/"target.spm")) if marian else source_sp
+                encode=lambda text:source_sp.encode(text,out_type=str)+(["</s>"] if marian else [])
+                decode=lambda tokens:target_sp.decode(tokens).replace("▁"," ")
+            engine=ctranslate2.Translator(str(root if marian else root/"model"),device="cpu",compute_type="int8",inter_threads=1,intra_threads=min(8,max(1,(os.cpu_count() or 2)//2)))
+            output=[]
+            for offset in range(0,len(texts),8):
+                batch=texts[offset:offset+8];tokens=[encode(text) for text in batch]
+                if any(len(t)>512 for t in tokens):raise ValueError("A transcript paragraph is too long. Split it into shorter subtitles.")
+                results=engine.translate_batch(tokens,beam_size=5,max_decoding_length=512,max_input_length=0,return_end_token=True)
+                for result in results:
+                    hypothesis=result.hypotheses[0]
+                    if not hypothesis or hypothesis[-1]!="</s>":raise ValueError("The translation was incomplete. No subtitles were saved.")
+                    output.append(decode(hypothesis[:-1]))
+                print(json.dumps({"fraction":(stage+(offset+len(batch))/len(texts))/len(pairs)}),flush=True)
+            texts=output
+            del engine
+        return texts
     return run
 
 def main():

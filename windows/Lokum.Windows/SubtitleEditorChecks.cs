@@ -39,6 +39,7 @@ internal static class SubtitleEditorChecks
             var generate=Find<Button>(editor).Single(b=>AutomationProperties.GetAutomationId(b)=="subtitles.generate");
             Check(sourceLanguage.SelectedIndex<0&&!generate.IsEnabled&&!targetLanguage.IsEnabled,"Creating subtitles requires an explicit source language before choosing a target.");
             sourceLanguage.SelectedItem="English";
+            Check(targetLanguage.Items.Cast<string>().SequenceEqual(new[]{"Turkish","English"})&&sourceLanguage.Items.Cast<string>().Contains("German"),"Turkish and English are the only subtitle targets; the original language can still be different.");
             Check(preview.Content as string=="Sonucu göster","The result preview button is translated into Turkish.");
             Check(!save.IsEnabled&&!preview.IsEnabled,"Empty subtitles cannot be saved or previewed.");
             sourceBox.Text="1\n00:00:00,250 --> 00:00:03,000\nPlease close the door.\n";
@@ -46,6 +47,12 @@ internal static class SubtitleEditorChecks
             targetLanguage.SelectedItem=model is null?"English":"Turkish";translate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));await Until(()=>translate.IsEnabled);
             tabs.SelectedIndex=1;editor.UpdateLayout();var textbox=Find<TextBox>(editor).Single(t=>AutomationProperties.GetAutomationId(t)=="subtitles.editor");
             Check(save.IsEnabled&&(model is null?editor.Transcript.Text.Contains("door"):editor.Transcript.Text.Contains("kapı")),"The selected target subtitles are generated from the reviewed transcript.");
+            if(model is not null)
+            {
+                tabs.SelectedIndex=0;sourceBox.Text=sourceBox.Text.Replace("door","window");Check(!save.IsEnabled,"A source correction cannot reuse the previous translated result.");
+                translate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));await Until(()=>translate.IsEnabled);
+                Check(editor.Transcript.Text.Contains("pencere")&&!editor.Transcript.Text.Contains("kapı"),"Regeneration translates the edited source transcript instead of the audio or old subtitle draft.");
+            }
             textbox.Text="1\n00:00:03,000 --> 00:00:02,000\nWrong\n";Check(!save.IsEnabled&&!preview.IsEnabled,"Invalid target timing blocks saving and preview.");
             tabs.SelectedIndex=0;generate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             await Until(()=>generate.IsEnabled);Check(!save.IsEnabled&&sourceBox.Text.Contains("country",StringComparison.OrdinalIgnoreCase),"Speech recognition creates only the source-language transcript.");

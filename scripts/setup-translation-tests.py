@@ -1,21 +1,32 @@
 from pathlib import Path
 import hashlib
+import json
+import shutil
 import sys
 import urllib.request
 import zipfile
 
+repository=Path(__file__).resolve().parents[1]
 root=Path(sys.argv[1] if len(sys.argv)>1 else "build/translation-fixtures")
 root.mkdir(parents=True,exist_ok=True)
-archive=root/"m2m100.argosmodel"
-digest="8a63b8e9228f985d081dd166e336acde5f9083f1f4d7b39e14f7f2d57e5405b4"
-if not archive.exists() or hashlib.sha256(archive.read_bytes()).hexdigest()!=digest:
-    request=urllib.request.Request("https://data.argosopentech.com/argospm/v2/translate-fairseq_m2m_100_418M.argosmodel",headers={"User-Agent":"Lokum-translation-verification"})
-    with urllib.request.urlopen(request,timeout=60) as response,archive.open("wb") as file:
-        while chunk:=response.read(1024*1024):file.write(chunk)
-    if hashlib.sha256(archive.read_bytes()).hexdigest()!=digest:raise RuntimeError("Translation model checksum mismatch")
-with zipfile.ZipFile(archive) as zip:
-    for relative in ["model/model.bin","model/shared_vocabulary.txt","sentencepiece.model"]:
-        target=root/relative;target.parent.mkdir(parents=True,exist_ok=True)
-        with zip.open("translate-fairseq_m2m_100_418M/"+relative) as source,target.open("wb") as file:
-            while chunk:=source.read(1024*1024):file.write(chunk)
-print("Verified offline translation model prepared")
+models=json.loads((repository/"Sources/LokumCore/Resources/SubtitleTranslationModels.json").read_text(encoding="utf-8"))
+selected=None if "--all" in sys.argv else {"en-tr","tr-en","de-en","fr-en","es-en"}
+for model in models:
+    if selected is not None and model["id"] not in selected:continue
+    destination=root/model["id"];destination.mkdir(parents=True,exist_ok=True)
+    for index,asset in enumerate(model["assets"]):
+        cache=root/"downloads"/(model["id"]+"-"+str(index));cache.parent.mkdir(parents=True,exist_ok=True)
+        def verified(path):
+            if not path.is_file() or path.stat().st_size!=asset["size"]:return False
+            with path.open("rb") as file:return hashlib.file_digest(file,"sha256").hexdigest()==asset["sha256"]
+        if not verified(cache):
+            request=urllib.request.Request(asset["url"],headers={"User-Agent":"Lokum-translation-verification"})
+            with urllib.request.urlopen(request,timeout=60) as response,cache.open("wb") as file:shutil.copyfileobj(response,file)
+            if not verified(cache):raise RuntimeError("Translation model checksum mismatch")
+        if asset.get("entries"):
+            with zipfile.ZipFile(cache) as archive:
+                for entry,relative in asset["entries"].items():
+                    output=destination/relative;output.parent.mkdir(parents=True,exist_ok=True)
+                    with archive.open(entry) as source,output.open("wb") as target:shutil.copyfileobj(source,target)
+        elif not verified(destination/asset["path"]):shutil.copy2(cache,destination/asset["path"])
+    print("Verified translation model: "+model["id"],flush=True)
