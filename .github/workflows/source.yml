@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: true
 jobs:
   mac-engines:
-    runs-on: macos-15
-    timeout-minutes: 45
+    runs-on: macos-15-intel
+    timeout-minutes: 90
     env:
       LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
       LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
@@ -44,7 +44,7 @@ jobs:
           export LOKUM_TRANSLATE="$PWD/Tools/Translate/translate"
           set -o pipefail
           swift test --filter TranscriptionTests/testVerifiedSharedTranslationModelInstallationProducesUsableEnglishSubtitles 2>&1 | tee build/mac-engines/model-install.log
-          build/translation-env/bin/python scripts/test-subtitle-translation.py
+          build/translation-env/bin/python scripts/test-subtitle-translation.py -v 2>&1 | tee build/mac-engines/translation-tests.log
           python3 scripts/setup-speech-tests.py build/speech-fixtures
           export LOKUM_TEST_SPEECH_FIXTURES="$PWD/build/speech-fixtures"
           swift test 2>&1 | tee build/mac-engines/tests.log

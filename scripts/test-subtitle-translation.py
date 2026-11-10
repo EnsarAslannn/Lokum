@@ -64,7 +64,7 @@ class SubtitleTranslationTests(unittest.TestCase):
         request={"sourceLanguage":"en","targetLanguage":"tr","cues":[{"start":1000,"end":4000,"text":"I did not say that he stole the money."},{"start":6000,"end":9000,"text":"Please close the window."}]}
         with tempfile.TemporaryDirectory() as folder:
             root=Path(folder);(root/"request.json").write_text(json.dumps(request),encoding="utf-8")
-            result=subprocess.run([sys.executable,str(path),"--model",os.environ["LOKUM_TEST_TRANSLATION_MODEL"],"--request",str(root/"request.json"),"--response",str(root/"response.json")],capture_output=True,text=True,encoding="utf-8",timeout=120)
+            result=subprocess.run([sys.executable,str(path),"--model",os.environ["LOKUM_TEST_TRANSLATION_MODEL"],"--request",str(root/"request.json"),"--response",str(root/"response.json")],capture_output=True,text=True,encoding="utf-8",timeout=1200 if sys.platform=="darwin" else 120)
             self.assertEqual(result.returncode,0,result.stderr)
             translated=json.loads((root/"response.json").read_text(encoding="utf-8"))
             text=" ".join(c["text"].replace("\n"," ") for c in translated["cues"])
