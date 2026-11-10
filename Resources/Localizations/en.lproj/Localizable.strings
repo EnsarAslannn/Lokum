@@ -773,7 +773,7 @@
 "DOWNLOAD THUMBNAIL" = "DOWNLOAD THUMBNAIL";
 "DOWNLOAD VIDEO" = "DOWNLOAD VIDEO";
 "DOWNLOAD ↗" = "DOWNLOAD ↗";
-"DOWNLOADING THE LANGUAGE-SPECIFIC TRANSLATION MODEL…" = "DOWNLOADING THE LANGUAGE-SPECIFIC TRANSLATION MODEL…";
+"DOWNLOADING THE SHARED TRANSLATION MODEL (5.7 GB, ONCE)…" = "DOWNLOADING THE SHARED TRANSLATION MODEL (5.7 GB, ONCE)…";
 "DOWNLOADING THE SPEECH ENGINE…" = "DOWNLOADING THE SPEECH ENGINE…";
 "DOWNLOADING THE SPEECH MODEL (148 MB)…" = "DOWNLOADING THE SPEECH MODEL (148 MB)…";
 "DOWNLOADING…" = "DOWNLOADING…";
@@ -849,7 +849,7 @@
 "Download ↗" = "Download ↗";
 "Download, verify and install Lokum %@? The app will restart. No account or token is needed." = "Download, verify and install Lokum %@? The app will restart. No account or token is needed.";
 "Download, verify and install Lokum %lld? The app will restart. No account or token is needed." = "Download, verify and install Lokum %lld? The app will restart. No account or token is needed.";
-"Downloading the language-specific translation model…" = "Downloading the language-specific translation model…";
+"Downloading the shared translation model (5.7 GB, once)…" = "Downloading the shared translation model (5.7 GB, once)…";
 "Downloading the speech engine…" = "Downloading the speech engine…";
 "Downloading the speech model (148 MB)…" = "Downloading the speech model (148 MB)…";
 "Downloading…" = "Downloading…";
@@ -2235,8 +2235,10 @@
 "THE SIGNED PACKAGE VERSION DOES NOT MATCH THIS UPDATE." = "THE SIGNED PACKAGE VERSION DOES NOT MATCH THIS UPDATE.";
 "THE SPEECH MODEL COULD NOT BE OPENED. DOWNLOAD IT AGAIN." = "THE SPEECH MODEL COULD NOT BE OPENED. DOWNLOAD IT AGAIN.";
 "THE SUBTITLE FILE IS TOO LARGE." = "THE SUBTITLE FILE IS TOO LARGE.";
+"THE TRANSLATION ENGINE COULD NOT PREPARE THE SOURCE TRANSCRIPT." = "THE TRANSLATION ENGINE COULD NOT PREPARE THE SOURCE TRANSCRIPT.";
 "THE TRANSLATION ENGINE IS MISSING. EXTRACT THE COMPLETE LOKUM PACKAGE AGAIN." = "THE TRANSLATION ENGINE IS MISSING. EXTRACT THE COMPLETE LOKUM PACKAGE AGAIN.";
 "THE TRANSLATION LANGUAGE DOES NOT MATCH YOUR SELECTION." = "THE TRANSLATION LANGUAGE DOES NOT MATCH YOUR SELECTION.";
+"THE TRANSLATION MODEL IS MISSING. SET UP THE TRANSLATION MODEL FIRST." = "THE TRANSLATION MODEL IS MISSING. SET UP THE TRANSLATION MODEL FIRST.";
 "THE TRANSLATION WAS INCOMPLETE. NO SUBTITLES WERE SAVED." = "THE TRANSLATION WAS INCOMPLETE. NO SUBTITLES WERE SAVED.";
 "THE UPDATE DOES NOT CONTAIN LOKUM." = "THE UPDATE DOES NOT CONTAIN LOKUM.";
 "THE UPDATE SIGNATURE IS INVALID. YOUR EXISTING APP WAS KEPT." = "THE UPDATE SIGNATURE IS INVALID. YOUR EXISTING APP WAS KEPT.";
@@ -2347,8 +2349,10 @@
 "The signed package version does not match this update." = "The signed package version does not match this update.";
 "The speech model could not be opened. Download it again." = "The speech model could not be opened. Download it again.";
 "The subtitle file is too large." = "The subtitle file is too large.";
+"The translation engine could not prepare the source transcript." = "The translation engine could not prepare the source transcript.";
 "The translation engine is missing. Extract the complete Lokum package again." = "The translation engine is missing. Extract the complete Lokum package again.";
 "The translation language does not match your selection." = "The translation language does not match your selection.";
+"The translation model is missing. Set up the translation model first." = "The translation model is missing. Set up the translation model first.";
 "The translation was incomplete. No subtitles were saved." = "The translation was incomplete. No subtitles were saved.";
 "The update does not contain Lokum." = "The update does not contain Lokum.";
 "The update signature is invalid. Your existing app was kept." = "The update signature is invalid. Your existing app was kept.";

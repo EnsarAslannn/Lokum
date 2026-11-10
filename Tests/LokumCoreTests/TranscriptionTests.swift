@@ -2,7 +2,7 @@ import XCTest
 @testable import LokumCore
 
 final class TranscriptionTests:XCTestCase {
-    func testVerifiedLanguagePairInstallationProducesUsableEnglishSubtitles()async throws {
+    func testVerifiedSharedTranslationModelInstallationProducesUsableEnglishSubtitles()async throws {
         guard ProcessInfo.processInfo.environment["LOKUM_TEST_INSTALL_TRANSLATION"]=="1" else {throw XCTSkip("Fresh model installation is exercised by engine CI.")}
         try await TranslationModelSetup.install(source:"fr",target:"en",token:CancellationToken()) {_,_ in}
         let source=try SubtitleTranscript(srt:"1\n00:00:01,000 --> 00:00:03,000\nVeuillez fermer la fenêtre.\n",duration:4)
@@ -33,8 +33,9 @@ final class TranscriptionTests:XCTestCase {
         let turkish="1\n00:00:01,000 --> 00:00:03,000\nLütfen kapıyı kapatın.\n"
         var flow=SubtitleWorkflow(duration:4)
         XCTAssertFalse(flow.canSave);XCTAssertFalse(flow.canTranslate)
-        XCTAssertEqual(try TranslationModelSetup.requiredPairs(source:"fr",target:"tr"),["fr-en","en-tr"])
-        XCTAssertEqual(try TranslationModelSetup.requiredPairs(source:"tr",target:"tr"),[])
+        let required=try TranslationModelSetup.requiredModels(source:"fr",target:"tr")
+        XCTAssertEqual(required.count,1);XCTAssertEqual(try TranslationModelSetup.requiredModels(source:"tr",target:"en"),required)
+        XCTAssertEqual(try TranslationModelSetup.requiredModels(source:"tr",target:"tr"),[])
         XCTAssertThrowsError(try flow.setSource(english,language:"auto"))
         try flow.setSource(english,language:"en");try flow.chooseTarget("tr");let revision=flow.revision
         XCTAssertTrue(flow.canTranslate);XCTAssertFalse(flow.canSave)
@@ -62,6 +63,14 @@ final class TranscriptionTests:XCTestCase {
         let video=try XCTUnwrap(TranscriptionEngine.export(document,input:source,format:"mp4",destination:target).first)
         let info=try MediaEngine.inspect(video)
         XCTAssertEqual(info.video?.width,640);XCTAssertNotNil(info.audio)
+        let decoded=directory.appendingPathComponent("subtitled-audio.s16")
+        try ProcessRunner.run(ffmpeg,["-y","-v","error","-i",video.path,"-map","0:a:0","-vn","-ar","16000","-ac","1","-f","s16le",decoded.path])
+        let samples=try Data(contentsOf:decoded)
+        XCTAssertTrue(stride(from:0,to:samples.count-1,by:2).contains{abs(Int(Int16(bitPattern:UInt16(samples[$0]) | UInt16(samples[$0+1])<<8)))>1000},"Subtitled output retains audible speech")
+        let multi=directory.appendingPathComponent("multiple-audio.mp4")
+        try ProcessRunner.run(ffmpeg,["-y","-v","error","-i",source.path,"-f","lavfi","-i","anullsrc=r=48000:cl=stereo","-map","0:v:0","-map","1:a:0","-map","0:a:0","-c:v","copy","-c:a","aac","-disposition:a:0","0","-disposition:a:1","default","-shortest",multi.path])
+        let multiOutput=try XCTUnwrap(TranscriptionEngine.export(document,input:multi,format:"mp4",destination:target).first)
+        XCTAssertEqual(try MediaEngine.inspect(multiOutput).streams.filter{$0.kind=="audio"}.count,2,"An audible default audio track after a silent first track must be preserved")
         let frame=directory.appendingPathComponent("frame.gray")
         try ProcessRunner.run(ffmpeg,["-v","error","-ss","1","-i",video.path,"-frames:v","1","-pix_fmt","gray","-f","rawvideo",frame.path])
         XCTAssertGreaterThan(try Data(contentsOf:frame).filter{$0>100}.count,50)

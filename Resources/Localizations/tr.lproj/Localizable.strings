@@ -773,7 +773,7 @@
 "DOWNLOAD THUMBNAIL" = "KÜÇÜK RESMİ İNDİR";
 "DOWNLOAD VIDEO" = "VİDEOYU İNDİR";
 "DOWNLOAD ↗" = "İNDİR ↗";
-"DOWNLOADING THE LANGUAGE-SPECIFIC TRANSLATION MODEL…" = "SEÇİLEN DİL İÇİN ÇEVİRİ MODELİ İNDİRİLİYOR…";
+"DOWNLOADING THE SHARED TRANSLATION MODEL (5.7 GB, ONCE)…" = "ORTAK ÇEVİRİ MODELİ İNDİRİLİYOR (5,7 GB, YALNIZCA BİR KEZ)…";
 "DOWNLOADING THE SPEECH ENGINE…" = "KONUŞMA MOTORU İNDİRİLİYOR…";
 "DOWNLOADING THE SPEECH MODEL (148 MB)…" = "KONUŞMA MODELİ İNDİRİLİYOR (148 MB)…";
 "DOWNLOADING…" = "İNDİRİLİYOR…";
@@ -849,7 +849,7 @@
 "Download ↗" = "İndir ↗";
 "Download, verify and install Lokum %@? The app will restart. No account or token is needed." = "Lokum %@ indirilip doğrulansın ve kurulsun mu? Uygulama yeniden başlayacak. Hesap veya token gerekmez.";
 "Download, verify and install Lokum %lld? The app will restart. No account or token is needed." = "Lokum %lld indirilip doğrulansın ve kurulsun mu? Uygulama yeniden başlayacak. Hesap veya token gerekmez.";
-"Downloading the language-specific translation model…" = "Seçilen dil için çeviri modeli indiriliyor…";
+"Downloading the shared translation model (5.7 GB, once)…" = "Ortak çeviri modeli indiriliyor (5,7 GB, yalnızca bir kez)…";
 "Downloading the speech engine…" = "Konuşma motoru indiriliyor…";
 "Downloading the speech model (148 MB)…" = "Konuşma modeli indiriliyor (148 MB)…";
 "Downloading…" = "İndiriliyor…";
@@ -2235,8 +2235,10 @@
 "THE SIGNED PACKAGE VERSION DOES NOT MATCH THIS UPDATE." = "İMZALI PAKETİN SÜRÜMÜ BU GÜNCELLEMEYLE EŞLEŞMİYOR.";
 "THE SPEECH MODEL COULD NOT BE OPENED. DOWNLOAD IT AGAIN." = "KONUŞMA MODELİ AÇILAMADI. MODELİ TEKRAR İNDİR.";
 "THE SUBTITLE FILE IS TOO LARGE." = "ALTYAZI DOSYASI ÇOK BÜYÜK.";
+"THE TRANSLATION ENGINE COULD NOT PREPARE THE SOURCE TRANSCRIPT." = "ÇEVİRİ MOTORU KAYNAK TRANSKRİPTİ HAZIRLAYAMADI.";
 "THE TRANSLATION ENGINE IS MISSING. EXTRACT THE COMPLETE LOKUM PACKAGE AGAIN." = "ÇEVİRİ MOTORU EKSİK. LOKUM PAKETİNİN TAMAMINI YENİDEN ÇIKAR.";
 "THE TRANSLATION LANGUAGE DOES NOT MATCH YOUR SELECTION." = "ÇEVİRİ DİLİ SEÇİMİNLE EŞLEŞMİYOR.";
+"THE TRANSLATION MODEL IS MISSING. SET UP THE TRANSLATION MODEL FIRST." = "ÇEVİRİ MODELİ EKSİK. ÖNCE ÇEVİRİ MODELİNİ KUR.";
 "THE TRANSLATION WAS INCOMPLETE. NO SUBTITLES WERE SAVED." = "ÇEVİRİ TAMAMLANAMADI. ALTYAZI KAYDEDİLMEDİ.";
 "THE UPDATE DOES NOT CONTAIN LOKUM." = "GÜNCELLEME LOKUM'Yİ İÇERMİYOR.";
 "THE UPDATE SIGNATURE IS INVALID. YOUR EXISTING APP WAS KEPT." = "GÜNCELLEME İMZASI GEÇERSİZ. MEVCUT UYGULAMAN KORUNDU.";
@@ -2347,8 +2349,10 @@
 "The signed package version does not match this update." = "İmzalı paketin sürümü bu güncellemeyle eşleşmiyor.";
 "The speech model could not be opened. Download it again." = "Konuşma modeli açılamadı. Modeli tekrar indir.";
 "The subtitle file is too large." = "Altyazı dosyası çok büyük.";
+"The translation engine could not prepare the source transcript." = "Çeviri motoru kaynak transkripti hazırlayamadı.";
 "The translation engine is missing. Extract the complete Lokum package again." = "Çeviri motoru eksik. Lokum paketinin tamamını yeniden çıkar.";
 "The translation language does not match your selection." = "Çeviri dili seçiminle eşleşmiyor.";
+"The translation model is missing. Set up the translation model first." = "Çeviri modeli eksik. Önce çeviri modelini kur.";
 "The translation was incomplete. No subtitles were saved." = "Çeviri tamamlanamadı. Altyazı kaydedilmedi.";
 "The update does not contain Lokum." = "Güncelleme Lokum'yi içermiyor.";
 "The update signature is invalid. Your existing app was kept." = "Güncelleme imzası geçersiz. Mevcut uygulaman korundu.";

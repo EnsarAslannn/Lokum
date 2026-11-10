@@ -36,7 +36,7 @@ public sealed class TranscriptionEngine(string whisper,string model,string ffmpe
         else
         {
             var subtitle=Path.Combine(tx.StagingDirectory,"captions.srt");await File.WriteAllTextAsync(subtitle,transcript.Srt,new UTF8Encoding(false),token);
-            await ProcessRunner.RunAsync(ffmpeg,["-nostdin","-v","error","-i",Path.GetFullPath(input),"-map","0:v:0","-map","0:a:0?","-vf","subtitles=filename=captions.srt","-c:v","libx264","-preset","medium","-crf","20","-c:a","aac","-movflags","+faststart",Path.GetFullPath(output)],token,workingDirectory:tx.StagingDirectory);
+            await ProcessRunner.RunAsync(ffmpeg,["-nostdin","-v","error","-i",Path.GetFullPath(input),"-map","0:v:0","-map","0:a?","-vf","subtitles=filename=captions.srt","-c:v","libx264","-preset","medium","-crf","20","-c:a","aac","-movflags","+faststart",Path.GetFullPath(output)],token,workingDirectory:tx.StagingDirectory);
         }
         token.ThrowIfCancellationRequested();return tx.Publish([output],token);
     }

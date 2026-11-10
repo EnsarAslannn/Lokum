@@ -29,6 +29,7 @@ internal static class SubtitleEditorChecks
         try
         {
             editor.Show();editor.UpdateLayout();
+            Check(editor.Format=="mp4","A video opens with MP4 selected so Save creates a subtitled video instead of a text sidecar.");
             var sourceLanguage=Find<ComboBox>(editor).Single(t=>AutomationProperties.GetAutomationId(t)=="subtitles.sourceLanguage");
             var targetLanguage=Find<ComboBox>(editor).Single(t=>AutomationProperties.GetAutomationId(t)=="subtitles.targetLanguage");
             var sourceBox=Find<TextBox>(editor).Single(t=>AutomationProperties.GetAutomationId(t)=="subtitles.source");
@@ -57,17 +58,45 @@ internal static class SubtitleEditorChecks
             tabs.SelectedIndex=0;generate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
             await Until(()=>generate.IsEnabled);Check(!save.IsEnabled&&sourceBox.Text.Contains("country",StringComparison.OrdinalIgnoreCase),"Speech recognition creates only the source-language transcript.");
             targetLanguage.SelectedItem="English";translate.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));await Until(()=>translate.IsEnabled);editor.UpdateLayout();textbox=Find<TextBox>(editor).Single(t=>AutomationProperties.GetAutomationId(t)=="subtitles.editor");
-            var formats=Find<ComboBox>(editor).Single(c=>c.Items.Cast<object>().Any(i=>i as string=="MP4"));formats.SelectedItem="MP4";
             preview.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));await Until(()=>preview.IsEnabled);
             var player=Find<MediaElement>(editor).Single();
             await Until(()=>player.NaturalVideoWidth>0,"Subtitled MP4 playback");
             Check(player.NaturalVideoWidth==640&&player.HasAudio,"The rendered subtitle preview opens in the native media player.");
             Check(player.Source is not null&&player.Source.LocalPath!=source&&File.Exists(player.Source.LocalPath),"Show result plays an actual subtitled MP4 before saving.");
+            Check(!player.IsMuted&&player.Volume>0,"The subtitle result player is audible rather than muted.");
+            var saved=(await TranscriptionEngine.ExportAsync(editor.Transcript,source,editor.Format,Path.Combine(output,"saved-default"),tools.Executable("ffmpeg")))[0];
+            var savedInfo=await new MediaEngine(tools.Executable("ffmpeg"),tools.Executable("ffprobe")).InspectAsync(saved);
+            Check(Path.GetExtension(saved)==".mp4"&&savedInfo.HasAudio&&savedInfo.Video is not null,"Saving with the initial format produces an MP4 containing both video and audio.");
             Check(editor.Transcript.Text.Contains("country",StringComparison.OrdinalIgnoreCase),"Video preview preserves editable recognized text.");
             var image=new RenderTargetBitmap((int)editor.ActualWidth,(int)editor.ActualHeight,96,96,PixelFormats.Pbgra32);image.Render(editor);ImageEngine.Save(image,Path.Combine(output,"subtitles-tr-light.png"),"png");
+            var formats=Find<ComboBox>(editor).Single(c=>c.Items.Cast<object>().Any(i=>i as string=="MP4"));formats.SelectedItem="SRT";
+            var sidecar=(await TranscriptionEngine.ExportAsync(editor.Transcript,source,editor.Format,Path.Combine(output,"saved-sidecar"),tools.Executable("ffmpeg")))[0];
+            Check(Path.GetExtension(sidecar)==".srt"&&SubtitleCodec.Parse(await File.ReadAllTextAsync(sidecar)).Length>0,"SRT remains an explicit option for a separate timed subtitle file.");formats.SelectedItem="MP4";
             textbox.Text="1\n00:00:00,000 --> 00:00:02,000\nYeni metin.\n";
             Check(player.Source?.LocalPath==source&&editor.Transcript.Text=="Yeni metin.\n","Editing invalidates the rendered preview and restores the original media.");
             tabs.SelectedIndex=0;sourceBox.Text=sourceBox.Text.Replace("country","world");Check(!save.IsEnabled&&!preview.IsEnabled,"Editing the reviewed source invalidates all previously generated target subtitles.");
+            if(model is not null)
+            {
+                var namesVideo=Path.Combine(output,"Subtitle-name-fixture.mp4");
+                await ProcessRunner.RunAsync(tools.Executable("ffmpeg"),["-y","-v","error","-f","lavfi","-i","color=black:size=640x360:rate=15","-f","lavfi","-i","anullsrc=r=48000:cl=stereo","-t","12","-c:v","libx264","-pix_fmt","yuv420p","-c:a","aac",namesVideo]);
+                var namesInfo=await new MediaEngine(tools.Executable("ffmpeg"),tools.Executable("ffprobe")).InspectAsync(namesVideo);
+                var namesEditor=new SubtitleEditorWindow(owner,namesVideo,namesInfo,tools,new SpeechModelSetup(speechDirectory),new TranslationModelSetup(model));
+                const string originalNames="1\n00:00:00,000 --> 00:00:02,400\nAbi Yaren Duman'ın doğum gününü kutlayıp\n\n2\n00:00:02,400 --> 00:00:04,040\nkokulu ve öpücükler yollar mısın?\n\n3\n00:00:04,040 --> 00:00:06,480\nYaren Duman'cım doğum günün kutlu olsun kardeş.\n\n4\n00:00:07,920 --> 00:00:10,710\nRabbim hayırlı günler versin. Baba.\n\n5\n00:00:10,710 --> 00:00:12,000\nCanım benim seni seviyoruz.\n";
+                try
+                {
+                    namesEditor.Show();namesEditor.UpdateLayout();
+                    Find<ComboBox>(namesEditor).Single(c=>AutomationProperties.GetAutomationId(c)=="subtitles.sourceLanguage").SelectedItem="Turkish";
+                    var originalBox=Find<TextBox>(namesEditor).Single(t=>AutomationProperties.GetAutomationId(t)=="subtitles.source");originalBox.Text=originalNames;
+                    Find<ComboBox>(namesEditor).Single(c=>AutomationProperties.GetAutomationId(c)=="subtitles.targetLanguage").SelectedItem="English";
+                    var action=Find<Button>(namesEditor).Single(b=>AutomationProperties.GetAutomationId(b)=="subtitles.translate");action.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));await Until(()=>action.IsEnabled);
+                    var english=namesEditor.Transcript.Text;
+                    Check(english.Split("Yaren Duman").Length-1==2&&!english.Contains("smok",StringComparison.OrdinalIgnoreCase),"The real editor preserves a full Turkish name in both the request and affectionate birthday greeting.");
+                    Check((english.Contains("Dad",StringComparison.OrdinalIgnoreCase)||english.Contains("Father",StringComparison.OrdinalIgnoreCase))&&english.Contains("we love you",StringComparison.OrdinalIgnoreCase),"Short addresses and plural subjects remain present in English subtitles.");
+                    Check(originalBox.Text==originalNames&&namesEditor.Transcript.Cues[^1].End==12000,"Translation preserves the complete reviewed transcript and final timestamp.");
+                    File.WriteAllText(Path.Combine(output,"names-english.srt"),namesEditor.Transcript.Srt);
+                }
+                finally{namesEditor.Close();}
+            }
             var opus=Path.Combine(output,"speech.opus");
             await ProcessRunner.RunAsync(tools.Executable("ffmpeg"),["-y","-v","error","-i",source,"-vn","-c:a","libopus",opus]);
             var audioInfo=await new MediaEngine(tools.Executable("ffmpeg"),tools.Executable("ffprobe")).InspectAsync(opus);
@@ -75,6 +104,7 @@ internal static class SubtitleEditorChecks
             try
             {
                 audioEditor.Show();audioEditor.UpdateLayout();var audio=Find<MediaElement>(audioEditor).Single();
+                Check(audioEditor.Format=="srt","Audio-only media defaults to SRT rather than an unsupported MP4 video.");
                 await Until(()=>audio.Source is {} url&&url.LocalPath!=opus&&File.Exists(url.LocalPath),"Compressed audio preview preparation");
                 var decoded=await new MediaEngine(tools.Executable("ffmpeg"),tools.Executable("ffprobe")).InspectAsync(audio.Source.LocalPath);
                 Check(decoded.HasAudio&&decoded.Streams.Any(s=>s.Codec=="pcm_s16le")&&Math.Abs(decoded.Duration-audioInfo.Duration)<.1,"Compressed speech is decoded into a complete PCM playback copy without truncation.");

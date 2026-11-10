@@ -39,14 +39,14 @@ jobs:
         run: |
           mkdir -p build/mac-engines
           python3 scripts/setup-translation-runtime.py
-          python3 scripts/setup-translation-tests.py build/translation-fixtures
-          export LOKUM_TEST_TRANSLATION_MODEL="$PWD/build/translation-fixtures"
+          export LOKUM_TEST_TRANSLATION_MODEL="$HOME/Library/Application Support/Lokum/Translation/context-v3"
           export LOKUM_TEST_INSTALL_TRANSLATION=1
-          build/translation-env/bin/python scripts/test-subtitle-translation.py
           export LOKUM_TRANSLATE="$PWD/Tools/Translate/translate"
+          set -o pipefail
+          swift test --filter TranscriptionTests/testVerifiedSharedTranslationModelInstallationProducesUsableEnglishSubtitles 2>&1 | tee build/mac-engines/model-install.log
+          build/translation-env/bin/python scripts/test-subtitle-translation.py
           python3 scripts/setup-speech-tests.py build/speech-fixtures
           export LOKUM_TEST_SPEECH_FIXTURES="$PWD/build/speech-fixtures"
-          set -o pipefail
           swift test 2>&1 | tee build/mac-engines/tests.log
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         if: always()

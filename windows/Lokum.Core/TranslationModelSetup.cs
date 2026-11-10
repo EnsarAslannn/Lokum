@@ -16,17 +16,17 @@ public sealed class TranslationModelSetup(string directory)
     }
     public string DirectoryPath=>Path.GetFullPath(directory);
     public string Executable=>Path.Combine(AppContext.BaseDirectory,"Tools","Translate","translate.exe");
-    public static IReadOnlyList<string> RequiredPairs(string source,string target)
+    public static IReadOnlyList<string> RequiredModels(string source,string target)
     {
         SubtitleWorkflow.ValidateLanguage(source);SubtitleWorkflow.ValidateTargetLanguage(target);
         if(source==target)return [];
-        var pairs=new List<string>();if(source!="en")pairs.Add(source+"-en");if(target=="tr")pairs.Add("en-tr");return pairs;
+        return Models.Select(m=>m.Id).ToArray();
     }
     private static bool Complete(string path,Model model)=>model.Required.All(n=>ToolInstallation.UsableFile(System.IO.Path.Combine(path,n)));
-    public bool ReadyFor(string source,string target)=>RequiredPairs(source,target).All(id=>Complete(System.IO.Path.Combine(DirectoryPath,id),Models.Single(m=>m.Id==id)));
+    public bool ReadyFor(string source,string target)=>RequiredModels(source,target).All(id=>Complete(System.IO.Path.Combine(DirectoryPath,id),Models.Single(m=>m.Id==id)));
     public async Task InstallAsync(string source,string target,IProgress<OperationProgress>? progress=null,CancellationToken token=default)
     {
-        token.ThrowIfCancellationRequested();var pairs=RequiredPairs(source,target);if(ReadyFor(source,target))return;
+        token.ThrowIfCancellationRequested();var pairs=RequiredModels(source,target);if(ReadyFor(source,target))return;
         if(!File.Exists(Executable))throw new FileNotFoundException("The translation engine is missing. Extract the complete Lokum package again.");
         Directory.CreateDirectory(DirectoryPath);
         foreach(var id in pairs)
@@ -39,7 +39,7 @@ public sealed class TranslationModelSetup(string directory)
                 foreach(var asset in model.Assets)
                 {
                     var download=System.IO.Path.Combine(stage,"download");
-                    await VerifiedDownload.FetchAsync(new(asset.Url),download,asset.Size,p=>progress?.Report(new(p,"Downloading the language-specific translation model…")),token);
+                    await VerifiedDownload.FetchAsync(new(asset.Url),download,asset.Size,p=>progress?.Report(new(p,"Downloading the shared translation model (5.7 GB, once)…")),token);
                     await using(var stream=File.OpenRead(download))
                         if(stream.Length!=asset.Size||Convert.ToHexString(await SHA256.HashDataAsync(stream,token)).ToLowerInvariant()!=asset.Sha256)throw new InvalidDataException("Upstream download checksum mismatch. Nothing was installed.");
                     if(asset.Entries is {} entries)

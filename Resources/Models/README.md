@@ -28,25 +28,34 @@ Manual selections and background replacement use the same image canvas on both p
 
 ## Offline subtitle translation
 
-Language-specific models translate the reviewed source transcript into Turkish
-or English. Turkish ↔ English uses Helsinki-NLP's OPUS-MT TC-big models.
-Other supported sources use the corresponding Argos source → English model;
-Turkish output then uses the English → Turkish model. The CPU helper bundles CTranslate2, SentencePiece and Python; users
-do not need to install Python or provide an API key. Media and transcripts stay
-on the computer. Speech recognition and translation can both make mistakes.
+Qwen3.5-9B translates the reviewed source transcript directly into Turkish or
+English. One shared model serves all eleven supported source languages. The
+CPU helper bundles llama.cpp, llama-cpp-python and Python; users do not need
+to install Python, run a server, provide an API key or upload their transcripts.
+Speech recognition and automatic translation can both make mistakes.
 
-- Original models: https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-en-tr and https://huggingface.co/Helsinki-NLP/opus-mt-tc-big-tr-en
-- Pinned CTranslate2 float16 conversions: https://huggingface.co/ooeoeo/opus-mt-tc-big-en-tr-ct2-float16/tree/4729dd2c625df6a5782d0a2225a36b14d52925b0 and https://huggingface.co/ooeoeo/opus-mt-tc-big-tr-en-ct2-float16/tree/22e01c5dbf6da0e9ac7f49ec4a25266ff28effe6
-- Turkish/English model download: about 475 MB per direction. CPU inference uses int8 computation; source and target SentencePiece vocabularies are kept separate and Marian input includes its required end token.
-- Other source models: https://github.com/argosopentech/argospm-index ; pinned HTTPS artifacts use the publisher's `data.argosopentech.com` mirror. Downloads are approximately 67–285 MB per source language.
-- Exact URLs, revisions, lengths, SHA-256 hashes and extracted-file allowlists: `Sources/LokumCore/Resources/SubtitleTranslationModels.json`, shared by both applications and verification scripts.
-- OPUS-MT model authors: Jörg Tiedemann and Santhosh Thottingal, University of Helsinki; https://github.com/Helsinki-NLP/Opus-MT . The upstream TC-big model license is CC-BY-4.0; this takes precedence over conversion-repository metadata. Full license: `Resources/licenses/OPUS-MT-CC-BY-4.0.txt` and the Windows licenses directory.
-- Argos Open Technologies packages retain their model README/metadata during installation. MIT license: `Resources/licenses/Argos-Translate-LICENSE.txt`; OPUS-derived models retain their original CC-BY-4.0 attribution. Stanza resources present in upstream archives are neither installed nor loaded.
+- Original model: https://huggingface.co/Qwen/Qwen3.5-9B
+- Q4_K_M GGUF conversion by Unsloth: https://huggingface.co/unsloth/Qwen3.5-9B-GGUF/tree/3885219b6810b007914f3a7950a8d1b469d598a5
+- Model: `Qwen3.5-9B-Q4_K_M.gguf`, 5,680,522,464 bytes (about 5.7 GB).
+- SHA-256: `03b74727a860a56338e042c4420bb3f04b2fec5734175f4cb9fa853daf52b7e8`.
+- Shared artifact manifest: `Sources/LokumCore/Resources/SubtitleTranslationModels.json`.
+- Model license: Apache-2.0, retained in `Resources/licenses/Qwen3.5-LICENSE.txt` and the Windows licenses directory.
+- llama.cpp and llama-cpp-python 0.3.36: MIT; full licenses are preserved alongside the model license and in the bundled helper.
 
-Only required language pairs download on first use and are cached under
-`Lokum/Translation/language-pairs-v2`. Older M2M-100 caches are never used as a fallback.
-Selecting the same source/target language needs no translation download. For example,
-French → Turkish downloads French → English and English → Turkish, not all models.
+The model is downloaded once into `Lokum/Translation/context-v3/qwen35-9b`,
+with length and checksum validation before atomic publication. Changing source
+or target languages reuses the same file. Same-language subtitles need no
+translation model. Older language-pair caches remain separate. CPU inference
+requires more memory and time than the earlier small translation models.
+
+Translation uses bounded batches, the model's chat template with thinking disabled,
+and a JSON grammar requiring one nonempty translation per timed group. Personal
+names, forms of address, questions, negation and subjects are explicitly preserved.
+Source text is tokenized without control-token interpretation. Invalid, missing or
+truncated output blocks export rather than saving a partial result. There are no
+network calls during inference. The context window is 4,096 tokens and at most
+eight CPU threads are used. The macOS helper is built for CPU-only execution with
+the application's minimum deployment target.
 
 Source cues that form one sentence are translated together, then split into
 readable timed captions. Long silent gaps are retained. Changing the source

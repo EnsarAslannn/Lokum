@@ -42,7 +42,7 @@ internal sealed class SubtitleEditorWindow:Window
     public SubtitleEditorWindow(Window owner,string input,MediaInfo info,Toolchain tools,SpeechModelSetup speech,TranslationModelSetup? translationSetup=null)
     {
         Theme.Attach(this);Owner=owner;this.input=input;this.info=info;this.tools=tools;this.speech=speech;workflow=new(info.Duration);
-        translation=translationSetup??new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Lokum","Translation","language-pairs-v2"));
+        translation=translationSetup??new(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Lokum","Translation","context-v3"));
         language.ItemsSource=languageCodes.Select(c=>TranscriptionEngine.Languages[c]).ToArray();
         targetLanguage.ItemsSource=SubtitleWorkflow.TargetLanguages.Select(c=>TranscriptionEngine.Languages[c]).ToArray();
         editors.Template=(ControlTemplate)System.Windows.Markup.XamlReader.Parse("""
@@ -69,7 +69,7 @@ internal sealed class SubtitleEditorWindow:Window
         var footer=new StackPanel{Margin=new(0,16,0,0)};Grid.SetRow(footer,2);root.Children.Add(footer);footer.Children.Add(progress);footer.Children.Add(status);
         var bar=new DockPanel{LastChildFill=false};footer.Children.Add(bar);save=MainWindow.Button("Save new copy  ↗",()=>{try{_=Transcript;DialogResult=true;}catch(Exception error){Status(error.Message);}});save.Background=Theme.Primary;save.Foreground=Theme.PrimaryInk;DockPanel.SetDock(save,Dock.Right);bar.Children.Add(save);
         preview=MainWindow.Button("Show Result",async()=>await ShowResult());DockPanel.SetDock(preview,Dock.Right);bar.Children.Add(preview);format.Width=90;DockPanel.SetDock(format,Dock.Right);bar.Children.Add(format);bar.Children.Add(MainWindow.Button("Cancel",()=>{if(busy)active?.Cancel();else Close();}));
-        if(info.Video is null)format.ItemsSource=new[]{"SRT","TXT","VTT"};format.SelectionChanged+=(_,_)=>Edited();
+        if(info.Video is null)format.ItemsSource=new[]{"SRT","TXT","VTT"};format.SelectedItem=info.Video is null?"SRT":"MP4";format.SelectionChanged+=(_,_)=>Edited();
         format.ToolTip="MP4 embeds subtitles permanently in a new video copy.";
         Status("Choose the video's original language, then create and review its transcript.");
         language.SelectionChanged+=(_,_)=>{sourceText.Clear();workflow.InvalidateSource();ResetResult();Status("Create a new transcript for the selected source language.");};

@@ -39,7 +39,7 @@ public enum TranscriptionEngine {
         let output=area.directory.appendingPathComponent(input.deletingPathExtension().lastPathComponent+"-subtitles."+format)
         if format=="mp4" {
             try transcript.srt.write(to:area.directory.appendingPathComponent("captions.srt"),atomically:true,encoding:.utf8)
-            try ProcessRunner.run(Dependencies.executable("ffmpeg"),["-nostdin","-v","error","-i",input.path,"-map","0:v:0","-map","0:a:0?","-vf","subtitles=filename=captions.srt","-c:v","libx264","-preset","medium","-crf","20","-c:a","aac","-movflags","+faststart",output.path],directory:area.directory,token:token)
+            try ProcessRunner.run(Dependencies.executable("ffmpeg"),["-nostdin","-v","error","-i",input.path,"-map","0:v:0","-map","0:a?","-vf","subtitles=filename=captions.srt","-c:v","libx264","-preset","medium","-crf","20","-c:a","aac","-movflags","+faststart",output.path],directory:area.directory,token:token)
         } else if format=="vtt" {
             let source=area.directory.appendingPathComponent("captions.srt");try transcript.srt.write(to:source,atomically:true,encoding:.utf8)
             try SubtitleCodec.convert(source,to:"vtt",token:token).write(to:output,atomically:true,encoding:.utf8)

@@ -10,7 +10,7 @@ import LokumCore
     @Published var text="" {didSet{validate()}}
     @Published var language="" {didSet{if language != oldValue {sourceText="";workflow.invalidateSource();sourceReady=false;resetResult()}}}
     @Published var targetLanguage="" {didSet{if targetLanguage != oldValue {if !targetLanguage.isEmpty {try? workflow.chooseTarget(targetLanguage)};resetResult()}}}
-    @Published var format="srt"
+    @Published var format:String
     @Published var busy=false
     @Published var label="Choose the video's original language, then create and review its transcript."
     @Published var fraction:Double?
@@ -29,7 +29,7 @@ import LokumCore
     private var originalPreview:MediaPreviewResult?
     private var closed=false
     var canTranslate:Bool {!busy && workflow.canTranslate && !targetLanguage.isEmpty}
-    init(input:URL) {self.input=input;player=AVPlayer(url:input)}
+    init(input:URL) {self.input=input;player=AVPlayer(url:input);format=FileCategory.detect(input) == .video ? "mp4":"srt"}
     private func resetResult() {hasTargetDraft=false;document=nil;text="";if resultPlaying {original()}}
     private func sourceEdited() {
         resetResult()

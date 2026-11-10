@@ -105,18 +105,17 @@ jobs:
         run: |
           python scripts/setup-speech-tests.py build/speech-fixtures --sample-only
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
-          python scripts/setup-translation-tests.py build/translation-fixtures
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          New-Item -ItemType Directory -Force build/translation-fixtures | Out-Null
           $env:LOKUM_TEST_TRANSLATION_MODEL = (Resolve-Path 'build/translation-fixtures').Path
-          & build/translation-env/Scripts/python.exe scripts/test-subtitle-translation.py
-          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $env:LOKUM_VERIFY_INSTALL_SPEECH = Join-Path $env:RUNNER_TEMP 'Lokum-Speech-Tests'
-          $env:LOKUM_VERIFY_INSTALL_TRANSLATION = Join-Path $env:RUNNER_TEMP 'Lokum-Translation-Tests'
+          $env:LOKUM_VERIFY_INSTALL_TRANSLATION = $env:LOKUM_TEST_TRANSLATION_MODEL
           $env:LOKUM_VERIFY_SPEECH_SAMPLE = (Resolve-Path 'build/speech-fixtures/jfk.wav').Path
           $tools = Join-Path $env:RUNNER_TEMP 'Lokum-Test-Tools'
           $env:LOKUM_VERIFY_FFMPEG = Join-Path $tools 'ffmpeg.exe'
           $env:LOKUM_VERIFY_FFPROBE = Join-Path $tools 'ffprobe.exe'
           dotnet run --project windows/Lokum.Verify -c Release -- --transcription-only
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & build/translation-env/Scripts/python.exe scripts/test-subtitle-translation.py
           if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
           $app = Join-Path $PWD 'build/windows/Lokum/Lokum.exe'
           $proof = Join-Path $PWD 'build/subtitle-editor-ui'

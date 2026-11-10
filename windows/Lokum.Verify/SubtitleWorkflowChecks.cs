@@ -7,7 +7,7 @@ internal static class SubtitleWorkflowChecks
         if(Environment.GetEnvironmentVariable("LOKUM_VERIFY_INSTALL_TRANSLATION") is {} directory)
         {
             var setup=new TranslationModelSetup(directory);await setup.InstallAsync("fr","en");
-            check(setup.ReadyFor("fr","en"),"A fresh verified language-pair download extracts and publishes a usable model.");
+            check(setup.ReadyFor("fr","en")&&setup.ReadyFor("tr","en")&&setup.ReadyFor("de","tr"),"A verified shared model installation is reused for other source and subtitle languages.");
         }
         var source=SubtitleTranscript.FromSrt("1\n00:00:01,000 --> 00:00:04,000\nHello, how are you?\n\n2\n00:00:06,000 --> 00:00:09,000\nPlease close the door.\n",10);
         var executable=Path.Combine(AppContext.BaseDirectory,"Tools","Translate","translate.exe");var engine=new SubtitleTranslationEngine(executable,model);
@@ -35,7 +35,8 @@ internal static class SubtitleWorkflowChecks
         check(!workflow.CanTranslate&&!workflow.CanSave,"A subtitle language cannot replace the source-language transcript stage.");
         var rejected=false;try{workflow.SetSource(english,"auto");}catch(ArgumentException){rejected=true;}
         check(rejected,"The source language must be explicitly selected.");
-        check(TranslationModelSetup.RequiredPairs("fr","tr").SequenceEqual(new[]{"fr-en","en-tr"})&&TranslationModelSetup.RequiredPairs("tr","tr").Count==0,"Translation chooses the source-specific English model and Turkish model only when necessary.");
+        var required=TranslationModelSetup.RequiredModels("fr","tr");
+        check(required.Count==1&&TranslationModelSetup.RequiredModels("tr","en").SequenceEqual(required)&&TranslationModelSetup.RequiredModels("tr","tr").Count==0,"Changing languages reuses the shared model; same-language subtitles need no download.");
         workflow.SetSource(english,"en");workflow.ChooseTarget("tr");var revision=workflow.Revision;
         check(workflow.CanTranslate&&!workflow.CanSave,"Choosing a different subtitle language requires translation.");
         check(workflow.AcceptTranslation(turkish,revision,"tr")&&workflow.Subtitles!.At(2)=="Lütfen kapıyı kapatın.","Translated subtitles reach preview and export.");

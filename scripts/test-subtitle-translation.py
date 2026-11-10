@@ -13,7 +13,34 @@ worker=importlib.util.module_from_spec(spec);spec.loader.exec_module(worker)
 
 class SubtitleTranslationTests(unittest.TestCase):
     @unittest.skipUnless(os.environ.get("LOKUM_TEST_TRANSLATION_MODEL"),"Install real translation models to run inference.")
-    def test_spanish_bpe_source_produces_readable_english(self):
+    def test_other_turkish_names_keep_their_original_spelling(self):
+        request={"sourceLanguage":"tr","targetLanguage":"en","cues":[
+            {"start":0,"end":3000,"text":"Ayşe Yılmaz'cığım, bize yarın gel."},
+            {"start":4000,"end":7000,"text":"Deniz Akın'ın annesi geldi."}]}
+        result=worker.translate_request(request,worker.local_translator(os.environ["LOKUM_TEST_TRANSLATION_MODEL"]))
+        text=" ".join(c["text"].replace("\n"," ") for c in result["cues"])
+        self.assertIn("Ayşe Yılmaz",text);self.assertIn("Deniz Akın",text)
+        self.assertIn("tomorrow",text.lower());self.assertIn("mother",text.lower())
+
+    @unittest.skipUnless(os.environ.get("LOKUM_TEST_TRANSLATION_MODEL"),"Install real translation models to run inference.")
+    def test_turkish_surname_and_familiar_address_remain_the_same_person(self):
+        request={"sourceLanguage":"tr","targetLanguage":"en","cues":[
+            {"start":0,"end":2400,"text":"Abi Yaren Duman'ın doğum gününü kutlayıp"},
+            {"start":2400,"end":4040,"text":"kokulu ve öpücükler yollar mısın?"},
+            {"start":4040,"end":6480,"text":"Yaren Duman'cım doğum günün kutlu olsun kardeş."},
+            {"start":7920,"end":10710,"text":"Rabbim hayırlı günler versin. Baba."},
+            {"start":10710,"end":12000,"text":"Canım benim seni seviyoruz."}]}
+        result=worker.translate_request(request,worker.local_translator(os.environ["LOKUM_TEST_TRANSLATION_MODEL"]))
+        first=" ".join(c["text"].replace("\n"," ") for c in result["cues"] if c["start"]<4040)
+        greeting=" ".join(c["text"].replace("\n"," ") for c in result["cues"] if 4040<=c["start"]<6480)
+        blessing=" ".join(c["text"].replace("\n"," ") for c in result["cues"] if 7920<=c["start"]<10710)
+        self.assertIn("Yaren Duman",first);self.assertIn("Yaren Duman",greeting)
+        self.assertNotIn("smok",greeting.lower());self.assertIn("birthday",greeting.lower())
+        self.assertRegex(blessing.lower(),r"\b(dad|father|papa)\b")
+        self.assertRegex(blessing.lower(),r"\b(you|your)\b")
+
+    @unittest.skipUnless(os.environ.get("LOKUM_TEST_TRANSLATION_MODEL"),"Install real translation models to run inference.")
+    def test_spanish_source_produces_readable_english(self):
         result=worker.translate_request({"sourceLanguage":"es","targetLanguage":"en","cues":[{"start":1000,"end":4000,"text":"Por favor, cierra la ventana."}]},worker.local_translator(os.environ["LOKUM_TEST_TRANSLATION_MODEL"]))
         text=" ".join(c["text"] for c in result["cues"])
         self.assertIn("window",text.lower());self.assertNotIn("@@",text)
