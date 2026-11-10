@@ -12,8 +12,8 @@ concurrency:
   cancel-in-progress: true
 jobs:
   mac-engines:
-    runs-on: macos-15-intel
-    timeout-minutes: 90
+    runs-on: macos-15
+    timeout-minutes: 120
     env:
       LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
       LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
