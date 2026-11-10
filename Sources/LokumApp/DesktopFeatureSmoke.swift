@@ -135,6 +135,24 @@ import LokumCore
                 check(!FileManager.default.fileExists(atPath:asset.url.path),tool.title+" releases its owned processed preview when the window closes")
             }
         }
+        let subtitles=SubtitleEditorModel(input:video)
+        check(subtitles.format=="mp4","Video subtitle saving defaults to an MP4 with embedded subtitles")
+        check(SubtitleEditorModel(input:output.appendingPathComponent("speech.wav")).format=="srt","Audio subtitle saving defaults to a text sidecar")
+        subtitles.duration=try MediaEngine.inspect(video).duration
+        subtitles.language="tr";subtitles.sourceText="1\n00:00:00,000 --> 00:00:02,000\nDeneme altyazısı.\n";subtitles.targetLanguage="tr";subtitles.translate();try await wait{!subtitles.busy}
+        check(subtitles.document?.at(1)=="Deneme altyazısı.","Native subtitle edits reach the synchronized preview document")
+        subtitles.text="1\n00:00:02,000 --> 00:00:01,000\nInvalid\n"
+        check(subtitles.document==nil && subtitles.error != nil,"Invalid native subtitle timing blocks result preview and export with an explanation")
+        subtitles.sourceText="1\n00:00:00,000 --> 00:00:02,000\nDeneme altyazısı.\n";check(subtitles.document==nil,"Editing a source transcript invalidates its previous translation");subtitles.translate();try await wait{!subtitles.busy}
+        subtitles.showResult()
+        try await wait{!subtitles.busy}
+        check(subtitles.error==nil && subtitles.resultPlaying,"The native subtitle editor prepares an actual burned-subtitle video; "+(subtitles.error ?? "ready"))
+        if let asset=subtitles.player.currentItem?.asset as? AVURLAsset,asset.url != video {
+            let file=asset.url;let info=try MediaEngine.inspect(file)
+            check(info.video != nil && info.audio != nil,"The native subtitle result retains both video and audio")
+            subtitles.close()
+            check(!FileManager.default.fileExists(atPath:file.path),"Closing the native subtitle editor removes its owned video preview")
+        }else {subtitles.close();check(false,"The subtitle result was not loaded into the native player")}
         let report:[String:Any]=["passed":failures.isEmpty,"checks":checks,"failures":failures]
         try JSONSerialization.data(withJSONObject:report,options:[.prettyPrinted,.sortedKeys]).write(to:output.appendingPathComponent("verification.json"))
         if !failures.isEmpty {throw NSError(domain:"Lokum desktop feature parity",code:1,userInfo:[NSLocalizedDescriptionKey:failures.joined(separator:"\n")])}

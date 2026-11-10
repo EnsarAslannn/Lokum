@@ -13,7 +13,7 @@ concurrency:
 jobs:
   mac-engines:
     runs-on: macos-15
-    timeout-minutes: 30
+    timeout-minutes: 120
     env:
       LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
       LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
@@ -22,6 +22,9 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
       - name: Install verified application runtimes and Office
         run: |
           if [ ! -d /Applications/LibreOffice.app ]; then brew install --cask libreoffice; fi
@@ -35,7 +38,15 @@ jobs:
       - name: All macOS engine and update regressions
         run: |
           mkdir -p build/mac-engines
+          python3 scripts/setup-translation-runtime.py
+          export LOKUM_TEST_TRANSLATION_MODEL="$HOME/Library/Application Support/Lokum/Translation/context-v3"
+          export LOKUM_TEST_INSTALL_TRANSLATION=1
+          export LOKUM_TRANSLATE="$PWD/Tools/Translate/translate"
           set -o pipefail
+          swift test --filter TranscriptionTests/testVerifiedSharedTranslationModelInstallationProducesUsableEnglishSubtitles 2>&1 | tee build/mac-engines/model-install.log
+          build/translation-env/bin/python scripts/test-subtitle-translation.py -v 2>&1 | tee build/mac-engines/translation-tests.log
+          python3 scripts/setup-speech-tests.py build/speech-fixtures
+          export LOKUM_TEST_SPEECH_FIXTURES="$PWD/build/speech-fixtures"
           swift test 2>&1 | tee build/mac-engines/tests.log
       - uses: actions/upload-artifact@b7c566a772e6b6bfb58ed0dc250532a479d7789f
         if: always()
@@ -46,7 +57,7 @@ jobs:
           if-no-files-found: warn
   mac-package:
     runs-on: macos-15
-    timeout-minutes: 20
+    timeout-minutes: 30
     env:
       LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
       LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
@@ -58,6 +69,9 @@ jobs:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
           persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1
+        with:
+          python-version: '3.12'
       - name: Install verified package test runtimes
         run: |
           if [ ! -d /Applications/LibreOffice.app ]; then brew install --cask libreoffice; fi
@@ -109,6 +123,9 @@ jobs:
   mac-source:
     runs-on: macos-15
     timeout-minutes: 20
+    env:
+      LOKUM_FFMPEG: ${{ github.workspace }}/Tools/ffmpeg
+      LOKUM_FFPROBE: ${{ github.workspace }}/Tools/ffprobe
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803
         with:
@@ -134,7 +151,10 @@ jobs:
         run: swift test --filter 'LokumUpdatesTests|WebMediaDragPayloadTests|InstagramPhotosTests|YouTubeThumbnailTests|WindowPlacementTests|AppLocalizationTests|ToolSetupTests'
       - name: Install FFmpeg for redaction regressions
         if: ${{ !cancelled() && steps.mac-build.outcome == 'success' }}
-        run: brew install ffmpeg
+        run: |
+          scripts/setup-tools.sh --media-only
+          Tools/ffmpeg -hide_banner -filters > build/ffmpeg-filters.txt 2>&1
+          grep -qE '[[:space:]]subtitles[[:space:]]' build/ffmpeg-filters.txt
       - name: Redaction coverage and image opacity regressions
         run: swift test --filter 'SolidRedactionCoverageTests|ImageRedactionBoundsRegressionTests|ImageColorOpacityRegressionTests|MediaEngineTests/testVideoRedactionStylesAndTemporalBounds'
       - name: Desktop feature parity regressions

@@ -6,7 +6,7 @@ internal static class ParityChecks
 {
     public static void Run(Action<bool,string> check,string root)
     {
-        check(FeatureCatalog.Conversions.Count==45&&FeatureCatalog.ToolNames.Count==29&&FeatureCatalog.ToolNames.ContainsKey("removeBackground"),"Shared catalog or Windows background removal capability is missing");
+        check(FeatureCatalog.Conversions.Count==45&&FeatureCatalog.ToolNames.Count==30&&FeatureCatalog.ToolNames.ContainsKey("removeBackground")&&FeatureCatalog.ToolNames.ContainsKey("generateSubtitles"),"Shared catalog or Windows editing capabilities are missing");
         check(FeatureCatalog.Formats(["a.jpeg","b.png"]).Contains("webp"),"Mixed image conversion intersection failed");
         check(!FeatureCatalog.Formats(["a.png","b.mp4"]).Any(),"Unrelated inputs offered an invalid format");
         check(FeatureCatalog.Tools(["a.pdf","b.pdf"]).SequenceEqual(new[]{"compress","removeMetadata","splitPDF","mergePDF","readQRCode"}),"Multiple PDF wheel diverged from Mac");

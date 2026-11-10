@@ -231,6 +231,15 @@ public sealed partial class MainWindow:Window
             if(choice.Id=="removeBackground"||imageSelection&&choice.Id=="frameImage"){SetBusy(false);await RemoveBackgroundAsync(selected,choice.Id=="frameImage");return;}
             if(choice.Id=="removeMetadata"){SetBusy(false);await EditMetadataAsync(selected);return;}
             if(choice.Id=="readQRCode"){SetBusy(false);await ReadQrAsync(selected);return;}
+            if(choice.Id=="generateSubtitles")
+            {
+                if(!tools.Ready)throw new InvalidOperationException("Choose Set up media tools once to enable media editing.");
+                info=await new MediaEngine(tools.Executable("ffmpeg"),tools.Executable("ffprobe")).InspectAsync(input);
+                if(!info.HasAudio)throw new ArgumentException("This media has no audio track to transcribe.");
+                SetBusy(false);var speech=new SpeechModelSetup(Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Lokum","Speech","whisper-1.9.2-base"));var subtitles=new SubtitleEditorWindow(this,input,info,tools,speech);if(subtitles.ShowDialog()!=true)return;
+                var transcript=subtitles.Transcript;var subtitleFormat=subtitles.Format;
+                await RunAsync((destination,p,t)=>TranscriptionEngine.ExportAsync(transcript,input,subtitleFormat,destination,tools.Executable("ffmpeg"),t),"Generate Subtitles");return;
+            }
             if(!imageSelection&&!mediaSelection&&choice.Id is not ("extractArchive" or "unzip")){SetBusy(false);await EditDocumentAsync(choice,selected,requestedFormat);return;}
             if(imageSelection)preview=ImageEngine.Load(input);
             else if(mediaSelection)

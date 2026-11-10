@@ -72,3 +72,22 @@ https://github.com/denoland/deno/archive/refs/tags/v2.9.7.tar.gz
 Runtime license, dependency notices and upstream source references:
 licenses/web-download/Deno-*.txt and V8-LICENSE.txt.
 No browser cookies or login credentials are imported by this feature.
+
+whisper.cpp v1.9.2, Copyright (c) 2023-2026 The ggml authors. MIT.
+https://github.com/ggml-org/whisper.cpp/tree/v1.9.2
+Multilingual Whisper base model, OpenAI, MIT. Runs locally; downloaded on first use.
+https://huggingface.co/ggerganov/whisper.cpp/tree/5359861c739e955e79d9a303bcbc70fb988958b1
+Full licenses: licenses/whisper.cpp-LICENSE.txt and licenses/Whisper-model-LICENSE.txt.
+
+Qwen3.5-9B, Qwen Team, Apache-2.0.
+https://huggingface.co/Qwen/Qwen3.5-9B
+Unsloth Q4_K_M GGUF conversion:
+https://huggingface.co/unsloth/Qwen3.5-9B-GGUF/tree/3885219b6810b007914f3a7950a8d1b469d598a5
+License: licenses/Qwen3.5-LICENSE.txt. The shared model downloads separately on demand.
+Exact pinned sources and checksums: Sources/LokumCore/Resources/SubtitleTranslationModels.json in the source distribution.
+Offline translation helper: llama-cpp-python 0.3.36 and llama.cpp (MIT), NumPy 2.2.6 (BSD-3-Clause), Python (PSF).
+Full licenses: licenses/llama-cpp-python-LICENSE.txt and licenses/llama.cpp-LICENSE.txt.
+Jinja2 3.1.6 and MarkupSafe 3.0.4 (BSD-3-Clause), diskcache 5.6.3 (Apache-2.0), typing_extensions 4.16.0 (PSF-2.0).
+The helper retains license metadata for setuptools and optional PyYAML modules when bundled.
+The helper distribution retains dependency license metadata and Python license under Tools/Translate.
+PyInstaller 6.16.0 uses GPL with the bootloader distribution exception.

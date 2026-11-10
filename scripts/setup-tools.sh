@@ -11,10 +11,12 @@ for component in ffmpeg ffprobe; do
   actual=$(shasum -a 256 "Tools/$component" | awk '{print $1}')
   if [[ "$actual" != "$expected" ]]; then print -u2 "Checksum mismatch for $component; refusing to run it."; exit 1; fi
 done
+Tools/ffmpeg -version | head -1
+if [[ "${1:-}" != --media-only ]]; then
 if [[ ! -d Tools/LibreOffice.app ]]; then
   task_lo_source=${LOKUM_LIBREOFFICE_SOURCE:-/Applications/LibreOffice.app}
   if [[ ! -d "$task_lo_source" ]]; then print -u2 'Set LOKUM_LIBREOFFICE_SOURCE to a local LibreOffice.app bundle, then rerun.'; exit 1; fi
   ditto "$task_lo_source" Tools/LibreOffice.app
 fi
-Tools/ffmpeg -version | head -1
 Tools/LibreOffice.app/Contents/MacOS/soffice --version
+fi

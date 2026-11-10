@@ -31,10 +31,11 @@ Windows Library and preferences are stored under `%LOCALAPPDATA%/Lokum`.
 
 ## Features
 
-- **45 input formats, 28 shared tools and 275 conversion routes**, with single-file and batch selection.
+- **45 input formats, 29 shared tools and 275 conversion routes**, with single-file and batch selection.
 - **Images:** conversion, compression, resizing, rotation/mirroring, cropping, annotations, frames, collages, metadata, redaction and QR reading.
 - **Background editing:** manually select areas to keep or use local automatic selection; export a transparent PNG or replace the background with a palette color or another image. Single images and batches are supported.
 - **Video and audio:** conversion, compression, spatial cropping, independent clip ranges, joining, speed changes, normalization and channel controls. Mute an entire video or a selected time range and preview the result. Video redaction shows the selected blur/pixelation style in the processed preview.
+- **Automatic subtitles:** choose the original spoken language, create its transcript, and correct misheard words or names. Then choose Turkish or English subtitles. The reviewed transcript is translated locally; preview and edit it before exporting SRT/TXT/VTT or a subtitled MP4. The speech model (148 MB) and one shared translation model (5.7 GB for all supported languages) download once. Translation runs on the CPU and requires more memory and time than the previous small models. No paid API; automatic results still require review.
 - **Documents and archives:** create, merge, split and edit PDFs; convert Office files, Pages, EPUBs, tables, presentations and subtitles; work with archives.
 - **Everyday tasks:** tool wheels, drag shortcuts, clipboard import, Float shelf, Library, folder automation and window layouts.
 - **Web:** download supported public video, audio and image links.
@@ -51,12 +52,14 @@ cd Lokum
 **Windows:** requires the .NET 10 SDK.
 
 ```powershell
+python scripts/setup-speech-engine.py
+python scripts/setup-translation-runtime.py
 dotnet restore windows/Lokum.Windows --locked-mode
 dotnet publish windows/Lokum.Windows -c Release --no-restore -o build/windows/Lokum
 .\build\windows\Lokum\Lokum.exe
 ```
 
-**macOS:** requires macOS 13+, Apple Silicon and Xcode/Swift 6.
+**macOS:** requires macOS 13.3+, Apple Silicon and Xcode/Swift 6.
 
 ```sh
 scripts/setup-exiftool.sh

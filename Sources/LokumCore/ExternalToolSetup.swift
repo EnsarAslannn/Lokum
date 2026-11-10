@@ -88,7 +88,7 @@ public enum ExternalToolSetup {
     }
 }
 
-private final class CheckedToolDownload:NSObject,URLSessionDownloadDelegate,@unchecked Sendable {
+final class CheckedToolDownload:NSObject,URLSessionDownloadDelegate,@unchecked Sendable {
     private let target:URL;private let maximum:Int64;private let progress:@Sendable (Double?)->Void
     private var continuation:CheckedContinuation<Void,Error>?;private var failure:Error?
     private init(target:URL,maximum:Int64,progress:@escaping @Sendable (Double?)->Void) { self.target=target;self.maximum=maximum;self.progress=progress }

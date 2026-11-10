@@ -1,6 +1,6 @@
 # Mac and Windows desktop parity
 
-Both implementations use the same 45 input-format / 28-tool catalog. `scripts/check-feature-parity.py` checks conversion destinations, tool names and single/multi-file eligibility against the Swift source; it is not a substitute for running the tools.
+Both implementations use the same 45 input-format / 29-tool catalog. `scripts/check-feature-parity.py` checks conversion destinations, tool names and single/multi-file eligibility against the Swift source; it is not a substitute for running the tools.
 
 | Workflow | Shared behavior |
 | --- | --- |
@@ -15,6 +15,7 @@ Both implementations use the same 45 input-format / 28-tool catalog. `scripts/ch
 | Precise media keys | Arrows seek 1 second; Shift+arrows use the source video FPS or 0.1 seconds for audio; I/O set trim range; Shift+Space plays the selected range |
 | PDF/documents | Merge, split, reorder/duplicate/rotate pages, uniform widths, compression, QR reading, editable/preserved document layouts, spreadsheets, EPUB and Pages interoperability |
 | Archives/subtitles | ZIP/TAR/GZIP/RAR workflows and SRT/VTT conversion; original files retained and output collisions handled safely |
+| Automatic subtitles | Explicit source language → reviewed source transcript → Turkish or English subtitles. Local Whisper recognition and a shared contextual translation model, separate editable source/target text, invalidation after source edits, synchronized preview and SRT/TXT/VTT/MP4 exports. One verified 5.7 GB translation model is reused across supported languages. The bundled Apple runtime requires macOS 13.3+. |
 | Float/actions | Compact paperclip stack; hover/click opens a slim thumbnail shelf; stack carries all files, clip moves the shelf; multi-selection, preview, copy/path, reveal/share, icon/list modes and edge attachment; removal never deletes originals |
 | Window management | Eight layouts: thirds, halves, two-thirds and Maximize; actual title-bar/resize drag, target preview, release placement and Escape cancellation; usable display work area; app minimum widths keep the selected left/center/right anchor |
 | Progress/results | Borderless progress/success notices, cancellable work, real progress where measurable and indeterminate state otherwise; success fades after three seconds |
