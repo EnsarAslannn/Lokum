@@ -16,7 +16,10 @@ internal sealed class SubtitleEditorWindow:Window
     private readonly SubtitleWorkflow workflow;
     private readonly TranslationModelSetup translation;
     private readonly string[] languageCodes=TranscriptionEngine.Languages.Keys.Where(k=>k!="auto").ToArray();
-    private readonly MediaElement player=new(){LoadedBehavior=MediaState.Manual,UnloadedBehavior=MediaState.Close,Stretch=Stretch.Uniform};
+    private readonly MediaElement player=new(){LoadedBehavior=MediaState.Manual,UnloadedBehavior=MediaState.Close,Stretch=Stretch.Uniform,ScrubbingEnabled=true};
+    private readonly Border previewLoading=new(){Background=new SolidColorBrush(Color.FromArgb(225,25,25,25)),CornerRadius=new(12),Padding=new(22),Margin=new(16),HorizontalAlignment=HorizontalAlignment.Center,VerticalAlignment=VerticalAlignment.Center,MaxWidth=360};
+    private readonly ProgressBar previewSpinner=new(){IsIndeterminate=true,Height=4,Width=180,Margin=new(0,0,0,12)};
+    private readonly TextBlock previewMessage=new(){Foreground=Brushes.White,TextAlignment=TextAlignment.Center,TextWrapping=TextWrapping.Wrap,TextTrimming=TextTrimming.CharacterEllipsis,MaxHeight=160,FontSize=15};
     private readonly TextBlock caption=new(){Foreground=Brushes.White,Background=new SolidColorBrush(Color.FromArgb(210,0,0,0)),FontSize=22,TextAlignment=TextAlignment.Center,TextWrapping=TextWrapping.Wrap,Padding=new(12),Margin=new(24),VerticalAlignment=VerticalAlignment.Bottom,Visibility=Visibility.Collapsed,IsHitTestVisible=false};
     private readonly TextBlock status=new(){TextWrapping=TextWrapping.Wrap,Margin=new(4,12,4,8)};
     private readonly TextBox text=new(){AcceptsReturn=true,AcceptsTab=true,VerticalContentAlignment=VerticalAlignment.Top,TextWrapping=TextWrapping.Wrap,VerticalScrollBarVisibility=ScrollBarVisibility.Auto,HorizontalScrollBarVisibility=ScrollBarVisibility.Disabled,FontFamily=new("Consolas"),MinHeight=200};
@@ -56,7 +59,7 @@ internal sealed class SubtitleEditorWindow:Window
         var header=new StackPanel{Margin=new(0,0,0,20)};header.Children.Add(L10n.Label(new TextBlock{Text="Generate Subtitles",FontSize=30,FontWeight=FontWeights.Bold}));header.Children.Add(new TextBlock{Text=Path.GetFileName(input),Foreground=Theme.Brush("Muted"),Margin=new(0,5,0,0)});root.Children.Add(header);
         var body=new Grid();body.ColumnDefinitions.Add(new(){Width=new(1,GridUnitType.Star)});body.ColumnDefinitions.Add(new(){Width=new(1,GridUnitType.Star)});Grid.SetRow(body,1);root.Children.Add(body);
         var left=new Grid{Margin=new(0,0,20,0)};left.RowDefinitions.Add(new(){Height=new(1,GridUnitType.Star)});left.RowDefinitions.Add(new(){Height=GridLength.Auto});left.RowDefinitions.Add(new(){Height=GridLength.Auto});body.Children.Add(left);
-        var screen=new Grid{Background=Brushes.Black,MinHeight=220};screen.Children.Add(player);screen.Children.Add(caption);left.Children.Add(screen);if(!NeedsOriginalProxy){player.Source=new Uri(input);player.Pause();}
+        var screen=new Grid{Background=Brushes.Black,MinHeight=220};screen.Children.Add(player);screen.Children.Add(caption);var loadingContent=new StackPanel();loadingContent.Children.Add(previewSpinner);loadingContent.Children.Add(previewMessage);previewLoading.Child=loadingContent;System.Windows.Automation.AutomationProperties.SetAutomationId(previewLoading,"subtitles.previewLoading");screen.Children.Add(previewLoading);BeginPreviewLoading();left.Children.Add(screen);if(!NeedsOriginalProxy){player.Source=new Uri(input);player.Pause();}
         seek.Maximum=info.Duration;Grid.SetRow(seek,1);left.Children.Add(seek);seek.ValueChanged+=(_,_)=>{if(seek.IsMouseCaptureWithin||seek.IsKeyboardFocusWithin)player.Position=TimeSpan.FromSeconds(seek.Value);};
         var playback=new WrapPanel();Grid.SetRow(playback,2);left.Children.Add(playback);playback.Children.Add(MainWindow.Button("Play / pause",()=>{if(playing)player.Pause();else player.Play();playing=!playing;}));playback.Children.Add(MainWindow.Button("Original",Original));
         var right=new Grid();Grid.SetColumn(right,1);body.Children.Add(right);foreach(var _ in Enumerable.Range(0,6))right.RowDefinitions.Add(new(){Height=GridLength.Auto});right.RowDefinitions.Add(new(){Height=new(1,GridUnitType.Star)});right.RowDefinitions.Add(new(){Height=GridLength.Auto});
@@ -77,14 +80,17 @@ internal sealed class SubtitleEditorWindow:Window
         System.Windows.Automation.AutomationProperties.SetAutomationId(text,"subtitles.editor");System.Windows.Automation.AutomationProperties.SetAutomationId(generate,"subtitles.generate");System.Windows.Automation.AutomationProperties.SetAutomationId(preview,"subtitles.preview");System.Windows.Automation.AutomationProperties.SetAutomationId(save,"subtitles.save");
         System.Windows.Automation.AutomationProperties.SetAutomationId(sourceText,"subtitles.source");System.Windows.Automation.AutomationProperties.SetAutomationId(language,"subtitles.sourceLanguage");System.Windows.Automation.AutomationProperties.SetAutomationId(targetLanguage,"subtitles.targetLanguage");System.Windows.Automation.AutomationProperties.SetAutomationId(translate,"subtitles.translate");
         clock.Tick+=(_,_)=>{if(!seek.IsMouseCaptureWithin&&!seek.IsKeyboardFocusWithin)seek.Value=Math.Clamp(player.Position.TotalSeconds,0,info.Duration);caption.Text=resultPlaying?"":transcript?.At(player.Position.TotalSeconds)??"";caption.Visibility=caption.Text.Length==0?Visibility.Collapsed:Visibility.Visible;};clock.Start();
-        player.MediaEnded+=(_,_)=>{playing=false;player.Pause();};player.MediaFailed+=async(_,e)=>{if(!closed&&!resultPlaying&&originalProxy is null&&!preparingProxy)await PrepareOriginalProxy();else if(!closed)Status(e.ErrorException.Message);};
+        player.MediaOpened+=(_,_)=>{if(closed)return;previewLoading.Visibility=Visibility.Collapsed;if(!playing)player.Pause();};
+        player.MediaEnded+=(_,_)=>{playing=false;player.Pause();};player.MediaFailed+=async(_,e)=>{if(closed)return;if(!resultPlaying&&originalProxy is null&&!attemptedProxy)await PrepareOriginalProxy();else if(!preparingProxy)PreviewFailed(e.ErrorException);};
         Closed+=(_,_)=>{closed=true;clock.Stop();lifetime.Cancel();active?.Cancel();player.Close();if(!busy)CleanPreview();if(!preparingProxy)CleanProxy();};
         Loaded+=async(_,_)=>
         {
-            if(NeedsOriginalProxy)await PrepareOriginalProxy();
+            if(NeedsOriginalProxy)await PrepareOriginalProxy();else{player.Play();player.Pause();}
         };
     }
     private void Status(string value)=>status.Text=L10n.Text(value);
+    private void BeginPreviewLoading(){previewMessage.Text=L10n.Text("Preparing preview…");previewLoading.ToolTip=null;previewSpinner.Visibility=Visibility.Visible;previewLoading.Visibility=Visibility.Visible;}
+    private void PreviewFailed(Exception error){if(closed)return;previewMessage.Text=string.Format(L10n.Text("Preview unavailable: {0}"),error.Message);previewLoading.ToolTip=error.Message;previewSpinner.Visibility=Visibility.Collapsed;previewLoading.Visibility=Visibility.Visible;Status(error.Message);}
     private void UpdateButtons(){generate.IsEnabled=import.IsEnabled=!busy&&language.SelectedIndex>=0;translate.IsEnabled=!busy&&workflow.CanTranslate;targetLanguage.IsEnabled=!busy&&workflow.Source is not null;preview.IsEnabled=save.IsEnabled=!busy&&workflow.CanSave;sourceText.IsReadOnly=busy||language.SelectedIndex<0;text.IsReadOnly=busy||!hasTargetDraft;language.IsEnabled=format.IsEnabled=!busy;progress.Visibility=busy?Visibility.Visible:Visibility.Collapsed;}
     private void ResetResult(){hasTargetDraft=false;transcript=null;text.Clear();if(resultPlaying)Original();UpdateButtons();}
     private void SourceEdited()
@@ -101,11 +107,11 @@ internal sealed class SubtitleEditorWindow:Window
         UpdateButtons();
     }
     private void Import(){var dialog=new OpenFileDialog{Filter="SubRip (*.srt)|*.srt"};if(dialog.ShowDialog(this)==true){try{if(new FileInfo(dialog.FileName).Length>10*1024*1024)throw new InvalidDataException("The subtitle file is too large.");sourceText.Text=File.ReadAllText(dialog.FileName);editors.SelectedIndex=0;}catch(Exception error){Status(error.Message);}}}
-    private void Original(){resultPlaying=false;player.Pause();playing=false;player.Source=originalProxy is not null?new Uri(originalProxy):NeedsOriginalProxy?null:new Uri(input);player.Position=TimeSpan.Zero;}
+    private void Original(){resultPlaying=false;player.Pause();playing=false;var source=originalProxy is not null?new Uri(originalProxy):NeedsOriginalProxy?null:new Uri(input);if(player.Source!=source){BeginPreviewLoading();player.Source=source;}player.Position=TimeSpan.Zero;}
     private async Task PrepareOriginalProxy()
     {
         if(closed||attemptedProxy)return;attemptedProxy=true;
-        preparingProxy=true;proxyDirectory=Path.Combine(Path.GetTempPath(),"Lokum-SubtitleSource-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(proxyDirectory);Status("Preparing a local preview…");
+        preparingProxy=true;BeginPreviewLoading();proxyDirectory=Path.Combine(Path.GetTempPath(),"Lokum-SubtitleSource-"+Guid.NewGuid().ToString("N"));Directory.CreateDirectory(proxyDirectory);Status("Preparing a local preview…");
         try
         {
             var path=Path.Combine(proxyDirectory,info.Video is null?"source.wav":"source.mp4");var arguments=new List<string>{"-nostdin","-v","error","-i",input};
@@ -114,7 +120,7 @@ internal sealed class SubtitleEditorWindow:Window
             arguments.Add(path);await ProcessRunner.RunAsync(tools.Executable("ffmpeg"),arguments,lifetime.Token);
             if(!closed){originalProxy=path;if(!resultPlaying){Original();player.Play();player.Pause();}Status("Preview ready · export uses your original file.");}
         }
-        catch(OperationCanceledException){}catch(Exception error){if(!closed)Status(error.Message);}
+        catch(OperationCanceledException){}catch(Exception error){PreviewFailed(error);}
         finally{preparingProxy=false;if(closed)CleanProxy();}
     }
     private void CleanProxy(){if(proxyDirectory is {} path){try{if(Directory.Exists(path))Directory.Delete(path,true);}catch(IOException){}proxyDirectory=null;}}
@@ -147,7 +153,7 @@ internal sealed class SubtitleEditorWindow:Window
         if(busy||transcript is null)return;
         if(Format!="mp4"){Original();player.Play();playing=true;return;}
         busy=true;UpdateButtons();active=CancellationTokenSource.CreateLinkedTokenSource(lifetime.Token);Original();CleanPreview();previewDirectory=Path.Combine(Path.GetTempPath(),"Lokum-SubtitlePreview-"+Guid.NewGuid().ToString("N"));Status("Preparing result preview…");
-        try{var files=await TranscriptionEngine.ExportAsync(Transcript,input,"mp4",previewDirectory,tools.Executable("ffmpeg"),active.Token);if(!closed){resultPlaying=true;player.Source=new Uri(files[0]);player.Play();playing=true;Status("Subtitles are ready. Review the text and timing.");}}
+        try{var files=await TranscriptionEngine.ExportAsync(Transcript,input,"mp4",previewDirectory,tools.Executable("ffmpeg"),active.Token);if(!closed){resultPlaying=true;BeginPreviewLoading();player.Source=new Uri(files[0]);player.Play();playing=true;Status("Subtitles are ready. Review the text and timing.");}}
         catch(OperationCanceledException){if(!closed)Status("Cancelled. Originals kept.");}catch(Exception error){if(!closed)Status(error.Message);}
         finally{active.Dispose();active=null;busy=false;if(closed)CleanPreview();else UpdateButtons();}
     }
