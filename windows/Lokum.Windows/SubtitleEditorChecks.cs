@@ -28,6 +28,52 @@ internal static class SubtitleEditorChecks
         var owner=new Window{Width=200,Height=120};owner.Show();var model=Environment.GetEnvironmentVariable("LOKUM_TEST_TRANSLATION_MODEL");var editor=new SubtitleEditorWindow(owner,source,info,tools,new SpeechModelSetup(speechDirectory),model is null?null:new TranslationModelSetup(model));
         try
         {
+            var startupVideo=Path.Combine(output,"Startup-blue.mp4");
+            await ProcessRunner.RunAsync(tools.Executable("ffmpeg"),["-y","-v","error","-f","lavfi","-i","color=blue:size=640x360:rate=15","-f","lavfi","-i","sine=frequency=440:sample_rate=48000","-t","3","-c:v","libx264","-pix_fmt","yuv420p","-c:a","aac",startupVideo]);
+            var startupInfo=await new MediaEngine(tools.Executable("ffmpeg"),tools.Executable("ffprobe")).InspectAsync(startupVideo);
+            var startup=new SubtitleEditorWindow(owner,startupVideo,startupInfo,tools,new SpeechModelSetup(speechDirectory));
+            try
+            {
+                startup.Show();startup.UpdateLayout();
+                var loading=Find<FrameworkElement>(startup).FirstOrDefault(e=>AutomationProperties.GetAutomationId(e)=="subtitles.previewLoading");
+                Check(loading is {IsVisible:true},"Opening the subtitle editor shows a loading state before the first media frame is ready.");
+                var initialPlayer=Find<MediaElement>(startup).Single();
+                bool BlueFrame(MediaElement current)
+                {
+                    if(current.ActualWidth<1||current.ActualHeight<1)return false;
+                    var frame=new RenderTargetBitmap((int)current.ActualWidth,(int)current.ActualHeight,96,96,PixelFormats.Pbgra32);frame.Render(current);
+                    var pixel=new byte[4];frame.CopyPixels(new Int32Rect(frame.PixelWidth/2,frame.PixelHeight/2,1,1),pixel,4,0);return pixel[0]>150&&pixel[1]<100&&pixel[2]<100;
+                }
+                await Until(()=>BlueFrame(initialPlayer),"Paused subtitle editor first frame");
+                Check(BlueFrame(initialPlayer)&&!loading!.IsVisible,"The first colored video frame is visible without pressing Play, and the loading state disappears.");
+                await Task.Delay(350);Check(initialPlayer.Position.TotalSeconds<.15,"Opening a subtitle editor does not automatically play the video or its audio.");
+                var original=Find<Button>(startup).Single(b=>b.Content as string==L10n.Text("Original"));original.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));original.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                await Task.Delay(150);Check(BlueFrame(initialPlayer)&&!loading!.IsVisible,"Selecting the already loaded original does not leave a loading indicator waiting for an event that will never recur.");
+                var play=Find<Button>(startup).Single(b=>b.Content as string==L10n.Text("Play / pause"));play.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));await Until(()=>initialPlayer.Position.TotalSeconds>.3,"Subtitle editor playback");original.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+                await Until(()=>initialPlayer.Position.TotalSeconds<.15&&BlueFrame(initialPlayer),"Restoring the initial subtitle frame");
+                Check(!loading!.IsVisible,"Returning from playback restores the first paused frame without obscuring it with a stale loading state.");
+                var startupImage=new RenderTargetBitmap((int)startup.ActualWidth,(int)startup.ActualHeight,96,96,PixelFormats.Pbgra32);startupImage.Render(startup);ImageEngine.Save(startupImage,Path.Combine(output,"startup-first-frame.png"),"png");
+                var webm=Path.Combine(output,"Startup-blue.webm");await ProcessRunner.RunAsync(tools.Executable("ffmpeg"),["-y","-v","error","-i",startupVideo,"-c:v","libvpx-vp9","-deadline","realtime","-cpu-used","8","-c:a","libopus",webm]);
+                var proxyInfo=await new MediaEngine(tools.Executable("ffmpeg"),tools.Executable("ffprobe")).InspectAsync(webm);
+                var proxyEditor=new SubtitleEditorWindow(owner,webm,proxyInfo,tools,new SpeechModelSetup(speechDirectory));
+                try
+                {
+                    proxyEditor.Show();proxyEditor.UpdateLayout();var proxyLoading=Find<FrameworkElement>(proxyEditor).First(e=>AutomationProperties.GetAutomationId(e)=="subtitles.previewLoading");var proxyPlayer=Find<MediaElement>(proxyEditor).Single();
+                    Check(proxyLoading.IsVisible,"Video formats requiring a local playback copy show loading feedback during preparation.");
+                    await Until(()=>BlueFrame(proxyPlayer)&&!proxyLoading.IsVisible,"Converted subtitle source first frame");
+                    Check(proxyPlayer.Source?.LocalPath!=webm&&proxyPlayer.Position.TotalSeconds<.15,"A converted video opens on its first frame and stays paused, like a directly supported video.");
+                }
+                finally{proxyEditor.Close();}
+                var invalid=Path.Combine(output,"Invalid-preview.mp4");await File.WriteAllTextAsync(invalid,"not a video");var failedEditor=new SubtitleEditorWindow(owner,invalid,startupInfo,tools,new SpeechModelSetup(speechDirectory));
+                try
+                {
+                    failedEditor.Show();failedEditor.UpdateLayout();var failedLoading=Find<FrameworkElement>(failedEditor).First(e=>AutomationProperties.GetAutomationId(e)=="subtitles.previewLoading");
+                    await Until(()=>failedLoading.IsVisible&&!Find<ProgressBar>(failedLoading).Any(p=>p.IsVisible),"Invalid subtitle source feedback");
+                    Check(Find<TextBlock>(failedLoading).Any(t=>!string.IsNullOrWhiteSpace(t.Text)),"An unreadable preview ends the loading animation and displays an explanation.");
+                }
+                finally{failedEditor.Close();}
+            }
+            finally{startup.Close();}
             editor.Show();editor.UpdateLayout();
             Check(editor.Format=="mp4","A video opens with MP4 selected so Save creates a subtitled video instead of a text sidecar.");
             var sourceLanguage=Find<ComboBox>(editor).Single(t=>AutomationProperties.GetAutomationId(t)=="subtitles.sourceLanguage");
