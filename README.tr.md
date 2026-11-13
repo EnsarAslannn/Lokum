@@ -4,6 +4,8 @@
 
 Lokum; görsel, video, ses ve belgeleri yerelde dönüştürüp düzenleyebildiğin bir dosya araç kutusudur. Tam kurulum ve derleme bilgileri [ana rehberdedir](README.md).
 
+**Web sürümü yayında:** [tarayıcıda dosya işle](https://lokum-red.vercel.app/app.html) veya [site ve etkileşimli demoyu aç](https://lokum-red.vercel.app/tr/). Web’deki işlemler ve boyut/süre sınırları [ana rehberde](README.md#webde-kullan) açıklanır. Aşağıdaki kullanım adımları masaüstü uygulaması içindir.
+
 ## Başlangıç
 
 **Web’de Ctrl + sağ tık → Medyayı indir:** Lokum’un küçük indirme menüsü açılır.

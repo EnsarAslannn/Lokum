@@ -3,13 +3,38 @@
 <p align="center">Dosyaların için tatlı bir kolaylık.</p>
 <p align="center"><a href="README.md"><strong>🇹🇷 TR</strong></a> | <a href="README.en.md">🇬🇧 EN</a></p>
 
-Lokum; görsel, video, ses ve belge dosyalarını bilgisayarında dönüştürüp düzenleyebildiğin bir masaüstü uygulamasıdır. Dosyanı seç, çarktan bir araç aç, sonucu önizle ve yeni bir kopya kaydet.
+Lokum; görsel, video, ses ve belge dosyaları için bir araç kutusudur. **Web sürümü yayında:** kurulum yapmadan tarayıcıda dosya işleyebilir veya daha geniş araç seti için Windows/macOS masaüstü uygulamasını kullanabilirsin. Dosyanı seç, sonucu önizle ve yeni bir kopya kaydet.
 
-[Türkçe kullanım](README.tr.md) · [Etkileşimli tanıtım kaynakları](docs/tr/index.html) · [Özellik ve platform matrisi](windows/FEATURE-PARITY.md) · [Bağımlılıklar](docs/dependencies.md)
+<p align="center"><a href="https://lokum-red.vercel.app/app.html"><strong>Web’de kullan ↗</strong></a> · <a href="https://lokum-red.vercel.app/tr/">Site ve etkileşimli demo</a> · <a href="https://lokum-red.vercel.app/en/app.html">English web app</a></p>
+
+[Türkçe kullanım](README.tr.md) · [Özellik ve platform matrisi](windows/FEATURE-PARITY.md) · [Bağımlılıklar](docs/dependencies.md)
 
 **Proje deposu:** [EnsarAslannn/Lokum](https://github.com/EnsarAslannn/Lokum) · [Hata bildir / öneri paylaş](https://github.com/EnsarAslannn/Lokum/issues)
 
-## Görünüm
+## Web’de kullan
+
+**[lokum-red.vercel.app](https://lokum-red.vercel.app/tr/)** üzerinde Türkçe ve İngilizce tanıtım, etkileşimli demo ve çalışan bir dosya çalışma alanı bulunur. Site ve dosya işleme API’si Vercel üzerinde yayındadır; API, Vercel Functions kullanır. Hesap veya kurulum gerekmez.
+
+| Web çalışma alanı | Yapabileceklerin |
+| --- | --- |
+| Görsel | PNG/JPEG/WebP/AVIF/TIFF çıktısı, boyutlandırma, döndürme, yansıtma ve kalite ayarı |
+| PDF | Birleştirme, sayfa çıkarma/sıralama/döndürme ve görsellerden PDF oluşturma |
+| Ses | Dönüştürme, kesme, hız değiştirme ve ses seviyesi eşitleme |
+| Video | Dönüştürme, kesme, genişlik/kalite/hız ayarı, ses kaldırma/çıkarma ve kare alma |
+
+**İlk sürüm sınırları:** toplam 3 MB girdi, en fazla 8 dosya, 4 MB çıktı, görsel başına 24 megapiksel, PDF için 200 sayfa, medya için en fazla 120 saniyelik aralık ve 60 saniyelik işlem süresi. Büyük/uzun medya, Office dönüşümleri, otomatik altyazı/çeviri ve işletim sistemi işlemleri masaüstü uygulamasında bulunur.
+
+Çalışma alanında **İşle** düğmesine bastığında dosyalar sunucuya gönderilir. Medya işlemlerinde kullanılan geçici klasör işlem sonunda temizlenir; sonuç açık tarayıcı sekmesinde tutulur. Tanıtım sayfasındaki etkileşimli demo ise yerelde çalışır; masaüstüne özel araçlar açıkça önizleme olarak gösterilir.
+
+### Web görünümü
+
+[![Lokum’un canlı Türkçe web sitesi](docs/screenshots/web-tr.png)](https://lokum-red.vercel.app/tr/)
+
+[![Lokum web dosya çalışma alanı](docs/screenshots/web-workspace-tr.png)](https://lokum-red.vercel.app/app.html)
+
+Görüntüler, yayındaki sitenin masaüstü tarayıcı görünümünden alınmıştır. Her iki sayfada da **TR | EN** dil seçici bulunur.
+
+## Masaüstü görünümü
 
 | Açık tema | Koyu tema |
 | :---: | :---: |
@@ -25,13 +50,15 @@ Ekranlar, Lokum Windows uygulamasının izole görsel denetiminden alınır. mac
 
 ## Çalıştırma
 
+Tarayıcıda kullanmak için doğrudan **[web çalışma alanını aç](https://lokum-red.vercel.app/app.html)**. Aşağıdaki adımlar masaüstü uygulaması içindir.
+
 Bu depo kaynak kodunu içerir; derlenmiş uygulama ve indirilen araçlar Git'e eklenmez. Hazır paket yayımlandığında [Releases](https://github.com/EnsarAslannn/Lokum/releases) sayfasından edinilebilir. Elinde `Lokum-Windows-x64.zip` varsa tamamını yazılabilir bir klasöre çıkarıp içindeki `Lokum.exe` dosyasını aç. Paketin tüm dosyalarını birlikte tut. Bağımsız Windows paketinde ayrı bir .NET kurulumu gerekmez. Kaynaktan çalıştırmak için aşağıdaki derleme adımlarını kullan.
 
 İlk açılışta **Kurulumu tamamla → Eksik araçları indir** akışını kullan. FFmpeg/ffprobe, yt-dlp, Deno, LibreOffice ve metadata araçları ilgili işlevler için kullanılır; uygulama bunları kendi kurulum akışından, sabitlenmiş sürüm ve SHA-256 kontrolleriyle edinir. Yerel görsel ve temel PDF işlemleri hemen kullanılabilir. İndirme iptal edilirse veya başarısız olursa aynı ekrandan yeniden denenebilir.
 
 Kütüphane ve ayarlar `%LOCALAPPDATA%/Lokum` altında saklanır.
 
-## Özellikler
+## Masaüstü özellikleri
 
 - **45 girdi formatı, 29 araç, 275 dönüşüm yolu:** ortak katalog ve seçim kuralları korunur.
 - **Görseller:** dönüştürme, sıkıştırma, boyutlandırma, döndürme/yansıtma, kırpma, işaretleme, çerçeve, kolaj, metadata, gizleme ve QR okuma.
@@ -114,7 +141,7 @@ macOS'ta Finder sürüklemesi sırasında Shift dönüştürme, Command araçlar
 
 ## Gizlilik ve güncellemeler
 
-Dönüştürme ve düzenleme yerelde çalışır. Web indirmeleri seçilen siteye, eksik araçların kurulumu ilgili resmi dağıtım kaynağına bağlanır. Analytics, bulut hesabı veya tarayıcı çerezi içe aktarma bulunmaz.
+Masaüstü uygulamasındaki dönüştürme ve düzenleme yerelde çalışır. Medya bağlantısı indirme seçilen siteye, eksik araçların kurulumu ilgili resmi dağıtım kaynağına bağlanır. Web çalışma alanındaki dosyalar ise yalnızca **İşle** düğmesine basıldığında sunucuya gönderilir. Analytics, bulut hesabı veya tarayıcı çerezi içe aktarma bulunmaz.
 
 Lokum imzalı güncellemeleri destekler. Bir yayın deposu ve güvenilir imza anahtarı yapılandırılana kadar otomatik güncelleme kanalı bağlı değildir. [Kanal yapılandırma notları](docs/LOKUM.md) yayınlayan kişi içindir.
 
