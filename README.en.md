@@ -3,11 +3,36 @@
 <p align="center">A sweet spot for your files.</p>
 <p align="center"><a href="README.md">🇹🇷 TR</a> | <a href="README.en.md"><strong>🇬🇧 EN</strong></a></p>
 
-Lokum is a desktop application for converting and editing images, video, audio and documents on your computer. Select a file, open a tool from the wheel, preview the result and save a new copy.
+Lokum is a toolbox for images, video, audio and documents. **The web version is live:** process files in your browser without installing anything, or use the Windows/macOS desktop app for the broader toolset. Choose a file, preview the result and save a fresh copy.
 
-[Turkish user guide](README.tr.md) · [Interactive demo sources](docs/index.html) · [Platform matrix](windows/FEATURE-PARITY.md) · [Dependencies](docs/dependencies.md) · [Report a bug / suggest a feature](https://github.com/EnsarAslannn/Lokum/issues)
+<p align="center"><a href="https://lokum-red.vercel.app/en/app.html"><strong>Open the web app ↗</strong></a> · <a href="https://lokum-red.vercel.app/index.html">Website & interactive demo</a> · <a href="https://lokum-red.vercel.app/app.html">Türkçe web uygulaması</a></p>
 
-## Appearance
+[Turkish user guide](README.tr.md) · [Platform matrix](windows/FEATURE-PARITY.md) · [Dependencies](docs/dependencies.md) · [Report a bug / suggest a feature](https://github.com/EnsarAslannn/Lokum/issues)
+
+## Use it on the web
+
+**[lokum-red.vercel.app](https://lokum-red.vercel.app/index.html)** hosts the Turkish/English website, interactive demo and working file workspace. The website and processing API are deployed on Vercel; the API runs on Vercel Functions. No account or installation is required.
+
+| Web workspace | What it does |
+| --- | --- |
+| Images | PNG/JPEG/WebP/AVIF/TIFF output, resizing, rotation, mirroring and quality settings |
+| PDFs | Merge, extract/reorder/rotate pages and create PDFs from images |
+| Audio | Convert, trim, change speed and normalize loudness |
+| Video | Convert, trim, change width/quality/speed, remove/extract audio and capture a frame |
+
+**Initial limits:** 3 MB total input, up to 8 files, 4 MB output, 24 megapixels per image, 200 PDF pages, a media range of up to 120 seconds and a 60-second processing timeout. Large/long media, Office conversions, automatic subtitles/translation and system actions are available in the desktop app.
+
+The workspace sends files to the server when you press **Process**. Temporary media-processing folders are cleaned up afterward; the result stays in the current browser tab. The interactive website demo processes locally and clearly labels desktop-only tools as previews.
+
+### Web appearance
+
+[![Lokum live English website](docs/screenshots/web-en.png)](https://lokum-red.vercel.app/index.html)
+
+[![Lokum web file workspace](docs/screenshots/web-workspace-en.png)](https://lokum-red.vercel.app/en/app.html)
+
+These images show the deployed website in a desktop browser. Both pages include the **TR | EN** language switch.
+
+## Desktop appearance
 
 | Light theme | Dark theme |
 | :---: | :---: |
@@ -23,13 +48,15 @@ These are isolated renders of the Windows interface. macOS sources include the t
 
 ## Run Lokum
 
+To use Lokum in your browser, **[open the web workspace](https://lokum-red.vercel.app/en/app.html)**. The steps below are for the desktop application.
+
 The repository contains source code; compiled applications and downloaded tools are excluded from Git. Published packages will be available on the [Releases](https://github.com/EnsarAslannn/Lokum/releases) page. If you already have `Lokum-Windows-x64.zip`, extract the entire folder into a writable location and open **Lokum.exe**. Keep all package files together. The self-contained Windows package does not require a separate .NET installation.
 
 On first launch, use **Finish setup → Download missing tools**. FFmpeg/ffprobe, yt-dlp, Deno, LibreOffice and metadata tools are installed for the features that need them, using pinned versions and SHA-256 verification. Local image and basic PDF operations are available immediately. Canceled or failed downloads can be retried from the same screen.
 
 Windows Library and preferences are stored under `%LOCALAPPDATA%/Lokum`.
 
-## Features
+## Desktop features
 
 - **45 input formats, 29 shared tools and 275 conversion routes**, with single-file and batch selection.
 - **Images:** conversion, compression, resizing, rotation/mirroring, cropping, annotations, frames, collages, metadata, redaction and QR reading.
@@ -99,7 +126,7 @@ Drag modifiers can be changed in Settings. The macOS defaults are Shift for conv
 
 ## Privacy and updates
 
-Editing and conversion run locally. Web downloads connect to the selected site, and tool setup connects to the relevant distribution source. There is no analytics, mandatory cloud account or browser-cookie import.
+Desktop editing and conversion run locally. Media-link downloads connect to the selected site, and tool setup connects to the relevant distribution source. The web workspace sends files to the server only when you press **Process**. There is no analytics, mandatory cloud account or browser-cookie import.
 
 Signed updates are supported; no automatic update channel is connected until a release repository and trusted signing key are configured. See [release channel configuration](docs/LOKUM.md).
 
